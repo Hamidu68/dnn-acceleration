@@ -569,7 +569,7 @@ void MaxPooling2D_1(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {
 }
 
 
-#if 1 // scalar replaced version
+#if 0 // scalar replaced version
 void Conv2D_padding_act_relu_3(hls::stream<DATA_T> &I_strm, DATA_T W[16][8][3][3], DATA_T B[16], hls::stream<DATA_T> &O_strm) {
 //void Conv2D_padding_act_relu_3(hls::stream<DATA_T> &I_strm, DATA_T W[16][8][3][3], DATA_T B[16], hls::stream<uint512_t> &O_strm) {
 //void Conv2D_padding_act_relu_3(hls::stream<DATA_T> &I_strm, DATA_T W[16][8][3][3], DATA_T B[16], DATA_T O[16][8][8]) {
@@ -994,6 +994,164 @@ void Conv2D_padding_act_relu_3(hls::stream<DATA_T> &I_strm, DATA_T W[16][8][3][3
 #endif
 
 
+
+
+#if 0 // old version
+void Conv2D_padding_act_relu_3(hls::stream<DATA_T> &I_strm, DATA_T W[16][8][3][3], DATA_T B[16], hls::stream<DATA_T> &O_strm) {
+//void Conv2D_padding_act_relu_3(hls::stream<DATA_T> &I_strm, DATA_T W[16][8][3][3], DATA_T B[16], hls::stream<uint512_t> &O_strm) {
+//void Conv2D_padding_act_relu_3(hls::stream<DATA_T> &I_strm, DATA_T W[16][8][3][3], DATA_T B[16], DATA_T O[16][8][8]) {
+//void Conv2D_padding_act_relu_3(DATA_T I[8][8][8], DATA_T W[16][8][3][3], DATA_T B[16], DATA_T O[16][8][8]) {
+#pragma HLS INLINE
+  int m, x, y, i, j, k;
+  //DATA_T ifm, ofm;
+
+  uint512_t O;
+
+  DATA_T I_0, I_1, I_2, I_3, I_4, I_5, I_6, I_7, I_8;
+
+  DATA_T ifm[16], ofm[16];
+#pragma HLS ARRAY_PARTITION variable=ifm complete dim=0
+#pragma HLS ARRAY_PARTITION variable=ofm complete dim=0
+
+  DATA_T I[8][3][8];
+
+#pragma HLS ARRAY_PARTITION variable=I complete dim=1
+#pragma HLS ARRAY_PARTITION variable=I complete dim=2
+#pragma HLS ARRAY_PARTITION variable=I complete dim=3
+
+ 	Conv2D_3_x_loop: for (x=0; x<10; x++) {
+ 		Conv2D_3_y_loop: for (y=0; y<10; y++) {
+  		Conv2D_3_k_loop: for (k=0; k<8; k++) {
+
+   	 		if (x<8 && y<8) {
+   	 			I[k][x%3][y] = I_strm.read();
+   	 		}
+  	 		if (x>=2 && y>=2) {
+
+
+      		I_0 = I[k][(x-2)%3][(y-2)];
+      		I_1 = I[k][(x-2)%3][(y-1)];
+      		I_2 = I[k][(x-2)%3][(y)];
+      		I_3 = I[k][(x-1)%3][(y-2)];
+      		I_4 = I[k][(x-1)%3][(y-1)];
+      		I_5 = I[k][(x-1)%3][(y)];
+      		I_6 = I[k][(x)%3][(y-2)];
+      		I_7 = I[k][(x)%3][(y-1)];
+      		I_8 = I[k][(x)%3][(y)];
+
+  	 			Conv2D_3_m_loop: for (m=0; m<16; m++) {
+#pragma HLS PIPELINE
+
+  	 				if (k==0) {
+  	 					ofm[m] = B[m];
+  	 				}
+  	 				/*
+  	 				Conv2D_3_i_loop: for (i=0; i<3; i++) {
+  	 					Conv2D_3_j_loop: for (j=0; j<3; j++) {
+  	 						if (x-2+i < 8 && y-2+j < 8) {
+  	 							ifm[m] = I[k][(x-2+i)%3][y-2+j];
+  	 						} else {
+  	 							ifm[m] = 0; // zero padding
+  	 						}
+  	 						ofm[m] = ofm[m] + ifm[m] * W[m][k][i][j];
+  	 					}
+  	 				}
+  	 				*/
+
+ 						if (x-2+0 < 8 && y-2+0 < 8) {
+ 							ifm[m] = I_0;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
+
+ 						if (x-2+0 < 8 && y-2+1 < 8) {
+ 							ifm[m] = I_1;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
+
+ 						if (x-2+0 < 8 && y-2+2 < 8) {
+ 							ifm[m] = I_2;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
+
+ 						if (x-2+1 < 8 && y-2+0 < 8) {
+ 							ifm[m] = I_3;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
+
+ 						if (x-2+1 < 8 && y-2+1 < 8) {
+ 							ifm[m] = I_4;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
+
+ 						if (x-2+1 < 8 && y-2+2 < 8) {
+ 							ifm[m] = I_5;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
+
+ 						if (x-2+2 < 8 && y-2+0 < 8) {
+ 							ifm[m] = I_6;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
+
+ 						if (x-2+2 < 8 && y-2+1 < 8) {
+ 							ifm[m] = I_7;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
+
+ 						if (x-2+2 < 8 && y-2+2 < 8) {
+ 							ifm[m] = I_8;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][2];
+
+  	 				/*if (Tk+k == 7) {
+   	 				//O[Tm+m][x-2][y-2] = ofm;
+   	 				O_strm.write(ofm);
+   	 				}*/
+	 				}
+  	 			/*
+  	 			if (k==7) {
+  	 				O = (uint512_t)ofm[0];
+  	 				for (m=1; m<16; m++) {
+#pragma HLS UNROLL
+ 							O = O | (uint512_t)ofm[m] << 32*m;
+  	 				}
+  	 				O_strm.write(O);
+  	 			}
+  	 			*/
+
+  	 			if (k==7) {
+  	 				for (m=0; m<16; m++) {
+#pragma HLS UNROLL
+  	 					O_strm.write(ofm[m]);
+  	 				}
+  	 			}
+
+ 	 			}
+ 			}
+   	}
+ 	}
+}
+#endif
+
+
 void Unpack3(hls::stream<uint512_t> &I_strm, hls::stream<DATA_T> &O_strm) {
 	int  x, y, m;
   uint512_t I;
@@ -1029,7 +1187,7 @@ void Unpack3(hls::stream<uint512_t> &I_strm, hls::stream<DATA_T> &O_strm) {
 }
 
 
-#if 0 // II not enough small, violate Clock frequency
+#if 1 // DAC 2017 like optimized code
 void Conv2D_padding_act_relu_3(hls::stream<DATA_T> &I_strm, DATA_T W[16][8][3][3], DATA_T B[16], hls::stream<DATA_T> &O_strm) {
 //void Conv2D_padding_act_relu_3(hls::stream<DATA_T> &I_strm, DATA_T W[16][8][3][3], DATA_T B[16], DATA_T O[16][8][8]) {
 //void Conv2D_padding_act_relu_3(DATA_T I[8][8][8], DATA_T W[16][8][3][3], DATA_T B[16], DATA_T O[16][8][8]) {
@@ -1037,58 +1195,182 @@ void Conv2D_padding_act_relu_3(hls::stream<DATA_T> &I_strm, DATA_T W[16][8][3][3
   int m, x, y, i, j, k;
   //DATA_T ifm, ofm;
 
-  uint256_t O;
+
 
   DATA_T ifm[16], ofm[16];
 #pragma HLS ARRAY_PARTITION variable=ifm complete dim=0
 #pragma HLS ARRAY_PARTITION variable=ofm complete dim=0
 
-  DATA_T I[8][3][8];
+  DATA_T I[8][4][8];
+  DATA_T O[16][2][8];
 
 #pragma HLS ARRAY_PARTITION variable=I complete dim=1
 #pragma HLS ARRAY_PARTITION variable=I complete dim=2
 #pragma HLS ARRAY_PARTITION variable=I complete dim=3
 
- 	Conv2D_3_x_loop: for (x=0; x<10; x++) {
- 		Conv2D_3_y_loop: for (y=0; y<10; y++) {
+#pragma HLS ARRAY_PARTITION variable=O complete dim=1
+#pragma HLS ARRAY_PARTITION variable=O complete dim=2
+#pragma HLS ARRAY_PARTITION variable=O complete dim=3
+
+  /*
+ 	Conv2D_3_x_init_loop: for (x=0; x<3; x++) {
+ 		Conv2D_3_y_init_loop: for (y=0; y<8; y++) {
+  		Conv2D_3_k_init_loop: for (k=0; k<8; k++) {
+#pragma HLS PIPELINE
+  			I[k][x%4][y] = I_strm.read();
+  		}
+ 		}
+ 	}
+ 	*/
+
+ 	Conv2D_3_x_loop: for (x=0; x<12; x++) {
+//#pragma HLS dependence variable=I intra false
+//#pragma HLS dependence variable=O intra false
+
+ 		/*
+ 		Conv2D_3_y_ld_loop: for (y=0; y<8; y++) {
+  		Conv2D_3_k_ld_loop: for (k=0; k<8; k++) {
+#pragma HLS PIPELINE
+  	 		if (x < 8) {
+  	 			I[k][x%4][y] = I_strm.read();
+  	 		}
+  		}
+ 		}
+ 		*/
+
+ 		Conv2D_3_y_loop: for (y=0; y<8; y++) {
   		Conv2D_3_k_loop: for (k=0; k<8; k++) {
 
-   	 		if (x<8 && y<8) {
-   	 			I[k][x%3][y] = I_strm.read();
-   	 		}
-  	 		if (x>=2 && y>=2) {
-  	 			Conv2D_3_m_loop: for (m=0; m<16; m++) {
+  	 		if (x < 8) {
+  	 			I[k][x%4][y] = I_strm.read();
+  	 		}
+
+	 			Conv2D_3_m_loop: for (m=0; m<16; m++) {
 #pragma HLS PIPELINE
 
-  	 				if (k==0) {
-  	 					ofm[m] = B[m];
-  	 				}
-  	 				Conv2D_3_i_loop: for (i=0; i<3; i++) {
-  	 					Conv2D_3_j_loop: for (j=0; j<3; j++) {
-  	 						if (x-2+i < 8 && y-2+j < 8) {
-  	 							ifm[m] = I[k][(x-2+i)%3][y-2+j];
-  	 						} else {
-  	 							ifm[m] = 0; // zero padding
-  	 						}
-  	 						ofm[m] = ofm[m] + ifm[m] * W[m][k][i][j];
-  	 					}
-  	 				}
-  	 				/*if (Tk+k == 7) {
-   	 				//O[Tm+m][x-2][y-2] = ofm;
-   	 				O_strm.write(ofm);
-   	 				}*/
-	 				}
-  	 			if (k==7) {
+	 		 		if (x >= 3 && x < 11) {
 
-  	 				for (m=0; m<16; m++) {
-#pragma HLS UNROLL
-  	 					O_strm.write(ofm[m]);
-  	 				}
-  	 			}
- 	 			}
- 			}
-   	}
+
+	 		 			if (k==0) {
+	 		 				ofm[m] = B[m];
+	 		 			} else {
+	 		 				ofm[m] = O[m][(x-3)%2][y];
+	 		 			}
+#if 0
+  					Conv2D_3_i_loop: for (i=0; i<3; i++) {
+  						Conv2D_3_j_loop: for (j=0; j<3; j++) {
+  							if (x-3+i < 8 && y+j < 8) {
+  								ifm[m] = I[k][(x-3+i)%4][y+j];
+  							} else {
+  								ifm[m] = 0; // zero padding
+  							}
+  							ofm[m] = ofm[m] + ifm[m] * W[m][k][i][j];
+  						}
+  					}
+#else
+
+  					if (x-3+0 < 8 && y+0 < 8) {
+  						ifm[m] = I[k][(x-3+0)%4][y+0];
+  					} else {
+  						ifm[m] = 0; // zero padding
+  					}
+  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
+
+  					if (x-3+0 < 8 && y+1 < 8) {
+  						ifm[m] = I[k][(x-3+0)%4][y+1];
+  					} else {
+  						ifm[m] = 0; // zero padding
+  					}
+  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
+
+  					if (x-3+0 < 8 && y+2 < 8) {
+  						ifm[m] = I[k][(x-3+0)%4][y+2];
+  					} else {
+  						ifm[m] = 0; // zero padding
+  					}
+  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
+
+  					if (x-3+1 < 8 && y+0 < 8) {
+  						ifm[m] = I[k][(x-3+1)%4][y+0];
+  					} else {
+  						ifm[m] = 0; // zero padding
+  					}
+  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
+
+  					if (x-3+1 < 8 && y+1 < 8) {
+  						ifm[m] = I[k][(x-3+1)%4][y+1];
+  					} else {
+  						ifm[m] = 0; // zero padding
+  					}
+  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
+
+  					if (x-3+1 < 8 && y+2 < 8) {
+  						ifm[m] = I[k][(x-3+1)%4][y+2];
+  					} else {
+  						ifm[m] = 0; // zero padding
+  					}
+  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
+
+  					if (x-3+2 < 8 && y+0 < 8) {
+  						ifm[m] = I[k][(x-3+2)%4][y+0];
+  					} else {
+  						ifm[m] = 0; // zero padding
+  					}
+  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
+
+  					if (x-3+2 < 8 && y+1 < 8) {
+  						ifm[m] = I[k][(x-3+2)%4][y+1];
+  					} else {
+  						ifm[m] = 0; // zero padding
+  					}
+  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
+
+  					if (x-3+2 < 8 && y+2 < 8) {
+  						ifm[m] = I[k][(x-3+2)%4][y+2];
+  					} else {
+  						ifm[m] = 0; // zero padding
+  					}
+  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][2];
+
+#endif
+
+
+  					O[m][(x-3)%2][y] = ofm[m];
+
+  				}
+		 			if (k == 7) {
+		 				if (x>=4) {
+		 					O_strm.write(O[m][(x-4)%2][y]);
+		 				}
+		 			}
+	 			}
+  		}
+  		/*
+ 			Conv2D_3_m_st_loop: for (m=0; m<16; m++) {
+#pragma HLS PIPELINE
+ 				if (x>=4) {
+ 					O_strm.write(O[m][(x-4)%2][y]);
+ 				}
+  	 	}
+  	 	*/
+ 		}
+
+
+/*
+ 		Conv2D_3_y_st_loop: for (y=0; y<8; y++) {
+ 			Conv2D_3_m_st_loop: for (m=0; m<16; m++) {
+#pragma HLS PIPELINE
+ 				if (x>=4) {
+ 					O_strm.write(O[m][(x-4)%2][y]);
+ 				}
+  	 	}
+  	}
+*/
+
  	}
+
+
+
 }
 #endif
 
@@ -1217,11 +1499,11 @@ static DATA_T B3_i[16];
 void VGG16(DATA_T I[3][16][16], DATA_T W1_i[8][3][3][3], DATA_T W2_i[8][8][3][3], DATA_T W3_i[16][8][3][3], DATA_T B1_i[8], DATA_T B2_i[8], DATA_T B3_i[16], DATA_T O[16][8][8]) {
 //void VGG16(hls::stream<DATA_T> &I_strm /*DATA_T I[3][16][16]*/, DATA_T W1_i[8][3][3][3], DATA_T W2_i[8][8][3][3], DATA_T W3_i[16][8][3][3], DATA_T B1_i[8], DATA_T B2_i[8], DATA_T B3_i[16], DATA_T O[16][8][8]) {
 
-#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=2 //k: # of input channels
-#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=3 //kernel size
-#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=4 //kernel size
+#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=2
+#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=4
 
-#pragma HLS ARRAY_PARTITION variable=W2_i complete dim=1 //m: # of output channels
+#pragma HLS ARRAY_PARTITION variable=W2_i complete dim=1
 #pragma HLS ARRAY_PARTITION variable=W2_i complete dim=3
 #pragma HLS ARRAY_PARTITION variable=W2_i complete dim=4
 
