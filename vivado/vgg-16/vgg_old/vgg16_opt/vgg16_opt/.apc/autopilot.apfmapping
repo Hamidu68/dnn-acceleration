@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<autopilotfilemapping:AutoPilotFileMapping xmlns:autopilotfilemapping="www.autoesl.com/autopilotfilemapping">
+  <source>
+    <originFiles name="vgg16.cpp" path="C:\Users\seto\Desktop\vgg16_opt\vgg16.cpp"/>
+  </source>
+  <testbench>
+    <originFiles name="vgg16_test.cpp" path="C:\Users\seto\Desktop\vgg16_opt\vgg16_test.cpp"/>
+  </testbench>
+</autopilotfilemapping:AutoPilotFileMapping>
