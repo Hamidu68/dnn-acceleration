@@ -1,0 +1,5 @@
+show_result= show_result + "$Name" + " : [[";
+for (k = 0; k <  $Output_channel ; k++) {
+	show_result = show_result + " " + to_string((int)(O${line_number}_SW[k]));
+}
+show_result += "]]\n\n";

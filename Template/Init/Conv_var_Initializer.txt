@@ -1,0 +1,12 @@
+for (m = 0; m <  $Output_channel ; m++) {
+	for (k = 0; k < $Input_channel ; k++) {
+		for (i = 0; i < $Filter_width ; i++) {
+			for (j = 0; j < $Filter_height ; j++) {
+				fscanf(w_stream, "%f", &temp);
+				W${line_number}[m][k][i][j] = temp;
+			}
+		}
+	}
+	fscanf(b_stream, "%f", &temp);
+	B${line_number}[m] = temp;      
+}
