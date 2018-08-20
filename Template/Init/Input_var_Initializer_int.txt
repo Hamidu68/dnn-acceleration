@@ -1,0 +1,9 @@
+for (k = 0; k <  $Input_channel ; k++) {
+	for (x = 0; x < $Input_width ; x++) {
+		for(y = 0; y < $Input_height ; y++) {
+			fscanf(i_stream, "%d", &temp);
+			I[k][x][y] = temp;
+			O0_SW[k][x][y] = temp;
+		}
+	}
+}

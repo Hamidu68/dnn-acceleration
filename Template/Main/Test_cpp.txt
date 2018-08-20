@@ -1,0 +1,44 @@
+#include <iostream>
+#include <ap_int.h>
+#include "hls_stream.h"
+#include <stdio.h>
+#include <stdlib.h>
+using namespace std;
+//typedef int DATA_T;
+typedef ap_uint<16> DATA_T;
+
+$def_model
+
+// argv[1] = init_weight.txt , argv[2] = init_bias.txt , argv[3] = init_input.txt
+int main(int argc, char *argv[]){
+ 
+  int m, x, y, i, j, k;
+  DATA_T temp;
+  
+  $static_variables
+  
+  FILE *w_stream = fopen(argv[1], "r");
+  if (w_stream == NULL) printf("weight file was not opened");
+  FILE *b_stream = fopen(argv[2], "r");
+  if (b_stream == NULL) printf("bias file was not opened");
+  FILE *i_stream = fopen(argv[3], "r");
+  if (i_stream == NULL) printf("i_stream file was not opened");
+  
+  $Initialization
+ 
+  $model_function
+
+  int ret_val;
+  if (err_cnt == 0) {
+    printf("*** TEST PASSED ***\n");
+    ret_val = 0;
+  } else {
+    printf("!!! TEST FAILED - %d mismatches detected !!!\n\n",err_cnt);
+    ret_val = -1;
+  }
+
+  fclose(w_stream);
+  fclose(b_stream);
+  fclose(i_stream);
+  return ret_val;
+}

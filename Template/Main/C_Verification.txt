@@ -2,7 +2,6 @@
 #include<iostream>
 #include <stdlib.h>
 #include<string>
-#include<time.h>
 #include<math.h>
 using namespace std;
 
@@ -15,7 +14,6 @@ int main(int argc, char *argv[]){
  
   DATA_T temp;
   int m, x, y, i, j, k, l;
-  srand(time(NULL));
   
   $Shared_static_variables
  
