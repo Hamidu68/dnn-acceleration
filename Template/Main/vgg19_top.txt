@@ -1,0 +1,20 @@
+void VGG19_top($variables) {
+
+  DATA_T O_i[$Output_channel][$Output_width][$Output_height];
+
+
+  int m, x, y, i, j, k;
+
+  $assign_value
+  
+  VGG19($vgg19_argument);
+
+  for (m=0; m<$Output_channel; m++) {
+    for (x=0; x<$Output_width; x++) {
+      for (y=0; y<$Output_height; y++) {
+          O[m][x][y] = O_i[m][x][y];
+      }
+    }
+  }
+
+}

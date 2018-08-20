@@ -1,0 +1,14 @@
+void VGG19(DATA_T I[$Input_channel][$Input_width][$Input_height], $variables DATA_T O[$Output_channel][$Output_width][$Output_height]) {
+
+$Optimized_code
+
+#pragma HLS DATAFLOW
+  hls::stream<uint256_t> O1_packed_strm("O1_packed_strm");
+  
+  $Stream_declaration
+  
+  Stream_input(I, I_strm);
+  $Function_call
+  Stream_output(O_strm, O);
+
+}

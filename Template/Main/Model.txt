@@ -1,0 +1,19 @@
+#include <iostream>
+#include <ap_int.h>
+#include <hls_stream.h>
+
+typedef ap_uint<16> DATA_T;
+
+typedef ap_uint<256> uint256_t;
+typedef ap_uint<512> uint512_t;
+
+$Stream_io
+
+$Static_variables
+
+$VGG19
+$VGG19_top
+$VGG19_sw
+
+$SW_def_func
+$HW_def_func
