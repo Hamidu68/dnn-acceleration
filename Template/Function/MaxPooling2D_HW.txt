@@ -1,0 +1,46 @@
+void HW_$Name(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {
+#pragma HLS INLINE
+  int m, x, y, i, j;
+  ap_uint<32> max;
+
+  DATA_T I[$Input_channel][$Filter_width][$Output_channel];
+
+//#pragma HLS ARRAY_PARTITION variable=I complete dim=1
+#pragma HLS ARRAY_PARTITION variable=I complete dim=2
+#pragma HLS ARRAY_PARTITION variable=I complete dim=3
+//#pragma HLS ARRAY_PARTITION variable=I cyclic factor=3 dim=3
+
+	Pool_${num}_x_loop: for (x=0; x<$Input_channel+2; x++) {
+	  Pool_${num}_y_loop: for (y=0; y<$Input_channel+2; y++) {
+
+	    Pool_${num}_m_loop: for (m=0; m<$Output_channel; m++) {
+#pragma HLS PIPELINE
+	    	if (x<$Output_channel && y<$Output_channel) {
+	    		I[m][x%3][y] = I_strm.read();
+	    		//std::cout << "HW: MaxPool: I[" << m << "][" << x << "][" << y << "] = " <<  I[m][x%3][y] << std::endl;
+	    	}
+	    	if (x>=2 && y>=2) {
+	    		if (x%2==0 && y%2==0) {
+	    			max = I[m][(x-2)%3][y-2];
+	    			if (I[m][(x-2)%3][y-2] > max) {
+	    				max = I[m][(x-2)%3][y-2];
+	    			}
+	    			if (I[m][(x-2)%3][y-1] > max) {
+	    				max = I[m][(x-2)%3][y-1];
+	    			}
+	    			if (I[m][(x-1)%3][y-2] > max) {
+	    				max = I[m][(x-1)%3][y-2];
+	    			}
+	    			if (I[m][(x-1)%3][y-1] > max) {
+	    				max = I[m][(x-1)%3][y-1];
+	    			}
+	    			//O[m][(x-2)/2][(y-2)/2] = max;
+	    			O_strm.write(max);
+	    		}
+	    	}
+      }
+    }
+  }
+
+
+}

@@ -1,0 +1,121 @@
+void HW_$Name(hls::stream<DATA_T> &I_strm, DATA_T W[$Output_channel][$Input_channel][$Filter_width][$Filter_height], DATA_T B[$Output_channel], hls::stream<DATA_T> &O_strm) {
+
+#pragma HLS INLINE
+  int m, x, y, i, j, k;
+
+  uint512_t O;
+
+  DATA_T I_0, I_1, I_2, I_3, I_4, I_5, I_6, I_7, I_8;
+
+  DATA_T ifm[$Output_channel], ofm[$Output_channel];
+#pragma HLS ARRAY_PARTITION variable=ifm complete dim=0
+#pragma HLS ARRAY_PARTITION variable=ofm complete dim=0
+
+  DATA_T I[$Input_channel][$Filter_width][$Input_channel];
+
+#pragma HLS ARRAY_PARTITION variable=I complete dim=1
+#pragma HLS ARRAY_PARTITION variable=I complete dim=2
+#pragma HLS ARRAY_PARTITION variable=I complete dim=3 
+
+ 	Conv2D_${num}_x_loop: for (x=0; x<$Input_channel+2; x++) {
+ 		Conv2D_${num}_y_loop: for (y=0; y<$Input_channel+2; y++) {
+  		Conv2D_${num}_k_loop: for (k=0; k<$Input_channel; k++) {
+
+   	 		if (x<$Input_channel && y<$Input_channel) {
+   	 			I[k][x%3][y] = I_strm.read();
+   	 		}
+  	 		if (x>=2 && y>=2) {
+
+
+      		I_0 = I[k][(x-2)%3][(y-2)];
+      		I_1 = I[k][(x-2)%3][(y-1)];
+      		I_2 = I[k][(x-2)%3][(y)];
+      		I_3 = I[k][(x-1)%3][(y-2)];
+      		I_4 = I[k][(x-1)%3][(y-1)];
+      		I_5 = I[k][(x-1)%3][(y)];
+      		I_6 = I[k][(x)%3][(y-2)];
+      		I_7 = I[k][(x)%3][(y-1)];
+      		I_8 = I[k][(x)%3][(y)];
+
+  	 			Conv2D_${num}_m_loop: for (m=0; m<$Output_channel; m++) {
+#pragma HLS PIPELINE
+
+  	 				if (k==0) {
+  	 					ofm[m] = B[m];
+  	 				}
+ 						if (x-2+0 < $Input_channel && y-2+0 < $Input_channel) {
+ 							ifm[m] = I_0;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
+
+ 						if (x-2+0 < $Input_channel && y-2+1 < $Input_channel) {
+ 							ifm[m] = I_1;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
+
+ 						if (x-2+0 < $Input_channel && y-2+2 < $Input_channel) {
+ 							ifm[m] = I_2;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
+
+ 						if (x-2+1 < $Input_channel && y-2+0 < $Input_channel) {
+ 							ifm[m] = I_3;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
+
+ 						if (x-2+1 < $Input_channel && y-2+1 < $Input_channel) {
+ 							ifm[m] = I_4;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
+
+ 						if (x-2+1 < $Input_channel && y-2+2 < $Input_channel) {
+ 							ifm[m] = I_5;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
+
+ 						if (x-2+2 < $Input_channel && y-2+0 < $Input_channel) {
+ 							ifm[m] = I_6;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
+
+ 						if (x-2+2 < $Input_channel && y-2+1 < $Input_channel) {
+ 							ifm[m] = I_7;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
+
+ 						if (x-2+2 < $Input_channel && y-2+2 < $Input_channel) {
+ 							ifm[m] = I_8;
+ 						} else {
+ 							ifm[m] = 0; // zero padding
+ 						}
+ 						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][2];
+
+	 				}
+  	 			if (k==$Input_channel-1) {
+  	 				for (m=0; m<$Output_channel; m++) {
+#pragma HLS UNROLL
+  	 					O_strm.write(ofm[m]);
+  	 				}
+  	 			}
+
+ 	 			}
+ 			}
+   	}
+ 	}
+}

@@ -44,30 +44,30 @@ if __name__ == "__main__":
 
 
 # Open file
-batch_normal = open("Template/BatchNormalization.txt")
-conv_s = open("Template/Conv2D_same.txt")
-conv_v = open("Template/Conv2D_valid.txt")
-ad = open("Template/Add.txt")
-den_s = open("Template/Dense_Softmax.txt")
-den_r = open("Template/Dense_Relu.txt")
-fla = open("Template/Flatten.txt")
-gap = open("Template/GlobalAveragePooling.txt")
-gmp = open("Template/GlobalMaxPooling.txt")
-mxp = open("Template/MaxPooling2D.txt")
-avp = open("Template/AveragePooling2D.txt")
-rl = open("Template/Relu.txt")
-sm = open("Template/Softmax.txt")
-zp = open("Template/ZeroPadding.txt")
-m = open("Template/Model.txt")
-st=open("Template/Stream_io.txt")
-vgg=open("Template/vgg19.txt")
-top=open("Template/vgg19_top.txt")
-sw=open("Template/vgg19_sw.txt")
+batch_normal = open("../Template/Function/BatchNormalization.txt")
+conv_s = open("../Template/Function/Conv2D_same.txt")
+conv_v = open("../Template/Function/Conv2D_valid.txt")
+ad = open("../Template/Function/Add.txt")
+den_s = open("../Template/Function/Dense_Softmax.txt")
+den_r = open("../Template/Function/Dense_Relu.txt")
+fla = open("../Template/Function/Flatten.txt")
+gap = open("../Template/Function/GlobalAveragePooling.txt")
+gmp = open("../Template/Function/GlobalMaxPooling.txt")
+mxp = open("../Template/Function/MaxPooling2D.txt")
+avp = open("../Template/Function/AveragePooling2D.txt")
+rl = open("../Template/Function/Relu.txt")
+sm = open("../Template/Function/Softmax.txt")
+zp = open("../Template/Function/ZeroPadding.txt")
+m = open("../Template/Main/Cpp.txt")
+st=open("../Template/Function/Stream_io.txt")
+vgg=open("../Template/Function/vgg19.txt")
+top=open("../Template/Function/vgg19_top.txt")
+sw=open("../Template/Function/vgg19_sw.txt")
 
 #Open HW file
-hw_conv_s = open("Template/Conv2D_same_HW.txt")
-hw_conv_v = open("Template/Conv2D_valid_HW.txt")
-hw_maxp = open("Template/MaxPooling2D_HW.txt")
+hw_conv_s = open("../Template/Function/Conv2D_same_HW.txt")
+hw_conv_v = open("../Template/Function/Conv2D_valid_HW.txt")
+hw_maxp = open("../Template/Function/MaxPooling2D_HW.txt")
 # Read Template
 BatchNormalization = Template(batch_normal.read())
 Conv2D_same = Template(conv_s.read())
@@ -311,7 +311,7 @@ for row in csv_reader:
         SW_static_v += "static DATA_T W"+str(line_count)+ "_SW[" + output_shape[1] + "][" + input_shape[1] + "];\n"
         SW_static_v += "static DATA_T B"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
         #assign_value to vgg_top.txt
-        assign_value += "B"+str(line_count)+"_i_m_loop: for (m=0; m<"+output_shape[1]+"; m++) {\n"+"\tB"+line_count+"_i[m] = B"+str(line_count)+"[m];\n}\n"       
+        assign_value += "B"+str(line_count)+"_i_m_loop: for (m=0; m<"+output_shape[1]+"; m++) {\n"+"\tB"+str(line_count)+"_i[m] = B"+str(line_count)+"[m];\n}\n"       
         assign_value += "W"+str(line_count)+"_i_m_loop: for (m=0; m<"+output_shape[1]+"; m++) {\n  W"+str(line_count)+"_i_k_loop: for (k=0; k<"+input_shape[1]+"; k++) {\n  W"+str(line_count)+"_i[m][k] = W"+str(line_count)+"[m][k];\n  }\n}\n"
 	#function def 
         if row["activation"] == 'relu' : # Activation = relu
@@ -363,7 +363,7 @@ vgg19sw_template=vgg19_sw.substitute(vg_s)
 #model
 f = {'Stream_io':stream_template, 'Static_variables': Static_variables, 'VGG19':vgg19_template, 'VGG19_top':vgg19top_template, 'VGG19_sw':vgg19sw_template, 'SW_def_func':SW_def_func, 'HW_def_func':HW_def_func}
 c_file = model.substitute(f) + "\n";
-print (c_file)
+#print (c_file)
 
 file = open('Output/'+model_name+'.cpp','w')
 file.write(c_file)

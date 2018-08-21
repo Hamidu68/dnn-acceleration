@@ -7,6 +7,7 @@ using namespace std;
 // argv[2] = Init_weight.txt (Output-weight file)
 // argv[3] = Init_Bias.txt (Output-weight file)
 // argv[4] = Init_Input.txt (Output-weight file)
+// argv[5] = 20 (Variable Random Range)
 int main(int argc, char *argv[])
 {
 	srand(time(NULL));
@@ -30,7 +31,7 @@ int main(int argc, char *argv[])
 	//open csv (layer info)
 	ifstream csv_file;
 	csv_file.open(argv[1]);
-	
+	int random_range = argv[5];
 	int layer_count = 0;
 	////////////////////////////////////////////////////////////////////////////////////////
 	/////////Read the layer file line by line and Generate the necessary variables./////////
@@ -70,9 +71,9 @@ int main(int argc, char *argv[])
 			//variable initialize = Input
 			input_size = i_c * i_w * i_h; // Input size
 			//save
-			input_t += to_string(rand() % 10 + 1);
+			input_t += to_string(rand() % random_range  + 1);
 			for (int i = 1; i < input_size; i++) {
-				input_t += " " +to_string(rand() % 10 + 1);
+				input_t += " " +to_string(rand() % random_range + 1);
 			}
 			input_t += "\n";
 		}
@@ -117,18 +118,18 @@ int main(int argc, char *argv[])
 			//variable initialize : Weight
 			//save
 			weight_size = i_c * o_c * f_w * f_h;
-			weight_t += to_string(rand() % 10 + 1);
+			weight_t += to_string(rand() % random_range + 1);
 			for (int i = 1; i < weight_size; i++) {
-				weight_t += " " + to_string(rand() % 10 + 1);
+				weight_t += " " + to_string(rand() % random_range + 1);
 			}
 			weight_t += "\n";
 
 			//variable initialize : Bias
 			//save
 			bias_size = o_c;
-			bias_t += to_string(rand() % 10 + 1);
+			bias_t += to_string(rand() % random_range + 1);
 			for (int i = 1; i < bias_size; i++) {
-				bias_t += " " + to_string(rand() % 10 + 1);
+				bias_t += " " + to_string(rand() % random_range + 1);
 			}
 			bias_t += "\n";
 
@@ -157,17 +158,17 @@ int main(int argc, char *argv[])
 
 			//variable initialize : Weight
 			weight_size = i_c * o_c;
-			weight_t += to_string(rand() % 10 + 1);
+			weight_t += to_string(rand() % random_range + 1);
 			for (int i = 1; i < weight_size; i++) {
-				weight_t += " " + to_string(rand() % 10 + 1);
+				weight_t += " " + to_string(rand() %random_range + 1);
 			}
 			weight_t += "\n";
 
 			//variable initialize : Bias
 			bias_size = o_c;
-			bias_t += to_string(rand() % 10 + 1);
+			bias_t += to_string(rand() % random_range + 1);
 			for (int i = 1; i < bias_size; i++) {
-				bias_t += " " + to_string(rand() % 10 + 1);
+				bias_t += " " + to_string(rand() % random_range + 1);
 			}
 			bias_t += "\n";
 		}

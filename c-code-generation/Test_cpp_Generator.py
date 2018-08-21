@@ -7,12 +7,13 @@
 import csv
 import sys
 from string import Template
-
-csv_file=open(sys.argv[1])
-csv_reader=csv.DictReader(csv_file)
     
 # sys.argv[1] = Test.csv
 # sys.argv[2] = model name
+# sys.argv[3] = Data_type
+
+csv_file=open(sys.argv[1])
+csv_reader=csv.DictReader(csv_file)
 
 if __name__ == "__main__" :    
     
@@ -26,10 +27,10 @@ if __name__ == "__main__" :
     func_model = "("
     #####Load template#####
     # Open file
-    m = open("Template/Main/Test_cpp.txt")
-    i_conv = open("Template/Init/Conv_var_Initializer_int.txt")
-    i_dense = open("Template/Init/Dense_var_Initializer_int.txt")
-    i_input = open("Template/Init/Input_var_Initializer_int.txt")
+    m = open("../Template/Main/Test_cpp.txt")
+    i_conv = open("../Template/Init/Conv_var_Initializer_int.txt")
+    i_dense = open("../Template/Init/Dense_var_Initializer_int.txt")
+    i_input = open("../Template/Init/Input_var_Initializer_int.txt")
     main = Template(m.read())
     Init_conv = Template(i_conv.read())
     Init_dense = Template(i_dense.read())
@@ -95,19 +96,19 @@ if __name__ == "__main__" :
         #HW_static_variables (O_HW)
         static_v += "static DATA_T O_HW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"; 
         def_model += ", DATA_T O[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "]);\n"  
-        model_function = "void " + model_name + "_top" + func_model + ",O_HW);\n"
-        model_function += "void " + model_name + "_sw" + func_model + """,O_SW);\n
-    int err_cnt = 0;
-    for (m=0; m<"""+output_shape[3]+"""; m++) {
-        for (x=0; x<"""+output_shape[1]+"""; x++) {
-           for (y=0; y<"""+output_shape[2]+"""; y++) {
-               if (O_HW[m][x][y] != O_SW[m][x][y]) {
-                 printf("SW: O[%d][%d][%d] = %d\n", m, x, y, O_SW[m][x][y]);
-                 printf("HW: O[%d][%d][%d] = %d\n", m, x, y, O_HW[m][x][y]);
-                 err_cnt++;}
-            }
-        }
-    }\n"""
+        model_function =  model_name + "_top" + func_model + ",O_HW);\n"
+        model_function += "  " + model_name + "_sw" + func_model + """,O_SW);\n
+   int err_cnt = 0;
+   for (m=0; m<"""+output_shape[3]+"""; m++) {
+       for (x=0; x<"""+output_shape[1]+"""; x++) {
+          for (y=0; y<"""+output_shape[2]+"""; y++) {
+              if (O_HW[m][x][y] != O_SW[m][x][y]) {
+                printf("SW: O[%d][%d][%d] = %d", m, x, y, O_SW[m][x][y]);
+                printf("HW: O[%d][%d][%d] = %d", m, x, y, O_HW[m][x][y]);
+                err_cnt++;}
+           }
+       }
+   }\n"""
     #Output Shape 1D   
     else :
         #SW_static_variables (O_SW)
@@ -115,8 +116,8 @@ if __name__ == "__main__" :
         #HW_static_variables (O_HW)
         static_v += "static DATA_T O_HW[" + output_shape[1] + "];\n\t"; 
         def_model += ", DATA_T O[" + output_shape[1] + "]);\n"   
-        model_function = "void " + model_name + "_top" + func_model + ",O_HW);\n"
-        model_function += "void " + model_name + "_sw" + func_model + """,O_SW);\n
+        model_function =  model_name + "_top" + func_model + ",O_HW);\n"
+        model_function += "  " + model_name + "_sw" + func_model + """,O_SW);\n
     int err_cnt = 0;
     for (m=0; m<"""+output_shape[1]+"""; m++) {
         if (O_HW[m] != O_SW[m]) {
@@ -128,8 +129,8 @@ if __name__ == "__main__" :
     model_definition = "void " + model_name + "_top" + def_model
     model_definition += "void " + model_name + "_sw" + def_model
     
-    # Generate C file
-    f = {'def_model':model_definition,'static_variables':static_v, 'Initialization':initialization, 'model_function' : model_function}    
+    # Generate CPP file
+    f = {'def_model':model_definition,'static_variables':static_v, 'Initialization':initialization, 'model_function' : model_function, 'D_type' : sys.argv[3]}    
     c_file = main.substitute(f) + "\n";
     file = open("Output/"+model_name + "_test.cpp",'w')
     file.write(c_file)
