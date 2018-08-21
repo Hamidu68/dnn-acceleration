@@ -114,6 +114,7 @@ model_name=sys.argv[2]
 for row in csv_reader:
     #Count Line number
     line_count+= 1;
+    line_num_str=str(line_count)
     #Get Input, Output shape
     input_shape = row["batch_input_shape"][1 : -1].split(", ")
     output_shape = row["batch_output_shape"][1 : -1].split(", ")
@@ -134,26 +135,26 @@ for row in csv_reader:
         lm = {'num': conv_count, 'Name' : row["name"], 'Input_channel' : input_shape[3], 'Output_channel' : output_shape[3],'Filter_width' : filter_shape[0],
              'Filter_height' : filter_shape[1]}
         #SW_static_variables(W,O,B)
-        SW_static_v += "static DATA_T W"+str(line_count)+"["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "];\n"
-        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n" 
-        SW_static_v += "static DATA_T B"+str(line_count) + "[" + output_shape[3] + "];\n"
-        Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
+        SW_static_v += "static DATA_T W"+line_num_str+"["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "];\n"
+        SW_static_v += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n" 
+        SW_static_v += "static DATA_T B"+line_num_str + "[" + output_shape[3] + "];\n"
+        Output_variables += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
         #SW_variables to sw.txt
-        SW_variables += "DATA_T W"+str(line_count)+"["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "], "
-        SW_variables += "DATA_T B"+str(line_count) + "[" + output_shape[3] + "],";
+        SW_variables += "DATA_T W"+line_num_str+"["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "], "
+        SW_variables += "DATA_T B"+line_num_str + "[" + output_shape[3] + "],";
         #variables to top_func.txt
-        variables += "DATA_T W"+str(line_count)+"_i["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "], "
-        variables += "DATA_T B"+str(line_count) + "_i[" + output_shape[3] + "],";
+        variables += "DATA_T W"+line_num_str+"_i["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "], "
+        variables += "DATA_T B"+line_num_str + "_i[" + output_shape[3] + "],";
         #HW_static_variables
-        HW_static_v += "hls::stream<DATA_T> O"+str(line_count)+"_strm;\n"
+        HW_static_v += "hls::stream<DATA_T> O"+line_num_str+"_strm;\n"
         #Static_variables to Cpp.txt
-        Static_variables += "static DATA_T W"+str(line_count)+"_i["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "];\n";
-        Static_variables += "static DATA_T B"+str(line_count) + "_i[" + output_shape[3] + "];\n";
+        Static_variables += "static DATA_T W"+line_num_str+"_i["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "];\n";
+        Static_variables += "static DATA_T B"+line_num_str + "_i[" + output_shape[3] + "];\n";
         #top_func_argument to top.txt
-        top_func_argument += "W"+str(line_count)+"_i, " +"B"+str(line_count)+"_i, "
+        top_func_argument += "W"+line_num_str+"_i, " +"B"+line_num_str+"_i, "
         #assign_value to top.txt
-        assign_value += "B"+str(line_count)+"_i_m_loop: for (m=0; m<"+output_shape[3]+"; m++) {\n"+"\tB"+str(line_count)+"_i[m] = B"+str(line_count)+"[m];\n}\n"       
-        assign_value += "W"+str(line_count)+"_i_m_loop: for (m=0; m<"+output_shape[3]+"; m++) {\n  W"+str(line_count)+"_i_k_loop: for (k=0; k<"+input_shape[3]+"; k++) {\n  W"+str(line_count)+"_i_i_loop: for (i=0; i<"+filter_shape[0]+"; i++) {\n  W"+str(line_count)+"_i_j_loop: for (j=0; j<"+filter_shape[1]+"; j++) {\n  W"+str(line_count)+"_i[m][k][i][j] = W"+str(line_count)+"[m][k][i][j];\n      }\n    }\n  }\n}\n"
+        assign_value += "B"+line_num_str+"_i_m_loop: for (m=0; m<"+output_shape[3]+"; m++) {\n"+"\tB"+line_num_str+"_i[m] = B"+line_num_str+"[m];\n}\n"       
+        assign_value += "W"+line_num_str+"_i_m_loop: for (m=0; m<"+output_shape[3]+"; m++) {\n  W"+line_num_str+"_i_k_loop: for (k=0; k<"+input_shape[3]+"; k++) {\n  W"+line_num_str+"_i_i_loop: for (i=0; i<"+filter_shape[0]+"; i++) {\n  W"+line_num_str+"_i_j_loop: for (j=0; j<"+filter_shape[1]+"; j++) {\n  W"+line_num_str+"_i[m][k][i][j] = W"+line_num_str+"[m][k][i][j];\n      }\n    }\n  }\n}\n"
 	#function def (Padding option)
         if row["padding"] == 'valid' :
             SW_def_func += Conv2D_valid.substitute(l) +"\n"
@@ -161,18 +162,18 @@ for row in csv_reader:
             SW_def_func += Conv2D_same.substitute(l) +"\n"
         HW_def_func += Conv2D_same_hw.substitute(lm) +"\n"
         #Function use
-        SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW,B" +str(line_count) + ",W"+str(line_count) +");\n"     
+        SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_num_str +  "_SW,B" +line_num_str + ",W"+line_num_str +");\n"     
         if line_count<=1 :
-            HW_functions += "HW_" + row["name"]+"(I_strm, W"+str(line_count)+", B"+str(line_count)+", O"+str(line_count)+"_strm);\n"
+            HW_functions += "HW_" + row["name"]+"(I_strm, W"+line_num_str+", B"+line_num_str+", O"+line_num_str+"_strm);\n"
         else :
-            HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+str(line_count)+", B"+str(line_count)+", O"+str(line_count)+"_strm);\n"
+            HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+line_num_str+", B"+line_num_str+", O"+line_num_str+"_strm);\n"
         #Optimized code
-        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+str(line_count)+"_i complete dim=2\n"
-        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+str(line_count)+"_i complete dim=3\n"
-        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+str(line_count)+"_i complete dim=4\n" 
-        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=B"+str(line_count)+"_i complete\n" 
+        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=2\n"
+        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=3\n"
+        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=4\n" 
+        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=B"+line_num_str+"_i complete\n" 
         #Stream declaration
-        variable_name="O"+str(line_count)+"_strm"                                                                  
+        variable_name="O"+line_num_str+"_strm"                                                                  
         Stream_declaration += "hls::stream<DATA_T> "+variable_name+"(\""+variable_name+"\");\n"
     # layer_type = BatchNormalization(I, O) 
     # if Batch size = None(one Input), Mean = 0, Var = 1 fixed.
@@ -181,14 +182,14 @@ for row in csv_reader:
              'Input_height' : input_shape[2], 'Output_channel' : output_shape[3],
               'Output_width' : output_shape[1], 'Output_height' : output_shape[2]}
         #SW_static_variables (O)
-        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
-        Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"         
+        SW_static_v += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
+        Output_variables += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"         
 	#function def
         SW_def_func += BatchNormalization.substitute(l) +"\n"
         #Function use
-        SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW);\n"  
+        SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_num_str +  "_SW);\n"  
         #Stream declaration
-        variable_name="O"+str(line_count)+"_strm"                                                                  
+        variable_name="O"+line_num_str+"_strm"                                                                  
         Stream_declaration += "hls::stream<DATA_T> "+variable_name+"(\""+variable_name+"\");\n"
     # layer_type = Activation(Relu)(I, O)
     elif row["layer_type"] == 'Activation' :
@@ -196,14 +197,14 @@ for row in csv_reader:
              'Input_height' : input_shape[2], 'Output_channel' : output_shape[3],
               'Output_width' : output_shape[1], 'Output_height' : output_shape[2]}
         #SW_static_variables (O)
-        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
-        Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
+        SW_static_v += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
+        Output_variables += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
         #function def
         SW_def_func += Relu.substitute(l) +"\n"
         #Function use
-        SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW);\n"   
+        SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_num_str +  "_SW);\n"   
         #Stream declaration
-        variable_name="O"+str(line_count)+"_strm"                                                                  
+        variable_name="O"+line_num_str+"_strm"                                                                  
         Stream_declaration += "hls::stream<DATA_T> "+variable_name+"(\""+variable_name+"\");\n"
     # layer_type = MaxPooling2D (I, O) 
     elif row["layer_type"] == 'MaxPooling2D' :
@@ -217,17 +218,17 @@ for row in csv_reader:
         lm = {'num': pool_count, 'Name' : row["name"], 'Input_channel' : input_shape[3], 'Output_channel' : output_shape[3],'Filter_width' : filter_shape[0],
              'Filter_height' : filter_shape[1]}
         #SW_static_variables (O)
-        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
-        HW_static_v += "hls::stream<DATA_T> O"+str(line_count)+"_strm;\n"
-        Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
+        SW_static_v += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
+        HW_static_v += "hls::stream<DATA_T> O"+line_num_str+"_strm;\n"
+        Output_variables += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
         #function def
         SW_def_func += MaxPooling2D.substitute(l) +"\n"
         HW_def_func += MaxPooling2D_hw.substitute(lm) +"\n"
         #Function use
-        SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW);\n"   
-        HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, O"+str(line_count)+"_strm);\n"
+        SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_num_str +  "_SW);\n"   
+        HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, O"+line_num_str+"_strm);\n"
         #Stream declaration
-        variable_name="O"+str(line_count)+"_strm"                                                                  
+        variable_name="O"+line_num_str+"_strm"                                                                  
         Stream_declaration += "hls::stream<DATA_T> "+variable_name+"(\""+variable_name+"\");\n"                                                                  
     # layer_type = AveragePooling2D (I, O) 
     elif row["layer_type"] == 'AveragePooling2D' :
@@ -238,14 +239,14 @@ for row in csv_reader:
               'Output_width' : output_shape[1], 'Output_height' : output_shape[2], 'Stride_width' : stride_shape[0],
             'Stride_height':stride_shape[1], 'Pool_width' : pool_shape[0], 'Pool_height' : pool_shape[1]}
         #SW_static_variables (O)
-        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
-        Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
+        SW_static_v += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
+        Output_variables += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
         #function def
         SW_def_func += AveragePooling2D.substitute(l) +"\n"
         #Function use
-        SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW);\n"  
+        SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_num_str +  "_SW);\n"  
         #Stream declaration
-        variable_name="O"+str(line_count)+"_strm"                                                                  
+        variable_name="O"+line_num_str+"_strm"                                                                  
         Stream_declaration += "hls::stream<DATA_T> "+variable_name+"(\""+variable_name+"\");\n"
     # layer_type = Add(I1,I2,O)
     elif row["layer_type"] == 'Add' :
@@ -254,13 +255,13 @@ for row in csv_reader:
              'Input_height2' : output_shape[2],'Output_channel' : output_shape[3], 'Output_width' : output_shape[1],
              'Output_height' : output_shape[2]}
         #SW_static_variables (O)
-        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
+        SW_static_v += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
         #function def
         SW_def_func += Add.substitute(l) +"\n"
         #Function use
-        SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count-11) +  "_SW,O" +str(line_count)+"_SW);\n"   
+        SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count-11) +  "_SW,O" +line_num_str+"_SW);\n"   
         #Stream declaration
-        variable_name="O"+str(line_count)+"_strm"                                                                  
+        variable_name="O"+line_num_str+"_strm"                                                                  
         Stream_declaration += "hls::stream<DATA_T> "+variable_name+"(\""+variable_name+"\");\n"
     # layer_type = ZeroPadding2D(I,O)
     elif row["layer_type"] =="ZeroPadding2D":
@@ -270,13 +271,13 @@ for row in csv_reader:
              'Input_height' : input_shape[2], 'Output_channel' : output_shape[3],
               'Output_width' : output_shape[1], 'Output_height' : output_shape[2], 'Padding_size': padding[0]}
         #SW_static_variables (O)
-        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
+        SW_static_v += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
         #function def
         SW_def_func += ZeroPadding.substitute(l) +"\n"
         #Function use
-        SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW);\n"   
+        SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_num_str +  "_SW);\n"   
         #Stream declaration
-        variable_name="O"+str(line_count)+"_strm"                                                                  
+        variable_name="O"+line_num_str+"_strm"                                                                  
         Stream_declaration += "hls::stream<DATA_T> "+variable_name+"(\""+variable_name+"\");\n"    
     # layer_type = InputLayer
     elif row["layer_type"] =="InputLayer":
@@ -301,32 +302,32 @@ for row in csv_reader:
     elif row["layer_type"] == "Flatten":
         l = {'Name':row["name"],'Input_channel':input_shape[3],'Input_width':input_shape[1],'Input_height':input_shape[2],'Output_channel':output_shape[1]}
         #SW_static_variables (O)
-        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
-        Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
+        SW_static_v += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[1] + "];\n"
+        Output_variables += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[1] + "];\n"
         #function def
         SW_def_func += Flatten.substitute(l) + "\n"
         #Function use
-        SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,O"+str(line_count)+"_SW);\n"
+        SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,O"+line_num_str+"_SW);\n"
         #Stream declaration
-        variable_name="O"+str(line_count)+"_strm"                                                                  
+        variable_name="O"+line_num_str+"_strm"                                                                  
         Stream_declaration += "hls::stream<DATA_T> "+variable_name+"(\""+variable_name+"\");\n"                                                                                                                                      
     # layer_type = Dense(I,W,B,O) (Activation option : relu , softmax)
     elif row["layer_type"] == "Dense":
         l = {'Name':row["name"],'Input_channel':input_shape[1],'Output_channel':output_shape[1]}
         #SW_static_variable (O,W,B)
-        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
-        SW_static_v += "static DATA_T W"+str(line_count)+ "_SW[" + output_shape[1] + "][" + input_shape[1] + "];\n"
-        SW_static_v += "static DATA_T B"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
-        Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
+        SW_static_v += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[1] + "];\n"
+        SW_static_v += "static DATA_T W"+line_num_str+ "_SW[" + output_shape[1] + "][" + input_shape[1] + "];\n"
+        SW_static_v += "static DATA_T B"+line_num_str+ "_SW[" + output_shape[1] + "];\n"
+        Output_variables += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[1] + "];\n"
         #Static_variables to Cpp.txt
-        Static_variables += "static DATA_T W"+str(line_count)+"_i["+ output_shape[1] + "][" + input_shape[1] + "];\n";
-        Static_variables += "static DATA_T B"+str(line_count) + "_i[" + output_shape[1] + "];\n";
+        Static_variables += "static DATA_T W"+line_num_str+"_i["+ output_shape[1] + "][" + input_shape[1] + "];\n";
+        Static_variables += "static DATA_T B"+line_num_str + "_i[" + output_shape[1] + "];\n";
 	#variables to top_func.txt
-        variables += "DATA_T W"+str(line_count)+"_i["+ output_shape[1] + "][" + input_shape[1] + "], "
-        variables += "DATA_T B"+str(line_count) + "_i[" + output_shape[1] + "],";
+        variables += "DATA_T W"+line_num_str+"_i["+ output_shape[1] + "][" + input_shape[1] + "], "
+        variables += "DATA_T B"+line_num_str + "_i[" + output_shape[1] + "],";
         #assign_value to top.txt
-        assign_value += "B"+str(line_count)+"_i_m_loop: for (m=0; m<"+output_shape[1]+"; m++) {\n"+"\tB"+str(line_count)+"_i[m] = B"+str(line_count)+"[m];\n}\n"       
-        assign_value += "W"+str(line_count)+"_i_m_loop: for (m=0; m<"+output_shape[1]+"; m++) {\n  W"+str(line_count)+"_i_k_loop: for (k=0; k<"+input_shape[1]+"; k++) {\n  W"+str(line_count)+"_i[m][k] = W"+str(line_count)+"[m][k];\n  }\n}\n"
+        assign_value += "B"+line_num_str+"_i_m_loop: for (m=0; m<"+output_shape[1]+"; m++) {\n"+"\tB"+line_num_str+"_i[m] = B"+line_num_str+"[m];\n}\n"       
+        assign_value += "W"+line_num_str+"_i_m_loop: for (m=0; m<"+output_shape[1]+"; m++) {\n  W"+line_num_str+"_i_k_loop: for (k=0; k<"+input_shape[1]+"; k++) {\n  W"+line_num_str+"_i[m][k] = W"+line_num_str+"[m][k];\n  }\n}\n"
 	#function def 
         if row["activation"] == 'relu' : # Activation = relu
             SW_def_func += Dense_relu.substitute(l) + "\n"
@@ -334,27 +335,27 @@ for row in csv_reader:
             SW_def_func += Dense_softmax.substitute(l) + "\n"
         HW_def_func += Dense_softmax.substitute(l) + "\n"
         #functipn use
-        SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,W"+str(line_count)+"_SW,B"+str(line_count)+"_SW,O"+str(line_count)+"_SW);\n"
+        SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,W"+line_num_str+"_SW,B"+line_num_str+"_SW,O"+line_num_str+"_SW);\n"
         if line_count<=1 :
-            HW_functions += "HW_" + row["name"]+"(I_strm, W"+str(line_count)+", B"+str(line_count)+", O"+str(line_count)+"_strm);\n"
+            HW_functions += "HW_" + row["name"]+"(I_strm, W"+line_num_str+", B"+line_num_str+", O"+line_num_str+"_strm);\n"
         else :
-            HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+str(line_count)+", B"+str(line_count)+", O"+str(line_count)+"_strm);\n"
+            HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+line_num_str+", B"+line_num_str+", O"+line_num_str+"_strm);\n"
         # If this is end of layer, Generate final output O
         if row["activation"] == 'softmax' :
             SW_static_v += "static DATA_T O_SW[" + output_shape[1] + "];\n";
-            SW_functions += "O_SW = O"+str(line_count)+"_SW;\n"
-        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+str(line_count)+"_i complete dim=2\n"
-        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+str(line_count)+"_i complete dim=3\n"
-        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+str(line_count)+"_i complete dim=4\n" 
-        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=B"+str(line_count)+"_i complete\n"
+            SW_functions += "O_SW = O"+line_num_str+"_SW;\n"
+        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=2\n"
+        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=3\n"
+        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=4\n" 
+        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=B"+line_num_str+"_i complete\n"
 	#top_func_argument to top.txt
-        top_func_argument += "W"+str(line_count)+"_i, " +"B"+str(line_count)+"_i, "                                                                  
+        top_func_argument += "W"+line_num_str+"_i, " +"B"+line_num_str+"_i, "                                                                  
         #Stream declaration
-        variable_name="O"+str(line_count)+"_strm"                                                                  
+        variable_name="O"+line_num_str+"_strm"                                                                  
         Stream_declaration += "hls::stream<DATA_T> "+variable_name+"(\""+variable_name+"\");\n" 
 	#SW_variables to sw.txt
-        SW_variables += "DATA_T W"+str(line_count)+"["+ output_shape[1] + "][" + input_shape[1] + "], "
-        SW_variables += "DATA_T B"+str(line_count) + "[" + output_shape[1] + "],";   
+        SW_variables += "DATA_T W"+line_num_str+"["+ output_shape[1] + "][" + input_shape[1] + "], "
+        SW_variables += "DATA_T B"+line_num_str + "[" + output_shape[1] + "],";   
     else :
         print ('Not defined')
     
@@ -371,19 +372,34 @@ a=Output_variables.rfind('D', 0,len(Output_variables))
 Output_variables=Output_variables[:a]
 last_output_shape = last_output_row["batch_output_shape"][1 : -1].split(", ")
 if len(last_output_shape)>2:
-	SW_variables += "DATA_T O"+str(line_count)+"_SW["+last_output_shape[3]+"]["+last_output_shape[1]+"]["+last_output_shape[2]+"]"
+        SW_variables += "DATA_T O"+line_num_str+"_SW["+last_output_shape[3]+"]["+last_output_shape[1]+"]["+last_output_shape[2]+"]"
 	variables += "DATA_T O["+last_output_shape[3]+"]["+last_output_shape[1]+"]["+last_output_shape[2]+"]"
 else:
-	SW_variables += "DATA_T O"+str(line_count)+"_SW["+last_output_shape[1]+"]"
+	SW_variables += "DATA_T O"+line_num_str+"_SW["+last_output_shape[1]+"]"
 	variables += "DATA_T O["+last_output_shape[1]+"]"
 #Template Stream_io.txt 
-strm={'Input_channel':first_input_shape[3], 'Input_width': first_input_shape[1], 'Input_height': first_input_shape[2], 'Output_channel': last_output_shape[3], 'Output_width':last_output_shape[1], 'Output_height':last_output_shape[2]}
+if len(last_output_shape)>2:
+        strm={'Input_channel':first_input_shape[3], 'Input_width': first_input_shape[1], 'Input_height': first_input_shape[2], 'Output_channel': last_output_shape[3],    
+	'Output_width':last_output_shape[1], 'Output_height':last_output_shape[2]}	
+else:
+	strm={'Input_channel':first_input_shape[3], 'Input_width': first_input_shape[1], 'Input_height': first_input_shape[2], 'last_output_channel': last_output_shap[1]}
 stream_template=stream_io.substitute(strm)+"\n"
 #Template top_func.txt
-tf={'Input_channel':first_input_shape[3] , 'Input_width': first_input_shape[1] , 'Input_height': first_input_shape[2], 'Output_channel': last_output_shape[3], 'Output_width': last_output_shape[1], 'Output_height': last_output_shape[2],'variables': variables, 'Optimized_code':Optimized_code , 'Stream_declaration':Stream_declaration , 'Function_call': HW_functions}
+if len(last_output_shape)>2:
+	tf={'model_name':model_name,'Input_channel':first_input_shape[3] , 'Input_width': first_input_shape[1] , 'Input_height': first_input_shape[2], 'Output_channel': 	 last_output_shape[3], 'Output_width': last_output_shape[1], 'Output_height': last_output_shape[2],'variables': variables,
+        'Optimized_code':Optimized_code ,'Stream_declaration':Stream_declaration , 'Function_call': HW_functions}
+else: 
+        tf={'model_name':model_name,'Input_channel':first_input_shape[3] , 'Input_width': first_input_shape[1] , 'Input_height': first_input_shape[2],
+        'last_output_channel': last_output_shape[1], 'variables': variables, 'Optimized_code':Optimized_code ,'Stream_declaration':Stream_declaration , 
+	'Function_call': HW_functions}       
 top_func_template=top_func.substitute(tf)
 #Template top.txt
-to={'variables':SW_static_v, 'Output_channel':last_output_shape[3],'Output_width':last_output_shape[1], 'Output_height':last_output_shape[2], 'assign_value':assign_value, 'top_func_argument':top_func_argument}
+if len(last_output_shape)>2:
+        to={'model_name':model_name, 'variables':SW_static_v, 'Output_channel':last_output_shape[3],'Output_width':last_output_shape[1], 
+        'Output_height':last_output_shape [2], 'assign_value':assign_value, 'top_func_argument':top_func_argument}
+else:
+        to={'model_name':model_name, 'variables':SW_static_v, 'last_output_channel':last_output_shape[1],'assign_value':assign_value, 
+        'top_func_argument':top_func_argument}
 top_template=top.substitute(to)
 #Template sw.txt
 s={'SW_variables': SW_variables,'Output_variables': Output_variables,'SW_functions':SW_functions}

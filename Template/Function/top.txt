@@ -7,7 +7,7 @@ void top($variables) {
 
   $assign_value
   
-  VGG19($top_func_argument);
+  $model_name($top_func_argument);
 
   for (m=0; m<$Output_channel; m++) {
     for (x=0; x<$Output_width; x++) {
