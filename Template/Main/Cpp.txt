@@ -11,9 +11,9 @@ $Stream_io
 
 $Static_variables
 
-$VGG19
-$VGG19_top
-$VGG19_sw
+$top_func
+$top
+$sw
 
 $SW_def_func
 $HW_def_func

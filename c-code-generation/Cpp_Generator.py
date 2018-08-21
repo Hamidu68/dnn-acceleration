@@ -25,14 +25,14 @@ if __name__ == "__main__":
     HW_functions = ""
     SW_static_v = ""
     HW_static_v = ""
-    Static_variables="" #Argument to Model.txt
-    vgg19_argument="" #Argument to vgg19_top.txt
-    Output_variables="" #Argument to vgg19_sw.txt
-    SW_variables="" #Argument to vgg19_sw.txt
-    assign_value="" #Argument to vgg19_top.txt
-    Optimized_code="" #Argument to vgg19.txt
-    variables="" #Argument to vgg19.txt
-    Stream_declaration="" #Argument to vgg19.txt
+    Static_variables="" #Argument to Cpp.txt
+    top_func_argument="" #Argument to top.txt
+    Output_variables="" #Argument to sw.txt
+    SW_variables="" #Argument to sw.txt
+    assign_value="" #Argument to top.txt
+    Optimized_code="" #Argument to top_func.txt
+    variables="" #Argument to top_func.txt
+    Stream_declaration="" #Argument to Cpp.txt
     line_count = -1
     conv_count=0
     pool_count = 0
@@ -60,9 +60,9 @@ sm = open("../Template/Function/Softmax.txt")
 zp = open("../Template/Function/ZeroPadding.txt")
 m = open("../Template/Main/Cpp.txt")
 st=open("../Template/Function/Stream_io.txt")
-vgg=open("../Template/Function/vgg19.txt")
-top=open("../Template/Function/vgg19_top.txt")
-sw=open("../Template/Function/vgg19_sw.txt")
+top_func=open("../Template/Function/top_func.txt")
+top=open("../Template/Function/top.txt")
+sw=open("../Template/Function/sw.txt")
 
 #Open HW file
 hw_conv_s = open("../Template/Function/Conv2D_same_HW.txt")
@@ -87,9 +87,9 @@ model = Template(m.read())
 Conv2D_same_hw = Template(hw_conv_s.read()) #HW conv2D_same
 MaxPooling2D_hw = Template(hw_maxp.read()) #HW maxp2D
 stream_io = Template(st.read())
-vgg19 = Template(vgg.read())
-vgg19_top = Template(top.read())
-vgg19_sw = Template(sw.read())
+top_func = Template(top_func.read())
+top = Template(top.read())
+sw = Template(sw.read())
 
 
 # Main 3) Read Layer Information from CSV
@@ -135,20 +135,20 @@ for row in csv_reader:
         SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
         SW_static_v += "static DATA_T B"+str(line_count) + "[" + output_shape[3] + "];\n";
         Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
-        #SW_variables to vgg19_sw.txt
+        #SW_variables to sw.txt
         SW_variables += "DATA_T W"+str(line_count)+"["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "], "
         SW_variables += "DATA_T B"+str(line_count) + "[" + output_shape[3] + "],";
-        #variables to vgg19.txt
+        #variables to top_func.txt
         variables += "DATA_T W"+str(line_count)+"_i["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "], "
         variables += "DATA_T B"+str(line_count) + "_i[" + output_shape[3] + "],";
         #HW_static_variables
         HW_static_v += "hls::stream<DATA_T> O"+str(line_count)+"_strm;\n"
-        #Static_variables to Model.txt
+        #Static_variables to Cpp.txt
         Static_variables += "static DATA_T W"+str(line_count)+"_i["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "];\n";
         Static_variables += "static DATA_T B"+str(line_count) + "_i[" + output_shape[3] + "];\n";
-        #vgg19_argument to vgg_top.txt
-        vgg19_argument += "W"+str(line_count)+"_i, " +"B"+str(line_count)+"_i, "
-        #assign_value to vgg_top.txt
+        #top_func_argument to top.txt
+        top_func_argument += "W"+str(line_count)+"_i, " +"B"+str(line_count)+"_i, "
+        #assign_value to top.txt
         assign_value += "B"+str(line_count)+"_i_m_loop: for (m=0; m<"+output_shape[3]+"; m++) {\n"+"\tB"+str(line_count)+"_i[m] = B"+str(line_count)+"[m];\n}\n"       
         assign_value += "W"+str(line_count)+"_i_m_loop: for (m=0; m<"+output_shape[3]+"; m++) {\n  W"+str(line_count)+"_i_k_loop: for (k=0; k<"+input_shape[3]+"; k++) {\n  W"+str(line_count)+"_i_i_loop: for (i=0; i<"+filter_shape[0]+"; i++) {\n  W"+str(line_count)+"_i_j_loop: for (j=0; j<"+filter_shape[1]+"; j++) {\n  W"+str(line_count)+"_i[m][k][i][j] = W"+str(line_count)+"[m][k][i][j];\n      }\n    }\n  }\n}\n"
 	#function def (Padding option)
@@ -179,7 +179,8 @@ for row in csv_reader:
               'Output_width' : output_shape[1], 'Output_height' : output_shape[2]}
         #SW_static_variables (O)
         SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
-        #function def
+	Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"         
+	#function def
         SW_def_func += BatchNormalization.substitute(l) +"\n"
         #Function use
         SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW);\n"  
@@ -193,6 +194,7 @@ for row in csv_reader:
               'Output_width' : output_shape[1], 'Output_height' : output_shape[2]}
         #SW_static_variables (O)
         SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
+	Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
         #function def
         SW_def_func += Relu.substitute(l) +"\n"
         #Function use
@@ -234,6 +236,7 @@ for row in csv_reader:
             'Stride_height':stride_shape[1], 'Pool_width' : pool_shape[0], 'Pool_height' : pool_shape[1]}
         #SW_static_variables (O)
         SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
+	Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
         #function def
         SW_def_func += AveragePooling2D.substitute(l) +"\n"
         #Function use
@@ -284,10 +287,11 @@ for row in csv_reader:
         #Static_variables to Model.txt
         Static_variables += "static DATA_T I_i[" + input_shape[3] + "][" + input_shape[1] + "][" + input_shape[2] + "];\n"
         #variables to vgg19.txt
-        variables += "DATA_T I["+input_shape[3]+"]["+input_shape[1]+"]["+input_shape[2]+"], "                                                                                                                                     
-        #vgg19_argument to vgg19_top.txt                                                                                                                                      
-        vgg19_argument += "I_i, "
-        #SW_variables to vgg19_sw.txt
+        variables += "DATA_T I["+input_shape[3]+"]["+input_shape[1]+"]["+input_shape[2]+"],
+"                                                                                                                                     
+        #top_func_argument to top.txt                                                                                                                                      
+        top_func_argument += "I_i, "
+        #SW_variables to sw.txt
         SW_variables += "DATA_T I["+input_shape[3]+"]["+input_shape[1]+"]["+input_shape[2]+"], "                                                                                                                                     
 	#Stream declaration
         Stream_declaration += "hls::stream<DATA_T> I_strm(\"I_strm\");\n"                                                                                                                                      
@@ -296,6 +300,7 @@ for row in csv_reader:
         l = {'Name':row["name"],'Input_channel':input_shape[3],'Input_width':input_shape[1],'Input_height':input_shape[2],'Output_channel':output_shape[1]}
         #SW_static_variables (O)
         SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n";
+	Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
         #function def
         SW_def_func += Flatten.substitute(l) + "\n"
         #Function use
@@ -310,6 +315,13 @@ for row in csv_reader:
         SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
         SW_static_v += "static DATA_T W"+str(line_count)+ "_SW[" + output_shape[1] + "][" + input_shape[1] + "];\n"
         SW_static_v += "static DATA_T B"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
+	Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
+        #Static_variables to Cpp.txt
+        Static_variables += "static DATA_T W"+str(line_count)+"_i["+ output_shape[1] + "][" + input_shape[1] + "];\n";
+        Static_variables += "static DATA_T B"+str(line_count) + "_i[" + output_shape[1] + "];\n";
+	#variables to top_func.txt
+        variables += "DATA_T W"+str(line_count)+"_i["+ output_shape[1] + "][" + input_shape[1] + "], "
+        variables += "DATA_T B"+str(line_count) + "_i[" + output_shape[1] + "],";
         #assign_value to vgg_top.txt
         assign_value += "B"+str(line_count)+"_i_m_loop: for (m=0; m<"+output_shape[1]+"; m++) {\n"+"\tB"+str(line_count)+"_i[m] = B"+str(line_count)+"[m];\n}\n"       
         assign_value += "W"+str(line_count)+"_i_m_loop: for (m=0; m<"+output_shape[1]+"; m++) {\n  W"+str(line_count)+"_i_k_loop: for (k=0; k<"+input_shape[1]+"; k++) {\n  W"+str(line_count)+"_i[m][k] = W"+str(line_count)+"[m][k];\n  }\n}\n"
@@ -318,8 +330,13 @@ for row in csv_reader:
             SW_def_func += Dense_relu.substitute(l) + "\n"
         else :  # Activation = softmax
             SW_def_func += Dense_softmax.substitute(l) + "\n"
+	HW_def_func += Dense_softmax.substitute(l) + "\n"
         #functipn use
         SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,W"+str(line_count)+"_SW,B"+str(line_count)+"_SW,O"+str(line_count)+"_SW);\n"
+	if line_count<=1 :
+            HW_functions += "HW_" + row["name"]+"(I_strm, W"+str(line_count)+", B"+str(line_count)+", O"+str(line_count)+"_strm);\n"
+        else :
+            HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+str(line_count)+", B"+str(line_count)+", O"+str(line_count)+"_strm);\n"
         # If this is end of layer, Generate final output O
         if row["activation"] == 'softmax' :
             SW_static_v += "static DATA_T O_SW[" + output_shape[1] + "];\n";
@@ -327,10 +344,15 @@ for row in csv_reader:
         Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+str(line_count)+"_i complete dim=2\n"
         Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+str(line_count)+"_i complete dim=3\n"
         Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+str(line_count)+"_i complete dim=4\n" 
-        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=B"+str(line_count)+"_i complete\n"                                                                  
+        Optimized_code += "#pragma HLS ARRAY_PARTITION variable=B"+str(line_count)+"_i complete\n"
+	#top_func_argument to top.txt
+        top_func_argument += "W"+str(line_count)+"_i, " +"B"+str(line_count)+"_i, "                                                                  
         #Stream declaration
         variable_name="O"+str(line_count)+"_strm"                                                                  
-        Stream_declaration += "hls::stream<DATA_T> "+variable_name+"(\""+variable_name+"\");\n"    
+        Stream_declaration += "hls::stream<DATA_T> "+variable_name+"(\""+variable_name+"\");\n" 
+	#SW_variables to sw.txt
+        SW_variables += "DATA_T W"+str(line_count)+"["+ output_shape[1] + "][" + input_shape[1] + "], "
+        SW_variables += "DATA_T B"+str(line_count) + "[" + output_shape[1] + "],";   
     else :
         print ('Not defined')
     
@@ -342,28 +364,31 @@ for row in csv_reader:
 # In[100]:
 
 
-vgg19_argument += "O_i"
+top_func_argument += "O_i"
 a=Output_variables.rfind('D', 0,len(Output_variables))
 Output_variables=Output_variables[:a]
 last_output_shape = last_output_row["batch_output_shape"][1 : -1].split(", ")
-SW_variables += "DATA_T O"+str(line_count)+"_SW["+last_output_shape[3]+"]["+last_output_shape[1]+"]["+last_output_shape[2]+"]"
-variables += "DATA_T O["+last_output_shape[3]+"]["+last_output_shape[1]+"]["+last_output_shape[2]+"]"
-#Stream_io Template
+if len(last_output_shape)>2:
+	SW_variables += "DATA_T O"+str(line_count)+"_SW["+last_output_shape[3]+"]["+last_output_shape[1]+"]["+last_output_shape[2]+"]"
+	variables += "DATA_T O["+last_output_shape[3]+"]["+last_output_shape[1]+"]["+last_output_shape[2]+"]"
+else:
+	SW_variables += "DATA_T O"+str(line_count)+"_SW["+last_output_shape[1]+"]"
+	variables += "DATA_T O["+last_output_shape[1]+"]"
+#Template Stream_io.txt 
 strm={'Input_channel':first_input_shape[3], 'Input_width': first_input_shape[1], 'Input_height': first_input_shape[2], 'Output_channel': last_output_shape[3], 'Output_width':last_output_shape[1], 'Output_height':last_output_shape[2]}
 stream_template=stream_io.substitute(strm)+"\n"
-#vgg19
-vg={'Input_channel':first_input_shape[3] , 'Input_width': first_input_shape[1] , 'Input_height': first_input_shape[2], 'Output_channel': last_output_shape[3], 'Output_width': last_output_shape[1], 'Output_height': last_output_shape[2],'variables': variables, 'Optimized_code':Optimized_code , 'Stream_declaration':Stream_declaration , 'Function_call': HW_functions}
-vgg19_template=vgg19.substitute(vg)
-#vgg19_top
-top={'variables':SW_static_v, 'Output_channel':last_output_shape[3],'Output_width':last_output_shape[1], 'Output_height':last_output_shape[2], 'assign_value':assign_value, 'vgg19_argument':vgg19_argument}
-vgg19top_template=vgg19_top.substitute(top)
-#vgg19_sw
-vg_s={'SW_variables': SW_variables,'Output_variables': Output_variables,'SW_functions':SW_functions}
-vgg19sw_template=vgg19_sw.substitute(vg_s)
-#model
-f = {'Stream_io':stream_template, 'Static_variables': Static_variables, 'VGG19':vgg19_template, 'VGG19_top':vgg19top_template, 'VGG19_sw':vgg19sw_template, 'SW_def_func':SW_def_func, 'HW_def_func':HW_def_func}
+#Template top_func.txt
+tf={'Input_channel':first_input_shape[3] , 'Input_width': first_input_shape[1] , 'Input_height': first_input_shape[2], 'Output_channel': last_output_shape[3], 'Output_width': last_output_shape[1], 'Output_height': last_output_shape[2],'variables': variables, 'Optimized_code':Optimized_code , 'Stream_declaration':Stream_declaration , 'Function_call': HW_functions}
+top_func_template=top_func.substitute(tf)
+#Template top.txt
+top={'variables':SW_static_v, 'Output_channel':last_output_shape[3],'Output_width':last_output_shape[1], 'Output_height':last_output_shape[2], 'assign_value':assign_value, 'top_func_argument':top_func_argument}
+top_template=top.substitute(top)
+#Template sw.txt
+s={'SW_variables': SW_variables,'Output_variables': Output_variables,'SW_functions':SW_functions}
+sw_template=sw.substitute(s)
+#Template Cpp.txt
+f = {'Stream_io':stream_template, 'Static_variables': Static_variables, 'top_func':top_func_template, 'top':top_template, 'sw':sw_template, 'SW_def_func':SW_def_func, 'HW_def_func':HW_def_func}
 c_file = model.substitute(f) + "\n";
-#print (c_file)
 
 file = open('Output/'+model_name+'.cpp','w')
 file.write(c_file)
