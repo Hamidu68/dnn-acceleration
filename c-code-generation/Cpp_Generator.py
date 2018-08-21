@@ -134,9 +134,9 @@ for row in csv_reader:
         lm = {'num': conv_count, 'Name' : row["name"], 'Input_channel' : input_shape[3], 'Output_channel' : output_shape[3],'Filter_width' : filter_shape[0],
              'Filter_height' : filter_shape[1]}
         #SW_static_variables(W,O,B)
-        SW_static_v += "static DATA_T W"+str(line_count)+"["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "];\n";
-        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
-        SW_static_v += "static DATA_T B"+str(line_count) + "[" + output_shape[3] + "];\n";
+        SW_static_v += "static DATA_T W"+str(line_count)+"["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "];\n"
+        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n" 
+        SW_static_v += "static DATA_T B"+str(line_count) + "[" + output_shape[3] + "];\n"
         Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
         #SW_variables to sw.txt
         SW_variables += "DATA_T W"+str(line_count)+"["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "], "
@@ -181,8 +181,8 @@ for row in csv_reader:
              'Input_height' : input_shape[2], 'Output_channel' : output_shape[3],
               'Output_width' : output_shape[1], 'Output_height' : output_shape[2]}
         #SW_static_variables (O)
-        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
-	Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"         
+        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
+        Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"         
 	#function def
         SW_def_func += BatchNormalization.substitute(l) +"\n"
         #Function use
@@ -196,8 +196,8 @@ for row in csv_reader:
              'Input_height' : input_shape[2], 'Output_channel' : output_shape[3],
               'Output_width' : output_shape[1], 'Output_height' : output_shape[2]}
         #SW_static_variables (O)
-        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
-	Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
+        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
+        Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
         #function def
         SW_def_func += Relu.substitute(l) +"\n"
         #Function use
@@ -239,7 +239,7 @@ for row in csv_reader:
             'Stride_height':stride_shape[1], 'Pool_width' : pool_shape[0], 'Pool_height' : pool_shape[1]}
         #SW_static_variables (O)
         SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"; 
-	Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
+        Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
         #function def
         SW_def_func += AveragePooling2D.substitute(l) +"\n"
         #Function use
@@ -290,8 +290,7 @@ for row in csv_reader:
         #Static_variables to Model.txt
         Static_variables += "static DATA_T I_i[" + input_shape[3] + "][" + input_shape[1] + "][" + input_shape[2] + "];\n"
         #variables to top_func.txt
-        variables += "DATA_T I["+input_shape[3]+"]["+input_shape[1]+"]["+input_shape[2]+"],
-"                                                                                                                                     
+        variables += "DATA_T I["+input_shape[3]+"]["+input_shape[1]+"]["+input_shape[2]+"], "                                           
         #top_func_argument to top.txt                                                                                                                                      
         top_func_argument += "I_i, "
         #SW_variables to sw.txt
@@ -302,8 +301,8 @@ for row in csv_reader:
     elif row["layer_type"] == "Flatten":
         l = {'Name':row["name"],'Input_channel':input_shape[3],'Input_width':input_shape[1],'Input_height':input_shape[2],'Output_channel':output_shape[1]}
         #SW_static_variables (O)
-        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n";
-	Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
+        SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
+        Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
         #function def
         SW_def_func += Flatten.substitute(l) + "\n"
         #Function use
@@ -318,7 +317,7 @@ for row in csv_reader:
         SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
         SW_static_v += "static DATA_T W"+str(line_count)+ "_SW[" + output_shape[1] + "][" + input_shape[1] + "];\n"
         SW_static_v += "static DATA_T B"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
-	Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
+        Output_variables += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n"
         #Static_variables to Cpp.txt
         Static_variables += "static DATA_T W"+str(line_count)+"_i["+ output_shape[1] + "][" + input_shape[1] + "];\n";
         Static_variables += "static DATA_T B"+str(line_count) + "_i[" + output_shape[1] + "];\n";
@@ -333,10 +332,10 @@ for row in csv_reader:
             SW_def_func += Dense_relu.substitute(l) + "\n"
         else :  # Activation = softmax
             SW_def_func += Dense_softmax.substitute(l) + "\n"
-	HW_def_func += Dense_softmax.substitute(l) + "\n"
+        HW_def_func += Dense_softmax.substitute(l) + "\n"
         #functipn use
         SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,W"+str(line_count)+"_SW,B"+str(line_count)+"_SW,O"+str(line_count)+"_SW);\n"
-	if line_count<=1 :
+        if line_count<=1 :
             HW_functions += "HW_" + row["name"]+"(I_strm, W"+str(line_count)+", B"+str(line_count)+", O"+str(line_count)+"_strm);\n"
         else :
             HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+str(line_count)+", B"+str(line_count)+", O"+str(line_count)+"_strm);\n"
@@ -384,8 +383,8 @@ stream_template=stream_io.substitute(strm)+"\n"
 tf={'Input_channel':first_input_shape[3] , 'Input_width': first_input_shape[1] , 'Input_height': first_input_shape[2], 'Output_channel': last_output_shape[3], 'Output_width': last_output_shape[1], 'Output_height': last_output_shape[2],'variables': variables, 'Optimized_code':Optimized_code , 'Stream_declaration':Stream_declaration , 'Function_call': HW_functions}
 top_func_template=top_func.substitute(tf)
 #Template top.txt
-top={'variables':SW_static_v, 'Output_channel':last_output_shape[3],'Output_width':last_output_shape[1], 'Output_height':last_output_shape[2], 'assign_value':assign_value, 'top_func_argument':top_func_argument}
-top_template=top.substitute(top)
+to={'variables':SW_static_v, 'Output_channel':last_output_shape[3],'Output_width':last_output_shape[1], 'Output_height':last_output_shape[2], 'assign_value':assign_value, 'top_func_argument':top_func_argument}
+top_template=top.substitute(to)
 #Template sw.txt
 s={'SW_variables': SW_variables,'Output_variables': Output_variables,'SW_functions':SW_functions}
 sw_template=sw.substitute(s)

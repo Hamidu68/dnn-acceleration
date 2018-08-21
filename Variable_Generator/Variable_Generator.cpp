@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	//open csv (layer info)
 	ifstream csv_file;
 	csv_file.open(argv[1]);
-	int random_range = argv[5];
+	int random_range = atoi(argv[5]);
 	int layer_count = 0;
 	////////////////////////////////////////////////////////////////////////////////////////
 	/////////Read the layer file line by line and Generate the necessary variables./////////

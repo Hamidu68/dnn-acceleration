@@ -21,7 +21,7 @@ python3 C_Verifier_Generator.py $1
 #Run Verifier
 python3 Keras_Verifier.py $1 $Variable_dir$Weight_file $Variable_dir$Bias_file $Variable_dir$Input_file
 g++ C_Verifier.cpp -o out
-./out $Weight_file $Bias_file $Input_file
+./out $Variable_dir$Weight_file $Variable_dir$Bias_file $Variable_dir$Input_file
 
 #Compare result
 vimdiff Output/keras_output.txt Output/C_output.txt

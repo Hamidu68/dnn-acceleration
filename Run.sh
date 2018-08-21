@@ -4,7 +4,7 @@
 #1. Result of C code vs keras code
 #2. model_test.cpp , model.cpp
 
-Test_dir="Test_file/Test_no_dense.csv"
+Test_dir="Test_file/Test.csv"
 Model_name="Ex_model"
 Data_type="ap_uint<16>"
 Random_range="20"
