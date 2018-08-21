@@ -12,6 +12,9 @@ from string import Template
 global last_output_row
 global first_input_shape
 
+#sys.argv[1]=Test.csv
+#sys.argv[2]=model name
+#sys.argv[3]=Data type
 
 # Main 1) Define variable
 
@@ -282,11 +285,11 @@ for row in csv_reader:
         SW_static_v += "static DATA_T O0_SW[" + input_shape[3] + "][" + input_shape[1] + "][" + input_shape[2] + "];\n"
         #HW_static_variables (I,O0)
         HW_static_v += "hls::stream<DATA_T> I_strm;\n"
-        #assign_value to vgg_top.txt
+        #assign_value to top.txt
         assign_value += "hls::stream<DATA_T> I_strm;\nI_i_k_loop: for (k=0; k<"+input_shape[3]+"; k++) {\n  I_i_x_loop: for (x=0; x<"+input_shape[1]+"; x++) {\n  I_i_y_loop: for (y=0; y<"+input_shape[2]+"; y++) {\n  I_i[k][x][y] = I[k][x][y];\n//I_strm.write(I[k][x][y]);\n    }\n  }\n}\n"
         #Static_variables to Model.txt
         Static_variables += "static DATA_T I_i[" + input_shape[3] + "][" + input_shape[1] + "][" + input_shape[2] + "];\n"
-        #variables to vgg19.txt
+        #variables to top_func.txt
         variables += "DATA_T I["+input_shape[3]+"]["+input_shape[1]+"]["+input_shape[2]+"],
 "                                                                                                                                     
         #top_func_argument to top.txt                                                                                                                                      
@@ -322,7 +325,7 @@ for row in csv_reader:
 	#variables to top_func.txt
         variables += "DATA_T W"+str(line_count)+"_i["+ output_shape[1] + "][" + input_shape[1] + "], "
         variables += "DATA_T B"+str(line_count) + "_i[" + output_shape[1] + "],";
-        #assign_value to vgg_top.txt
+        #assign_value to top.txt
         assign_value += "B"+str(line_count)+"_i_m_loop: for (m=0; m<"+output_shape[1]+"; m++) {\n"+"\tB"+str(line_count)+"_i[m] = B"+str(line_count)+"[m];\n}\n"       
         assign_value += "W"+str(line_count)+"_i_m_loop: for (m=0; m<"+output_shape[1]+"; m++) {\n  W"+str(line_count)+"_i_k_loop: for (k=0; k<"+input_shape[1]+"; k++) {\n  W"+str(line_count)+"_i[m][k] = W"+str(line_count)+"[m][k];\n  }\n}\n"
 	#function def 
@@ -387,7 +390,7 @@ top_template=top.substitute(top)
 s={'SW_variables': SW_variables,'Output_variables': Output_variables,'SW_functions':SW_functions}
 sw_template=sw.substitute(s)
 #Template Cpp.txt
-f = {'Stream_io':stream_template, 'Static_variables': Static_variables, 'top_func':top_func_template, 'top':top_template, 'sw':sw_template, 'SW_def_func':SW_def_func, 'HW_def_func':HW_def_func}
+f = {'D_type':sys.argv[3], 'Stream_io':stream_template, 'Static_variables': Static_variables, 'top_func':top_func_template, 'top':top_template, 'sw':sw_template, 'SW_def_func':SW_def_func, 'HW_def_func':HW_def_func}
 c_file = model.substitute(f) + "\n";
 
 file = open('Output/'+model_name+'.cpp','w')

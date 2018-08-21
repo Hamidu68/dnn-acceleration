@@ -1,4 +1,4 @@
-void VGG19_top($variables) {
+void top($variables) {
 
   DATA_T O_i[$Output_channel][$Output_width][$Output_height];
 
