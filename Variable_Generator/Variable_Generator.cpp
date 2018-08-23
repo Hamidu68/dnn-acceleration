@@ -1,6 +1,9 @@
 #include<fstream>
 #include<string>
+#include<stdlib.h>
+#include<stdio.h>
 #include<time.h>
+#include<iostream>
 using namespace std;
 
 // argv[1] = Test.csv (layer file) 
@@ -118,18 +121,18 @@ int main(int argc, char *argv[])
 			//variable initialize : Weight
 			//save
 			weight_size = i_c * o_c * f_w * f_h;
-			weight_t += to_string(rand() % random_range + 1);
+			weight_t += to_string((rand() % random_range) + 1);
 			for (int i = 1; i < weight_size; i++) {
-				weight_t += " " + to_string(rand() % random_range + 1);
+				weight_t += " " + to_string((rand() % random_range) + 1);
 			}
 			weight_t += "\n";
 
 			//variable initialize : Bias
 			//save
 			bias_size = o_c;
-			bias_t += to_string(rand() % random_range + 1);
+			bias_t += to_string((rand() % random_range) + 1);
 			for (int i = 1; i < bias_size; i++) {
-				bias_t += " " + to_string(rand() % random_range + 1);
+				bias_t += " " + to_string((rand() % random_range) + 1);
 			}
 			bias_t += "\n";
 
@@ -158,7 +161,7 @@ int main(int argc, char *argv[])
 
 			//variable initialize : Weight
 			weight_size = i_c * o_c;
-			weight_t += to_string(rand() % random_range + 1);
+			weight_t += to_string((rand() % random_range) + 1);
 			for (int i = 1; i < weight_size; i++) {
 				weight_t += " " + to_string(rand() %random_range + 1);
 			}
@@ -166,9 +169,9 @@ int main(int argc, char *argv[])
 
 			//variable initialize : Bias
 			bias_size = o_c;
-			bias_t += to_string(rand() % random_range + 1);
+			bias_t += to_string((rand() % random_range) + 1);
 			for (int i = 1; i < bias_size; i++) {
-				bias_t += " " + to_string(rand() % random_range + 1);
+				bias_t += " " + to_string((rand() % random_range) + 1);
 			}
 			bias_t += "\n";
 		}

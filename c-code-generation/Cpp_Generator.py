@@ -157,7 +157,7 @@ if __name__ == "__main__":
             else :
                 HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+line_num_str+", B"+line_num_str+", O"+line_num_str+"_strm);\n"
             #Optimized code
-            Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=2\n"
+            Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=1\n"
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=3\n"
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=4\n" 
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=B"+line_num_str+"_i complete\n" 
@@ -333,7 +333,7 @@ if __name__ == "__main__":
                 HW_functions += "HW_" + row["name"]+"(I_strm, W"+line_num_str+", B"+line_num_str+", O"+line_num_str+"_strm);\n"
             else :
                 HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+line_num_str+", B"+line_num_str+", O"+line_num_str+"_strm);\n"
-            Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=2\n"
+            Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=1\n"
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=3\n"
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=4\n" 
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=B"+line_num_str+"_i complete\n"
@@ -350,7 +350,7 @@ if __name__ == "__main__":
     # Make C file
 
     top_func_argument += "O_i"
-    a=Output_variables.rfind('D', 0,len(Output_variables))
+    a=Output_variables.rfind('s', 0,len(Output_variables))
     Output_variables=Output_variables[:a]
 
     # Output shape 3D
@@ -383,7 +383,7 @@ if __name__ == "__main__":
 	'Function_call': HW_functions}       
         top_func_template=top_func_dense.substitute(tf)
         #Template top.txt
-        to={'model_name':model_name, 'variables':SW_static_v, 'last_output_channel':output_shape[1],'assign_value':assign_value, 
+        to={'model_name':model_name, 'variables':variables, 'last_output_channel':output_shape[1],'assign_value':assign_value, 
         'top_func_argument':top_func_argument}
         top_template=top_dense.substitute(to)
     

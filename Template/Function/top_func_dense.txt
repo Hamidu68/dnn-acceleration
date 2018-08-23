@@ -1,4 +1,4 @@
-void $model_name(DATA_T I[$Input_channel][$Input_width][$Input_height], $variables DATA_T O[$last_output_channel]) {
+void $model_name($variables) {
 
 $Optimized_code
 

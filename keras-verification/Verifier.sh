@@ -11,16 +11,16 @@ return_dir="../"
 #Generate Variable 
 #Input: layer info / Output : c_verifier.cpp
 cd $Variable_dir
-g++ Variable_Generator.cpp -o out
+g++ -std=c++0x Variable_Generator.cpp -o out
 ./out $1 $Weight_file $Bias_file $Input_file $2
 
 #Generate C_Verifier
 cd ../keras-verification
-python3 C_Verifier_Generator.py $1
+python C_Verifier_Generator.py $1
 
 #Run Verifier
-python3 Keras_Verifier.py $1 $Variable_dir$Weight_file $Variable_dir$Bias_file $Variable_dir$Input_file
-g++ C_Verifier.cpp -o out
+python Keras_Verifier.py $1 $Variable_dir$Weight_file $Variable_dir$Bias_file $Variable_dir$Input_file
+g++ -std=c++0x C_Verifier.cpp -o out
 ./out $Variable_dir$Weight_file $Variable_dir$Bias_file $Variable_dir$Input_file
 
 #Compare result

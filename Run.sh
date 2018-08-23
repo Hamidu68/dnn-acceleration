@@ -14,5 +14,5 @@ cd keras-verification
 ./Verifier.sh $return_dir$Test_dir $Random_range
 
 cd ../c-code-generation
-python3 Test_cpp_Generator.py $return_dir$Test_dir $Model_name $Data_type
-python3 Cpp_Generator.py $return_dir$Test_dir $Model_name $Data_type
+python Test_cpp_Generator.py $return_dir$Test_dir $Model_name $Data_type
+python Cpp_Generator.py $return_dir$Test_dir $Model_name $Data_type
