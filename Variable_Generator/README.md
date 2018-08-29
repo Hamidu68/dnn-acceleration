@@ -7,7 +7,7 @@ It is generated based on layer informaion(csv) using the command below.
   ./out $1 $Weight_file $Bias_file $Input_file $2 
 ```
 
-In input layer,
+In input layer,  
 Input.txt is created.  
 
 In Convolution layer,  
