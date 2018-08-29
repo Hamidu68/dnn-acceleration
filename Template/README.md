@@ -3,7 +3,7 @@
 **Template**  
 ------
   
-Function
+**Function**
     template files for function of each layer  
   
 **Init**  
