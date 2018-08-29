@@ -6,6 +6,8 @@
 ```  
 $return_dir$Test_dir : path to Test.csv file which contains layer information of the model   
 $Random_range : set a numerical range of variables to be initialized (ex. 20 means 1 to 20)  
+  
+  
 2. Layer information : Test.csv  
 3. Generate Variable(Input,Weight,Bias)  
 ```  
