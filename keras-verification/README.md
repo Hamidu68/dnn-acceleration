@@ -23,7 +23,11 @@ python C_Verifier_Generator.py
 ```
 g++ C_Verifier.cpp -o out  
 ./out $path to Weight_file $path to Bias_file $path to Input_file
+```  
 ```
+python Keras_Verifier.py $1 $Variable_dir$Weight_file $Variable_dir$Bias_file $Variable_dir$Input_file  
+```  
+
 6. Compare result : c_output.txt / keras_output.txt  
 
 7. You can see compared result using vimDiff  
