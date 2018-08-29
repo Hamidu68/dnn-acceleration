@@ -21,12 +21,8 @@ Random_range : if the Random_range value is 'Num', each index of the array is in
   1) Run ./verifier.sh  
      
      ```
-     ./verif for example,   
+     ./verifier.sh $return_dir$Test_dir $Random_range  
      
-     ```  
-     python Test_cpp_Generator.py ../Test-file/Test.csv vgg19 ap_uint<16> 
-     python Cpp_Generator.py ../Test-file/Test.csv vgg19 ap_uint<16>
-     ```   ier.sh $return_dir$Test_dir $Random_range  
      ```  
   2) Create 'model_name.cpp' and 'model_name_test.cpp' files  
      ```
