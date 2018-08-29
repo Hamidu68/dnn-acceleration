@@ -11,7 +11,7 @@ Random_range="20"
 return_dir="../"
 
 cd keras-verification
-./Verifier.sh $return_dir$Test_dir $Random_range
+./verifier.sh $return_dir$Test_dir $Random_range
 
 cd ../c-code-generation
 python Test_cpp_Generator.py $return_dir$Test_dir $Model_name $Data_type

@@ -70,7 +70,8 @@ if __name__ == "__main__":
     #####Generate Function depending on layer_type #####
     for row in csv_reader:
         #Count Line number
-        line_count+= 1;
+        line_count+= 1
+        line_str = str(line_count)
         #Get Input, Output shape
         input_shape = row["batch_input_shape"][1 : -1].split(", ")
         output_shape = row["batch_output_shape"][1 : -1].split(", ")
@@ -83,10 +84,10 @@ if __name__ == "__main__":
                  'Input_height' : input_shape[2], 'Output_channel' : output_shape[3],'Filter_width' : filter_shape[0],
                  'Filter_height' : filter_shape[1], 'Output_width' : output_shape[1], 'Output_height' : output_shape[2]}
             #Shared_variables(W,B)
-            Shared_static_v += "static DATA_T W"+str(line_count)+"[" + output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "];\n\t";
-            Shared_static_v += "static DATA_T B"+str(line_count) + "[" + output_shape[3] + "];\n\t";
+            Shared_static_v += "static DATA_T W"+line_str+"[" + output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "];\n\t";
+            Shared_static_v += "static DATA_T B"+line_str + "[" + output_shape[3] + "];\n\t";
             #SW_static_variables(O)
-            SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"; 
+            SW_static_v += "static DATA_T O"+line_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"
             #function def (Padding option)
             if row["padding"] == 'valid' :
                 SW_def_func += Conv2D_valid.substitute(l) +"\n"
@@ -95,8 +96,10 @@ if __name__ == "__main__":
             m = {'Input_channel' : input_shape[3],'Output_channel' : output_shape[3],'Filter_width' : filter_shape[0],'Filter_height' : filter_shape[1],'line_number' : line_count}
             #Initialization
             initialization += Init_conv.substitute(m) + "\n\t"
+            #Report Status
+            SW_functions += "printf(\"[C_verifier.cpp]Calcluate Conv2D"+line_str+"\\n\\n\");\n\t"
             #Function use
-            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW,B" +str(line_count) + ",W"+str(line_count) +");\n\t"     
+            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str +  "_SW,B" +line_str + ",W"+line_str +");\n\t"     
             #print result
             c = {'Name':"Convolution2D",'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape[2],'line_number':line_count}
             print_result += output3d.substitute(c)+"\n"
@@ -108,11 +111,13 @@ if __name__ == "__main__":
                  'Input_height' : input_shape[2], 'Output_channel' : output_shape[3],
                   'Output_width' : output_shape[1], 'Output_height' : output_shape[2]}
             #SW_static_variables (O)
-            SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"; 
+            SW_static_v += "static DATA_T O"+line_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"
             #function def
             SW_def_func += BatchNormalization.substitute(l) +"\n"
+            #Report Status
+            SW_functions += "printf(\"[C_verifier.cpp]Calcluate BatchNormalization"+line_str+"\\n\\n\");\n\t"
             #Function use
-            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW);\n\t"  
+            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str +  "_SW);\n\t"  
             #print result
             c = {'Name':"BatchNormalization",'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape[2],'line_number':line_count}
             print_result += output3d.substitute(c)+"\n"
@@ -123,11 +128,13 @@ if __name__ == "__main__":
                  'Input_height' : input_shape[2], 'Output_channel' : output_shape[3],
                   'Output_width' : output_shape[1], 'Output_height' : output_shape[2]}
             #SW_static_variables (O)
-            SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"; 
+            SW_static_v += "static DATA_T O"+line_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"
             #function def
             SW_def_func += Relu.substitute(l) +"\n"
+            #Report Status
+            SW_functions += "printf(\"[C_verifier.cpp]Calcluate Activation(Relu)"+line_str+"\\n\\n\");\n\t"
             #Function use
-            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW);\n\t" 
+            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str+  "_SW);\n\t" 
             #print result
             c = {'Name':"Activations.Relu",'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape[2],'line_number':line_count}
             print_result += output3d.substitute(c)+"\n"
@@ -141,11 +148,13 @@ if __name__ == "__main__":
                   'Output_width' : output_shape[1], 'Output_height' : output_shape[2], 'Stride_width' : stride_shape[0],
                 'Stride_height':stride_shape[1], 'Pool_width' : pool_shape[0], 'Pool_height' : pool_shape[1]}
             #SW_static_variables (O)
-            SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"; 
+            SW_static_v += "static DATA_T O"+line_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"
             #function def
             SW_def_func += MaxPooling2D.substitute(l) +"\n"
+            #Report Status
+            SW_functions += "printf(\"[C_verifier.cpp]Calcluate MaxPooling2D"+line_str+"\\n\\n\");\n\t"
             #Function use
-            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW);\n\t"   
+            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str+  "_SW);\n\t"   
             #print result
             c = {'Name':"MaxPooling2D",'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape[2],'line_number':line_count}
             print_result += output3d.substitute(c)+"\n"
@@ -159,11 +168,13 @@ if __name__ == "__main__":
                   'Output_width' : output_shape[1], 'Output_height' : output_shape[2], 'Stride_width' : stride_shape[0],
                 'Stride_height':stride_shape[1], 'Pool_width' : pool_shape[0], 'Pool_height' : pool_shape[1]}
             #SW_static_variables (O)
-            SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"; 
+            SW_static_v += "static DATA_T O"+line_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"
             #function def
             SW_def_func += AveragePooling2D.substitute(l) +"\n"
+            #Report Status
+            SW_functions += "printf(\"[C_verifier.cpp]Calcluate AveragePooling2D"+line_str+"\\n\\n\");\n\t"
             #Function use
-            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW);\n\t"  
+            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str +  "_SW);\n\t"  
             #print result
             c = {'Name':"AveragePooling2D",'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape[2],'line_number':line_count}
             print_result += output3d.substitute(c)+"\n"
@@ -175,11 +186,13 @@ if __name__ == "__main__":
                  'Input_height2' : output_shape[2],'Output_channel' : output_shape[3], 'Output_width' : output_shape[1],
                  'Output_height' : output_shape[2]}
             #SW_static_variables (O)
-            SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"; 
+            SW_static_v += "static DATA_T O"+line_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"; 
             #function def
             SW_def_func += Add.substitute(l) +"\n"
+            #Report Status
+            SW_functions += "printf(\"[C_verifier.cpp]Calcluate Add"+line_str+"\\n\\n\");\n\t"
             #Function use
-            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count-11) +  "_SW,O" +str(line_count)+"_SW);\n\t"   
+            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count-11) +  "_SW,O" +line_str+"_SW);\n\t"   
             #print result
             c = {'Name':"Add",'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape[2],'line_number':line_count}
             print_result += output3d.substitute(c)+"\n"
@@ -192,9 +205,11 @@ if __name__ == "__main__":
                  'Input_height' : input_shape[2], 'Output_channel' : output_shape[3],
                   'Output_width' : output_shape[1], 'Output_height' : output_shape[2], 'Padding_size': padding[0]}
             #SW_static_variables (O)
-            SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"; 
+            SW_static_v += "static DATA_T O"+line_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"
             #function def
             SW_def_func += ZeroPadding2D.substitute(l) +"\n"
+            #Report Status
+            SW_functions += "printf(\"[C_verifier.cpp]Calcluate ZeroPadding2D"+line_str+"\\n\\n\");\n\t"
             #Function use
             SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW);\n\t"   
             #print result
@@ -203,6 +218,8 @@ if __name__ == "__main__":
    
         # layer_type = InputLayer
         elif row["layer_type"] =="InputLayer":
+            #Report Status
+            SW_functions += "printf(\"[C_verifier.cpp]InputLayer\\n\\n\");\n\t"
             #SW_static_variables (I,O0)
             Shared_static_v += "static DATA_T I[" + input_shape[3] + "][" + input_shape[1] + "][" + input_shape[2] + "];\n\t";
             SW_static_v += "static DATA_T O0_SW[" + input_shape[3] + "][" + input_shape[1] + "][" + input_shape[2] + "];\n\t";
@@ -217,11 +234,13 @@ if __name__ == "__main__":
         elif row["layer_type"] == "Flatten":
             l = {'Name':row["name"],'Input_channel':input_shape[3],'Input_width':input_shape[1],'Input_height':input_shape[2],'Output_channel':output_shape[1]}
             #SW_static_variables (O)
-            SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n\t";
+            SW_static_v += "static DATA_T O"+line_str+ "_SW[" + output_shape[1] + "];\n\t"
             #function def
             SW_def_func += Flatten.substitute(l) + "\n"
+            #Report Status
+            SW_functions += "printf(\"[C_verifier.py]Calcluate Flatten"+line_str+"\\n\\n\");\n\t"
             #Function use
-            SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,O"+str(line_count)+"_SW);\n\t"
+            SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,O"+line_str+"_SW);\n\t"
             #print result
             c = {'Name':"Flatten",'Output_channel':output_shape[1],'line_number':line_count}
             print_result += output1d.substitute(c)+"\n"
@@ -230,8 +249,8 @@ if __name__ == "__main__":
         elif row["layer_type"] == "Dense":
             l = {'Name':row["name"],'Input_channel':input_shape[1],'Output_channel':output_shape[1]}
             #Shared_static_variable (B,W)
-            Shared_static_v += "static DATA_T B"+str(line_count)+ "[" + output_shape[1] + "];\n\t";
-            Shared_static_v += "static DATA_T W"+str(line_count)+ "[" + output_shape[1] + "][" + input_shape[1] + "];\n\t";
+            Shared_static_v += "static DATA_T B"+line_str+ "[" + output_shape[1] + "];\n\t"
+            Shared_static_v += "static DATA_T W"+line_str+ "[" + output_shape[1] + "][" + input_shape[1] + "];\n\t";
             #function def 
             if row["activation"] == 'relu' : # Activation = relu
                 SW_def_func += Dense_relu.substitute(l) + "\n"
@@ -241,9 +260,11 @@ if __name__ == "__main__":
             #Initialization
             initialization += Init_dense.substitute(m) + "\n\t"
             #SW_static_variable (O)
+            SW_static_v += "static DATA_T O"+line_str+ "_SW[" + output_shape[1] + "];\n\t"
+            #Report Status
+            SW_functions += "printf(\"[C_verifier.cpp]Calcluate Dense"+line_str+"\\n\\n\");\n\t"
             #functipn use
-            SW_static_v += "static DATA_T O"+str(line_count)+ "_SW[" + output_shape[1] + "];\n\t";
-            SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,W"+str(line_count)+",B"+str(line_count)+",O"+str(line_count)+"_SW);\n\t"  
+            SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,W"+line_str+",B"+line_str+",O"+line_str+"_SW);\n\t"  
             #print result
             c = {'Name':"Dense",'Output_channel':output_shape[1],'line_number':line_count}
             print_result += output1d.substitute(c)+"\n"

@@ -2,6 +2,7 @@
 #include<iostream>
 #include <stdlib.h>
 #include<string>
+#include<string.h>
 #include<math.h>
 using namespace std;
 
@@ -14,7 +15,9 @@ int main(int argc, char *argv[]){
  
   DATA_T temp;
   int m, x, y, i, j, k, l;
-  
+  char * w_line, * b_line, *i_line;
+  size_t b_len, w_len, i_len;
+  char *i_v, * w_v, *b_v;
   $Shared_static_variables
  
   $SW_static_variables 
@@ -27,13 +30,12 @@ int main(int argc, char *argv[]){
   if (i_stream == NULL) printf("i_stream file was not opened");
   FILE *o_stream = fopen("Output/C_output.txt", "w");
   if (o_stream == NULL) printf("Output file was not opened");
-  
-  $Initialization
  
-  $SW_functions
-  
-  string show_result;
-  
+  printf("[C_verifier.cpp]Start Initialzation\n\n");
+  $Initialization
+  printf("[C_verifier.cpp]Finish Initialization\n\n");
+  $SW_functions  string show_result;
+  printf("[C_verifier.cpp]Print Result\n");
   $result
   
   fprintf(o_stream,"%s",show_result.c_str());

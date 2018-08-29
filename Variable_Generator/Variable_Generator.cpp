@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
 	getline(csv_file, line); //first line (Ignore label)
 	while (getline(csv_file, line)){ //other lines
-		printf("layer : %d\n", ++layer_count);
+		printf("Generate layer variables : %d\n", ++layer_count);
 		size_t pos = 0;
 		pos = line.find(',');
 		line = line.substr(pos + 1); //Delete name
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 		}
 		else if (layer_type == "Conv2D")
 		{
-			//Read line
+                 	//Read line
 			pos = line.find(')');
 			batch_input_shape = line.substr(0, pos); //Set batch_Input_shape
 			line = line.substr(pos + 5);
@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
 
 		else if (layer_type == "Dense")
 		{
-			//Read line
+                        //Read line
 			pos = line.find(')');
 			batch_input_shape = line.substr(0, pos);
 			line = line.substr(pos + 5);

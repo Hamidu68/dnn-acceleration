@@ -1,9 +1,12 @@
+i_line = NULL;
+i_len = 0;
+getline(&i_line, &i_len, i_stream);
 for (k = 0; k <  $Input_channel ; k++) {
 	for (x = 0; x < $Input_width ; x++) {
 		for(y = 0; y < $Input_height ; y++) {
-			fscanf(i_stream, "%d", &temp);
-			I[k][x][y] = temp;
-			O0_SW[k][x][y] = temp;
+			i_v = strtok_r(i_line, " ", &i_line);
+                        I[k][x][y] = atoi(i_v);
+			O0_SW[k][x][y] = atoi(i_v);
 		}
 	}
 }
