@@ -19,7 +19,6 @@ if __name__ == "__main__":
     HW_functions = ""
     SW_static_v = ""
     HW_static_v = ""
-    initialization=""
     Static_variables="" #Argument to Cpp.txt
     top_func_argument="" #Argument to top.txt
     Output_variables="" #Argument to sw.txt
@@ -92,16 +91,8 @@ if __name__ == "__main__":
     top_dense = Template(t_dense.read())
     
     sw = Template(sw.read())
-    
-    i_conv=open("../Template/Init/Conv_var_Initializer_int.txt")
-    i_dense=open("../Template/Init/Dense_var_Initializer_int.txt")
-    i_input=open("../Template/Init/Input_var_Initializer_int.txt")
-
-    Init_conv=Template(i_conv.read())
-    Init_dense=Template(i_dense.read())
-    Init_input=Template(i_input.read())
-	
-     # Main 3) Read Layer Information from CSV
+   
+    # Main 3) Read Layer Information from CSV
 
     csv_file = open(sys.argv[1])
     csv_reader = csv.DictReader(csv_file)
@@ -172,10 +163,7 @@ if __name__ == "__main__":
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=B"+line_num_str+"_i complete\n" 
             #Stream declaration
             variable_name="O"+line_num_str+"_strm"                                                                  
-            Stream_declaration += "hls::stream<DATA_T> "+variable_name+"(\""+variable_name+"\");\n"
-            mm={'Input_channel':input_shape[3],'Output_channel':output_shape[3],'Filter_width':filter_shape[0],'Filter_height':filter_shape[1],'line_number':line_count'}
-	    #Initialization
-            initialization += Init_conv.substitute(mm)+"\n\t"		
+            Stream_declaration += "hls::stream<DATA_T> "+variable_name+"(\""+variable_name+"\");\n"		
         # layer_type = BatchNormalization(I, O) 
         elif row["layer_type"] == 'BatchNormalization' :
             l = {'Name' : row["name"], 'Input_channel' : input_shape[3], 'Input_width' : input_shape[1],
@@ -301,10 +289,7 @@ if __name__ == "__main__":
             #SW_variables to sw.txt
             SW_variables += "DATA_T I["+input_shape[3]+"]["+input_shape[1]+"]["+input_shape[2]+"],"                                                                                                                                     
         	#Stream declaration
-            Stream_declaration += "hls::stream<DATA_T> I_strm(\"I_strm\");\n"
-            mm={'Input_channel':input_shape[3],'Input_width':input_shape[1],'Input_height':input_shape[2]}
-            #Initialization
-            initialization += Init_input.substitute(mm) + "\n\t"	
+            Stream_declaration += "hls::stream<DATA_T> I_strm(\"I_strm\");\n"           	
         # layer_type = Flatten(I,O)
         elif row["layer_type"] == "Flatten":
             l = {'Name':row["name"],'Input_channel':input_shape[3],'Input_width':input_shape[1],'Input_height':input_shape[2],'Output_channel':output_shape[1]}
@@ -358,10 +343,7 @@ if __name__ == "__main__":
             Stream_declaration += "hls::stream<DATA_T> "+variable_name+"(\""+variable_name+"\");\n" 
 	    #SW_variables to sw.txt
             SW_variables += "DATA_T W"+line_num_str+"["+ output_shape[1] + "][" + input_shape[1] + "], "
-            SW_variables += "DATA_T B"+line_num_str + "[" + output_shape[1] + "],";   
-            mm={'Input_channel':input_shape[1],'Output_channel':output_shape[1],'line_number':line_count}
-            #Initialization
-            initialization+=Init_dense.substitute(m) + "\n\t"		
+            SW_variables += "DATA_T B"+line_num_str + "[" + output_shape[1] + "],";               	
 
     # Make C file
 
