@@ -130,8 +130,8 @@ if __name__ == "__main__":
             SW_variables += "DATA_T W"+line_num_str+"["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "], "
             SW_variables += "DATA_T B"+line_num_str + "[" + output_shape[3] + "],";
             #variables to top_func.txt
-            variables += "DATA_T W"+line_num_str+"_i["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "], "
-            variables += "DATA_T B"+line_num_str + "_i[" + output_shape[3] + "],";
+            variables += "DATA_T W"+line_num_str+"["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "], "
+            variables += "DATA_T B"+line_num_str + "[" + output_shape[3] + "],";
             #HW_static_variables
             HW_static_v += "hls::stream<DATA_T> O"+line_num_str+"_strm;\n"
             #Static_variables to Cpp.txt
@@ -149,10 +149,11 @@ if __name__ == "__main__":
                 SW_def_func += Conv2D_same.substitute(l) +"\n"
                 HW_def_func += Conv2D_same_hw.substitute(lm) +"\n"
             #Function use
-            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_num_str +  "_SW,B" +line_num_str + ",W"+line_num_str +");\n"     
             if line_count<=1 :
                 HW_functions += "HW_" + row["name"]+"(I_strm, W"+line_num_str+"_i, B"+line_num_str+"_i, O"+line_num_str+"_strm);\n"
+                SW_functions += "SW_" + row["name"]+ "(I,O"+line_num_str +  "_SW,B" +line_num_str + ",W"+line_num_str +");\n"
             else :
+                SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_num_str +  "_SW,B" +line_num_str + ",W"+line_num_str +");\n"
                 HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+line_num_str+"_i, B"+line_num_str+"_i, O"+line_num_str+"_strm);\n"
             #Optimized code
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=1\n"
@@ -313,8 +314,8 @@ if __name__ == "__main__":
             Static_variables += "static DATA_T W"+line_num_str+"_i["+ output_shape[1] + "][" + input_shape[1] + "];\n";
             Static_variables += "static DATA_T B"+line_num_str + "_i[" + output_shape[1] + "];\n";
 	    #variables to top_func.txt
-            variables += "DATA_T W"+line_num_str+"_i["+ output_shape[1] + "][" + input_shape[1] + "], "
-            variables += "DATA_T B"+line_num_str + "_i[" + output_shape[1] + "],";
+            variables += "DATA_T W"+line_num_str+"["+ output_shape[1] + "][" + input_shape[1] + "], "
+            variables += "DATA_T B"+line_num_str + "[" + output_shape[1] + "],";
             #assign_value to top.txt
             assign_value += "B"+line_num_str+"_i_m_loop: for (m=0; m<"+output_shape[1]+"; m++) {\n"+"\tB"+line_num_str+"_i[m] = B"+line_num_str+"[m];\n}\n"       
             assign_value += "W"+line_num_str+"_i_m_loop: for (m=0; m<"+output_shape[1]+"; m++) {\n  W"+line_num_str+"_i_k_loop: for (k=0; k<"+input_shape[1]+"; k++) {\n  W"+line_num_str+"_i[m][k] = W"+line_num_str+"[m][k];\n  }\n}\n"
@@ -359,7 +360,7 @@ if __name__ == "__main__":
         stream_template=stream_io.substitute(strm)+"\n"	
 	#Template top_func.txt
         tf={'model_name':model_name,'variables': variables,
-        'Optimized_code':Optimized_code ,'Stream_declaration':Stream_declaration , 'Function_call': HW_functions}
+        'Optimized_code':Optimized_code ,'Stream_declaration':Stream_declaration , 'Function_call': HW_functions, 'line_num':line_num_str}
         top_func_template=top_func.substitute(tf)
         #Template top.txt
         to={'model_name':model_name, 'variables':variables, 'Output_channel':output_shape[3],'Output_width':output_shape[1], 
@@ -375,7 +376,7 @@ if __name__ == "__main__":
         stream_template=stream_io_dense.substitute(strm)+"\n"
         #Template top_func.txt
         tf={'model_name':model_name,'variables': variables, 'Optimized_code':Optimized_code ,'Stream_declaration':Stream_declaration , 
-	'Function_call': HW_functions}       
+	'Function_call': HW_functions, 'line_num':line_num_str}       
         top_func_template=top_func.substitute(tf)
         #Template top.txt
         to={'model_name':model_name, 'variables':variables, 'last_output_channel':output_shape[1],'assign_value':assign_value, 

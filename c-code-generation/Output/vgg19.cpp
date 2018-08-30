@@ -8,7 +8,7 @@ typedef ap_uint<256> uint256_t;
 typedef ap_uint<512> uint512_t;
 
 void Stream_input(DATA_T I[3][224][224], hls::stream<DATA_T> &I_strm) {
-  int m, x, y;
+  int k, x, y;
 
 #pragma HLS ARRAY_PARTITION variable=I complete dim=1
 	Stream_input_x_loop: for (x=0; x<224; x++) {
@@ -47,149 +47,6 @@ static DATA_T B4_i[128];
 static DATA_T W5_i[128][128][3][3];
 static DATA_T B5_i[128];
 
-
-void vgg19(DATA_T I[3][224][224], DATA_T W1_i[64][3][3][3], DATA_T B1_i[64],DATA_T W2_i[64][64][3][3], DATA_T B2_i[64],DATA_T W4_i[128][64][3][3], DATA_T B4_i[128],DATA_T W5_i[128][128][3][3], DATA_T B5_i[128],DATA_T O[128][56][56]) {
-
-#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=1
-#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=3
-#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=4
-#pragma HLS ARRAY_PARTITION variable=B1_i complete
-#pragma HLS ARRAY_PARTITION variable=W2_i complete dim=1
-#pragma HLS ARRAY_PARTITION variable=W2_i complete dim=3
-#pragma HLS ARRAY_PARTITION variable=W2_i complete dim=4
-#pragma HLS ARRAY_PARTITION variable=B2_i complete
-#pragma HLS ARRAY_PARTITION variable=W4_i complete dim=1
-#pragma HLS ARRAY_PARTITION variable=W4_i complete dim=3
-#pragma HLS ARRAY_PARTITION variable=W4_i complete dim=4
-#pragma HLS ARRAY_PARTITION variable=B4_i complete
-#pragma HLS ARRAY_PARTITION variable=W5_i complete dim=1
-#pragma HLS ARRAY_PARTITION variable=W5_i complete dim=3
-#pragma HLS ARRAY_PARTITION variable=W5_i complete dim=4
-#pragma HLS ARRAY_PARTITION variable=B5_i complete
-
-
-#pragma HLS DATAFLOW
-  hls::stream<uint256_t> O1_packed_strm("O1_packed_strm");
-  
-  hls::stream<DATA_T> I_strm("I_strm");
-hls::stream<DATA_T> O1_strm("O1_strm");
-hls::stream<DATA_T> O2_strm("O2_strm");
-hls::stream<DATA_T> O3_strm("O3_strm");
-hls::stream<DATA_T> O4_strm("O4_strm");
-hls::stream<DATA_T> O5_strm("O5_strm");
-hls::stream<DATA_T> O6_strm("O6_strm");
-
-  
-  Stream_input(I, I_strm);
-  HW_block1_conv1(I_strm, W1_i, B1_i, O1_strm);
-HW_block1_conv2(O1_strm, W2_i, B2_i, O2_strm);
-HW_block1_pool(O2_strm, O3_strm);
-HW_block2_conv1(O3_strm, W4_i, B4_i, O4_strm);
-HW_block2_conv2(O4_strm, W5_i, B5_i, O5_strm);
-HW_block2_pool(O5_strm, O6_strm);
-
-  Stream_output(O_strm, O);
-
-}
-
-void top(DATA_T I[3][224][224], DATA_T W1_i[64][3][3][3], DATA_T B1_i[64],DATA_T W2_i[64][64][3][3], DATA_T B2_i[64],DATA_T W4_i[128][64][3][3], DATA_T B4_i[128],DATA_T W5_i[128][128][3][3], DATA_T B5_i[128],DATA_T O[128][56][56]) {
-
-  DATA_T O_i[128][56][56];
-
-
-  int m, x, y, i, j, k;
-
-  hls::stream<DATA_T> I_strm;
-I_i_k_loop: for (k=0; k<3; k++) {
-  I_i_x_loop: for (x=0; x<224; x++) {
-  I_i_y_loop: for (y=0; y<224; y++) {
-  I_i[k][x][y] = I[k][x][y];
-//I_strm.write(I[k][x][y]);
-    }
-  }
-}
-B1_i_m_loop: for (m=0; m<64; m++) {
-	B1_i[m] = B1[m];
-}
-W1_i_m_loop: for (m=0; m<64; m++) {
-  W1_i_k_loop: for (k=0; k<3; k++) {
-  W1_i_i_loop: for (i=0; i<3; i++) {
-  W1_i_j_loop: for (j=0; j<3; j++) {
-  W1_i[m][k][i][j] = W1[m][k][i][j];
-      }
-    }
-  }
-}
-B2_i_m_loop: for (m=0; m<64; m++) {
-	B2_i[m] = B2[m];
-}
-W2_i_m_loop: for (m=0; m<64; m++) {
-  W2_i_k_loop: for (k=0; k<64; k++) {
-  W2_i_i_loop: for (i=0; i<3; i++) {
-  W2_i_j_loop: for (j=0; j<3; j++) {
-  W2_i[m][k][i][j] = W2[m][k][i][j];
-      }
-    }
-  }
-}
-B4_i_m_loop: for (m=0; m<128; m++) {
-	B4_i[m] = B4[m];
-}
-W4_i_m_loop: for (m=0; m<128; m++) {
-  W4_i_k_loop: for (k=0; k<64; k++) {
-  W4_i_i_loop: for (i=0; i<3; i++) {
-  W4_i_j_loop: for (j=0; j<3; j++) {
-  W4_i[m][k][i][j] = W4[m][k][i][j];
-      }
-    }
-  }
-}
-B5_i_m_loop: for (m=0; m<128; m++) {
-	B5_i[m] = B5[m];
-}
-W5_i_m_loop: for (m=0; m<128; m++) {
-  W5_i_k_loop: for (k=0; k<128; k++) {
-  W5_i_i_loop: for (i=0; i<3; i++) {
-  W5_i_j_loop: for (j=0; j<3; j++) {
-  W5_i[m][k][i][j] = W5[m][k][i][j];
-      }
-    }
-  }
-}
-
-  
-  vgg19(I_i, W1_i, B1_i, W2_i, B2_i, W4_i, B4_i, W5_i, B5_i, O_i);
-
-  for (m=0; m<128; m++) {
-    for (x=0; x<56; x++) {
-      for (y=0; y<56; y++) {
-          O[m][x][y] = O_i[m][x][y];
-      }
-    }
-  }
-
-}
-
-void VGG19_sw(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128],DATA_T O6_SW[128][56][56]) {
-
-  static DATA_T O1_SW[64][224][224];
-static DATA_T O2_SW[64][224][224];
-static DATA_T O3_SW[64][112][112];
-static DATA_T O4_SW[128][112][112];
-static DATA_T O5_SW[128][112][112];
-
-
-  int m, x, y, i, j, k;
-
-  SW_block1_conv1(O0_SW,O1_SW,B1,W1);
-SW_block1_conv2(O1_SW,O2_SW,B2,W2);
-SW_block1_pool(O2_SW,O3_SW);
-SW_block2_conv1(O3_SW,O4_SW,B4,W4);
-SW_block2_conv2(O4_SW,O5_SW,B5,W5);
-SW_block2_pool(O5_SW,O6_SW);
-
-
-}
 
 void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][224][224], DATA_T B[64], DATA_T W[64][3][3][3]) {
 	int m, x, y, i, j, k;
@@ -917,4 +774,147 @@ void HW_block2_pool(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {
 
 }
 
+
+void vgg19(DATA_T I[3][224][224], DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128],DATA_T O[128][56][56]) {
+
+#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B1_i complete
+#pragma HLS ARRAY_PARTITION variable=W2_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W2_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W2_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B2_i complete
+#pragma HLS ARRAY_PARTITION variable=W4_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W4_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W4_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B4_i complete
+#pragma HLS ARRAY_PARTITION variable=W5_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W5_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W5_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B5_i complete
+
+
+#pragma HLS DATAFLOW
+  hls::stream<uint256_t> O1_packed_strm("O1_packed_strm");
+  
+  hls::stream<DATA_T> I_strm("I_strm");
+hls::stream<DATA_T> O1_strm("O1_strm");
+hls::stream<DATA_T> O2_strm("O2_strm");
+hls::stream<DATA_T> O3_strm("O3_strm");
+hls::stream<DATA_T> O4_strm("O4_strm");
+hls::stream<DATA_T> O5_strm("O5_strm");
+hls::stream<DATA_T> O6_strm("O6_strm");
+
+  
+  Stream_input(I, I_strm);
+  HW_block1_conv1(I_strm, W1_i, B1_i, O1_strm);
+HW_block1_conv2(O1_strm, W2_i, B2_i, O2_strm);
+HW_block1_pool(O2_strm, O3_strm);
+HW_block2_conv1(O3_strm, W4_i, B4_i, O4_strm);
+HW_block2_conv2(O4_strm, W5_i, B5_i, O5_strm);
+HW_block2_pool(O5_strm, O6_strm);
+
+  Stream_output(O6_strm, O);
+
+}
+
+void top(DATA_T I[3][224][224], DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128],DATA_T O[128][56][56]) {
+
+  DATA_T O_i[128][56][56];
+
+
+  int m, x, y, i, j, k;
+
+  hls::stream<DATA_T> I_strm;
+I_i_k_loop: for (k=0; k<3; k++) {
+  I_i_x_loop: for (x=0; x<224; x++) {
+  I_i_y_loop: for (y=0; y<224; y++) {
+  I_i[k][x][y] = I[k][x][y];
+//I_strm.write(I[k][x][y]);
+    }
+  }
+}
+B1_i_m_loop: for (m=0; m<64; m++) {
+	B1_i[m] = B1[m];
+}
+W1_i_m_loop: for (m=0; m<64; m++) {
+  W1_i_k_loop: for (k=0; k<3; k++) {
+  W1_i_i_loop: for (i=0; i<3; i++) {
+  W1_i_j_loop: for (j=0; j<3; j++) {
+  W1_i[m][k][i][j] = W1[m][k][i][j];
+      }
+    }
+  }
+}
+B2_i_m_loop: for (m=0; m<64; m++) {
+	B2_i[m] = B2[m];
+}
+W2_i_m_loop: for (m=0; m<64; m++) {
+  W2_i_k_loop: for (k=0; k<64; k++) {
+  W2_i_i_loop: for (i=0; i<3; i++) {
+  W2_i_j_loop: for (j=0; j<3; j++) {
+  W2_i[m][k][i][j] = W2[m][k][i][j];
+      }
+    }
+  }
+}
+B4_i_m_loop: for (m=0; m<128; m++) {
+	B4_i[m] = B4[m];
+}
+W4_i_m_loop: for (m=0; m<128; m++) {
+  W4_i_k_loop: for (k=0; k<64; k++) {
+  W4_i_i_loop: for (i=0; i<3; i++) {
+  W4_i_j_loop: for (j=0; j<3; j++) {
+  W4_i[m][k][i][j] = W4[m][k][i][j];
+      }
+    }
+  }
+}
+B5_i_m_loop: for (m=0; m<128; m++) {
+	B5_i[m] = B5[m];
+}
+W5_i_m_loop: for (m=0; m<128; m++) {
+  W5_i_k_loop: for (k=0; k<128; k++) {
+  W5_i_i_loop: for (i=0; i<3; i++) {
+  W5_i_j_loop: for (j=0; j<3; j++) {
+  W5_i[m][k][i][j] = W5[m][k][i][j];
+      }
+    }
+  }
+}
+
+  
+  vgg19(I_i, W1_i, B1_i, W2_i, B2_i, W4_i, B4_i, W5_i, B5_i, O_i);
+
+  for (m=0; m<128; m++) {
+    for (x=0; x<56; x++) {
+      for (y=0; y<56; y++) {
+          O[m][x][y] = O_i[m][x][y];
+      }
+    }
+  }
+
+}
+
+void VGG19_sw(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128],DATA_T O6_SW[128][56][56]) {
+
+  static DATA_T O1_SW[64][224][224];
+static DATA_T O2_SW[64][224][224];
+static DATA_T O3_SW[64][112][112];
+static DATA_T O4_SW[128][112][112];
+static DATA_T O5_SW[128][112][112];
+
+
+  int m, x, y, i, j, k;
+
+  SW_block1_conv1(I,O1_SW,B1,W1);
+SW_block1_conv2(O1_SW,O2_SW,B2,W2);
+SW_block1_pool(O2_SW,O3_SW);
+SW_block2_conv1(O3_SW,O4_SW,B4,W4);
+SW_block2_conv2(O4_SW,O5_SW,B5,W5);
+SW_block2_pool(O5_SW,O6_SW);
+
+
+}
 
