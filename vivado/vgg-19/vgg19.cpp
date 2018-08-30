@@ -48,7 +48,7 @@ static DATA_T W5_i[128][128][3][3];
 static DATA_T B5_i[128];
 
 
-void VGG19(DATA_T I[3][224][224], DATA_T W1_i[64][3][3][3], DATA_T B1_i[64],DATA_T W2_i[64][64][3][3], DATA_T B2_i[64],DATA_T W4_i[128][64][3][3], DATA_T B4_i[128],DATA_T W5_i[128][128][3][3], DATA_T B5_i[128],DATA_T O[128][56][56]) {
+void vgg19(DATA_T I[3][224][224], DATA_T W1_i[64][3][3][3], DATA_T B1_i[64],DATA_T W2_i[64][64][3][3], DATA_T B2_i[64],DATA_T W4_i[128][64][3][3], DATA_T B4_i[128],DATA_T W5_i[128][128][3][3], DATA_T B5_i[128],DATA_T O[128][56][56]) {
 
 #pragma HLS ARRAY_PARTITION variable=W1_i complete dim=1
 #pragma HLS ARRAY_PARTITION variable=W1_i complete dim=3
@@ -81,34 +81,18 @@ hls::stream<DATA_T> O6_strm("O6_strm");
 
   
   Stream_input(I, I_strm);
-  HW_block1_conv1(I_strm, W1, B1, O1_strm);
-HW_block1_conv2(O1_strm, W2, B2, O2_strm);
+  HW_block1_conv1(I_strm, W1_i, B1_i, O1_strm);
+HW_block1_conv2(O1_strm, W2_i, B2_i, O2_strm);
 HW_block1_pool(O2_strm, O3_strm);
-HW_block2_conv1(O3_strm, W4, B4, O4_strm);
-HW_block2_conv2(O4_strm, W5, B5, O5_strm);
+HW_block2_conv1(O3_strm, W4_i, B4_i, O4_strm);
+HW_block2_conv2(O4_strm, W5_i, B5_i, O5_strm);
 HW_block2_pool(O5_strm, O6_strm);
 
   Stream_output(O_strm, O);
 
 }
 
-void top(static DATA_T I[3][224][224];
-static DATA_T O0_SW[3][224][224];
-static DATA_T W1[64][3][3][3];
-static DATA_T O1_SW[64][224][224];
-static DATA_T B1[64];
-static DATA_T W2[64][64][3][3];
-static DATA_T O2_SW[64][224][224];
-static DATA_T B2[64];
-static DATA_T O3_SW[64][112][112];
-static DATA_T W4[128][64][3][3];
-static DATA_T O4_SW[128][112][112];
-static DATA_T B4[128];
-static DATA_T W5[128][128][3][3];
-static DATA_T O5_SW[128][112][112];
-static DATA_T B5[128];
-static DATA_T O6_SW[128][56][56];
-) {
+void top(DATA_T I[3][224][224], DATA_T W1_i[64][3][3][3], DATA_T B1_i[64],DATA_T W2_i[64][64][3][3], DATA_T B2_i[64],DATA_T W4_i[128][64][3][3], DATA_T B4_i[128],DATA_T W5_i[128][128][3][3], DATA_T B5_i[128],DATA_T O[128][56][56]) {
 
   DATA_T O_i[128][56][56];
 
@@ -174,7 +158,7 @@ W5_i_m_loop: for (m=0; m<128; m++) {
 }
 
   
-  VGG19(I_i, W1_i, B1_i, W2_i, B2_i, W4_i, B4_i, W5_i, B5_i, O_i);
+  vgg19(I_i, W1_i, B1_i, W2_i, B2_i, W4_i, B4_i, W5_i, B5_i, O_i);
 
   for (m=0; m<128; m++) {
     for (x=0; x<56; x++) {

@@ -3,26 +3,29 @@
 #include "hls_stream.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 using namespace std;
 
 typedef $D_type DATA_T;
 
 $def_model
 
-// argv[1] = init_weight.txt , argv[2] = init_bias.txt , argv[3] = init_input.txt
-int main(int argc, char *argv[]){
+int main(){
  
   int m, x, y, i, j, k;
   DATA_T temp;
-  
+  size_t i_len,b_len,w_len;
+  char *i_line,*b_line,*w_line;
+  char * i_v,*b_v,*w_v;
   $static_variables
   
-  FILE *w_stream = fopen(argv[1], "r");
+  FILE *w_stream = fopen("init_weight.txt", "r");
   if (w_stream == NULL) printf("weight file was not opened");
-  FILE *b_stream = fopen(argv[2], "r");
+  FILE *b_stream = fopen("init_bias", "r");
   if (b_stream == NULL) printf("bias file was not opened");
-  FILE *i_stream = fopen(argv[3], "r");
-  if (i_stream == NULL) printf("i_stream file was not opened");
+  FILE *i_stream = fopen("init_input.txt", "r");
+  if (i_stream == NULL) printf("input file was not opened");
   
   $Initialization
  

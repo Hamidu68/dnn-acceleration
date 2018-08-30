@@ -3,20 +3,23 @@
 #include "hls_stream.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 using namespace std;
 
 typedef ap_uint<16> DATA_T;
 
-void VGG19_top(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128], DATA_T O[128][112][112]);
-void VGG19_sw(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128], DATA_T O[128][112][112]);
+void vgg19_top(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128], DATA_T O[128][112][112]);
+void vgg19_sw(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128], DATA_T O[128][112][112]);
 
 
-// argv[1] = init_weight.txt , argv[2] = init_bias.txt , argv[3] = init_input.txt
-int main(int argc, char *argv[]){
+int main(){
  
   int m, x, y, i, j, k;
   DATA_T temp;
-  
+  size_t i_len,b_len,w_len;
+  char *i_line,*b_line,*w_line;
+  char * i_v,*b_v,*w_v;
   static DATA_T I[3][224][224];
 	static DATA_T O0_SW[3][224][224];
 	static DATA_T W1[64][3][3][3];
@@ -31,12 +34,12 @@ int main(int argc, char *argv[]){
 	static DATA_T O_HW[128][112][112];
 	
   
-  FILE *w_stream = fopen(argv[1], "r");
+  FILE *w_stream = fopen("init_weight.txt", "r");
   if (w_stream == NULL) printf("weight file was not opened");
-  FILE *b_stream = fopen(argv[2], "r");
+  FILE *b_stream = fopen("init_bias", "r");
   if (b_stream == NULL) printf("bias file was not opened");
-  FILE *i_stream = fopen(argv[3], "r");
-  if (i_stream == NULL) printf("i_stream file was not opened");
+  FILE *i_stream = fopen("init_input.txt", "r");
+  if (i_stream == NULL) printf("input file was not opened");
   
   i_line = NULL;
 i_len = 0;
@@ -121,8 +124,8 @@ for (m = 0; m <  128 ; m++) {
 
 	
  
-  VGG19_top(I,W1,B1,W2,B2,W4,B4,W5,B5,O_HW);
-  VGG19_sw(I,W1,B1,W2,B2,W4,B4,W5,B5,O_SW);
+  vgg19_top(I,W1,B1,W2,B2,W4,B4,W5,B5,O_HW);
+  vgg19_sw(I,W1,B1,W2,B2,W4,B4,W5,B5,O_SW);
 
    int err_cnt = 0;
    for (m=0; m<128; m++) {
