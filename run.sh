@@ -5,7 +5,7 @@
 #2. model_test.cpp , model.cpp
 
 Test_dir="Test_file/vgg19_test.csv"
-Model_name="VGG19"
+Model_name="vgg19"
 Data_type="ap_uint<16>"
 Random_range="20"
 return_dir="../"
