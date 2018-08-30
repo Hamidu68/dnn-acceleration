@@ -11,9 +11,9 @@ $Stream_io
 
 $Static_variables
 
+$SW_def_func
+$HW_def_func
+
 $top_func
 $top
 $sw
-
-$SW_def_func
-$HW_def_func

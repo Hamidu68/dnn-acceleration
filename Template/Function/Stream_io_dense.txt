@@ -1,5 +1,5 @@
 void Stream_input(DATA_T I[$Input_channel][$Input_width][$Input_height], hls::stream<DATA_T> &I_strm) {
-  int m, x, y;
+  int k, x, y;
 
 #pragma HLS ARRAY_PARTITION variable=I complete dim=1
 	Stream_input_x_loop: for (x=0; x<$Input_width; x++) {

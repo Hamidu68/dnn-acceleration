@@ -9,6 +9,6 @@ $Optimized_code
   
   Stream_input(I, I_strm);
   $Function_call
-  Stream_output(O_strm, O);
+  Stream_output(O${line_num}_strm, O);
 
 }
