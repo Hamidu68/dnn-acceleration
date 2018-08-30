@@ -56,7 +56,6 @@ if __name__ == "__main__":
     st_d=open("../Template/Function/Stream_io_dense.txt")
     t_func=open("../Template/Function/top_func.txt")
     t=open("../Template/Function/top.txt")
-    t_func_dense=open("../Template/Function/top_func_dense.txt")
     t_dense=open("../Template/Function/top_dense.txt")
     
     sw=open("../Template/Function/sw.txt")
@@ -87,7 +86,6 @@ if __name__ == "__main__":
     stream_io_dense = Template(st_d.read())
     top_func = Template(t_func.read())
     top = Template(t.read())
-    top_func_dense = Template(t_func_dense.read())
     top_dense = Template(t_dense.read())
     
     sw = Template(sw.read())
@@ -360,7 +358,7 @@ if __name__ == "__main__":
 	'Output_width':output_shape[1], 'Output_height':output_shape[2]}
         stream_template=stream_io.substitute(strm)+"\n"	
 	#Template top_func.txt
-        tf={'model_name':model_name,'Input_channel':first_input_shape[3] , 'Input_width': first_input_shape[1] , 'Input_height': first_input_shape[2], 'Output_channel': output_shape[3], 'Output_width': output_shape[1], 'Output_height': output_shape[2],'variables': variables,
+        tf={'model_name':model_name,'variables': variables,
         'Optimized_code':Optimized_code ,'Stream_declaration':Stream_declaration , 'Function_call': HW_functions}
         top_func_template=top_func.substitute(tf)
         #Template top.txt
@@ -376,10 +374,9 @@ if __name__ == "__main__":
         strm={'Input_channel':first_input_shape[3], 'Input_width': first_input_shape[1], 'Input_height': first_input_shape[2], 'last_output_channel': output_shape[1]}
         stream_template=stream_io_dense.substitute(strm)+"\n"
         #Template top_func.txt
-        tf={'model_name':model_name,'Input_channel':first_input_shape[3] , 'Input_width': first_input_shape[1] , 'Input_height': first_input_shape[2],
-        'last_output_channel': output_shape[1], 'variables': variables, 'Optimized_code':Optimized_code ,'Stream_declaration':Stream_declaration , 
+        tf={'model_name':model_name,'variables': variables, 'Optimized_code':Optimized_code ,'Stream_declaration':Stream_declaration , 
 	'Function_call': HW_functions}       
-        top_func_template=top_func_dense.substitute(tf)
+        top_func_template=top_func.substitute(tf)
         #Template top.txt
         to={'model_name':model_name, 'variables':variables, 'last_output_channel':output_shape[1],'assign_value':assign_value, 
         'top_func_argument':top_func_argument}
