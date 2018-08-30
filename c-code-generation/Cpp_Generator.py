@@ -151,9 +151,9 @@ if __name__ == "__main__":
             #Function use
             SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_num_str +  "_SW,B" +line_num_str + ",W"+line_num_str +");\n"     
             if line_count<=1 :
-                HW_functions += "HW_" + row["name"]+"(I_strm, W"+line_num_str+", B"+line_num_str+", O"+line_num_str+"_strm);\n"
+                HW_functions += "HW_" + row["name"]+"(I_strm, W"+line_num_str+"_i, B"+line_num_str+"_i, O"+line_num_str+"_strm);\n"
             else :
-                HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+line_num_str+", B"+line_num_str+", O"+line_num_str+"_strm);\n"
+                HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+line_num_str+"_i, B"+line_num_str+"_i, O"+line_num_str+"_strm);\n"
             #Optimized code
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=1\n"
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=3\n"
@@ -327,9 +327,9 @@ if __name__ == "__main__":
             #functipn use
             SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,W"+line_num_str+"_SW,B"+line_num_str+"_SW,O"+line_num_str+"_SW);\n"
             if line_count<=1 :
-                HW_functions += "HW_" + row["name"]+"(I_strm, W"+line_num_str+", B"+line_num_str+", O"+line_num_str+"_strm);\n"
+                HW_functions += "HW_" + row["name"]+"(I_strm, W"+line_num_str+"_i, B"+line_num_str+"_i, O"+line_num_str+"_strm);\n"
             else :
-                HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+line_num_str+", B"+line_num_str+", O"+line_num_str+"_strm);\n"
+                HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+line_num_str+"_i, B"+line_num_str+"_i, O"+line_num_str+"_strm);\n"
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=1\n"
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=3\n"
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_i complete dim=4\n" 

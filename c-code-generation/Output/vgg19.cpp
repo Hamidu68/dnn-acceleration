@@ -81,11 +81,11 @@ hls::stream<DATA_T> O6_strm("O6_strm");
 
   
   Stream_input(I, I_strm);
-  HW_block1_conv1(I_strm, W1, B1, O1_strm);
-HW_block1_conv2(O1_strm, W2, B2, O2_strm);
+  HW_block1_conv1(I_strm, W1_i, B1_i, O1_strm);
+HW_block1_conv2(O1_strm, W2_i, B2_i, O2_strm);
 HW_block1_pool(O2_strm, O3_strm);
-HW_block2_conv1(O3_strm, W4, B4, O4_strm);
-HW_block2_conv2(O4_strm, W5, B5, O5_strm);
+HW_block2_conv1(O3_strm, W4_i, B4_i, O4_strm);
+HW_block2_conv2(O4_strm, W5_i, B5_i, O5_strm);
 HW_block2_pool(O5_strm, O6_strm);
 
   Stream_output(O_strm, O);
