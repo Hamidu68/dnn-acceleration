@@ -366,7 +366,7 @@ if __name__ == "__main__":
         'Optimized_code':Optimized_code ,'Stream_declaration':Stream_declaration , 'Function_call': HW_functions}
         top_func_template=top_func.substitute(tf)
         #Template top.txt
-        to={'model_name':model_name, 'variables':SW_static_v, 'Output_channel':output_shape[3],'Output_width':output_shape[1], 
+        to={'model_name':model_name, 'variables':variables, 'Output_channel':output_shape[3],'Output_width':output_shape[1], 
         'Output_height':output_shape [2], 'assign_value':assign_value, 'top_func_argument':top_func_argument}
         top_template=top.substitute(to)
     
