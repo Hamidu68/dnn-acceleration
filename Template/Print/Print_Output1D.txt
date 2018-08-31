@@ -1,5 +1,7 @@
-show_result= show_result + "$Name" + " : [[";
+fprintf(o_stream,"%s","$Name : [[");
 for (k = 0; k <  $Output_channel ; k++) {
-	show_result = show_result + " " + to_string((int)(O${line_number}_SW[k]));
+
+	fprintf(o_stream,"%2d ",int(O${line_number}_SW[k]));
 }
-show_result += "]]\n\n";
+fprintf(o_stream,"%s","]]\n\n");
+

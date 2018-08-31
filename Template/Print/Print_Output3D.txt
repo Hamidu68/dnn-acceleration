@@ -1,16 +1,18 @@
-show_result= show_result + "$Name" + " : [[";
+fprintf(o_stream,"%s","$Name : [[");
 for (k = 0; k <  $Output_channel ; k++) {
-	show_result += "[";
+	fprintf(o_stream,"%s","[");
 	for (x = 0; x < $Output_width ; x++) {
-		show_result += "[";
+		fprintf(o_stream,"%s","[");
 		for(y = 0; y < $Output_height ; y++) {
-			show_result = show_result +" "+to_string((int)(O${line_number}_SW[k][x][y]));
+			fprintf(o_stream,"%2d ",int(O${line_number}_SW[k][x][y]));
 		}
-		show_result += "]";
 		if(x != $Output_width -1 )
-			show_result += "\n   ";
+			fprintf(o_stream,"%s","]\n   ");
+		else
+			fprintf(o_stream,"%s","]");
 	}
 	if(k != $Output_channel -1 )
-		show_result += "]\n\n  ";
+		fprintf(o_stream,"%s","]\n\n  ");
 }
-show_result += "]]]\n\n";
+fprintf(o_stream,"%s","]]]\n\n");
+

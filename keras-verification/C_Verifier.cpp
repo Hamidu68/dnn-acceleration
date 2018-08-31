@@ -292,130 +292,142 @@ for (m = 0; m <  128 ; m++) {
 	SW_block2_conv2(O4_SW,O5_SW,B5,W5);
 	printf("[C_verifier.cpp]Calcluate MaxPooling2D6\n\n");
 	SW_block2_pool(O5_SW,O6_SW);
-	  string show_result;
+	
   printf("[C_verifier.cpp]Print Result\n");
-  show_result= show_result + "InputLayer" + " : [[";
+  fprintf(o_stream,"%s","InputLayer : [[");
 for (k = 0; k <  3 ; k++) {
-	show_result += "[";
+	fprintf(o_stream,"%s","[");
 	for (x = 0; x < 224 ; x++) {
-		show_result += "[";
+		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 224 ; y++) {
-			show_result = show_result +" "+to_string((int)(O0_SW[k][x][y]));
+			fprintf(o_stream,"%2d ",int(O0_SW[k][x][y]));
 		}
-		show_result += "]";
 		if(x != 224 -1 )
-			show_result += "\n   ";
+			fprintf(o_stream,"%s","]\n   ");
+		else
+			fprintf(o_stream,"%s","]");
 	}
 	if(k != 3 -1 )
-		show_result += "]\n\n  ";
+		fprintf(o_stream,"%s","]\n\n  ");
 }
-show_result += "]]]\n\n";
+fprintf(o_stream,"%s","]]]\n\n");
 
-show_result= show_result + "Convolution2D" + " : [[";
+
+fprintf(o_stream,"%s","Convolution2D : [[");
 for (k = 0; k <  64 ; k++) {
-	show_result += "[";
+	fprintf(o_stream,"%s","[");
 	for (x = 0; x < 224 ; x++) {
-		show_result += "[";
+		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 224 ; y++) {
-			show_result = show_result +" "+to_string((int)(O1_SW[k][x][y]));
+			fprintf(o_stream,"%2d ",int(O1_SW[k][x][y]));
 		}
-		show_result += "]";
 		if(x != 224 -1 )
-			show_result += "\n   ";
+			fprintf(o_stream,"%s","]\n   ");
+		else
+			fprintf(o_stream,"%s","]");
 	}
 	if(k != 64 -1 )
-		show_result += "]\n\n  ";
+		fprintf(o_stream,"%s","]\n\n  ");
 }
-show_result += "]]]\n\n";
+fprintf(o_stream,"%s","]]]\n\n");
 
-show_result= show_result + "Convolution2D" + " : [[";
+
+fprintf(o_stream,"%s","Convolution2D : [[");
 for (k = 0; k <  64 ; k++) {
-	show_result += "[";
+	fprintf(o_stream,"%s","[");
 	for (x = 0; x < 224 ; x++) {
-		show_result += "[";
+		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 224 ; y++) {
-			show_result = show_result +" "+to_string((int)(O2_SW[k][x][y]));
+			fprintf(o_stream,"%2d ",int(O2_SW[k][x][y]));
 		}
-		show_result += "]";
 		if(x != 224 -1 )
-			show_result += "\n   ";
+			fprintf(o_stream,"%s","]\n   ");
+		else
+			fprintf(o_stream,"%s","]");
 	}
 	if(k != 64 -1 )
-		show_result += "]\n\n  ";
+		fprintf(o_stream,"%s","]\n\n  ");
 }
-show_result += "]]]\n\n";
+fprintf(o_stream,"%s","]]]\n\n");
 
-show_result= show_result + "MaxPooling2D" + " : [[";
+
+fprintf(o_stream,"%s","MaxPooling2D : [[");
 for (k = 0; k <  64 ; k++) {
-	show_result += "[";
+	fprintf(o_stream,"%s","[");
 	for (x = 0; x < 112 ; x++) {
-		show_result += "[";
+		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 112 ; y++) {
-			show_result = show_result +" "+to_string((int)(O3_SW[k][x][y]));
+			fprintf(o_stream,"%2d ",int(O3_SW[k][x][y]));
 		}
-		show_result += "]";
 		if(x != 112 -1 )
-			show_result += "\n   ";
+			fprintf(o_stream,"%s","]\n   ");
+		else
+			fprintf(o_stream,"%s","]");
 	}
 	if(k != 64 -1 )
-		show_result += "]\n\n  ";
+		fprintf(o_stream,"%s","]\n\n  ");
 }
-show_result += "]]]\n\n";
+fprintf(o_stream,"%s","]]]\n\n");
 
-show_result= show_result + "Convolution2D" + " : [[";
+
+fprintf(o_stream,"%s","Convolution2D : [[");
 for (k = 0; k <  128 ; k++) {
-	show_result += "[";
+	fprintf(o_stream,"%s","[");
 	for (x = 0; x < 112 ; x++) {
-		show_result += "[";
+		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 112 ; y++) {
-			show_result = show_result +" "+to_string((int)(O4_SW[k][x][y]));
+			fprintf(o_stream,"%2d ",int(O4_SW[k][x][y]));
 		}
-		show_result += "]";
 		if(x != 112 -1 )
-			show_result += "\n   ";
+			fprintf(o_stream,"%s","]\n   ");
+		else
+			fprintf(o_stream,"%s","]");
 	}
 	if(k != 128 -1 )
-		show_result += "]\n\n  ";
+		fprintf(o_stream,"%s","]\n\n  ");
 }
-show_result += "]]]\n\n";
+fprintf(o_stream,"%s","]]]\n\n");
 
-show_result= show_result + "Convolution2D" + " : [[";
+
+fprintf(o_stream,"%s","Convolution2D : [[");
 for (k = 0; k <  128 ; k++) {
-	show_result += "[";
+	fprintf(o_stream,"%s","[");
 	for (x = 0; x < 112 ; x++) {
-		show_result += "[";
+		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 112 ; y++) {
-			show_result = show_result +" "+to_string((int)(O5_SW[k][x][y]));
+			fprintf(o_stream,"%2d ",int(O5_SW[k][x][y]));
 		}
-		show_result += "]";
 		if(x != 112 -1 )
-			show_result += "\n   ";
+			fprintf(o_stream,"%s","]\n   ");
+		else
+			fprintf(o_stream,"%s","]");
 	}
 	if(k != 128 -1 )
-		show_result += "]\n\n  ";
+		fprintf(o_stream,"%s","]\n\n  ");
 }
-show_result += "]]]\n\n";
+fprintf(o_stream,"%s","]]]\n\n");
 
-show_result= show_result + "MaxPooling2D" + " : [[";
+
+fprintf(o_stream,"%s","MaxPooling2D : [[");
 for (k = 0; k <  128 ; k++) {
-	show_result += "[";
+	fprintf(o_stream,"%s","[");
 	for (x = 0; x < 56 ; x++) {
-		show_result += "[";
+		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 56 ; y++) {
-			show_result = show_result +" "+to_string((int)(O6_SW[k][x][y]));
+			fprintf(o_stream,"%2d ",int(O6_SW[k][x][y]));
 		}
-		show_result += "]";
 		if(x != 56 -1 )
-			show_result += "\n   ";
+			fprintf(o_stream,"%s","]\n   ");
+		else
+			fprintf(o_stream,"%s","]");
 	}
 	if(k != 128 -1 )
-		show_result += "]\n\n  ";
+		fprintf(o_stream,"%s","]\n\n  ");
 }
-show_result += "]]]\n\n";
+fprintf(o_stream,"%s","]]]\n\n");
 
 
-  
-  fprintf(o_stream,"%s",show_result.c_str());
+
   
   fclose(w_stream);
   fclose(b_stream);

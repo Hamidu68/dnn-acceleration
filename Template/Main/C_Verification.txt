@@ -34,11 +34,9 @@ int main(int argc, char *argv[]){
   printf("[C_verifier.cpp]Start Initialzation\n\n");
   $Initialization
   printf("[C_verifier.cpp]Finish Initialization\n\n");
-  $SW_functions  string show_result;
+  $SW_functions
   printf("[C_verifier.cpp]Print Result\n");
   $result
-  
-  fprintf(o_stream,"%s",show_result.c_str());
   
   fclose(w_stream);
   fclose(b_stream);
