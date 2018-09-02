@@ -12,6 +12,8 @@ import numpy as np
 import csv
 import sys
 
+np.set_printoptions(threshold=np.inf)
+
 csv_file=open(sys.argv[1])
 csv_reader=csv.DictReader(csv_file)
 
