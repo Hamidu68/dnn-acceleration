@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
         if layer =='Conv2D' :
             #Report Status
-            print("[Keras_verifier.py]Calcluate Conv2D"+line_str+"\n")
+            print("[Keras_verifier.py]Calculate Conv2D"+line_str+"\n")
             filter_shape = np.asarray(row["kernel_size"][1:-1].split(", ")).astype(np.int)
             strides_shape= np.asarray(row["strides"][1:-1].split(", ")).astype(np.int)
             # Weight setting
@@ -62,7 +62,7 @@ if __name__ == "__main__":
             
         elif layer == 'MaxPooling2D' : 
             #Report Status
-            print("[Keras_verifier.py]Calcluate MaxPooling2D"+line_str+"\n")
+            print("[Keras_verifier.py]Calculate MaxPooling2D"+line_str+"\n")
             #Set strides, kernalsize 
             strides_shape= np.asarray(row["strides"][1:-1].split(", ")).astype(np.int)
             pool_shape = np.asarray(row["pool_size"][1:-1].split(", ")).astype(np.int)
@@ -83,21 +83,21 @@ if __name__ == "__main__":
 
         elif layer == 'BatchNormalization' :
             #Report Status
-            print("[Keras_verifier.py]Calcluate BatchNormalization"+line_str+"\n")
+            print("[Keras_verifier.py]Calculate BatchNormalization"+line_str+"\n")
             #Set BatchNormalization
             model.add(BatchNormalization(axis=1,name=row["name"]))
             layer_name.append("BatchNormalization : ") 
 
         elif layer == 'Activation' :
             #Report Status
-            print("[Keras_verifier.py]Calcluate Activation(Relu)"+line_str+"\n")
+            print("[Keras_verifier.py]Calculate Activation(Relu)"+line_str+"\n")
             #Set activations.relu
             model.add(Activation('relu'))
             layer_name.append("Activation.Relu : ")
             
         elif layer == 'AveragePooling2D' :
             #Report Status
-            print("[Keras_verifier.py]Calcluate AveragePooling2D"+line_str+"\n")
+            print("[Keras_verifier.py]Calculate AveragePooling2D"+line_str+"\n")
             #Set strides, kernalsize 
             strides_shape= np.asarray(row["strides"][1:-1].split(", ")).astype(np.int)
             pool_shape = np.asarray(row["pool_size"][1:-1].split(", ")).astype(np.int)
@@ -108,7 +108,7 @@ if __name__ == "__main__":
         #elif layer == 'Add' :
         elif layer =='ZeroPadding2D' :
             #Report Status
-            print("[Keras_verifier.py]Calcluate ZeroPadding2D"+line_str+"\n")
+            print("[Keras_verifier.py]Calculate ZeroPadding2D"+line_str+"\n")
             #Set padding 
             padding1 = row["padding"][1:-1].split(", (")
             padding = padding1[0][1:-1].split(", ")
@@ -118,14 +118,14 @@ if __name__ == "__main__":
             
         elif layer == 'Flatten' :
             #Report Status
-            print("[Keras_verifier.py]Calcluate Flatten"+line_str+"\n")
+            print("[Keras_verifier.py]Calculate Flatten"+line_str+"\n")
             #Set Flatten
             model.add(Flatten(data_format='channels_first'))
             layer_name.append("Flatten : ")
             
         elif layer == 'Dense' :
             #Report Status
-            print("[Keras_verifier.py]Calcluate Dense"+line_str+"\n")
+            print("[Keras_verifier.py]Calculate Dense"+line_str+"\n")
             # Weight setting
             filters = np.empty([(int)(output_shape[1]),(int)(input_shape[1])], dtype=np.int32)
             for m in range((int)(output_shape[1])):

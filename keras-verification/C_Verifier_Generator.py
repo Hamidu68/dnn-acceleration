@@ -97,7 +97,7 @@ if __name__ == "__main__":
             #Initialization
             initialization += Init_conv.substitute(m) + "\n\t"
             #Report Status
-            SW_functions += "printf(\"[C_verifier.cpp]Calcluate Conv2D"+line_str+"\\n\\n\");\n\t"
+            SW_functions += "printf(\"[C_verifier.cpp]Calculate Conv2D"+line_str+"\\n\\n\");\n\t"
             #Function use
             SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str +  "_SW,B" +line_str + ",W"+line_str +");\n\t"     
             #print result
@@ -115,7 +115,7 @@ if __name__ == "__main__":
             #function def
             SW_def_func += BatchNormalization.substitute(l) +"\n"
             #Report Status
-            SW_functions += "printf(\"[C_verifier.cpp]Calcluate BatchNormalization"+line_str+"\\n\\n\");\n\t"
+            SW_functions += "printf(\"[C_verifier.cpp]Calculate BatchNormalization"+line_str+"\\n\\n\");\n\t"
             #Function use
             SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str +  "_SW);\n\t"  
             #print result
@@ -132,7 +132,7 @@ if __name__ == "__main__":
             #function def
             SW_def_func += Relu.substitute(l) +"\n"
             #Report Status
-            SW_functions += "printf(\"[C_verifier.cpp]Calcluate Activation(Relu)"+line_str+"\\n\\n\");\n\t"
+            SW_functions += "printf(\"[C_verifier.cpp]Calculate Activation(Relu)"+line_str+"\\n\\n\");\n\t"
             #Function use
             SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str+  "_SW);\n\t" 
             #print result
@@ -152,7 +152,7 @@ if __name__ == "__main__":
             #function def
             SW_def_func += MaxPooling2D.substitute(l) +"\n"
             #Report Status
-            SW_functions += "printf(\"[C_verifier.cpp]Calcluate MaxPooling2D"+line_str+"\\n\\n\");\n\t"
+            SW_functions += "printf(\"[C_verifier.cpp]Calculate MaxPooling2D"+line_str+"\\n\\n\");\n\t"
             #Function use
             SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str+  "_SW);\n\t"   
             #print result
@@ -172,7 +172,7 @@ if __name__ == "__main__":
             #function def
             SW_def_func += AveragePooling2D.substitute(l) +"\n"
             #Report Status
-            SW_functions += "printf(\"[C_verifier.cpp]Calcluate AveragePooling2D"+line_str+"\\n\\n\");\n\t"
+            SW_functions += "printf(\"[C_verifier.cpp]Calculate AveragePooling2D"+line_str+"\\n\\n\");\n\t"
             #Function use
             SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str +  "_SW);\n\t"  
             #print result
@@ -190,7 +190,7 @@ if __name__ == "__main__":
             #function def
             SW_def_func += Add.substitute(l) +"\n"
             #Report Status
-            SW_functions += "printf(\"[C_verifier.cpp]Calcluate Add"+line_str+"\\n\\n\");\n\t"
+            SW_functions += "printf(\"[C_verifier.cpp]Calculate Add"+line_str+"\\n\\n\");\n\t"
             #Function use
             SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count-11) +  "_SW,O" +line_str+"_SW);\n\t"   
             #print result
@@ -209,7 +209,7 @@ if __name__ == "__main__":
             #function def
             SW_def_func += ZeroPadding2D.substitute(l) +"\n"
             #Report Status
-            SW_functions += "printf(\"[C_verifier.cpp]Calcluate ZeroPadding2D"+line_str+"\\n\\n\");\n\t"
+            SW_functions += "printf(\"[C_verifier.cpp]Calculate ZeroPadding2D"+line_str+"\\n\\n\");\n\t"
             #Function use
             SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW);\n\t"   
             #print result
@@ -238,7 +238,7 @@ if __name__ == "__main__":
             #function def
             SW_def_func += Flatten.substitute(l) + "\n"
             #Report Status
-            SW_functions += "printf(\"[C_verifier.py]Calcluate Flatten"+line_str+"\\n\\n\");\n\t"
+            SW_functions += "printf(\"[C_verifier.py]Calculate Flatten"+line_str+"\\n\\n\");\n\t"
             #Function use
             SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,O"+line_str+"_SW);\n\t"
             #print result
@@ -262,7 +262,7 @@ if __name__ == "__main__":
             #SW_static_variable (O)
             SW_static_v += "static DATA_T O"+line_str+ "_SW[" + output_shape[1] + "];\n\t"
             #Report Status
-            SW_functions += "printf(\"[C_verifier.cpp]Calcluate Dense"+line_str+"\\n\\n\");\n\t"
+            SW_functions += "printf(\"[C_verifier.cpp]Calculate Dense"+line_str+"\\n\\n\");\n\t"
             #functipn use
             SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,W"+line_str+",B"+line_str+",O"+line_str+"_SW);\n\t"  
             #print result
