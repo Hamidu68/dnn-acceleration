@@ -1,8 +1,8 @@
 #test_dir="Test-file/Test.csv"
 
-Input_file="init_Input.txt"
-Weight_file="init_Weight.txt"
-Bias_file="init_Bias.txt"
+Input_file="init_Input.bin"
+Weight_file="init_Weight.bin"
+Bias_file="init_Bias.bin"
 
 Variable_dir="../Variable_Generator/"
 Result_dir="vimdiff.txt"

@@ -12,12 +12,11 @@ typedef $D_type DATA_T;
 $def_model
 
 int main(){
- 
+
+  DATA_T temp; 
   int m, x, y, i, j, k;
-  DATA_T temp;
-  size_t i_len,b_len,w_len;
-  char *i_line,*b_line,*w_line;
-  char * i_v,*b_v,*w_v;
+  int trash;
+  
   $static_variables
   
   FILE *w_stream = fopen("init_weight.txt", "r");

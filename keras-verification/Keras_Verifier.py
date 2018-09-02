@@ -15,9 +15,9 @@ import sys
 csv_file=open(sys.argv[1])
 csv_reader=csv.DictReader(csv_file)
 
-weight_read=open(sys.argv[2],'r')
-bias_read=open(sys.argv[3],'r')
-input_read=open(sys.argv[4],'r')
+weight_read=open(sys.argv[2],'rb')
+bias_read=open(sys.argv[3],'rb')
+input_read=open(sys.argv[4],'rb')
 
 global input_value
 
@@ -45,15 +45,17 @@ if __name__ == "__main__":
             filter_shape = np.asarray(row["kernel_size"][1:-1].split(", ")).astype(np.int)
             strides_shape= np.asarray(row["strides"][1:-1].split(", ")).astype(np.int)
             # Weight setting
-            line = weight_read.readline()
-            line = line.split(' ')
-            weight=np.asarray(line).astype(np.int)
-            filters=np.reshape(weight,((int)(output_shape[3]),(int)(input_shape[3]),filter_shape[0],filter_shape[1])) 
+            filters = np.empty([(int)(output_shape[3]),(int)(input_shape[3]),filter_shape[0],filter_shape[1]], dtype=np.int32)
+            for m in range( (int)(output_shape[3]) ):
+                for k in range( (int)(input_shape[3]) ):
+                    for i in range(filter_shape[0]):
+                        for j in range(filter_shape[1]):
+                            filters[m][k][i][j] = np.fromfile(file=weight_read, dtype=np.int32, count=1, sep='')
             filters = np.transpose(filters,(2,3,1,0))
             # Bias setting
-            line = bias_read.readline()
-            line = line.split(' ')
-            bias=np.asarray(line).astype(np.int)
+            bias = np.empty([(int)(output_shape[3])], dtype=np.int32)
+            for m in range((int)(output_shape[3])):
+                bias[m] = np.fromfile(file=bias_read, dtype=np.int32, count=1, sep='')
             #Set Convolution2D
             model.add(Conv2D(filters = (int)(output_shape[3]),kernel_size=filter_shape,strides=strides_shape,padding= row["padding"],weights=[filters,bias],activation=row["activation"],data_format='channels_first'))
             layer_name.append("Convolution2D : ")
@@ -72,10 +74,11 @@ if __name__ == "__main__":
             #Report Status
             print("[Keras_verifier.py]InputLayer\n")
             #Set layer_value as input value
-            line = input_read.readline()
-            line = line.split(' ')
-            input_value=np.asarray(line).astype(np.int) 
-            input_value=np.reshape(input_value,(1,(int)(input_shape[3]),(int)(input_shape[1]),(int)(input_shape[2])))
+            input_value = np.empty([1,(int)(input_shape[3]),(int)(input_shape[1]),(int)(input_shape[2])], dtype=np.int32)
+            for k in range((int)(input_shape[3])):
+                for i in range((int)(input_shape[1])):
+                    for j in range((int)(input_shape[2])):
+                        input_value[0][k][i][j] = np.fromfile(file=input_read, dtype=np.int32, count=1, sep='')
             layer_name.append("InputLayer : ")
 
         elif layer == 'BatchNormalization' :
@@ -124,15 +127,15 @@ if __name__ == "__main__":
             #Report Status
             print("[Keras_verifier.py]Calcluate Dense"+line_str+"\n")
             # Weight setting
-            line = weight_read.readline()
-            line = line.split(' ')
-            weight=np.asarray(line).astype(np.int)
-            filters=np.reshape(weight,((int)(output_shape[1]),(int)(input_shape[1])))
+            filters = np.empty([(int)(output_shape[1]),(int)(input_shape[1])], dtype=np.int32)
+            for m in range((int)(output_shape[1])):
+                for k in range((int)(input_shape[1])):
+                    filters[m][k] = np.fromfile(file=weight_read, dtype=np.int32, count=1, sep='')
             filters = np.transpose(filters,(1,0))
             # Bias setting
-            line = bias_read.readline()
-            line = line.split(' ')
-            bias=np.asarray(line).astype(np.int)
+            bias = np.empty([(int)(output_shape[1])], dtype=np.int32)
+            for m in range((int)(output_shape[1])):
+                bias[m] = np.fromfile(file=bias_read, dtype=np.int32, count=1, sep='')
             #Set Dense
             model.add(Dense(units=int(row["units"]),activation=row["activation"],weights = [filters,bias]))
             layer_name.append("Dense : ")

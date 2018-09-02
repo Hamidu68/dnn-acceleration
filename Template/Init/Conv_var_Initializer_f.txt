@@ -1,16 +1,12 @@
-w_line = b_line = NULL;
-w_len = b_len = 0;
-getline(&w_line, &w_len, w_stream);
-getline(&b_line, &b_len, b_stream);
 for (m = 0; m <  $Output_channel ; m++) {
 	for (k = 0; k < $Input_channel ; k++) {
 		for (i = 0; i < $Filter_width ; i++) {
 			for (j = 0; j < $Filter_height ; j++) {
-                                w_v = strtok_r(w_line," ",&w_line);
-				W${line_number}[m][k][i][j] = atof(w_v);       
+				fread(&trash, sizeof(int), 1, w_stream);
+                                W${line_number}[m][k][i][j] = (float) trash;       
 			}
 		}
 	}
-	b_v = strtok_r(b_line," ",&b_line);
-        B${line_number}[m] = atof(b_v);            
+	fread(&trash, sizeof(int), 1, b_stream);
+        B${line_number}[m] = (float) trash;            
 }

@@ -7,9 +7,9 @@
 using namespace std;
 
 // argv[1] = Test.csv (layer file) 
-// argv[2] = Init_weight.txt (Output-weight file)
-// argv[3] = Init_Bias.txt (Output-weight file)
-// argv[4] = Init_Input.txt (Output-weight file)
+// argv[2] = Init_weight.bin (Output-weight file)
+// argv[3] = Init_Bias.bin (Output-weight file)
+// argv[4] = Init_Input.bin (Output-weight file)
 // argv[5] = 20 (Variable Random Range)
 int main(int argc, char *argv[])
 {
@@ -26,10 +26,6 @@ int main(int argc, char *argv[])
 	int o_c;            // output_channel
 	int f_w, f_h;       // filter_width, filter_height
 	int input_size, weight_size, bias_size;  //Size of varibles that have to be initialized
-	string bias_t, weight_t, input_t;        //Gather initialzied values to string
-	bias_t = "";
-	weight_t = "";
-	input_t = "";
 
 	//open csv (layer info)
 	ifstream csv_file;
@@ -40,6 +36,11 @@ int main(int argc, char *argv[])
 	/////////Read the layer file line by line and Generate the necessary variables./////////
 	////////////////////////////////////////////////////////////////////////////////////////
 
+	//Open files
+	FILE *input_f = fopen(argv[4], "wb");
+	FILE *weight_f = fopen(argv[2], "wb");
+	FILE *bias_f = fopen(argv[3], "wb");
+	
 	getline(csv_file, line); //first line (Ignore label)
 	while (getline(csv_file, line)){ //other lines
 		printf("Generate layer variables : %d\n", ++layer_count);
@@ -74,15 +75,15 @@ int main(int argc, char *argv[])
 			//variable initialize = Input
 			input_size = i_c * i_w * i_h; // Input size
 			//save
-			input_t += to_string(rand() % random_range  + 1);
-			for (int i = 1; i < input_size; i++) {
-				input_t += " " +to_string(rand() % random_range + 1);
+			int trash;
+			for (int i = 0; i < input_size; i++) {
+				trash = (rand() % random_range) + 1;
+				fwrite(&trash, sizeof(int), 1, input_f);
 			}
-			input_t += "\n";
 		}
 		else if (layer_type == "Conv2D")
 		{
-                 	//Read line
+            //Read line
 			pos = line.find(')');
 			batch_input_shape = line.substr(0, pos); //Set batch_Input_shape
 			line = line.substr(pos + 5);
@@ -95,7 +96,7 @@ int main(int argc, char *argv[])
 			pos = line.find(')');
 			kernel_size = line.substr(0, pos); //Set kernel_size
 			
-		   //batch_Input_shape  ("batch, width, height, channel")
+			//batch_Input_shape  ("batch, width, height, channel")
 
 			//Divide Input value
 			temp = batch_input_shape;
@@ -121,21 +122,21 @@ int main(int argc, char *argv[])
 			//variable initialize : Weight
 			//save
 			weight_size = i_c * o_c * f_w * f_h;
-			weight_t += to_string((rand() % random_range) + 1);
-			for (int i = 1; i < weight_size; i++) {
-				weight_t += " " + to_string((rand() % random_range) + 1);
+			int trash;
+			for (int i = 0; i < weight_size; i++) {
+				trash = (rand() % random_range) + 1;
+				fwrite(&trash, sizeof(int), 1, weight_f);
 			}
-			weight_t += "\n";
-
+			
 			//variable initialize : Bias
 			//save
 			bias_size = o_c;
-			bias_t += to_string((rand() % random_range) + 1);
-			for (int i = 1; i < bias_size; i++) {
-				bias_t += " " + to_string((rand() % random_range) + 1);
+			
+			for (int i = 0; i < bias_size; i++) {
+				trash = (rand() % random_range) + 1;
+				fwrite(&trash, sizeof(int), 1, bias_f);
 			}
-			bias_t += "\n";
-
+			
 		}
 
 		else if (layer_type == "Dense")
@@ -161,45 +162,30 @@ int main(int argc, char *argv[])
 
 			//variable initialize : Weight
 			weight_size = i_c * o_c;
-			weight_t += to_string((rand() % random_range) + 1);
-			for (int i = 1; i < weight_size; i++) {
-				weight_t += " " + to_string(rand() %random_range + 1);
+			int trash;
+			for (int i = 0; i < weight_size; i++) {
+				trash = (rand() % random_range) + 1;
+				fwrite(&trash, sizeof(int), 1, weight_f);
 			}
-			weight_t += "\n";
-
+			
 			//variable initialize : Bias
 			bias_size = o_c;
-			bias_t += to_string((rand() % random_range) + 1);
-			for (int i = 1; i < bias_size; i++) {
-				bias_t += " " + to_string((rand() % random_range) + 1);
+			
+			for (int i = 0; i < bias_size; i++) {
+				trash = (rand() % random_range) + 1;
+				fwrite(&trash, sizeof(int), 1, bias_f);
 			}
-			bias_t += "\n";
+			
 		}
 		else // Nothing
 		{
 		}
 	}
 
-	///////////////////////////////////////////////////
-	//////////////// Write file ///////////////////////
-	///////////////////////////////////////////////////
-
-	ofstream Weight, Bias, Input;
-
-	//Open output(weight,bias,input) txt file
-	Weight.open(argv[2]);
-	Bias.open(argv[3]);
-	Input.open(argv[4]);
-
-	//Write
-	Input << input_t;
-	Bias << bias_t;
-	Weight << weight_t;
-
 	//Close
-	Weight.close();
-	Bias.close();
-	Input.close();
+	fclose(input_f);
+	fclose(weight_f);
+	fclose(bias_f);
 
 	return 0;
 }
