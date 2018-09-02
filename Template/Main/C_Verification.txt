@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
   FILE *b_stream = fopen(argv[2], "rb");
   if (b_stream == NULL) printf("bias file was not opened");
   FILE *i_stream = fopen(argv[3], "rb");
-  if (i_stream == NULL) printf("i_stream file was not opened");
+  if (i_stream == NULL) printf("input file was not opened");
   FILE *o_stream = fopen("Output/C_output.txt", "w");
   if (o_stream == NULL) printf("Output file was not opened");
  

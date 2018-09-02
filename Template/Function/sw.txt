@@ -1,4 +1,4 @@
-void VGG19_sw($SW_variables) {
+void ${model_name}_sw($SW_variables) {
 
   $Output_variables
 

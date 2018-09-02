@@ -1,4 +1,4 @@
-void top($variables) {
+void ${model_name}_top($variables) {
 
   DATA_T O_i[$last_output_channel];
 

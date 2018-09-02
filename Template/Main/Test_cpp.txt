@@ -19,11 +19,11 @@ int main(){
   
   $static_variables
   
-  FILE *w_stream = fopen("init_weight.txt", "r");
+  FILE *w_stream = fopen("init_weight.txt", "rb");
   if (w_stream == NULL) printf("weight file was not opened");
-  FILE *b_stream = fopen("init_bias", "r");
+  FILE *b_stream = fopen("init_bias", "rb");
   if (b_stream == NULL) printf("bias file was not opened");
-  FILE *i_stream = fopen("init_input.txt", "r");
+  FILE *i_stream = fopen("init_input.txt", "rb");
   if (i_stream == NULL) printf("input file was not opened");
   
   $Initialization
