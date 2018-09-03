@@ -9,8 +9,8 @@ using namespace std;
 
 typedef ap_uint<16> DATA_T;
 
-void vgg19_top(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128], DATA_T O[128][112][112]);
-void vgg19_sw(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128], DATA_T O[128][112][112]);
+void vgg19_top(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128], DATA_T O[128][56][56]);
+void vgg19_sw(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128], DATA_T O[128][56][56]);
 
 
 int main(){
@@ -29,8 +29,8 @@ int main(){
 	static DATA_T B4[128];
 	static DATA_T W5[128][128][3][3];
 	static DATA_T B5[128];
-	static DATA_T O_SW[128][112][112];
-	static DATA_T O_HW[128][112][112];
+	static DATA_T O_SW[128][56][56];
+	static DATA_T O_HW[128][56][56];
 	
   
   FILE *w_stream = fopen("init_weight.txt", "rb");
@@ -101,8 +101,8 @@ int main(){
 
    int err_cnt = 0;
    for (m=0; m<128; m++) {
-       for (x=0; x<112; x++) {
-          for (y=0; y<112; y++) {
+       for (x=0; x<56; x++) {
+          for (y=0; y<56; y++) {
               if (O_HW[m][x][y] != O_SW[m][x][y]) {
                 printf("SW: O[%d][%d][%d] = %d", m, x, y, O_SW[m][x][y]);
                 printf("HW: O[%d][%d][%d] = %d", m, x, y, O_HW[m][x][y]);
