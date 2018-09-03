@@ -88,7 +88,13 @@ if __name__ == "__main__" :
             def_model +=",DATA_T W"+line_num+"[" + output_shape[1] + "][" + input_shape[1] + "], DATA_T B"+line_num + "[" + output_shape[1] + "]"
             #func_model
             func_model +=",W"+line_num + ",B"+line_num
-    
+	
+	# layer_type = Other all layers
+        elif row["layer_type"] != '':
+            #Get Input, Output shape
+            input_shape = row["batch_input_shape"][1 : -1].split(", ")
+            output_shape = row["batch_output_shape"][1 : -1].split(", ")
+
     # Output Shape 3D
     if len(output_shape) == 4 :
         #SW_static_variables (O_SW)
