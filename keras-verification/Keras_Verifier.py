@@ -13,6 +13,7 @@ import csv
 import sys
 
 np.set_printoptions(threshold=np.inf)
+np.set_printoptions(linewidth=9223372036854775807)
 
 csv_file=open(sys.argv[1])
 csv_reader=csv.DictReader(csv_file)
