@@ -146,58 +146,18 @@ if __name__ == "__main__":
             print("Undefined\n")
     #Report Status
     print("[Keras_verifier.py]Print Result\n")
-
-    #Open file
-    f = open('Output/keras_output.txt','w')
-    
+    np.set_printoptions(linewidth=9223372036854775807)
     temp = model.predict(input_value)
-
-    #Write input_value
-    f.write('{}[['.format(layer_name[0]))
-    for k in range(input_value.shape[1]):
-        f.write('[')
-        for x in range(input_value.shape[2]):
-            f.write('[')
-            for y in range(input_value.shape[3]):
-                f.write('{} '.format(int(input_value[0][k][x][y])))
-            if x != (input_value.shape[2] - 1):
-                f.write(']\n   ')
-            else:
-                f.write(']')
-        if k != (input_value.shape[1] - 1):
-            f.write(']\n\n  ')
-    f.write(']]]\n\n')
-
-    #Write each layers output
-    before_output = input_value
+    result_file = result_file + layer_name[0] + str(np.asarray(input_value).astype(np.int)) + "\n\n"
     for i in range(line_num):
-        get_3rd_layer_output = K.function([model.layers[i].input], [model.layers[i].output])
-        layer_output = get_3rd_layer_output([before_output])[0]
-        before_output = layer_output
-
-        if len(layer_output.shape) == 4:
-            f.write('{}[['.format(layer_name[i+1]))
-            for k in range(layer_output.shape[1]):
-                f.write('[')
-                for x in range(layer_output.shape[2]):
-                    f.write('[')
-                    for y in range(layer_output.shape[3]):
-                        f.write('{} '.format(int(layer_output[0][k][x][y])))
-                    if x != (layer_output.shape[2] - 1):
-                        f.write(']\n   ')
-                    else:
-                        f.write(']')
-                if k != (layer_output.shape[1] - 1):
-                    f.write(']\n\n  ')
-            f.write(']]]\n\n')
-            
-        elif len(layer_output.shape) == 2:
-            f.write('{}[['.format(layer_name[i+1]))
-            for k in range(layer_output.shape[1]):
-                f.write('{} '.format(int(layer_output[0][k])))
-            f.write(']]\n\n')
-            
+        get_3rd_layer_output = K.function([model.layers[0].input], [model.layers[i].output])
+        layer_output = get_3rd_layer_output([input_value])[0]
+        result_file = result_file + layer_name[i+1] + str(np.asarray(layer_output).astype(np.int)) + "\n\n"
+        print(len(layer_output.shape))
+        print(layer_output.shape)
     #model.summary()
+    f = open('Output/keras_output.txt','w')
+    f.write(result_file)
     f.close()
 
 

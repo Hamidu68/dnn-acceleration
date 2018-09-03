@@ -4,7 +4,7 @@ for (k = 0; k <  $Output_channel ; k++) {
 	for (x = 0; x < $Output_width ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < $Output_height ; y++) {
-			fprintf(o_stream,"%2d ",int(O${line_number}_SW[k][x][y]));
+			fprintf(o_stream,"%d ",int(O${line_number}_SW[k][x][y]));
 		}
 		if(x != $Output_width -1 )
 			fprintf(o_stream,"%s","]\n   ");

@@ -3,10 +3,10 @@ for (m = 0; m <  $Output_channel ; m++) {
 		for (i = 0; i < $Filter_width ; i++) {
 			for (j = 0; j < $Filter_height ; j++) {
 				fread(&trash, sizeof(int), 1, w_stream);
-                                W${line_number}[m][k][i][j] = (float) trash;       
+                                W${line_number}[m][k][i][j] = (DATA_T) trash;       
 			}
 		}
 	}
 	fread(&trash, sizeof(int), 1, b_stream);
-        B${line_number}[m] = (float) trash;            
+        B${line_number}[m] = (DATA_T) trash;            
 }

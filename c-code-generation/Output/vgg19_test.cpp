@@ -9,8 +9,8 @@ using namespace std;
 
 typedef ap_uint<16> DATA_T;
 
-void vgg19_top(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128], DATA_T O[128][56][56]);
-void vgg19_sw(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128], DATA_T O[128][56][56]);
+void vgg19_top(DATA_T I[3][32][32],DATA_T W1[16][3][3][3], DATA_T B1[16],DATA_T W2[16][16][3][3], DATA_T B2[16],DATA_T W5[10][4096], DATA_T B5[10],DATA_T W6[10][10], DATA_T B6[10], DATA_T O[10]);
+void vgg19_sw(DATA_T I[3][32][32],DATA_T W1[16][3][3][3], DATA_T B1[16],DATA_T W2[16][16][3][3], DATA_T B2[16],DATA_T W5[10][4096], DATA_T B5[10],DATA_T W6[10][10], DATA_T B6[10], DATA_T O[10]);
 
 
 int main(){
@@ -19,18 +19,18 @@ int main(){
   int m, x, y, i, j, k;
   int trash;
   
-  static DATA_T I[3][224][224];
-	static DATA_T O0_SW[3][224][224];
-	static DATA_T W1[64][3][3][3];
-	static DATA_T B1[64];
-	static DATA_T W2[64][64][3][3];
-	static DATA_T B2[64];
-	static DATA_T W4[128][64][3][3];
-	static DATA_T B4[128];
-	static DATA_T W5[128][128][3][3];
-	static DATA_T B5[128];
-	static DATA_T O_SW[128][56][56];
-	static DATA_T O_HW[128][56][56];
+  static DATA_T I[3][32][32];
+	static DATA_T O0_SW[3][32][32];
+	static DATA_T W1[16][3][3][3];
+	static DATA_T B1[16];
+	static DATA_T W2[16][16][3][3];
+	static DATA_T B2[16];
+	static DATA_T W5[10][4096];
+	static DATA_T B5[10];
+	static DATA_T W6[10][10];
+	static DATA_T B6[10];
+	static DATA_T O_SW[10];
+	static DATA_T O_HW[10];
 	
   
   FILE *w_stream = fopen("init_weight.txt", "rb");
@@ -41,8 +41,8 @@ int main(){
   if (i_stream == NULL) printf("input file was not opened");
   
   for (k = 0; k <  3 ; k++) {
-	for (x = 0; x < 224 ; x++) {
-		for(y = 0; y < 224 ; y++) {
+	for (x = 0; x < 32 ; x++) {
+		for(y = 0; y < 32 ; y++) {
 			fread(&trash, sizeof(int), 1, i_stream);
                         I[k][x][y] = trash;
 			O0_SW[k][x][y] = trash;
@@ -50,7 +50,7 @@ int main(){
 	}
 }
 
-	for (m = 0; m <  64 ; m++) {
+	for (m = 0; m <  16 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 3 ; i++) {
 			for (j = 0; j < 3 ; j++) {
@@ -61,8 +61,8 @@ int main(){
         fread(&B1[m], sizeof(int), 1, b_stream);
 }
 
-	for (m = 0; m <  64 ; m++) {
-	for (k = 0; k < 64 ; k++) {
+	for (m = 0; m <  16 ; m++) {
+	for (k = 0; k < 16 ; k++) {
 		for (i = 0; i < 3 ; i++) {
 			for (j = 0; j < 3 ; j++) {
                                 fread(&W2[m][k][i][j], sizeof(int), 1, w_stream);       
@@ -72,44 +72,32 @@ int main(){
         fread(&B2[m], sizeof(int), 1, b_stream);
 }
 
-	for (m = 0; m <  128 ; m++) {
-	for (k = 0; k < 64 ; k++) {
-		for (i = 0; i < 3 ; i++) {
-			for (j = 0; j < 3 ; j++) {
-                                fread(&W4[m][k][i][j], sizeof(int), 1, w_stream);       
-			}
-		}
-	}
-        fread(&B4[m], sizeof(int), 1, b_stream);
+	for (m = 0; m <  10 ; m++) {
+	for (k = 0; k < 4096 ; k++) {
+		fread(&W5[m][k], sizeof(int), 1, w_stream);
+	}   
+        fread(&B5[m], sizeof(int), 1, b_stream);
 }
 
-	for (m = 0; m <  128 ; m++) {
-	for (k = 0; k < 128 ; k++) {
-		for (i = 0; i < 3 ; i++) {
-			for (j = 0; j < 3 ; j++) {
-                                fread(&W5[m][k][i][j], sizeof(int), 1, w_stream);       
-			}
-		}
-	}
-        fread(&B5[m], sizeof(int), 1, b_stream);
+	for (m = 0; m <  10 ; m++) {
+	for (k = 0; k < 10 ; k++) {
+		fread(&W6[m][k], sizeof(int), 1, w_stream);
+	}   
+        fread(&B6[m], sizeof(int), 1, b_stream);
 }
 
 	
  
-  vgg19_top(I,W1,B1,W2,B2,W4,B4,W5,B5,O_HW);
-  vgg19_sw(I,W1,B1,W2,B2,W4,B4,W5,B5,O_SW);
+  vgg19_top(I,W1,B1,W2,B2,W5,B5,W6,B6,O_HW);
+  vgg19_sw(I,W1,B1,W2,B2,W5,B5,W6,B6,O_SW);
 
-   int err_cnt = 0;
-   for (m=0; m<128; m++) {
-       for (x=0; x<56; x++) {
-          for (y=0; y<56; y++) {
-              if (O_HW[m][x][y] != O_SW[m][x][y]) {
-                printf("SW: O[%d][%d][%d] = %d", m, x, y, O_SW[m][x][y]);
-                printf("HW: O[%d][%d][%d] = %d", m, x, y, O_HW[m][x][y]);
-                err_cnt++;}
-           }
-       }
-   }
+    int err_cnt = 0;
+    for (m=0; m<10; m++) {
+        if (O_HW[m] != O_SW[m]) {
+            printf("SW: O[%d] = %d", m, O_SW[m]);
+            printf("HW: O[%d] = %d", m, O_HW[m]);
+            err_cnt++;}
+    }
 
 
   int ret_val;

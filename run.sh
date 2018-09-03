@@ -4,7 +4,7 @@
 #1. Result of C code vs keras code
 #2. model_test.cpp , model.cpp
 
-Test_dir="Test_file/vgg19_test.csv"
+Test_dir="Test_file/vgg19_test2.csv"
 Model_name="vgg19"
 Data_type="ap_uint<16>"
 Random_range="20"
