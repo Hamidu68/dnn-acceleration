@@ -187,17 +187,17 @@ void HW_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[16][3][3][3], DATA_T 
 #pragma HLS ARRAY_PARTITION variable=ifm complete dim=0
 #pragma HLS ARRAY_PARTITION variable=ofm complete dim=0
 
-  DATA_T I[3][3][3];
+  DATA_T I[3][3][32];
 
 #pragma HLS ARRAY_PARTITION variable=I complete dim=1
 #pragma HLS ARRAY_PARTITION variable=I complete dim=2
 #pragma HLS ARRAY_PARTITION variable=I complete dim=3 
 
- 	Conv2D_1_x_loop: for (x=0; x<3+2; x++) {
- 		Conv2D_1_y_loop: for (y=0; y<3+2; y++) {
+ 	Conv2D_1_x_loop: for (x=0; x<32+2; x++) {
+ 		Conv2D_1_y_loop: for (y=0; y<32+2; y++) {
   		Conv2D_1_k_loop: for (k=0; k<3; k++) {
 
-   	 		if (x<3 && y<3) {
+   	 		if (x<32 && y<32) {
    	 			I[k][x%3][y] = I_strm.read();
    	 		}
   	 		if (x>=2 && y>=2) {
@@ -219,63 +219,63 @@ void HW_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[16][3][3][3], DATA_T 
   	 				if (k==0) {
   	 					ofm[m] = B[m];
   	 				}
- 						if (x-2+0 < 3 && y-2+0 < 3) {
+ 						if (x-2+0 < 32 && y-2+0 < 32) {
  							ifm[m] = I_0;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
 
- 						if (x-2+0 < 3 && y-2+1 < 3) {
+ 						if (x-2+0 < 32 && y-2+1 < 32) {
  							ifm[m] = I_1;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
 
- 						if (x-2+0 < 3 && y-2+2 < 3) {
+ 						if (x-2+0 < 32 && y-2+2 < 32) {
  							ifm[m] = I_2;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
 
- 						if (x-2+1 < 3 && y-2+0 < 3) {
+ 						if (x-2+1 < 32 && y-2+0 < 32) {
  							ifm[m] = I_3;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
 
- 						if (x-2+1 < 3 && y-2+1 < 3) {
+ 						if (x-2+1 < 32 && y-2+1 < 32) {
  							ifm[m] = I_4;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
 
- 						if (x-2+1 < 3 && y-2+2 < 3) {
+ 						if (x-2+1 < 32 && y-2+2 < 32) {
  							ifm[m] = I_5;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
 
- 						if (x-2+2 < 3 && y-2+0 < 3) {
+ 						if (x-2+2 < 32 && y-2+0 < 32) {
  							ifm[m] = I_6;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
- 						if (x-2+2 < 3 && y-2+1 < 3) {
+ 						if (x-2+2 < 32 && y-2+1 < 32) {
  							ifm[m] = I_7;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
 
- 						if (x-2+2 < 3 && y-2+2 < 3) {
+ 						if (x-2+2 < 32 && y-2+2 < 32) {
  							ifm[m] = I_8;
  						} else {
  							ifm[m] = 0; // zero padding
@@ -295,6 +295,7 @@ void HW_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[16][3][3][3], DATA_T 
    	}
  	}
 }
+
 void HW_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[16][16][3][3], DATA_T B[16], hls::stream<DATA_T> &O_strm) {
 
 #pragma HLS INLINE
@@ -308,17 +309,17 @@ void HW_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[16][16][3][3], DATA_T
 #pragma HLS ARRAY_PARTITION variable=ifm complete dim=0
 #pragma HLS ARRAY_PARTITION variable=ofm complete dim=0
 
-  DATA_T I[16][3][16];
+  DATA_T I[16][3][32];
 
 #pragma HLS ARRAY_PARTITION variable=I complete dim=1
 #pragma HLS ARRAY_PARTITION variable=I complete dim=2
 #pragma HLS ARRAY_PARTITION variable=I complete dim=3 
 
- 	Conv2D_2_x_loop: for (x=0; x<16+2; x++) {
- 		Conv2D_2_y_loop: for (y=0; y<16+2; y++) {
+ 	Conv2D_2_x_loop: for (x=0; x<32+2; x++) {
+ 		Conv2D_2_y_loop: for (y=0; y<32+2; y++) {
   		Conv2D_2_k_loop: for (k=0; k<16; k++) {
 
-   	 		if (x<16 && y<16) {
+   	 		if (x<32 && y<32) {
    	 			I[k][x%3][y] = I_strm.read();
    	 		}
   	 		if (x>=2 && y>=2) {
@@ -340,63 +341,63 @@ void HW_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[16][16][3][3], DATA_T
   	 				if (k==0) {
   	 					ofm[m] = B[m];
   	 				}
- 						if (x-2+0 < 16 && y-2+0 < 16) {
+ 						if (x-2+0 < 32 && y-2+0 < 32) {
  							ifm[m] = I_0;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
 
- 						if (x-2+0 < 16 && y-2+1 < 16) {
+ 						if (x-2+0 < 32 && y-2+1 < 32) {
  							ifm[m] = I_1;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
 
- 						if (x-2+0 < 16 && y-2+2 < 16) {
+ 						if (x-2+0 < 32 && y-2+2 < 32) {
  							ifm[m] = I_2;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
 
- 						if (x-2+1 < 16 && y-2+0 < 16) {
+ 						if (x-2+1 < 32 && y-2+0 < 32) {
  							ifm[m] = I_3;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
 
- 						if (x-2+1 < 16 && y-2+1 < 16) {
+ 						if (x-2+1 < 32 && y-2+1 < 32) {
  							ifm[m] = I_4;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
 
- 						if (x-2+1 < 16 && y-2+2 < 16) {
+ 						if (x-2+1 < 32 && y-2+2 < 32) {
  							ifm[m] = I_5;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
 
- 						if (x-2+2 < 16 && y-2+0 < 16) {
+ 						if (x-2+2 < 32 && y-2+0 < 32) {
  							ifm[m] = I_6;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
- 						if (x-2+2 < 16 && y-2+1 < 16) {
+ 						if (x-2+2 < 32 && y-2+1 < 32) {
  							ifm[m] = I_7;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
 
- 						if (x-2+2 < 16 && y-2+2 < 16) {
+ 						if (x-2+2 < 32 && y-2+2 < 32) {
  							ifm[m] = I_8;
  						} else {
  							ifm[m] = 0; // zero padding
@@ -416,12 +417,13 @@ void HW_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[16][16][3][3], DATA_T
    	}
  	}
 }
+
 void HW_block1_pool(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {
 #pragma HLS INLINE
   int m, x, y, i, j;
   ap_uint<32> max;
 
-  DATA_T I[16][3][16];
+  DATA_T I[16][3][32];
 
 //#pragma HLS ARRAY_PARTITION variable=I complete dim=1
 #pragma HLS ARRAY_PARTITION variable=I complete dim=2
@@ -429,7 +431,7 @@ void HW_block1_pool(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {
 //#pragma HLS ARRAY_PARTITION variable=I cyclic factor=3 dim=3
 
 	Pool_1_x_loop: for (x=0; x<16+2; x++) {
-	  Pool_1_y_loop: for (y=0; y<16+2; y++) {
+	  Pool_1_y_loop: for (y=0; y<32+2; y++) {
 
 	    Pool_1_m_loop: for (m=0; m<16; m++) {
 #pragma HLS PIPELINE
@@ -462,6 +464,7 @@ void HW_block1_pool(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {
 
 
 }
+
 void SW_fc1(DATA_T I[4096], DATA_T W[10][4096], DATA_T B[10] , DATA_T O[10])
 {
     //Dense

@@ -33,11 +33,11 @@ int main(){
 	static DATA_T O_HW[10];
 	
   
-  FILE *w_stream = fopen("init_weight.txt", "rb");
+  FILE *w_stream = fopen("init_Weight.bin", "r");
   if (w_stream == NULL) printf("weight file was not opened");
-  FILE *b_stream = fopen("init_bias", "rb");
+  FILE *b_stream = fopen("init_Bias.bin", "r");
   if (b_stream == NULL) printf("bias file was not opened");
-  FILE *i_stream = fopen("init_input.txt", "rb");
+  FILE *i_stream = fopen("init_Input.bin", "r");
   if (i_stream == NULL) printf("input file was not opened");
   
   for (k = 0; k <  3 ; k++) {
