@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include<iostream>
+#include <stdlib.h>
+#include<string>
+#include<string.h>
+#include<math.h>
+using namespace std;
+
+typedef float DATA_T;
+
+$def_SW_functions
+
+//argv[1] = init_weight.txt , argv[2] = init_bias.txt , argv[3] = init_input.txt
+int main(int argc, char *argv[]){
+ 
+  DATA_T temp;
+  int m, x, y, i, j, k, l;
+  int trash;
+
+  $Shared_static_variables
+ 
+  $SW_static_variables 
+
+  FILE *w_stream = fopen(argv[1], "rb");
+  if (w_stream == NULL) printf("weight file was not opened");
+  FILE *b_stream = fopen(argv[2], "rb");
+  if (b_stream == NULL) printf("bias file was not opened");
+  FILE *i_stream = fopen(argv[3], "rb");
+  if (i_stream == NULL) printf("input file was not opened");
+  FILE *o_stream = fopen("Output/C_output.txt", "w");
+  if (o_stream == NULL) printf("Output file was not opened");
+ 
+  printf("[C_verifier.cpp]Start Initialzation\n\n");
+  $Initialization
+  printf("[C_verifier.cpp]Finish Initialization\n\n");
+  
+  $SW_functions
+
+  printf("[C_verifier.cpp]Print Result\n");
+  
+  $result
+    
+  fclose(w_stream);
+  fclose(b_stream);
+  fclose(i_stream);
+  fclose(o_stream);
+  return 0;
+}

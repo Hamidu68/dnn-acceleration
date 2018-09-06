@@ -1,0 +1,20 @@
+void ${model_name}_top($variables) {
+
+  DATA_T O_i[$Output_channel][$Output_width][$Output_height];
+
+
+  int m, x, y, i, j, k;
+
+  $assign_value
+  
+  $model_name($top_func_argument);
+
+  for (m=0; m<$Output_channel; m++) {
+    for (x=0; x<$Output_width; x++) {
+      for (y=0; y<$Output_height; y++) {
+          O[m][x][y] = O_i[m][x][y];
+      }
+    }
+  }
+
+}

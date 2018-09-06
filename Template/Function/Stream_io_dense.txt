@@ -1,0 +1,24 @@
+void Stream_input(DATA_T I[$Input_channel][$Input_width][$Input_height], hls::stream<DATA_T> &I_strm) {
+  int k, x, y;
+
+#pragma HLS ARRAY_PARTITION variable=I complete dim=1
+	Stream_input_x_loop: for (x=0; x<$Input_width; x++) {
+	 	Stream_input_y_loop: for (y=0; y<$Input_height; y++) {
+#pragma HLS PIPELINE
+	 		Stream_input_m_loop: for (k=0; k<$Input_channel; k++) {
+	 			I_strm.write(I[k][x][y]);
+	    }
+	  }
+	}
+}
+
+void Stream_output(hls::stream<DATA_T> &O_strm, DATA_T O[$last_output_channel]) {
+  int x;
+#pragma HLS ARRAY_PARTITION variable=O complete dim=1
+
+	Stream_input_x_loop: for (x=0; x<$last_output_channel; x++) {
+	 
+#pragma HLS PIPELINE
+	 			O[x] = O_strm.read()
+	}
+}
