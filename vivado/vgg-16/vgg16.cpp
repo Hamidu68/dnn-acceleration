@@ -1212,31 +1212,12 @@ void Conv2D_padding_act_relu_3(hls::stream<DATA_T> &I_strm, DATA_T W[16][8][3][3
 #pragma HLS ARRAY_PARTITION variable=O complete dim=2
 #pragma HLS ARRAY_PARTITION variable=O complete dim=3
 
-  /*
- 	Conv2D_3_x_init_loop: for (x=0; x<3; x++) {
- 		Conv2D_3_y_init_loop: for (y=0; y<8; y++) {
-  		Conv2D_3_k_init_loop: for (k=0; k<8; k++) {
-#pragma HLS PIPELINE
-  			I[k][x%4][y] = I_strm.read();
-  		}
- 		}
- 	}
- 	*/
 
  	Conv2D_3_x_loop: for (x=0; x<12; x++) {
 //#pragma HLS dependence variable=I intra false
 //#pragma HLS dependence variable=O intra false
 
- 		/*
- 		Conv2D_3_y_ld_loop: for (y=0; y<8; y++) {
-  		Conv2D_3_k_ld_loop: for (k=0; k<8; k++) {
-#pragma HLS PIPELINE
-  	 		if (x < 8) {
-  	 			I[k][x%4][y] = I_strm.read();
-  	 		}
-  		}
- 		}
- 		*/
+
 
  		Conv2D_3_y_loop: for (y=0; y<8; y++) {
   		Conv2D_3_k_loop: for (k=0; k<8; k++) {
@@ -1250,24 +1231,11 @@ void Conv2D_padding_act_relu_3(hls::stream<DATA_T> &I_strm, DATA_T W[16][8][3][3
 
 	 		 		if (x >= 3 && x < 11) {
 
-
 	 		 			if (k==0) {
 	 		 				ofm[m] = B[m];
 	 		 			} else {
 	 		 				ofm[m] = O[m][(x-3)%2][y];
 	 		 			}
-#if 0
-  					Conv2D_3_i_loop: for (i=0; i<3; i++) {
-  						Conv2D_3_j_loop: for (j=0; j<3; j++) {
-  							if (x-3+i < 8 && y+j < 8) {
-  								ifm[m] = I[k][(x-3+i)%4][y+j];
-  							} else {
-  								ifm[m] = 0; // zero padding
-  							}
-  							ofm[m] = ofm[m] + ifm[m] * W[m][k][i][j];
-  						}
-  					}
-#else
 
   					if (x-3+0 < 8 && y+0 < 8) {
   						ifm[m] = I[k][(x-3+0)%4][y+0];
@@ -1332,8 +1300,6 @@ void Conv2D_padding_act_relu_3(hls::stream<DATA_T> &I_strm, DATA_T W[16][8][3][3
   					}
   					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][2];
 
-#endif
-
 
   					O[m][(x-3)%2][y] = ofm[m];
 
@@ -1344,15 +1310,21 @@ void Conv2D_padding_act_relu_3(hls::stream<DATA_T> &I_strm, DATA_T W[16][8][3][3
 		 				}
 		 			}
 	 			}
-  		}
-  		/*
- 			Conv2D_3_m_st_loop: for (m=0; m<16; m++) {
+/*
+	  		if (k == 7) {
+	  			Conv2D_3_m_st_loop: for (m=0; m<16; m++) {
 #pragma HLS PIPELINE
- 				if (x>=4) {
- 					O_strm.write(O[m][(x-4)%2][y]);
- 				}
-  	 	}
-  	 	*/
+	  				if (x>=4) {
+	  					O_strm.write(O[m][(x-4)%2][y]);
+	  				}
+	  			}
+	  		}
+*/
+
+  		}
+
+
+
  		}
 
 
