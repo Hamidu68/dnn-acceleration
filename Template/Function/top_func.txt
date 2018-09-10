@@ -6,8 +6,8 @@ $Optimized_code
   hls::stream<uint256_t> O1_packed_strm("O1_packed_strm");
   
   $Stream_declaration
-  
-  Stream_input(I, I_strm);
+
+  Stream_input(I, I_strm);          
   $Function_call
   Stream_output(O${line_num}_strm, O);
 

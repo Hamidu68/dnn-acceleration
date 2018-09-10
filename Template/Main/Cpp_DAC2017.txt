@@ -1,0 +1,20 @@
+#include <iostream>
+#include <ap_int.h>
+#include <hls_stream.h>
+
+typedef $D_type DATA_T;
+
+typedef ap_uint<256> uint256_t;
+typedef ap_uint<512> uint512_t;
+
+$Stream_io
+
+$Static_variables
+
+$DAC2017_def_func
+$our_def_func
+
+$top_func
+$top
+$DAC2017_func
+$DAC2017

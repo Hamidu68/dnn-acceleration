@@ -1,8 +1,8 @@
 for (m = 0; m <  $Output_channel ; m++) {
 	for (k = 0; k < $Input_channel ; k++) {
 		fread(&trash, sizeof(int), 1, w_stream);
-                W${line_number}[m][k] = (DATA_T) trash;       
+        W${line_number}[m][k] = (DATA_T) trash;
 	}
 	fread(&trash, sizeof(int), 1, b_stream);
-        B${line_number}[m] = (DATA_T) trash;         
+    B${line_number}[m] = (DATA_T) trash;
 }
