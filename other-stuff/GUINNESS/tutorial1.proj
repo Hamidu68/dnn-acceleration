@@ -1,0 +1,7 @@
+PROJECT_NAME: tutorial1
+TRAINING_DATA: /home/seto/GUINESS/GUINNESS-master/class3_dataset.pkl
+TRAINING_LABEL: /home/seto/GUINESS/GUINNESS-master/class3_label.pkl
+NUM_OF_EPOCS: 10
+OPTIMIZER: Adam
+USE_GPU: YES
+FPGA_BOARD: zed
