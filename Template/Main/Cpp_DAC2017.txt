@@ -12,9 +12,8 @@ $Stream_io
 $Static_variables
 
 $DAC2017_def_func
-$our_def_func
+$DAC2017_sw_def_func
 
-$top_func
-$top
 $DAC2017_func
-$DAC2017
+$DAC2017_top
+$DAC2017_sw
