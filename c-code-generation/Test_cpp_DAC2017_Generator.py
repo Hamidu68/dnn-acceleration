@@ -29,11 +29,9 @@ if __name__ == "__main__" :
     # Open file
     m = open("../Template/Main/Test_cpp.txt")
     i_conv = open("../Template/Init/Conv_var_Initializer_int.txt")
-    i_dense = open("../Template/Init/Dense_var_Initializer_int.txt")
     i_input = open("../Template/Init/Input_var_Initializer_int.txt")
     main = Template(m.read())
     Init_conv = Template(i_conv.read())
-    Init_dense = Template(i_dense.read())
     Init_input = Template(i_input.read())
 
     #####Generate Function depending on layer_type #####
@@ -41,12 +39,10 @@ if __name__ == "__main__" :
         #Count Line number
         line_count+= 1;
         line_num = str(line_count)
-        #Get Input, Output shape
         input_shape = row['batch_input_shape'][1:-1].split(", ")
         output_shape = row['batch_output_shape'][1:-1].split(", ")
         # layer_type = convolution2D(I,O,B,W) (padding option: valid , same)
         if row["layer_type"] == 'Conv2D' :
-            #Get Input, Output shape
             filter_shape = row["kernel_size"][1:-1].split(", ")
             #Static_variables(W,B)
             static_v += "static DATA_T W"+line_num+"[" + output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "];\n\t";
@@ -72,63 +68,31 @@ if __name__ == "__main__" :
             #func_model
             func_model +="I"
 
-        # layer_type = Dense(I,W,B,O) (Activation option : relu , softmax)
-        elif row["layer_type"] == "Dense":
-            #static_variable (W,B)
-            static_v += "static DATA_T W"+line_num+ "[" + output_shape[1] + "][" + input_shape[1] + "];\n\t";
-            static_v += "static DATA_T B"+line_num+ "[" + output_shape[1] + "];\n\t";
-            m = {'Input_channel' : input_shape[1],'Output_channel' : output_shape[1],'line_number' : line_count}
-            #Initialization
-            initialization += Init_dense.substitute(m) + "\n\t"
-            #def model
-            def_model +=",DATA_T W"+line_num+"[" + output_shape[1] + "][" + input_shape[1] + "], DATA_T B"+line_num + "[" + output_shape[1] + "]"
-            #func_model
-            func_model +=",W"+line_num + ",B"+line_num
-
-    # Output Shape 3D
-    if len(output_shape) == 4 :
-        #SW_static_variables (O_SW)
-        static_v += "static DATA_T O_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t";
-        #HW_static_variables (O_HW)
-        static_v += "static DATA_T O_HW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t";
-        def_model += ", DATA_T O[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "]);\n"
-        model_function =  model_name + "_top" + func_model + ",O_HW);\n"
-        model_function += "  " + model_name + "_sw" + func_model + """,O_SW);\n
-   int err_cnt = 0;
-   for (m=0; m<"""+output_shape[3]+"""; m++) {
+    #static_variables
+    static_v += "static DATA_T OUR_WORK[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t";
+    static_v += "static DATA_T DAC2017[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t";
+    def_model += ", DATA_T O[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "]);\n"
+    model_function =  model_name + "_top" + func_model + ",OUR_WORK);\n"
+    model_function += "  DAC2017_top" + func_model + """,DAC2017);\n
+    int err_cnt = 0;
+    for (m=0; m<"""+output_shape[3]+"""; m++) {
        for (x=0; x<"""+output_shape[1]+"""; x++) {
           for (y=0; y<"""+output_shape[2]+"""; y++) {
-              if (O_HW[m][x][y] != O_SW[m][x][y]) {
-                printf("SW: O[%d][%d][%d] = %d", m, x, y, O_SW[m][x][y]);
-                printf("HW: O[%d][%d][%d] = %d", m, x, y, O_HW[m][x][y]);
+              if (OUR_WORK[m][x][y] != DAC2017[m][x][y]) {
+                printf("OUR_WORK: O[%d][%d][%d] = %d", m, x, y, OUR_WORK[m][x][y]);
+                printf("DAC2017: O[%d][%d][%d] = %d", m, x, y, DAC2017[m][x][y]);
                 err_cnt++;}
            }
        }
    }\n"""
-    #Output Shape 1D
-    else :
-        #SW_static_variables (O_SW)
-        static_v += "static DATA_T O_SW[" + output_shape[1] + "];\n\t";
-        #HW_static_variables (O_HW)
-        static_v += "static DATA_T O_HW[" + output_shape[1] + "];\n\t";
-        def_model += ", DATA_T O[" + output_shape[1] + "]);\n"
-        model_function =  model_name + "_top" + func_model + ",O_HW);\n"
-        model_function += "  " + model_name + "_sw" + func_model + """,O_SW);\n
-    int err_cnt = 0;
-    for (m=0; m<"""+output_shape[1]+"""; m++) {
-        if (O_HW[m] != O_SW[m]) {
-            printf("SW: O[%d] = %d", m, O_SW[m]);
-            printf("HW: O[%d] = %d", m, O_HW[m]);
-            err_cnt++;}
-    }\n"""
 
     model_definition = "void " + model_name + "_top" + def_model
-    model_definition += "void " + model_name + "_sw" + def_model
+    model_definition += "void DAC2017_top" + def_model
 
     # Generate CPP file
     f = {'def_model':model_definition,'static_variables':static_v, 'Initialization':initialization, 'model_function' : model_function, 'D_type' : sys.argv[3]}
     c_file = main.substitute(f) + "\n";
-    file = open("Output/"+model_name + "_test.cpp",'w')
+    file = open("Output/DAC2017_"+model_name + "_test.cpp",'w')
     file.write(c_file)
     file.close()
 
