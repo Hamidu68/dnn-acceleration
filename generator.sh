@@ -15,4 +15,6 @@ return_dir="../"
 
 cd c-code-generation
 python Test_cpp_Generator.py $return_dir$Test_dir $Model_name $Data_type
+python Test_cpp_DAC2017_Generator.py $return_dir$Test_dir $Model_name $Data_type
+python Cpp_DAC2017_Generator.py $return_dir$Test_dir $Model_name $Data_type
 python Cpp_Generator.py $return_dir$Test_dir $Model_name $Data_type
