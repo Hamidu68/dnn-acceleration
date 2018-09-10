@@ -167,8 +167,8 @@ if __name__ == "__main__":
             #variables
             variables += "DATA_T I["+input_shape[3]+"]["+input_shape[1]+"]["+input_shape[2]+"], "
             #variables to top_func.txt
-            variables_i += "DATA_T I_i["+input_shape[3]+"]["+input_shape[1]+"]["+input_shape[2]+"], "
-            variables_dac += "DATA_T I_DAC["+input_shape[3]+"]["+input_shape[1]+"]["+input_shape[2]+"], "
+            variables_i += "DATA_T I["+input_shape[3]+"]["+input_shape[1]+"]["+input_shape[2]+"], "
+            variables_dac += "DATA_T I["+input_shape[3]+"]["+input_shape[1]+"]["+input_shape[2]+"], "
             #function argument
             i_func_argument += "I_i, "
             DAC_func_argument += "I_DAC, "

@@ -1338,7 +1338,7 @@ void HW_block3_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[256][128][3][3], DATA
 
 
 
-void vgg19(DATA_T I_i[3][224][224], DATA_T W1_i[64][3][3][3], DATA_T B1_i[64],DATA_T W2_i[64][64][3][3], DATA_T B2_i[64],DATA_T W4_i[128][64][3][3], DATA_T B4_i[128],DATA_T W5_i[128][128][3][3], DATA_T B5_i[128],DATA_T W7_i[256][128][3][3], DATA_T B7_i[256],DATA_T O[256][56][56]) {
+void vgg19(DATA_T I[3][224][224], DATA_T W1_i[64][3][3][3], DATA_T B1_i[64],DATA_T W2_i[64][64][3][3], DATA_T B2_i[64],DATA_T W4_i[128][64][3][3], DATA_T B4_i[128],DATA_T W5_i[128][128][3][3], DATA_T B5_i[128],DATA_T W7_i[256][128][3][3], DATA_T B7_i[256],DATA_T O[256][56][56]) {
 
 #pragma HLS ARRAY_PARTITION variable=W1_i complete dim=1
 #pragma HLS ARRAY_PARTITION variable=W1_i complete dim=3
@@ -1478,7 +1478,7 @@ W7_i_m_loop: for (m=0; m<256; m++) {
 
 }
 
-void DAC2017(DATA_T I_DAC[3][224][224], DATA_T W1_DAC[64][3][3][3], DATA_T B1_DAC[64],DATA_T W2_DAC[64][64][3][3], DATA_T B2_DAC[64],DATA_T W4_DAC[128][64][3][3], DATA_T B4_DAC[128],DATA_T W5_DAC[128][128][3][3], DATA_T B5_DAC[128],DATA_T W7_DAC[256][128][3][3], DATA_T B7_DAC[256],DATA_T O[256][56][56]) {
+void DAC2017(DATA_T I[3][224][224], DATA_T W1_DAC[64][3][3][3], DATA_T B1_DAC[64],DATA_T W2_DAC[64][64][3][3], DATA_T B2_DAC[64],DATA_T W4_DAC[128][64][3][3], DATA_T B4_DAC[128],DATA_T W5_DAC[128][128][3][3], DATA_T B5_DAC[128],DATA_T W7_DAC[256][128][3][3], DATA_T B7_DAC[256],DATA_T O[256][56][56]) {
 
 #pragma HLS ARRAY_PARTITION variable=W1_DAC complete dim=1
 #pragma HLS ARRAY_PARTITION variable=W1_DAC complete dim=3
