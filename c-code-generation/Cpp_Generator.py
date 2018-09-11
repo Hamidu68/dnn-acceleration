@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
     # Open file
     batch_normal = open("../Template/Function/BatchNormalization.txt")
-    conv_s = open("../Template/Function/Conv2D_same_dac.txt")
+    conv_s = open("../Template/Function/Conv2D_same.txt")
     conv_v = open("../Template/Function/Conv2D_valid.txt")
     ad = open("../Template/Function/Add.txt")
     den_s = open("../Template/Function/Dense_Softmax.txt")

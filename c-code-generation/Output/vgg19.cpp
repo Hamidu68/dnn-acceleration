@@ -71,7 +71,10 @@ void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][224][224], DATA_T B[64]
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -98,7 +101,10 @@ void SW_block1_conv2(DATA_T I[64][224][224], DATA_T O[64][224][224], DATA_T B[64
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -145,7 +151,10 @@ void SW_block2_conv1(DATA_T I[64][112][112], DATA_T O[128][112][112], DATA_T B[1
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -172,7 +181,10 @@ void SW_block2_conv2(DATA_T I[128][112][112], DATA_T O[128][112][112], DATA_T B[
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -219,7 +231,10 @@ void SW_block3_conv1(DATA_T I[128][56][56], DATA_T O[256][56][56], DATA_T B[256]
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}

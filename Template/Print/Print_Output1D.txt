@@ -1,7 +1,7 @@
 fprintf(o_stream,"%s","$Name : [[");
 for (k = 0; k <  $Output_channel ; k++) {
 
-	fprintf(o_stream,"%d ",int(O${line_number}_SW[k]));
+	fprintf(o_stream,"%.f ",O${line_number}_SW[k]);
 }
 fprintf(o_stream,"%s","]]\n\n");
 
