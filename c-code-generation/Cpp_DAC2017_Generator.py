@@ -24,7 +24,7 @@ if __name__ == "__main__":
     Output_variables="" #Argument to sw.txt
     SW_variables="" #Argument to sw.txt
     assign_value="" #Argument to top.txt
-    Optimized_code="" #Argument to top_func.txt
+    DAC_Optimized_code="" #Argument to top_func.txt
     variables="" #Argument to top.txt
     variables_dac = "" #Argument to top_func.txt
     Stream_declaration="" #Argument to Cpp.txt
@@ -120,9 +120,8 @@ if __name__ == "__main__":
             l = {'Name' : row["name"], 'Input_channel' : input_shape[3], 'Input_width' : input_shape[1],'Stride_width': stride_shape[0],'Stride_height':stride_shape[1],
              'Input_height' : input_shape[2], 'Output_channel' : output_shape[3],'Filter_width' : filter_shape[0],
              'Filter_height' : filter_shape[1], 'Output_width' : output_shape[1], 'Output_height' : output_shape[2]}
-            lm = {'num': conv_count, 'Name' : row["name"], 'Input_channel' : input_shape[3], 'Output_channel' : output_shape[3], 'Input_width' : input_shape[1],
-             'Input_height' : input_shape[2],'Filter_width' : filter_shape[0],
-             'Filter_height' : filter_shape[1]}
+            lm = {'num': conv_count, 'Name' : row["name"], 'Input_channel' : input_shape[3], 'Output_channel' : output_shape[3],'Output_width':output_shape[1], 'Input_width' : input_shape[1],
+             'Input_height' : input_shape[2],'Filter_width' : filter_shape[0],'Filter_height' : filter_shape[1]}
             #SW_static_variables(W,O,B)
             SW_static_v += "static DATA_T W"+line_num_str+"["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "];\n"
             SW_static_v += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
@@ -341,10 +340,10 @@ if __name__ == "__main__":
                 HW_functions += "HW_" + row["name"]+"(I_strm, W"+line_num_str+"_DAC, B"+line_num_str+"_DAC, O"+line_num_str+"_strm);\n"
             else :
                 HW_functions += "HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+line_num_str+"_DAC, B"+line_num_str+"_DAC, O"+line_num_str+"_strm);\n"
-            Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_DAC complete dim=1\n"
-            Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_DAC complete dim=3\n"
-            Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_DAC complete dim=4\n"
-            Optimized_code += "#pragma HLS ARRAY_PARTITION variable=B"+line_num_str+"_DAC complete\n"
+            DAC_Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_DAC complete dim=1\n"
+            DAC_Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_DAC complete dim=3\n"
+            DAC_Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_DAC complete dim=4\n"
+            DAC_Optimized_code += "#pragma HLS ARRAY_PARTITION variable=B"+line_num_str+"_DAC complete\n"
 	    #top_func_argument to top.txt
             top_func_argument += "W"+line_num_str+"_DAC, " +"B"+line_num_str+"_DAC, "
             #Stream declaration
@@ -370,12 +369,12 @@ if __name__ == "__main__":
 	'Output_width':output_shape[1], 'Output_height':output_shape[2]}
         stream_template=stream_io.substitute(strm)+"\n"
 	#Template top_func.txt
-        tf={'model_name':model_name,'variables': variables_dac,
-        'Optimized_code':Optimized_code ,'Stream_declaration':Stream_declaration , 'Function_call': HW_functions, 'line_num':line_num_str}
+        tf={'model_name':"DAC2017",'variables': variables_dac,
+        'Optimized_code':DAC_Optimized_code ,'Stream_declaration':Stream_declaration , 'Function_call': HW_functions, 'line_num':line_num_str}
         top_func_template=top_func.substitute(tf)
         #Template top.txt
-        to={'model_name':model_name, 'variables':variables, 'Output_channel':output_shape[3],'Output_width':output_shape[1],
-        'Output_height':output_shape [2], 'assign_value':assign_value, 'top_func_argument':top_func_argument}
+        to={'model_name':"DAC2017", 'variables':variables, 'Output_channel':output_shape[3],'Output_width':output_shape[1],
+        'Output_height':output_shape[2], 'assign_value':assign_value, 'top_func_argument':top_func_argument}
         top_template=top.substitute(to)
 
     # Output shape 1D
@@ -387,22 +386,22 @@ if __name__ == "__main__":
         strm={'Input_channel':first_input_shape[3], 'Input_width': first_input_shape[1], 'Input_height': first_input_shape[2], 'last_output_channel': output_shape[1]}
         stream_template=stream_io_dense.substitute(strm)+"\n"
         #Template top_func.txt
-        tf={'model_name':model_name,'variables': variables_dac, 'Optimized_code':Optimized_code ,'Stream_declaration':Stream_declaration ,
+        tf={'model_name':"DAC2017",'variables': variables_dac, 'Optimized_code':DAC_Optimized_code ,'Stream_declaration':Stream_declaration ,
 	'Function_call': HW_functions, 'line_num':line_num_str}
         top_func_template=top_func.substitute(tf)
         #Template top.txt
-        to={'model_name':model_name, 'variables':variables, 'last_output_channel':output_shape[1],'assign_value':assign_value,
+        to={'model_name':"DAC2017", 'variables':variables, 'last_output_channel':output_shape[1],'assign_value':assign_value,
         'top_func_argument':top_func_argument}
         top_template=top_dense.substitute(to)
 
     #Template sw.txt
-    s={'model_name':model_name,'SW_variables': SW_variables,'Output_variables': Output_variables,'SW_functions':SW_functions}
+    s={'model_name':"DAC2017",'SW_variables': SW_variables,'Output_variables': Output_variables,'SW_functions':SW_functions}
     sw_template=sw.substitute(s)
     #Template Cpp.txt
     f = {'D_type':sys.argv[3], 'Stream_io':stream_template, 'Static_variables': Static_variables, 'top_func':top_func_template, 'top':top_template, 'sw':sw_template, 'SW_def_func':SW_def_func, 'HW_def_func':HW_def_func}
     c_file = model.substitute(f) + "\n";
 
-    file = open('Output/'+model_name+'.cpp','w')
+    file = open("Output/DAC2017_"+ model_name+".cpp",'w')
     file.write(c_file)
     file.close()
 
