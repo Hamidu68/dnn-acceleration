@@ -1,3 +1,5 @@
 *.bin
 out
 C_Verifier.cpp
+C_output.txt
+keras_output.txt

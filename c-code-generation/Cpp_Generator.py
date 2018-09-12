@@ -9,10 +9,11 @@ from string import Template
 #sys.argv[1]=Test.csv
 #sys.argv[2]=model name
 #sys.argv[3]=Data type
-
-# Main 1) Define variable
+#sys.argv[4]=Relu(True and False)
 
 if __name__ == "__main__":
+    # Main 1) Define variable
+
     SW_def_func =""
     HW_def_func =""
     SW_functions = ""
@@ -39,7 +40,12 @@ if __name__ == "__main__":
 
     # Open file
     batch_normal = open("../Template/Function/BatchNormalization.txt")
-    conv_s = open("../Template/Function/Conv2D_same.txt")
+    #with relu
+    if sys.argv[4] == "True":
+        conv_s = open("../Template/Function/Conv2D_same_relu.txt")
+    #without relu
+    else :
+        conv_s = open("../Template/Function/Conv2D_same.txt")
     conv_v = open("../Template/Function/Conv2D_valid.txt")
     ad = open("../Template/Function/Add.txt")
     den_s = open("../Template/Function/Dense_Softmax.txt")
@@ -98,8 +104,6 @@ if __name__ == "__main__":
     model_name=sys.argv[2]
 
     # Main 4) Generate Function depending on layer_type
-
-    #File Pointers
 
     for row in csv_reader:
         #Count Line number

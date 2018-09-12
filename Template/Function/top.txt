@@ -6,7 +6,7 @@ void ${model_name}_top($variables) {
   int m, x, y, i, j, k;
 
   $assign_value
-  
+
   $model_name($top_func_argument);
 
   for (m=0; m<$Output_channel; m++) {

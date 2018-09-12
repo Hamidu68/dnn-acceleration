@@ -37,17 +37,17 @@ void Stream_output(hls::stream<DATA_T> &O_strm, DATA_T O[256][56][56]) {
 
 
 
-static DATA_T I_DAC[3][224][224];
-static DATA_T W1_DAC[64][3][3][3];
-static DATA_T B1_DAC[64];
-static DATA_T W2_DAC[64][64][3][3];
-static DATA_T B2_DAC[64];
-static DATA_T W4_DAC[128][64][3][3];
-static DATA_T B4_DAC[128];
-static DATA_T W5_DAC[128][128][3][3];
-static DATA_T B5_DAC[128];
-static DATA_T W7_DAC[256][128][3][3];
-static DATA_T B7_DAC[256];
+static DATA_T I_d[3][224][224];
+static DATA_T W1_d[64][3][3][3];
+static DATA_T B1_d[64];
+static DATA_T W2_d[64][64][3][3];
+static DATA_T B2_d[64];
+static DATA_T W4_d[128][64][3][3];
+static DATA_T B4_d[128];
+static DATA_T W5_d[128][128][3][3];
+static DATA_T B5_d[128];
+static DATA_T W7_d[256][128][3][3];
+static DATA_T B7_d[256];
 
 
 void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][224][224], DATA_T B[64], DATA_T W[64][3][3][3]) {
@@ -907,28 +907,28 @@ void DAC2017_block3_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[256][128][3][3],
 
 
 
-void DAC2017(DATA_T I[3][224][224], DATA_T W1_DAC[64][3][3][3], DATA_T B1_DAC[64],DATA_T W2_DAC[64][64][3][3], DATA_T B2_DAC[64],DATA_T W4_DAC[128][64][3][3], DATA_T B4_DAC[128],DATA_T W5_DAC[128][128][3][3], DATA_T B5_DAC[128],DATA_T W7_DAC[256][128][3][3], DATA_T B7_DAC[256],DATA_T O[256][56][56]) {
+void DAC2017(DATA_T I[3][224][224], DATA_T W1_d[64][3][3][3], DATA_T B1_d[64],DATA_T W2_d[64][64][3][3], DATA_T B2_d[64],DATA_T W4_d[128][64][3][3], DATA_T B4_d[128],DATA_T W5_d[128][128][3][3], DATA_T B5_d[128],DATA_T W7_d[256][128][3][3], DATA_T B7_d[256],DATA_T O[256][56][56]) {
 
-#pragma HLS ARRAY_PARTITION variable=W1_DAC complete dim=1
-#pragma HLS ARRAY_PARTITION variable=W1_DAC complete dim=3
-#pragma HLS ARRAY_PARTITION variable=W1_DAC complete dim=4
-#pragma HLS ARRAY_PARTITION variable=B1_DAC complete
-#pragma HLS ARRAY_PARTITION variable=W2_DAC complete dim=1
-#pragma HLS ARRAY_PARTITION variable=W2_DAC complete dim=3
-#pragma HLS ARRAY_PARTITION variable=W2_DAC complete dim=4
-#pragma HLS ARRAY_PARTITION variable=B2_DAC complete
-#pragma HLS ARRAY_PARTITION variable=W4_DAC complete dim=1
-#pragma HLS ARRAY_PARTITION variable=W4_DAC complete dim=3
-#pragma HLS ARRAY_PARTITION variable=W4_DAC complete dim=4
-#pragma HLS ARRAY_PARTITION variable=B4_DAC complete
-#pragma HLS ARRAY_PARTITION variable=W5_DAC complete dim=1
-#pragma HLS ARRAY_PARTITION variable=W5_DAC complete dim=3
-#pragma HLS ARRAY_PARTITION variable=W5_DAC complete dim=4
-#pragma HLS ARRAY_PARTITION variable=B5_DAC complete
-#pragma HLS ARRAY_PARTITION variable=W7_DAC complete dim=1
-#pragma HLS ARRAY_PARTITION variable=W7_DAC complete dim=3
-#pragma HLS ARRAY_PARTITION variable=W7_DAC complete dim=4
-#pragma HLS ARRAY_PARTITION variable=B7_DAC complete
+#pragma HLS ARRAY_PARTITION variable=W1_d complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W1_d complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W1_d complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B1_d complete
+#pragma HLS ARRAY_PARTITION variable=W2_d complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W2_d complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W2_d complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B2_d complete
+#pragma HLS ARRAY_PARTITION variable=W4_d complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W4_d complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W4_d complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B4_d complete
+#pragma HLS ARRAY_PARTITION variable=W5_d complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W5_d complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W5_d complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B5_d complete
+#pragma HLS ARRAY_PARTITION variable=W7_d complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W7_d complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W7_d complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B7_d complete
 
 
 #pragma HLS DATAFLOW
@@ -945,13 +945,13 @@ hls::stream<DATA_T> O7_strm("O7_strm");
 
 
   Stream_input(I, I_strm);          
-  HW_block1_conv1(I_strm, W1_DAC, B1_DAC, O1_strm);
-HW_block1_conv2(O1_strm, W2_DAC, B2_DAC, O2_strm);
+  DAC2017_block1_conv1(I_strm, W1_d, B1_d, O1_strm);
+DAC2017_block1_conv2(O1_strm, W2_d, B2_d, O2_strm);
 HW_block1_pool(O2_strm, O3_strm);
-HW_block2_conv1(O3_strm, W4_DAC, B4_DAC, O4_strm);
-HW_block2_conv2(O4_strm, W5_DAC, B5_DAC, O5_strm);
+DAC2017_block2_conv1(O3_strm, W4_d, B4_d, O4_strm);
+DAC2017_block2_conv2(O4_strm, W5_d, B5_d, O5_strm);
 HW_block2_pool(O5_strm, O6_strm);
-HW_block3_conv1(O6_strm, W7_DAC, B7_DAC, O7_strm);
+DAC2017_block3_conv1(O6_strm, W7_d, B7_d, O7_strm);
 
   Stream_output(O7_strm, O);
 
@@ -965,77 +965,77 @@ void DAC2017_top(DATA_T I[3][224][224], DATA_T W1[64][3][3][3], DATA_T B1[64],DA
   int m, x, y, i, j, k;
 
   hls::stream<DATA_T> I_strm;
-I_DAC_k_loop: for (k=0; k<3; k++) {
-  I_DAC_x_loop: for (x=0; x<224; x++) {
-  I_DAC_y_loop: for (y=0; y<224; y++) {
-  I_DAC[k][x][y] = I[k][x][y];
+I_d_k_loop: for (k=0; k<3; k++) {
+  I_d_x_loop: for (x=0; x<224; x++) {
+  I_d_y_loop: for (y=0; y<224; y++) {
+  I_d[k][x][y] = I[k][x][y];
 //I_strm.write(I[k][x][y]);
     }
   }
 }
-B1_DAC_m_loop: for (m=0; m<64; m++) {
-	B1_DAC[m] = B1[m];
+B1_d_m_loop: for (m=0; m<64; m++) {
+	B1_d[m] = B1[m];
 }
-W1_DAC_m_loop: for (m=0; m<64; m++) {
-  W1_DAC_k_loop: for (k=0; k<3; k++) {
-  W1_DAC_i_loop: for (i=0; i<3; i++) {
-  W1_DAC_j_loop: for (j=0; j<3; j++) {
-  W1_DAC[m][k][i][j] = W1[m][k][i][j];
+W1_d_m_loop: for (m=0; m<64; m++) {
+  W1_d_k_loop: for (k=0; k<3; k++) {
+  W1_d_i_loop: for (i=0; i<3; i++) {
+  W1_d_j_loop: for (j=0; j<3; j++) {
+  W1_d[m][k][i][j] = W1[m][k][i][j];
       }
     }
   }
 }
-B2_DAC_m_loop: for (m=0; m<64; m++) {
-	B2_DAC[m] = B2[m];
+B2_d_m_loop: for (m=0; m<64; m++) {
+	B2_d[m] = B2[m];
 }
-W2_DAC_m_loop: for (m=0; m<64; m++) {
-  W2_DAC_k_loop: for (k=0; k<64; k++) {
-  W2_DAC_i_loop: for (i=0; i<3; i++) {
-  W2_DAC_j_loop: for (j=0; j<3; j++) {
-  W2_DAC[m][k][i][j] = W2[m][k][i][j];
+W2_d_m_loop: for (m=0; m<64; m++) {
+  W2_d_k_loop: for (k=0; k<64; k++) {
+  W2_d_i_loop: for (i=0; i<3; i++) {
+  W2_d_j_loop: for (j=0; j<3; j++) {
+  W2_d[m][k][i][j] = W2[m][k][i][j];
       }
     }
   }
 }
-B4_DAC_m_loop: for (m=0; m<128; m++) {
-	B4_DAC[m] = B4[m];
+B4_d_m_loop: for (m=0; m<128; m++) {
+	B4_d[m] = B4[m];
 }
-W4_DAC_m_loop: for (m=0; m<128; m++) {
-  W4_DAC_k_loop: for (k=0; k<64; k++) {
-  W4_DAC_i_loop: for (i=0; i<3; i++) {
-  W4_DAC_j_loop: for (j=0; j<3; j++) {
-  W4_DAC[m][k][i][j] = W4[m][k][i][j];
+W4_d_m_loop: for (m=0; m<128; m++) {
+  W4_d_k_loop: for (k=0; k<64; k++) {
+  W4_d_i_loop: for (i=0; i<3; i++) {
+  W4_d_j_loop: for (j=0; j<3; j++) {
+  W4_d[m][k][i][j] = W4[m][k][i][j];
       }
     }
   }
 }
-B5_DAC_m_loop: for (m=0; m<128; m++) {
-	B5_DAC[m] = B5[m];
+B5_d_m_loop: for (m=0; m<128; m++) {
+	B5_d[m] = B5[m];
 }
-W5_DAC_m_loop: for (m=0; m<128; m++) {
-  W5_DAC_k_loop: for (k=0; k<128; k++) {
-  W5_DAC_i_loop: for (i=0; i<3; i++) {
-  W5_DAC_j_loop: for (j=0; j<3; j++) {
-  W5_DAC[m][k][i][j] = W5[m][k][i][j];
+W5_d_m_loop: for (m=0; m<128; m++) {
+  W5_d_k_loop: for (k=0; k<128; k++) {
+  W5_d_i_loop: for (i=0; i<3; i++) {
+  W5_d_j_loop: for (j=0; j<3; j++) {
+  W5_d[m][k][i][j] = W5[m][k][i][j];
       }
     }
   }
 }
-B7_DAC_m_loop: for (m=0; m<256; m++) {
-	B7_DAC[m] = B7[m];
+B7_d_m_loop: for (m=0; m<256; m++) {
+	B7_d[m] = B7[m];
 }
-W7_DAC_m_loop: for (m=0; m<256; m++) {
-  W7_DAC_k_loop: for (k=0; k<128; k++) {
-  W7_DAC_i_loop: for (i=0; i<3; i++) {
-  W7_DAC_j_loop: for (j=0; j<3; j++) {
-  W7_DAC[m][k][i][j] = W7[m][k][i][j];
+W7_d_m_loop: for (m=0; m<256; m++) {
+  W7_d_k_loop: for (k=0; k<128; k++) {
+  W7_d_i_loop: for (i=0; i<3; i++) {
+  W7_d_j_loop: for (j=0; j<3; j++) {
+  W7_d[m][k][i][j] = W7[m][k][i][j];
       }
     }
   }
 }
 
-  
-  DAC2017(I_DAC, W1_DAC, B1_DAC, W2_DAC, B2_DAC, W4_DAC, B4_DAC, W5_DAC, B5_DAC, W7_DAC, B7_DAC, O_DAC);
+
+  DAC2017(I_d, W1_d, B1_d, W2_d, B2_d, W4_d, B4_d, W5_d, B5_d, W7_d, B7_d, O_i);
 
   for (m=0; m<256; m++) {
     for (x=0; x<56; x++) {
@@ -1047,7 +1047,7 @@ W7_DAC_m_loop: for (m=0; m<256; m++) {
 
 }
 
-void DAC2017_sw(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128],DATA_T W7[256][128][3][3], DATA_T B7[256],DATA_T O7_SW[256][56][56]) {
+void vgg19_sw(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128],DATA_T W7[256][128][3][3], DATA_T B7[256],DATA_T O[256][56][56]) {
 
   static DATA_T O1_SW[64][224][224];
 static DATA_T O2_SW[64][224][224];
@@ -1055,6 +1055,7 @@ static DATA_T O3_SW[64][112][112];
 static DATA_T O4_SW[128][112][112];
 static DATA_T O5_SW[128][112][112];
 static DATA_T O6_SW[128][56][56];
+static DATA_T O7_SW[256][56][56];
 
 
   int m, x, y, i, j, k;

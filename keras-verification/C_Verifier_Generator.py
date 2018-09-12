@@ -7,10 +7,13 @@
 import csv
 from string import Template
 from sys import argv
- 
-# sys.argv[1] = Test.csv
+
+#sys.argv[1]= Test.csv
+#sys.argv[2]=Relu(True and False)
 
 if __name__ == "__main__":
+    # Main 1) Define variable
+
     SW_def_func =""
     SW_functions = ""
     Shared_static_v =""
@@ -18,11 +21,17 @@ if __name__ == "__main__":
     initialization = ""
     line_count = -1
     print_result =""
-    
-    #####Load template#####
+
+    # Main 2) Load Template
+
     # Open file
     batch_normal = open("../Template/Function/BatchNormalization.txt")
-    conv_s = open("../Template/Function/Conv2D_same.txt")
+    #with relu
+    if argv[2] == "True":
+        conv_s = open("../Template/Function/Conv2D_same_relu.txt")
+    #without relu
+    else :
+        conv_s = open("../Template/Function/Conv2D_same.txt")
     conv_v = open("../Template/Function/Conv2D_valid.txt")
     ad = open("../Template/Function/Add.txt")
     den_s = open("../Template/Function/Dense_Softmax.txt")
@@ -41,7 +50,7 @@ if __name__ == "__main__":
     m = open("../Template/Main/C_Verification.txt")
     o1 = open("../Template/Print/Print_Output3D.txt")
     o2 = open("../Template/Print/Print_Output1D.txt")
-    
+
     # Read Template
     BatchNormalization = Template(batch_normal.read())
     Conv2D_same = Template(conv_s.read())
@@ -63,11 +72,14 @@ if __name__ == "__main__":
     main = Template(m.read())
     output3d = Template(o1.read())
     output1d = Template(o2.read())
-    #Read Layer Information from CSV
+
+    # Main 3) Read Layer Information from CSV
+
     csv_file = open(argv[1])
     csv_reader = csv.DictReader(csv_file)
-    
-    #####Generate Function depending on layer_type #####
+
+     # Main 4) Generate Function depending on layer_type
+
     for row in csv_reader:
         #Count Line number
         line_count+= 1
@@ -75,7 +87,7 @@ if __name__ == "__main__":
         #Get Input, Output shape
         input_shape = row["batch_input_shape"][1 : -1].split(", ")
         output_shape = row["batch_output_shape"][1 : -1].split(", ")
-     
+
         # layer_type = convolution2D(I,O,B,W) (padding option: valid , same)
         if row["layer_type"] == 'Conv2D' :
             filter_shape = row["kernel_size"][1:-1].split(", ")
@@ -99,12 +111,12 @@ if __name__ == "__main__":
             #Report Status
             SW_functions += "printf(\"[C_verifier.cpp]Calculate Conv2D"+line_str+"\\n\\n\");\n\t"
             #Function use
-            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str +  "_SW,B" +line_str + ",W"+line_str +");\n\t"     
+            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str +  "_SW,B" +line_str + ",W"+line_str +");\n\t"
             #print result
             c = {'Name':"Convolution2D",'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape[2],'line_number':line_count}
             print_result += output3d.substitute(c)+"\n"
-        
-        # layer_type = BatchNormalization(I, O) 
+
+        # layer_type = BatchNormalization(I, O)
         # if Batch size = None(one Input), Mean = 0, Var = 1 fixed.
         elif row["layer_type"] == 'BatchNormalization' :
             l = {'Name' : row["name"], 'Input_channel' : input_shape[3], 'Input_width' : input_shape[1],
@@ -117,11 +129,11 @@ if __name__ == "__main__":
             #Report Status
             SW_functions += "printf(\"[C_verifier.cpp]Calculate BatchNormalization"+line_str+"\\n\\n\");\n\t"
             #Function use
-            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str +  "_SW);\n\t"  
+            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str +  "_SW);\n\t"
             #print result
             c = {'Name':"BatchNormalization",'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape[2],'line_number':line_count}
             print_result += output3d.substitute(c)+"\n"
-       
+
         # layer_type = Activation(Relu)(I, O)
         elif row["layer_type"] == 'Activation' :
             l = {'Name' : row["name"], 'Input_channel' : input_shape[3], 'Input_width' : input_shape[1],
@@ -134,12 +146,12 @@ if __name__ == "__main__":
             #Report Status
             SW_functions += "printf(\"[C_verifier.cpp]Calculate Activation(Relu)"+line_str+"\\n\\n\");\n\t"
             #Function use
-            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str+  "_SW);\n\t" 
+            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str+  "_SW);\n\t"
             #print result
             c = {'Name':"Activations.Relu",'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape[2],'line_number':line_count}
             print_result += output3d.substitute(c)+"\n"
-        
-        # layer_type = MaxPooling2D (I, O) 
+
+        # layer_type = MaxPooling2D (I, O)
         elif row["layer_type"] == 'MaxPooling2D' :
             pool_shape = row["pool_size"][1:-1].split(", ")
             stride_shape = row["strides"][1:-1].split(", ")
@@ -154,12 +166,12 @@ if __name__ == "__main__":
             #Report Status
             SW_functions += "printf(\"[C_verifier.cpp]Calculate MaxPooling2D"+line_str+"\\n\\n\");\n\t"
             #Function use
-            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str+  "_SW);\n\t"   
+            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str+  "_SW);\n\t"
             #print result
             c = {'Name':"MaxPooling2D",'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape[2],'line_number':line_count}
             print_result += output3d.substitute(c)+"\n"
 
-        # layer_type = AveragePooling2D (I, O) 
+        # layer_type = AveragePooling2D (I, O)
         elif row["layer_type"] == 'AveragePooling2D' :
             pool_shape = row["pool_size"][1:-1].split(", ")
             stride_shape = row["strides"][1:-1].split(", ")
@@ -174,7 +186,7 @@ if __name__ == "__main__":
             #Report Status
             SW_functions += "printf(\"[C_verifier.cpp]Calculate AveragePooling2D"+line_str+"\\n\\n\");\n\t"
             #Function use
-            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str +  "_SW);\n\t"  
+            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_str +  "_SW);\n\t"
             #print result
             c = {'Name':"AveragePooling2D",'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape[2],'line_number':line_count}
             print_result += output3d.substitute(c)+"\n"
@@ -186,13 +198,13 @@ if __name__ == "__main__":
                  'Input_height2' : output_shape[2],'Output_channel' : output_shape[3], 'Output_width' : output_shape[1],
                  'Output_height' : output_shape[2]}
             #SW_static_variables (O)
-            SW_static_v += "static DATA_T O"+line_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t"; 
+            SW_static_v += "static DATA_T O"+line_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t";
             #function def
             SW_def_func += Add.substitute(l) +"\n"
             #Report Status
             SW_functions += "printf(\"[C_verifier.cpp]Calculate Add"+line_str+"\\n\\n\");\n\t"
             #Function use
-            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count-11) +  "_SW,O" +line_str+"_SW);\n\t"   
+            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count-11) +  "_SW,O" +line_str+"_SW);\n\t"
             #print result
             c = {'Name':"Add",'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape[2],'line_number':line_count}
             print_result += output3d.substitute(c)+"\n"
@@ -211,11 +223,11 @@ if __name__ == "__main__":
             #Report Status
             SW_functions += "printf(\"[C_verifier.cpp]Calculate ZeroPadding2D"+line_str+"\\n\\n\");\n\t"
             #Function use
-            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW);\n\t"   
+            SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+str(line_count) +  "_SW);\n\t"
             #print result
             c = {'Name':"ZeroPadding2D",'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape[2],'line_number':line_count}
             print_result += output3d.substitute(c)+"\n"
-   
+
         # layer_type = InputLayer
         elif row["layer_type"] =="InputLayer":
             #Report Status
@@ -229,7 +241,7 @@ if __name__ == "__main__":
             #print result
             c = {'Name':"InputLayer",'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape[2],'line_number':line_count}
             print_result += output3d.substitute(c)+"\n"
-   
+
         # layer_type = Flatten(I,O)
         elif row["layer_type"] == "Flatten":
             l = {'Name':row["name"],'Input_channel':input_shape[3],'Input_width':input_shape[1],'Input_height':input_shape[2],'Output_channel':output_shape[1]}
@@ -244,14 +256,14 @@ if __name__ == "__main__":
             #print result
             c = {'Name':"Flatten",'Output_channel':output_shape[1],'line_number':line_count}
             print_result += output1d.substitute(c)+"\n"
-        
+
         # layer_type = Dense(I,W,B,O) (Activation option : relu , softmax)
         elif row["layer_type"] == "Dense":
             l = {'Name':row["name"],'Input_channel':input_shape[1],'Output_channel':output_shape[1]}
             #Shared_static_variable (B,W)
             Shared_static_v += "static DATA_T B"+line_str+ "[" + output_shape[1] + "];\n\t"
             Shared_static_v += "static DATA_T W"+line_str+ "[" + output_shape[1] + "][" + input_shape[1] + "];\n\t";
-            #function def 
+            #function def
             if row["activation"] == 'relu' : # Activation = relu
                 SW_def_func += Dense_relu.substitute(l) + "\n"
             else :  # Activation = softmax
@@ -264,18 +276,18 @@ if __name__ == "__main__":
             #Report Status
             SW_functions += "printf(\"[C_verifier.cpp]Calculate Dense"+line_str+"\\n\\n\");\n\t"
             #functipn use
-            SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,W"+line_str+",B"+line_str+",O"+line_str+"_SW);\n\t"  
+            SW_functions += "SW_"+row["name"]+"(O"+str(line_count-1)+"_SW,W"+line_str+",B"+line_str+",O"+line_str+"_SW);\n\t"
             #print result
             c = {'Name':"Dense",'Output_channel':output_shape[1],'line_number':line_count}
             print_result += output1d.substitute(c)+"\n"
         else :
             print ('Not defined')
-            
+
     # Generate C file
     f = {'def_SW_functions':SW_def_func,'SW_static_variables' :SW_static_v,'Shared_static_variables':Shared_static_v,'SW_functions' :SW_functions,
-         'Initialization':initialization, 'result' : print_result }    
+         'Initialization':initialization, 'result' : print_result }
     c_file = main.substitute(f) + "\n";
     file = open('C_Verifier.cpp','w')
     file.write(c_file)
-    file.close() 
+    file.close()
 

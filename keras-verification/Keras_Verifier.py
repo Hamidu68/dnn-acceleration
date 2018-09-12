@@ -29,6 +29,7 @@ global result_file
 
 line_num=-1
 layer_name=[]
+Relu = sys.argv[5];
 
 if __name__ == "__main__":
     result_file =""
@@ -59,13 +60,16 @@ if __name__ == "__main__":
             for m in range((int)(output_shape[3])):
                 bias[m] = np.fromfile(file=bias_read, dtype=np.int32, count=1, sep='')
             #Set Convolution2D
-            model.add(Conv2D(filters = (int)(output_shape[3]),kernel_size=filter_shape,strides=strides_shape,padding= row["padding"],weights=[filters,bias],activation=row["activation"],data_format='channels_first'))
+            if Relu == "True":
+                model.add(Conv2D(filters = (int)(output_shape[3]),kernel_size=filter_shape,strides=strides_shape,padding= row["padding"],weights=[filters,bias],activation=row["activation"],data_format='channels_first'))
+            else :  #Without Relu
+                model.add(Conv2D(filters = (int)(output_shape[3]),kernel_size=filter_shape,strides=strides_shape,padding= row["padding"],weights=[filters,bias],data_format='channels_first'))
             layer_name.append("Convolution2D : ")
-            
-        elif layer == 'MaxPooling2D' : 
+
+        elif layer == 'MaxPooling2D' :
             #Report Status
             print("[Keras_verifier.py]Calculate MaxPooling2D"+line_str+"\n")
-            #Set strides, kernalsize 
+            #Set strides, kernalsize
             strides_shape= np.asarray(row["strides"][1:-1].split(", ")).astype(np.int)
             pool_shape = np.asarray(row["pool_size"][1:-1].split(", ")).astype(np.int)
             #Set MaxPooling2D
@@ -88,7 +92,7 @@ if __name__ == "__main__":
             print("[Keras_verifier.py]Calculate BatchNormalization"+line_str+"\n")
             #Set BatchNormalization
             model.add(BatchNormalization(axis=1,name=row["name"]))
-            layer_name.append("BatchNormalization : ") 
+            layer_name.append("BatchNormalization : ")
 
         elif layer == 'Activation' :
             #Report Status
@@ -96,35 +100,35 @@ if __name__ == "__main__":
             #Set activations.relu
             model.add(Activation('relu'))
             layer_name.append("Activation.Relu : ")
-            
+
         elif layer == 'AveragePooling2D' :
             #Report Status
             print("[Keras_verifier.py]Calculate AveragePooling2D"+line_str+"\n")
-            #Set strides, kernalsize 
+            #Set strides, kernalsize
             strides_shape= np.asarray(row["strides"][1:-1].split(", ")).astype(np.int)
             pool_shape = np.asarray(row["pool_size"][1:-1].split(", ")).astype(np.int)
             #Set AveragePooling2D
             model.add(AveragePooling2D(pool_size=pool_shape,strides=strides_shape,padding=row["padding"],data_format='channels_first'))
             layer_name.append("AveragePooling2D : ")
-            
+
         #elif layer == 'Add' :
         elif layer =='ZeroPadding2D' :
             #Report Status
             print("[Keras_verifier.py]Calculate ZeroPadding2D"+line_str+"\n")
-            #Set padding 
+            #Set padding
             padding1 = row["padding"][1:-1].split(", (")
             padding = padding1[0][1:-1].split(", ")
             #Set ZeroPadding2D
             model.add(ZeroPadding2D(padding=(int)(padding1[0]), data_format='channels_first'))
             layer_name.append("ZeroPadding2D : ")
-            
+
         elif layer == 'Flatten' :
             #Report Status
             print("[Keras_verifier.py]Calculate Flatten"+line_str+"\n")
             #Set Flatten
             model.add(Flatten(data_format='channels_first'))
             layer_name.append("Flatten : ")
-            
+
         elif layer == 'Dense' :
             #Report Status
             print("[Keras_verifier.py]Calculate Dense"+line_str+"\n")
@@ -141,15 +145,15 @@ if __name__ == "__main__":
             #Set Dense
             model.add(Dense(units=int(row["units"]),activation=row["activation"],weights = [filters,bias]))
             layer_name.append("Dense : ")
-            
-        else : 
+
+        else :
             print("Undefined\n")
     #Report Status
     print("[Keras_verifier.py]Print Result\n")
 
     #Open file
     f = open('Output/keras_output.txt','w')
-    
+
     temp = model.predict(input_value)
 
     #Write input_value
@@ -190,13 +194,13 @@ if __name__ == "__main__":
                 if k != (layer_output.shape[1] - 1):
                     f.write(']\n\n  ')
             f.write(']]]\n\n')
-            
+
         elif len(layer_output.shape) == 2:
             f.write('{}[['.format(layer_name[i+1]))
             for k in range(layer_output.shape[1]):
                 f.write('{} '.format(int(layer_output[0][k])))
             f.write(']]\n\n')
-            
+
     #model.summary()
     f.close()
 

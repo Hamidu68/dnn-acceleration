@@ -1074,7 +1074,7 @@ W7_i_m_loop: for (m=0; m<256; m++) {
   }
 }
 
-  
+
   vgg19(I_i, W1_i, B1_i, W2_i, B2_i, W4_i, B4_i, W5_i, B5_i, W7_i, B7_i, O_i);
 
   for (m=0; m<256; m++) {
