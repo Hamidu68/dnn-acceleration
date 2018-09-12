@@ -73,7 +73,7 @@ if __name__ == "__main__" :
     static_v += "static DATA_T DAC2017[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n\t";
     def_model += ", DATA_T O[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "]);\n"
     model_function =  model_name + "_sw" + func_model + ",O_SW);\n"
-    model_function += "  DAC2017_top" + func_model + """,DAC2017);\n
+    model_function += "  DAC2017_"+model_name+"_top" + func_model + """,DAC2017);\n
     int err_cnt = 0;
     for (m=0; m<"""+output_shape[3]+"""; m++) {
        for (x=0; x<"""+output_shape[1]+"""; x++) {
@@ -87,7 +87,7 @@ if __name__ == "__main__" :
    }\n"""
 
     model_definition = "void " + model_name + "_sw" + def_model
-    model_definition += "void DAC2017_top" + def_model
+    model_definition += "void DAC2017_"+model_name+"_top" + def_model
 
     # Generate CPP file
     f = {'def_model':model_definition,'static_variables':static_v, 'Initialization':initialization, 'model_function' : model_function, 'D_type' : sys.argv[3]}

@@ -10,7 +10,7 @@ using namespace std;
 typedef ap_uint<16> DATA_T;
 
 void vgg19_sw(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128],DATA_T W7[256][128][3][3], DATA_T B7[256], DATA_T O[256][56][56]);
-void DAC2017_top(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128],DATA_T W7[256][128][3][3], DATA_T B7[256], DATA_T O[256][56][56]);
+void DAC2017_vgg19_top(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128],DATA_T W7[256][128][3][3], DATA_T B7[256], DATA_T O[256][56][56]);
 
 
 int main(){
@@ -110,7 +110,7 @@ int main(){
 	
  
   vgg19_sw(I,W1,B1,W2,B2,W4,B4,W5,B5,W7,B7,O_SW);
-  DAC2017_top(I,W1,B1,W2,B2,W4,B4,W5,B5,W7,B7,DAC2017);
+  DAC2017_vgg19_top(I,W1,B1,W2,B2,W4,B4,W5,B5,W7,B7,DAC2017);
 
     int err_cnt = 0;
     for (m=0; m<256; m++) {
