@@ -241,7 +241,7 @@ void SW_block3_conv1(DATA_T I[128][56][56], DATA_T O[256][56][56], DATA_T B[256]
 }
 
 
-void DAC2017_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[64][3][3][3], DATA_T B[64], hls::stream<DATA_T> &O_strm) {
+void DAC2017_HW_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[64][3][3][3], DATA_T B[64], hls::stream<DATA_T> &O_strm) {
 
 #pragma HLS INLINE
   int m, x, y, i, j, k;
@@ -355,7 +355,7 @@ void DAC2017_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[64][3][3][3], DA
  	}
 }
 
-void DAC2017_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[64][64][3][3], DATA_T B[64], hls::stream<DATA_T> &O_strm) {
+void DAC2017_HW_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[64][64][3][3], DATA_T B[64], hls::stream<DATA_T> &O_strm) {
 
 #pragma HLS INLINE
   int m, x, y, i, j, k;
@@ -516,7 +516,7 @@ void HW_block1_pool(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {
 
 }
 
-void DAC2017_block2_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[128][64][3][3], DATA_T B[128], hls::stream<DATA_T> &O_strm) {
+void DAC2017_HW_block2_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[128][64][3][3], DATA_T B[128], hls::stream<DATA_T> &O_strm) {
 
 #pragma HLS INLINE
   int m, x, y, i, j, k;
@@ -630,7 +630,7 @@ void DAC2017_block2_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[128][64][3][3], 
  	}
 }
 
-void DAC2017_block2_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[128][128][3][3], DATA_T B[128], hls::stream<DATA_T> &O_strm) {
+void DAC2017_HW_block2_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[128][128][3][3], DATA_T B[128], hls::stream<DATA_T> &O_strm) {
 
 #pragma HLS INLINE
   int m, x, y, i, j, k;
@@ -791,7 +791,7 @@ void HW_block2_pool(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {
 
 }
 
-void DAC2017_block3_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[256][128][3][3], DATA_T B[256], hls::stream<DATA_T> &O_strm) {
+void DAC2017_HW_block3_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[256][128][3][3], DATA_T B[256], hls::stream<DATA_T> &O_strm) {
 
 #pragma HLS INLINE
   int m, x, y, i, j, k;
@@ -907,7 +907,7 @@ void DAC2017_block3_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[256][128][3][3],
 
 
 
-void DAC2017(DATA_T I[3][224][224], DATA_T W1_d[64][3][3][3], DATA_T B1_d[64],DATA_T W2_d[64][64][3][3], DATA_T B2_d[64],DATA_T W4_d[128][64][3][3], DATA_T B4_d[128],DATA_T W5_d[128][128][3][3], DATA_T B5_d[128],DATA_T W7_d[256][128][3][3], DATA_T B7_d[256],DATA_T O[256][56][56]) {
+void DAC2017_vgg19(DATA_T I[3][224][224], DATA_T W1_d[64][3][3][3], DATA_T B1_d[64],DATA_T W2_d[64][64][3][3], DATA_T B2_d[64],DATA_T W4_d[128][64][3][3], DATA_T B4_d[128],DATA_T W5_d[128][128][3][3], DATA_T B5_d[128],DATA_T W7_d[256][128][3][3], DATA_T B7_d[256],DATA_T O[256][56][56]) {
 
 #pragma HLS ARRAY_PARTITION variable=W1_d complete dim=1
 #pragma HLS ARRAY_PARTITION variable=W1_d complete dim=3
@@ -945,19 +945,19 @@ hls::stream<DATA_T> O7_strm("O7_strm");
 
 
   Stream_input(I, I_strm);          
-  DAC2017_block1_conv1(I_strm, W1_d, B1_d, O1_strm);
-DAC2017_block1_conv2(O1_strm, W2_d, B2_d, O2_strm);
+  DAC2017_HW_block1_conv1(I_strm, W1_d, B1_d, O1_strm);
+DAC2017_HW_block1_conv2(O1_strm, W2_d, B2_d, O2_strm);
 HW_block1_pool(O2_strm, O3_strm);
-DAC2017_block2_conv1(O3_strm, W4_d, B4_d, O4_strm);
-DAC2017_block2_conv2(O4_strm, W5_d, B5_d, O5_strm);
+DAC2017_HW_block2_conv1(O3_strm, W4_d, B4_d, O4_strm);
+DAC2017_HW_block2_conv2(O4_strm, W5_d, B5_d, O5_strm);
 HW_block2_pool(O5_strm, O6_strm);
-DAC2017_block3_conv1(O6_strm, W7_d, B7_d, O7_strm);
+DAC2017_HW_block3_conv1(O6_strm, W7_d, B7_d, O7_strm);
 
   Stream_output(O7_strm, O);
 
 }
 
-void DAC2017_top(DATA_T I[3][224][224], DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128],DATA_T W7[256][128][3][3], DATA_T B7[256],DATA_T O[256][56][56]) {
+void DAC2017_vgg19_top(DATA_T I[3][224][224], DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T W2[64][64][3][3], DATA_T B2[64],DATA_T W4[128][64][3][3], DATA_T B4[128],DATA_T W5[128][128][3][3], DATA_T B5[128],DATA_T W7[256][128][3][3], DATA_T B7[256],DATA_T O[256][56][56]) {
 
   DATA_T O_i[256][56][56];
 
@@ -1035,7 +1035,7 @@ W7_d_m_loop: for (m=0; m<256; m++) {
 }
 
 
-  DAC2017(I_d, W1_d, B1_d, W2_d, B2_d, W4_d, B4_d, W5_d, B5_d, W7_d, B7_d, O_i);
+  DAC2017_vgg19(I_d, W1_d, B1_d, W2_d, B2_d, W4_d, B4_d, W5_d, B5_d, W7_d, B7_d, O_i);
 
   for (m=0; m<256; m++) {
     for (x=0; x<56; x++) {

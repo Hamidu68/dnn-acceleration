@@ -91,7 +91,7 @@ if __name__ == "__main__":
             l = {'Name' : row["name"], 'Input_channel' : input_shape[3], 'Input_width' : input_shape[1],'Stride_width': stride_shape[0],'Stride_height':stride_shape[1],
              'Input_height' : input_shape[2], 'Output_channel' : output_shape[3],'Filter_width' : filter_shape[0],
              'Filter_height' : filter_shape[1], 'Output_width' : output_shape[1], 'Output_height' : output_shape[2]}
-            lm = {'num': conv_count, 'Name' : row["name"], 'Input_channel' : input_shape[3], 'Output_channel' : output_shape[3], 'Input_width' : input_shape[1], 'Output_width' : output_shape[1], 'Output_height' : output_shape[2], 'Input_height' : input_shape[2],'Filter_width' : filter_shape[0], 'Filter_height' : filter_shape[1]}
+            lm = {'num': conv_count, 'Name' : "HW_"+row["name"], 'Input_channel' : input_shape[3], 'Output_channel' : output_shape[3], 'Input_width' : input_shape[1], 'Output_width' : output_shape[1], 'Output_height' : output_shape[2], 'Input_height' : input_shape[2],'Filter_width' : filter_shape[0], 'Filter_height' : filter_shape[1]}
             #SW_static_variables(W,O,B)
             SW_static_v += "static DATA_T W"+line_num_str+"["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "];\n"
             SW_static_v += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
@@ -120,11 +120,11 @@ if __name__ == "__main__":
             HW_def_func += Conv2D_same_hw.substitute(lm) +"\n"
             #Function use
             if line_count<=1 :
-                HW_functions += "DAC2017_" + row["name"]+"(I_strm, W"+line_num_str+"_d, B"+line_num_str+"_d, O"+line_num_str+"_strm);\n"
+                HW_functions += "DAC2017_HW_" + row["name"]+"(I_strm, W"+line_num_str+"_d, B"+line_num_str+"_d, O"+line_num_str+"_strm);\n"
                 SW_functions += "SW_" + row["name"]+ "(I,O"+line_num_str +  "_SW,B" +line_num_str + ",W"+line_num_str +");\n"
             else :
                 SW_functions += "SW_" + row["name"]+ "(O" +str(line_count-1) +"_SW,O"+line_num_str +  "_SW,B" +line_num_str + ",W"+line_num_str +");\n"
-                HW_functions += "DAC2017_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+line_num_str+"_d, B"+line_num_str+"_d, O"+line_num_str+"_strm);\n"
+                HW_functions += "DAC2017_HW_" + row["name"]+"(O"+str(line_count-1)+"_strm, W"+line_num_str+"_d, B"+line_num_str+"_d, O"+line_num_str+"_strm);\n"
             #Optimized code
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_d complete dim=1\n"
             Optimized_code += "#pragma HLS ARRAY_PARTITION variable=W"+line_num_str+"_d complete dim=3\n"
@@ -191,10 +191,10 @@ if __name__ == "__main__":
     strm={'Input_channel':first_input_shape[3], 'Input_width': first_input_shape[1], 'Input_height': first_input_shape[2], 'Output_channel':output_shape[3],'Output_width':output_shape[1], 'Output_height':output_shape[2]}
     stream_template=stream_io.substitute(strm)+"\n"
 	#Template top_func.txt
-    tf={'model_name':"DAC2017",'variables': variables_i,'Optimized_code':Optimized_code ,'Stream_declaration':Stream_declaration , 'Function_call': HW_functions, 'line_num':line_num_str}
+    tf={'model_name':"DAC2017_"+model_name,'variables': variables_i,'Optimized_code':Optimized_code ,'Stream_declaration':Stream_declaration , 'Function_call': HW_functions, 'line_num':line_num_str}
     top_func_template=top_func.substitute(tf)
     #Template top.txt
-    to={'model_name':"DAC2017", 'variables':variables, 'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape [2], 'assign_value':assign_value, 'top_func_argument':top_func_argument}
+    to={'model_name':"DAC2017_"+model_name, 'variables':variables, 'Output_channel':output_shape[3],'Output_width':output_shape[1],'Output_height':output_shape [2], 'assign_value':assign_value, 'top_func_argument':top_func_argument}
     top_template=top.substitute(to)
 
     #Template sw.txt
