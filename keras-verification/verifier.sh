@@ -16,10 +16,10 @@ g++ -std=c++0x Variable_Generator.cpp -o out
 
 #Generate C_Verifier
 cd ../keras-verification
-python C_Verifier_Generator.py $1 $2
+python C_Verifier_Generator.py $1 $3
 
 #Run Verifier
-python Keras_Verifier.py $1 $Variable_dir$Weight_file $Variable_dir$Bias_file $Variable_dir$Input_file $2
+python Keras_Verifier.py $1 $Variable_dir$Weight_file $Variable_dir$Bias_file $Variable_dir$Input_file $3
 g++ -std=c++0x C_Verifier.cpp -o out
 ./out $Variable_dir$Weight_file $Variable_dir$Bias_file $Variable_dir$Input_file
 
