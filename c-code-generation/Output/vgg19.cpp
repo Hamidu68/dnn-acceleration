@@ -258,7 +258,7 @@ void HW_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[64][3][3][3], DATA_T 
 
 #pragma HLS ARRAY_PARTITION variable=I complete dim=1
 #pragma HLS ARRAY_PARTITION variable=I complete dim=2
-#pragma HLS ARRAY_PARTITION variable=I complete dim=3 
+#pragma HLS ARRAY_PARTITION variable=I complete dim=3
 
  	Conv2D_1_x_loop: for (x=0; x<224+2; x++) {
  		Conv2D_1_y_loop: for (y=0; y<224+2; y++) {
@@ -286,63 +286,63 @@ void HW_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[64][3][3][3], DATA_T 
   	 				if (k==0) {
   	 					ofm[m] = B[m];
   	 				}
- 						if (x-2+0 < 3 && y-2+0 < 3) {
+ 						if (x-2+0 < 224 && y-2+0 < 224) {
  							ifm[m] = I_0;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
 
- 						if (x-2+0 < 3 && y-2+1 < 3) {
+ 						if (x-2+0 < 224 && y-2+1 < 224) {
  							ifm[m] = I_1;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
 
- 						if (x-2+0 < 3 && y-2+2 < 3) {
+ 						if (x-2+0 < 224 && y-2+2 < 224) {
  							ifm[m] = I_2;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
 
- 						if (x-2+1 < 3 && y-2+0 < 3) {
+ 						if (x-2+1 < 224 && y-2+0 < 224) {
  							ifm[m] = I_3;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
 
- 						if (x-2+1 < 3 && y-2+1 < 3) {
+ 						if (x-2+1 < 224 && y-2+1 < 224) {
  							ifm[m] = I_4;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
 
- 						if (x-2+1 < 3 && y-2+2 < 3) {
+ 						if (x-2+1 < 224 && y-2+2 < 224) {
  							ifm[m] = I_5;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
 
- 						if (x-2+2 < 3 && y-2+0 < 3) {
+ 						if (x-2+2 < 224 && y-2+0 < 224) {
  							ifm[m] = I_6;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
- 						if (x-2+2 < 3 && y-2+1 < 3) {
+ 						if (x-2+2 < 224 && y-2+1 < 224) {
  							ifm[m] = I_7;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
 
- 						if (x-2+2 < 3 && y-2+2 < 3) {
+ 						if (x-2+2 < 224 && y-2+2 < 224) {
  							ifm[m] = I_8;
  						} else {
  							ifm[m] = 0; // zero padding
@@ -380,7 +380,7 @@ void HW_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[64][64][3][3], DATA_T
 
 #pragma HLS ARRAY_PARTITION variable=I complete dim=1
 #pragma HLS ARRAY_PARTITION variable=I complete dim=2
-#pragma HLS ARRAY_PARTITION variable=I complete dim=3 
+#pragma HLS ARRAY_PARTITION variable=I complete dim=3
 
  	Conv2D_2_x_loop: for (x=0; x<224+2; x++) {
  		Conv2D_2_y_loop: for (y=0; y<224+2; y++) {
@@ -408,63 +408,63 @@ void HW_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[64][64][3][3], DATA_T
   	 				if (k==0) {
   	 					ofm[m] = B[m];
   	 				}
- 						if (x-2+0 < 64 && y-2+0 < 64) {
+ 						if (x-2+0 < 224 && y-2+0 < 224) {
  							ifm[m] = I_0;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
 
- 						if (x-2+0 < 64 && y-2+1 < 64) {
+ 						if (x-2+0 < 224 && y-2+1 < 224) {
  							ifm[m] = I_1;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
 
- 						if (x-2+0 < 64 && y-2+2 < 64) {
+ 						if (x-2+0 < 224 && y-2+2 < 224) {
  							ifm[m] = I_2;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
 
- 						if (x-2+1 < 64 && y-2+0 < 64) {
+ 						if (x-2+1 < 224 && y-2+0 < 224) {
  							ifm[m] = I_3;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
 
- 						if (x-2+1 < 64 && y-2+1 < 64) {
+ 						if (x-2+1 < 224 && y-2+1 < 224) {
  							ifm[m] = I_4;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
 
- 						if (x-2+1 < 64 && y-2+2 < 64) {
+ 						if (x-2+1 < 224 && y-2+2 < 224) {
  							ifm[m] = I_5;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
 
- 						if (x-2+2 < 64 && y-2+0 < 64) {
+ 						if (x-2+2 < 224 && y-2+0 < 224) {
  							ifm[m] = I_6;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
- 						if (x-2+2 < 64 && y-2+1 < 64) {
+ 						if (x-2+2 < 224 && y-2+1 < 224) {
  							ifm[m] = I_7;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
 
- 						if (x-2+2 < 64 && y-2+2 < 64) {
+ 						if (x-2+2 < 224 && y-2+2 < 224) {
  							ifm[m] = I_8;
  						} else {
  							ifm[m] = 0; // zero padding
@@ -549,7 +549,7 @@ void HW_block2_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[128][64][3][3], DATA_
 
 #pragma HLS ARRAY_PARTITION variable=I complete dim=1
 #pragma HLS ARRAY_PARTITION variable=I complete dim=2
-#pragma HLS ARRAY_PARTITION variable=I complete dim=3 
+#pragma HLS ARRAY_PARTITION variable=I complete dim=3
 
  	Conv2D_3_x_loop: for (x=0; x<112+2; x++) {
  		Conv2D_3_y_loop: for (y=0; y<112+2; y++) {
@@ -577,63 +577,63 @@ void HW_block2_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[128][64][3][3], DATA_
   	 				if (k==0) {
   	 					ofm[m] = B[m];
   	 				}
- 						if (x-2+0 < 64 && y-2+0 < 64) {
+ 						if (x-2+0 < 112 && y-2+0 < 112) {
  							ifm[m] = I_0;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
 
- 						if (x-2+0 < 64 && y-2+1 < 64) {
+ 						if (x-2+0 < 112 && y-2+1 < 112) {
  							ifm[m] = I_1;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
 
- 						if (x-2+0 < 64 && y-2+2 < 64) {
+ 						if (x-2+0 < 112 && y-2+2 < 112) {
  							ifm[m] = I_2;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
 
- 						if (x-2+1 < 64 && y-2+0 < 64) {
+ 						if (x-2+1 < 112 && y-2+0 < 112) {
  							ifm[m] = I_3;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
 
- 						if (x-2+1 < 64 && y-2+1 < 64) {
+ 						if (x-2+1 < 112 && y-2+1 < 112) {
  							ifm[m] = I_4;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
 
- 						if (x-2+1 < 64 && y-2+2 < 64) {
+ 						if (x-2+1 < 112 && y-2+2 < 112) {
  							ifm[m] = I_5;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
 
- 						if (x-2+2 < 64 && y-2+0 < 64) {
+ 						if (x-2+2 < 112 && y-2+0 < 112) {
  							ifm[m] = I_6;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
- 						if (x-2+2 < 64 && y-2+1 < 64) {
+ 						if (x-2+2 < 112 && y-2+1 < 112) {
  							ifm[m] = I_7;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
 
- 						if (x-2+2 < 64 && y-2+2 < 64) {
+ 						if (x-2+2 < 112 && y-2+2 < 112) {
  							ifm[m] = I_8;
  						} else {
  							ifm[m] = 0; // zero padding
@@ -671,7 +671,7 @@ void HW_block2_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[128][128][3][3], DATA
 
 #pragma HLS ARRAY_PARTITION variable=I complete dim=1
 #pragma HLS ARRAY_PARTITION variable=I complete dim=2
-#pragma HLS ARRAY_PARTITION variable=I complete dim=3 
+#pragma HLS ARRAY_PARTITION variable=I complete dim=3
 
  	Conv2D_4_x_loop: for (x=0; x<112+2; x++) {
  		Conv2D_4_y_loop: for (y=0; y<112+2; y++) {
@@ -699,63 +699,63 @@ void HW_block2_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[128][128][3][3], DATA
   	 				if (k==0) {
   	 					ofm[m] = B[m];
   	 				}
- 						if (x-2+0 < 128 && y-2+0 < 128) {
+ 						if (x-2+0 < 112 && y-2+0 < 112) {
  							ifm[m] = I_0;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
 
- 						if (x-2+0 < 128 && y-2+1 < 128) {
+ 						if (x-2+0 < 112 && y-2+1 < 112) {
  							ifm[m] = I_1;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
 
- 						if (x-2+0 < 128 && y-2+2 < 128) {
+ 						if (x-2+0 < 112 && y-2+2 < 112) {
  							ifm[m] = I_2;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
 
- 						if (x-2+1 < 128 && y-2+0 < 128) {
+ 						if (x-2+1 < 112 && y-2+0 < 112) {
  							ifm[m] = I_3;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
 
- 						if (x-2+1 < 128 && y-2+1 < 128) {
+ 						if (x-2+1 < 112 && y-2+1 < 112) {
  							ifm[m] = I_4;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
 
- 						if (x-2+1 < 128 && y-2+2 < 128) {
+ 						if (x-2+1 < 112 && y-2+2 < 112) {
  							ifm[m] = I_5;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
 
- 						if (x-2+2 < 128 && y-2+0 < 128) {
+ 						if (x-2+2 < 112 && y-2+0 < 112) {
  							ifm[m] = I_6;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
- 						if (x-2+2 < 128 && y-2+1 < 128) {
+ 						if (x-2+2 < 112 && y-2+1 < 112) {
  							ifm[m] = I_7;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
 
- 						if (x-2+2 < 128 && y-2+2 < 128) {
+ 						if (x-2+2 < 112 && y-2+2 < 112) {
  							ifm[m] = I_8;
  						} else {
  							ifm[m] = 0; // zero padding
@@ -840,7 +840,7 @@ void HW_block3_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[256][128][3][3], DATA
 
 #pragma HLS ARRAY_PARTITION variable=I complete dim=1
 #pragma HLS ARRAY_PARTITION variable=I complete dim=2
-#pragma HLS ARRAY_PARTITION variable=I complete dim=3 
+#pragma HLS ARRAY_PARTITION variable=I complete dim=3
 
  	Conv2D_5_x_loop: for (x=0; x<56+2; x++) {
  		Conv2D_5_y_loop: for (y=0; y<56+2; y++) {
@@ -868,63 +868,63 @@ void HW_block3_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[256][128][3][3], DATA
   	 				if (k==0) {
   	 					ofm[m] = B[m];
   	 				}
- 						if (x-2+0 < 128 && y-2+0 < 128) {
+ 						if (x-2+0 < 56 && y-2+0 < 56) {
  							ifm[m] = I_0;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
 
- 						if (x-2+0 < 128 && y-2+1 < 128) {
+ 						if (x-2+0 < 56 && y-2+1 < 56) {
  							ifm[m] = I_1;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
 
- 						if (x-2+0 < 128 && y-2+2 < 128) {
+ 						if (x-2+0 < 56 && y-2+2 < 56) {
  							ifm[m] = I_2;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
 
- 						if (x-2+1 < 128 && y-2+0 < 128) {
+ 						if (x-2+1 < 56 && y-2+0 < 56) {
  							ifm[m] = I_3;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
 
- 						if (x-2+1 < 128 && y-2+1 < 128) {
+ 						if (x-2+1 < 56 && y-2+1 < 56) {
  							ifm[m] = I_4;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
 
- 						if (x-2+1 < 128 && y-2+2 < 128) {
+ 						if (x-2+1 < 56 && y-2+2 < 56) {
  							ifm[m] = I_5;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
 
- 						if (x-2+2 < 128 && y-2+0 < 128) {
+ 						if (x-2+2 < 56 && y-2+0 < 56) {
  							ifm[m] = I_6;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
- 						if (x-2+2 < 128 && y-2+1 < 128) {
+ 						if (x-2+2 < 56 && y-2+1 < 56) {
  							ifm[m] = I_7;
  						} else {
  							ifm[m] = 0; // zero padding
  						}
  						ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
 
- 						if (x-2+2 < 128 && y-2+2 < 128) {
+ 						if (x-2+2 < 56 && y-2+2 < 56) {
  							ifm[m] = I_8;
  						} else {
  							ifm[m] = 0; // zero padding

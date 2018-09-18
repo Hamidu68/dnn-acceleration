@@ -7,7 +7,7 @@
 Test_dir="Test_file/vgg19_test.csv"
 Model_name="vgg19"
 Data_type="ap_uint<16>"
-Random_range="20"
+Random_range="10"
 return_dir="../"
 Relu="True"
 

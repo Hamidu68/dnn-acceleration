@@ -327,7 +327,7 @@ void DAC2017_HW_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[64][3][3][3],
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
  					if (x-3+2 < 224 && y+1 < 224) {
- 						ifm[m] = I[k][(x-3+2)%4][y+1];;
+ 						ifm[m] = I[k][(x-3+2)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
@@ -441,7 +441,7 @@ void DAC2017_HW_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[64][64][3][3]
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
  					if (x-3+2 < 224 && y+1 < 224) {
- 						ifm[m] = I[k][(x-3+2)%4][y+1];;
+ 						ifm[m] = I[k][(x-3+2)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
@@ -602,7 +602,7 @@ void DAC2017_HW_block2_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[128][64][3][3
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
  					if (x-3+2 < 112 && y+1 < 112) {
- 						ifm[m] = I[k][(x-3+2)%4][y+1];;
+ 						ifm[m] = I[k][(x-3+2)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
@@ -716,7 +716,7 @@ void DAC2017_HW_block2_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[128][128][3][
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
  					if (x-3+2 < 112 && y+1 < 112) {
- 						ifm[m] = I[k][(x-3+2)%4][y+1];;
+ 						ifm[m] = I[k][(x-3+2)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
@@ -877,7 +877,7 @@ void DAC2017_HW_block3_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[256][128][3][
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
  					if (x-3+2 < 56 && y+1 < 56) {
- 						ifm[m] = I[k][(x-3+2)%4][y+1];;
+ 						ifm[m] = I[k][(x-3+2)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}

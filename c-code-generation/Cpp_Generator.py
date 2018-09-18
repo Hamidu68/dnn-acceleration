@@ -121,12 +121,9 @@ if __name__ == "__main__":
             conv_count+=1
             filter_shape = row["kernel_size"][1:-1].split(", ")
             stride_shape = row["strides"][1:-1].split(", ")
-            l = {'Name' : row["name"], 'Input_channel' : input_shape[3], 'Input_width' : input_shape[1],'Stride_width': stride_shape[0],'Stride_height':stride_shape[1],
-             'Input_height' : input_shape[2], 'Output_channel' : output_shape[3],'Filter_width' : filter_shape[0],
+            l = {'Name' : row["name"], 'Input_channel' : input_shape[3], 'Input_width' : input_shape[1],'Stride_width': stride_shape[0],'Stride_height':stride_shape[1], 'Input_height' : input_shape[2], 'Output_channel' : output_shape[3],'Filter_width' : filter_shape[0],
              'Filter_height' : filter_shape[1], 'Output_width' : output_shape[1], 'Output_height' : output_shape[2]}
-            lm = {'num': conv_count, 'Name' : row["name"], 'Input_channel' : input_shape[3], 'Output_channel' : output_shape[3], 'Input_width' : input_shape[1],
-             'Input_height' : input_shape[2],'Filter_width' : filter_shape[0],
-             'Filter_height' : filter_shape[1]}
+            lm = {'num': conv_count, 'Name' : row["name"], 'Input_channel' : input_shape[3], 'Output_channel' : output_shape[3], 'Input_width' : input_shape[1], 'Input_height' : input_shape[2],'Filter_width' : filter_shape[0], 'Output_width' : output_shape[1], 'Output_height' : output_shape[2], 'Filter_height' : filter_shape[1]}
             #SW_static_variables(W,O,B)
             SW_static_v += "static DATA_T W"+line_num_str+"["+ output_shape[3] + "][" + input_shape[3] + "][" + filter_shape[0] + "][" + filter_shape[1] + "];\n"
             SW_static_v += "static DATA_T O"+line_num_str+ "_SW[" + output_shape[3] + "][" + output_shape[1] + "][" + output_shape[2] + "];\n"
