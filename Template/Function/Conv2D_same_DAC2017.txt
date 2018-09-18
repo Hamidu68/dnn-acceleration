@@ -34,63 +34,63 @@ void DAC2017_$Name(hls::stream<DATA_T> &I_strm, DATA_T W[$Output_channel][$Input
             else {
                ofm[m] = O[m][(x-3)%2][y];}
 
- 					if (x-3+0 < $Input_channel && y+0 < $Input_channel) {
+ 					if (x-3+0 < $Input_channel && y+0 < $Input_width) {
  						ifm[m] = I[k][(x-3+0)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
 
- 					if (x-3+0 < $Input_channel && y+1 < $Input_channel) {
+ 					if (x-3+0 < $Input_channel && y+1 < $Input_width) {
  						ifm[m] = I[k][(x-3+0)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
 
- 					if (x-3+0 < $Input_channel && y+2 < $Input_channel) {
+ 					if (x-3+0 < $Input_channel && y+2 < $Input_width) {
 						ifm[m] = I[k][(x-3+0)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
 
- 					if (x-3+1 < $Input_channel && y+0 < $Input_channel) {
+ 					if (x-3+1 < $Input_channel && y+0 < $Input_width) {
  						ifm[m] = I[k][(x-3+1)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
 
- 					if (x-3+1 < $Input_channel && y+1 < $Input_channel) {
+ 					if (x-3+1 < $Input_channel && y+1 < $Input_width) {
  						ifm[m] = I[k][(x-3+1)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
 
- 					if (x-3+1 < $Input_channel && y+2 < $Input_channel) {
+ 					if (x-3+1 < $Input_channel && y+2 < $Input_width) {
  						ifm[m] = I[k][(x-3+1)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
 
- 					if (x-3+2 < $Input_channel && y+0 < $Input_channel) {
+ 					if (x-3+2 < $Input_channel && y+0 < $Input_width) {
  						ifm[m] = I[k][(x-3+2)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
- 					if (x-3+2 < $Input_channel && y+1 < $Input_channel) {
+ 					if (x-3+2 < $Input_channel && y+1 < $Input_width) {
  						ifm[m] = I[k][(x-3+2)%4][y+1];;
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
 
- 					if (x-3+2 < $Input_channel && y+2 < $Input_channel) {
+ 					if (x-3+2 < $Input_channel && y+2 < $Input_width) {
  						ifm[m] = I[k][(x-3+2)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
