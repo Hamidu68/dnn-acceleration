@@ -277,63 +277,63 @@ void DAC2017_HW_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[64][3][3][3],
             else {
                ofm[m] = O[m][(x-3)%2][y];}
 
- 					if (x-3+0 < 3 && y+0 < 224) {
+ 					if (x-3+0 < 3 && y+0 < 3) {
  						ifm[m] = I[k][(x-3+0)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
 
- 					if (x-3+0 < 3 && y+1 < 224) {
+ 					if (x-3+0 < 3 && y+1 < 3) {
  						ifm[m] = I[k][(x-3+0)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
 
- 					if (x-3+0 < 3 && y+2 < 224) {
+ 					if (x-3+0 < 3 && y+2 < 3) {
 						ifm[m] = I[k][(x-3+0)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
 
- 					if (x-3+1 < 3 && y+0 < 224) {
+ 					if (x-3+1 < 3 && y+0 < 3) {
  						ifm[m] = I[k][(x-3+1)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
 
- 					if (x-3+1 < 3 && y+1 < 224) {
+ 					if (x-3+1 < 3 && y+1 < 3) {
  						ifm[m] = I[k][(x-3+1)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
 
- 					if (x-3+1 < 3 && y+2 < 224) {
+ 					if (x-3+1 < 3 && y+2 < 3) {
  						ifm[m] = I[k][(x-3+1)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
 
- 					if (x-3+2 < 3 && y+0 < 224) {
+ 					if (x-3+2 < 3 && y+0 < 3) {
  						ifm[m] = I[k][(x-3+2)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
- 					if (x-3+2 < 3 && y+1 < 224) {
+ 					if (x-3+2 < 3 && y+1 < 3) {
  						ifm[m] = I[k][(x-3+2)%4][y+1];;
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
 
- 					if (x-3+2 < 3 && y+2 < 224) {
+ 					if (x-3+2 < 3 && y+2 < 3) {
  						ifm[m] = I[k][(x-3+2)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
@@ -391,63 +391,63 @@ void DAC2017_HW_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[64][64][3][3]
             else {
                ofm[m] = O[m][(x-3)%2][y];}
 
- 					if (x-3+0 < 64 && y+0 < 224) {
+ 					if (x-3+0 < 64 && y+0 < 64) {
  						ifm[m] = I[k][(x-3+0)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
 
- 					if (x-3+0 < 64 && y+1 < 224) {
+ 					if (x-3+0 < 64 && y+1 < 64) {
  						ifm[m] = I[k][(x-3+0)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
 
- 					if (x-3+0 < 64 && y+2 < 224) {
+ 					if (x-3+0 < 64 && y+2 < 64) {
 						ifm[m] = I[k][(x-3+0)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
 
- 					if (x-3+1 < 64 && y+0 < 224) {
+ 					if (x-3+1 < 64 && y+0 < 64) {
  						ifm[m] = I[k][(x-3+1)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
 
- 					if (x-3+1 < 64 && y+1 < 224) {
+ 					if (x-3+1 < 64 && y+1 < 64) {
  						ifm[m] = I[k][(x-3+1)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
 
- 					if (x-3+1 < 64 && y+2 < 224) {
+ 					if (x-3+1 < 64 && y+2 < 64) {
  						ifm[m] = I[k][(x-3+1)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
 
- 					if (x-3+2 < 64 && y+0 < 224) {
+ 					if (x-3+2 < 64 && y+0 < 64) {
  						ifm[m] = I[k][(x-3+2)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
- 					if (x-3+2 < 64 && y+1 < 224) {
+ 					if (x-3+2 < 64 && y+1 < 64) {
  						ifm[m] = I[k][(x-3+2)%4][y+1];;
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
 
- 					if (x-3+2 < 64 && y+2 < 224) {
+ 					if (x-3+2 < 64 && y+2 < 64) {
  						ifm[m] = I[k][(x-3+2)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
@@ -552,63 +552,63 @@ void DAC2017_HW_block2_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[128][64][3][3
             else {
                ofm[m] = O[m][(x-3)%2][y];}
 
- 					if (x-3+0 < 64 && y+0 < 112) {
+ 					if (x-3+0 < 64 && y+0 < 64) {
  						ifm[m] = I[k][(x-3+0)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
 
- 					if (x-3+0 < 64 && y+1 < 112) {
+ 					if (x-3+0 < 64 && y+1 < 64) {
  						ifm[m] = I[k][(x-3+0)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
 
- 					if (x-3+0 < 64 && y+2 < 112) {
+ 					if (x-3+0 < 64 && y+2 < 64) {
 						ifm[m] = I[k][(x-3+0)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
 
- 					if (x-3+1 < 64 && y+0 < 112) {
+ 					if (x-3+1 < 64 && y+0 < 64) {
  						ifm[m] = I[k][(x-3+1)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
 
- 					if (x-3+1 < 64 && y+1 < 112) {
+ 					if (x-3+1 < 64 && y+1 < 64) {
  						ifm[m] = I[k][(x-3+1)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
 
- 					if (x-3+1 < 64 && y+2 < 112) {
+ 					if (x-3+1 < 64 && y+2 < 64) {
  						ifm[m] = I[k][(x-3+1)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
 
- 					if (x-3+2 < 64 && y+0 < 112) {
+ 					if (x-3+2 < 64 && y+0 < 64) {
  						ifm[m] = I[k][(x-3+2)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
- 					if (x-3+2 < 64 && y+1 < 112) {
+ 					if (x-3+2 < 64 && y+1 < 64) {
  						ifm[m] = I[k][(x-3+2)%4][y+1];;
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
 
- 					if (x-3+2 < 64 && y+2 < 112) {
+ 					if (x-3+2 < 64 && y+2 < 64) {
  						ifm[m] = I[k][(x-3+2)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
@@ -666,63 +666,63 @@ void DAC2017_HW_block2_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[128][128][3][
             else {
                ofm[m] = O[m][(x-3)%2][y];}
 
- 					if (x-3+0 < 128 && y+0 < 112) {
+ 					if (x-3+0 < 128 && y+0 < 128) {
  						ifm[m] = I[k][(x-3+0)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
 
- 					if (x-3+0 < 128 && y+1 < 112) {
+ 					if (x-3+0 < 128 && y+1 < 128) {
  						ifm[m] = I[k][(x-3+0)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
 
- 					if (x-3+0 < 128 && y+2 < 112) {
+ 					if (x-3+0 < 128 && y+2 < 128) {
 						ifm[m] = I[k][(x-3+0)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
 
- 					if (x-3+1 < 128 && y+0 < 112) {
+ 					if (x-3+1 < 128 && y+0 < 128) {
  						ifm[m] = I[k][(x-3+1)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
 
- 					if (x-3+1 < 128 && y+1 < 112) {
+ 					if (x-3+1 < 128 && y+1 < 128) {
  						ifm[m] = I[k][(x-3+1)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
 
- 					if (x-3+1 < 128 && y+2 < 112) {
+ 					if (x-3+1 < 128 && y+2 < 128) {
  						ifm[m] = I[k][(x-3+1)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
 
- 					if (x-3+2 < 128 && y+0 < 112) {
+ 					if (x-3+2 < 128 && y+0 < 128) {
  						ifm[m] = I[k][(x-3+2)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
- 					if (x-3+2 < 128 && y+1 < 112) {
+ 					if (x-3+2 < 128 && y+1 < 128) {
  						ifm[m] = I[k][(x-3+2)%4][y+1];;
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
 
- 					if (x-3+2 < 128 && y+2 < 112) {
+ 					if (x-3+2 < 128 && y+2 < 128) {
  						ifm[m] = I[k][(x-3+2)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
@@ -827,63 +827,63 @@ void DAC2017_HW_block3_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[256][128][3][
             else {
                ofm[m] = O[m][(x-3)%2][y];}
 
- 					if (x-3+0 < 128 && y+0 < 56) {
+ 					if (x-3+0 < 128 && y+0 < 128) {
  						ifm[m] = I[k][(x-3+0)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][0];
 
- 					if (x-3+0 < 128 && y+1 < 56) {
+ 					if (x-3+0 < 128 && y+1 < 128) {
  						ifm[m] = I[k][(x-3+0)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][1];
 
- 					if (x-3+0 < 128 && y+2 < 56) {
+ 					if (x-3+0 < 128 && y+2 < 128) {
 						ifm[m] = I[k][(x-3+0)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][0][2];
 
- 					if (x-3+1 < 128 && y+0 < 56) {
+ 					if (x-3+1 < 128 && y+0 < 128) {
  						ifm[m] = I[k][(x-3+1)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][0];
 
- 					if (x-3+1 < 128 && y+1 < 56) {
+ 					if (x-3+1 < 128 && y+1 < 128) {
  						ifm[m] = I[k][(x-3+1)%4][y+1];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][1];
 
- 					if (x-3+1 < 128 && y+2 < 56) {
+ 					if (x-3+1 < 128 && y+2 < 128) {
  						ifm[m] = I[k][(x-3+1)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][1][2];
 
- 					if (x-3+2 < 128 && y+0 < 56) {
+ 					if (x-3+2 < 128 && y+0 < 128) {
  						ifm[m] = I[k][(x-3+2)%4][y+0];
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][0];
 
- 					if (x-3+2 < 128 && y+1 < 56) {
+ 					if (x-3+2 < 128 && y+1 < 128) {
  						ifm[m] = I[k][(x-3+2)%4][y+1];;
  					} else {
  						ifm[m] = 0; // zero padding
  					}
  					ofm[m] = ofm[m] + ifm[m] * W[m][k][2][1];
 
- 					if (x-3+2 < 128 && y+2 < 56) {
+ 					if (x-3+2 < 128 && y+2 < 128) {
  						ifm[m] = I[k][(x-3+2)%4][y+2];
  					} else {
  						ifm[m] = 0; // zero padding
