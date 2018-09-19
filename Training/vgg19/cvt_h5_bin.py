@@ -8,7 +8,8 @@ from keras.models import load_model
 def cvt_h5_bin(h5_path = './weights_h5',
                bin_path = './weights_bin',
                model_name = 'vgg19',
-               epoch = 0):
+               epoch = 0,
+               dtype=np.float32):
     '''
     '''
     #Load the model
@@ -21,60 +22,28 @@ def cvt_h5_bin(h5_path = './weights_h5',
             if file_name_list[-1] == 'h5':
                 file_name=file
         model = load_model(h5_path + '/' + file_name)
-    '''
-    #functions
-    def weights1D(weights=None):
-        for m in range(weights.shape[0]):
-            f.write(weights[m])
-
-    def weights2D(weights=None):
-        for m in range(weights.shape[0]):
-            for k in range(weights.shape[1]):
-                f.write(weights[m][k])
-
-    def weights3D(weights=None):
-        for m in range(weights.shape[0]):
-            for k in range(weights.shape[1]):
-                for i in range(weights.shape[2]):
-                    f.write(weights[m][k][i])
-
-    def weights4D(weights=None):
-        for m in range(weights.shape[0]):
-            for k in range(weights.shape[1]):
-                for i in range(weights.shape[2]):
-                    for j in range(weights.shape[3]):
-                        f.write(weights[m][k][i][j])
-    '''
     
     #Load the binary file
     f = open(bin_path + '/' + model_name + '_weights.bin', 'wb')
     
-    #Save weights as binary file
-    def save_weights(layers=None):
-        for layer in model.layers:
+    #Save weights to binary file
+    def save_weights(layers=None, fid=None, dtype=np.float32):
+        for layer in layers:
             if (str(layer).split()[0]).split('.')[-1] == 'Model':
-                save_weights(layer)
+                save_weights(layer.layers, fid, dtype)
             else:
-                layer.get_weights().tofile(f)
-        '''
-        for W in layer.weights:
-            print(W.shape)
-            print(type(W))
-            #f.write(bytearray(np.asarray(W)))
-           
-            if len(W.shape) == 4:
-                weights4D(W)
-            elif len(W.shape) == 3:
-                weights3D(W)
-            elif len(W.shape) == 2:
-                weights2D(W)
-            elif len(W.shape) == 1:
-                weights1D(W)
-        '''
+                for W in layer.get_weights():
+                    W.astype(dtype).tofile(fid)
+
+    save_weights(model.layers, f, dtype)
 
     #Close the binary file
     f.close()
 
 
 if __name__ == '__main__':
-    cvt_h5_bin()
+    cvt_h5_bin(h5_path = './weights_h5',
+               bin_path = './weights_bin',
+               model_name = 'vgg19',
+               epoch = 0,
+               dtype=np.float32)

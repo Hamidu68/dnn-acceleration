@@ -20,7 +20,7 @@ from tiny_imagenet.load_tiny_imagenet import load_images
 model_name = 'vgg19'
 data_format = 'channels_first'
 image_size = 64
-nb_classes = 2
+nb_classes = 200
 nb_epochs = 30
 train_batchsize = 32
 val_batchsize = 4
@@ -40,7 +40,7 @@ for file in os.listdir(weights_path):
 if cur_epoch != 0:
     model = load_model(weights_path + '/' + file_name)
 else:
-    model = vgg19(weights=True, data_format=data_format, image_size=image_size, nb_classes=nb_classes)
+    model = vgg19(weights=False, data_format=data_format, image_size=image_size, nb_classes=nb_classes)
     model.compile(loss='categorical_crossentropy',
               optimizer=Adam(lr=0.001),
               metrics=['acc'])

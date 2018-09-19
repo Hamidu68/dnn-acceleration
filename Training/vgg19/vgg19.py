@@ -170,7 +170,7 @@ def vgg19(weights=True,
 
     #Load weights of top
     if weights != False:
-        x = load_top(weights=weights, model=Model(inputs, x, name='vgg19_top')).layers[-1].output
+        x = load_top(weights=weights, model=Model(inputs, x, name='vgg19_top')).output
 
     #Add classification Block
     x = layers.Flatten(data_format=data_format)(x)
