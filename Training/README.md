@@ -30,7 +30,8 @@ Call load_images(...) function in [tiny_imagenet/load_tiny_imagenet.py](tiny_ima
     ```
         X_train, Y_train, X_val, Y_val = load_images('./tiny-imagenet-200', 200)
     ```
-
+    
+ 
 <a name="define"></a>
 ### Define a CNN model
 1. Make a new directory for your manual CNN model ([vgg19](vgg19)).
@@ -38,21 +39,26 @@ Call load_images(...) function in [tiny_imagenet/load_tiny_imagenet.py](tiny_ima
 - Example usage
     ```
     from vgg19 import vgg19
-        model = vgg19(weights=False,    data_format='channels_first', image_size=64, nb_classes=200)
+        model = vgg19(weights=False, data_format='channels_first', image_size=64, nb_classes=200)
     ```
+
 
 <a name="train"></a>
 ### Train the model
 1. Make a code for training the model ([vgg19/train.py](vgg19/train.py)).
 2. Train the model
-```
-    $ python train.py
-```
+- Example usage
+    ```
+        $ python train.py
+    ```
+
+
 <a name="save"></a>
 ### Save weights of the trained model
 If you see the train.py, there is a CustomCallback class.
 When your model is being trained, the function in CustomCallback is called after each epochs.
 The function saves the current state and weights of your model as h5 file.
+
 
 <a name="convert"></a>
 ### Convert .h5 to .bin
@@ -63,6 +69,7 @@ See the [vgg19/cvt_h5_bin.py](vgg19/cvt_h5_bin.py).
     ```
         $ python cvt_h5_bin.py
     ```
+
 
 <a name="extract"></a>
 ### Extract csv file from the model
