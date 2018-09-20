@@ -6,7 +6,7 @@ Tiny ImageNet
 
 	Tiny Imagenet has 200 classes. Each class has 500 training images, 50 validation images, and 50 test images.
 	We have released the training and validation sets with images and annotations. We provide both class labels and bounding boxes as annotations.
-	You can download the data at here: https://tiny-imagenet.herokuapp.com/
+	You can download the data at here. https://tiny-imagenet.herokuapp.com/
 
 - directory
 	```
