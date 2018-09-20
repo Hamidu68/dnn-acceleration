@@ -1,27 +1,38 @@
-#test_dir="Test-file/Test.csv"
+Test_dir=$1
+Random_range=$2
 
-Input_file="init_Input.bin"
-Weight_file="init_Weight.bin"
-Bias_file="init_Bias.bin"
+Variable_dir="../variable_generator/"
 
-Variable_dir="../Variable_Generator/"
-Result_dir="vimdiff.txt"
-return_dir="../"
+Weight_file="init_weights.bin"
+Input_file="init_inputs.bin"
 
-#Generate Variable
-#Input: layer info / Output : c_verifier.cpp
-cd $Variable_dir
-g++ -std=c++0x Variable_Generator.cpp -o out
-./out $1 $Weight_file $Bias_file $Input_file $2
+if [ &# -eq 3 ];then
+
+   #Generate Variable
+   #Input: layer info / Output : c_verifier.cpp
+   Data_type=$3
+   
+   cd ${Variable_dir}
+   python variable_generator.py ${Test_dir} ${Weight_file} ${Input_file} ${Random_range} ${Data_type}
+   cd ..
+
+elif [ &# -eq 4 ];then
+
+   Weight_file=$3
+   Input_file=$4
+
+fi
 
 #Generate C_Verifier
-cd ../keras-verification
-python C_Verifier_Generator.py $1 $3
+cd keras-verification
+python C_Verifier_Generator.py ${Test_dir}
+g++ -std=c++0x C_Verifier.cpp -o out
 
 #Run Verifier
-python Keras_Verifier.py $1 $Variable_dir$Weight_file $Variable_dir$Bias_file $Variable_dir$Input_file $3
-g++ -std=c++0x C_Verifier.cpp -o out
-./out $Variable_dir$Weight_file $Variable_dir$Bias_file $Variable_dir$Input_file
+#Keras code
+python Keras_Verifier.py ${Test_dir} ${Variable_dir}${Weight_file} ${Variable_dir}${Input_file} ${Data_type}
+#C-code
+./out ${Variable_dir}${Weight_file} ${Variable_dir}${Input_file}
 
 #Compare result
 vimdiff Output/keras_output.txt Output/C_output.txt

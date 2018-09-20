@@ -80,7 +80,7 @@ def extract_configs(model,name):
     for param in params[::-1]:
         keys.insert(0, keys.pop(keys.index(param)))
     
-    with open(name+'.csv', 'w') as output_file:
+    with open(name+'.csv', 'wb') as output_file:
         dict_writer = csv.DictWriter(output_file, keys)
         dict_writer.writeheader()
         dict_writer.writerows(list_config)

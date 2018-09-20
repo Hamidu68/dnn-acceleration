@@ -1,17 +1,21 @@
 Random Generator for Input, Weight, Bias value.  
 It is generated based on layer informaion(csv) using the command below.  
 
-
+###Execute
+- C code
 ```
   g++ Variable_Generator.cpp -o out
   ./out $1 $Weight_file $Bias_file $Input_file $2 
 ```
 
+or you can use python version code (Variable_Generator.py).
+
+###Result files
 In input layer,  
-Input.txt is created.  
+Input.bin is created.  
 
 In Convolution layer,  
-Weight.txt, Bias.txt are created.  
+Weight.bin, Bias.bin are created.  
   
 In Dense layer,  
 Weight.txt, Bias.txt are created.  

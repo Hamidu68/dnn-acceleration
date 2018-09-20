@@ -49,6 +49,7 @@ def load_images(path,nb_classes):
         if (j >= nb_classes):
             break
 
+    #X_train = X_train.astype(np.float32)
     # convert class vectors to binary class matrices
     Y_train = np_utils.to_categorical(Y_train, nb_classes)
     
@@ -63,10 +64,10 @@ def load_images(path,nb_classes):
     print('loading validation images...')
 
     i = 0
-    testPath=path+'/val/images'
-    for sChild in os.listdir(testPath):
+    valPath=path+'/val/images'
+    for sChild in os.listdir(valPath):
         if val_annotations_map[sChild] in annotations.keys():
-            sChildPath = os.path.join(testPath, sChild)
+            sChildPath = os.path.join(valPath, sChild)
             X=np.array(Image.open(sChildPath))
             if len(np.shape(X))==2:
                 X_val[i]=np.array([X,X,X])
@@ -77,6 +78,7 @@ def load_images(path,nb_classes):
         else:
             pass
 
+    #X_val = X_val.astype(np.float32)
     # convert class vectors to binary class matrices
     Y_val = np_utils.to_categorical(Y_val, nb_classes)
     
@@ -84,6 +86,70 @@ def load_images(path,nb_classes):
 
     return X_train,Y_train,X_val,Y_val
 
+
+def load_test_images(path,nb_classes):
+    #Load images
+    
+    trainPath=path+'/train'
+
+    print('loading validation images...');
+
+    j=0
+    annotations={}
+    for sChild in os.listdir(trainPath):
+        sChildPath = os.path.join(os.path.join(trainPath,sChild),'images')
+        annotations[sChild]=j
+        j+=1
+        if (j >= nb_classes):
+            break
+
+    val_annotations_map = get_annotations_map(path)
+
+    X_val = np.zeros([nb_classes*50,3,64,64],dtype='uint8')
+    Y_val = np.zeros([nb_classes*50], dtype='uint8')
+
+    i = 0
+    valPath=path+'/val/images'
+    for sChild in os.listdir(valPath):
+        if val_annotations_map[sChild] in annotations.keys():
+            sChildPath = os.path.join(valPath, sChild)
+            X=np.array(Image.open(sChildPath))
+            if len(np.shape(X))==2:
+                X_val[i]=np.array([X,X,X])
+            else:
+                X_val[i]=np.transpose(X,(2,0,1))
+            Y_val[i]=annotations[val_annotations_map[sChild]]
+            i+=1
+        else:
+            pass
+
+    #X_val = X_val.astype(np.float32)
+    # convert class vectors to binary class matrices
+    Y_val = np_utils.to_categorical(Y_val, nb_classes)
+    
+    print('finished loading validation images('+str(i)+')')
+
+
+    print('loading test images...');
+
+    X_test = np.array([])
+
+    i=0
+    testPath=path+'/test/images'
+    for sChild in os.listdir(testPath):
+        sChildPath = os.path.join(testPath, sChild)
+        X=np.array(Image.open(sChildPath))
+        if len(np.shape(X))==2:
+            X_test[i]=np.array([X,X,X])
+        else:
+            X_test[i]=np.transpose(X,(2,0,1))
+        i+=1
+    
+    #X_test = X_test.astype(np.float32)
+
+    print('finished loading test images('+str(i)+')')
+
+    return X_val,Y_val,X_test
 
 
 if __name__ == "__main__":
