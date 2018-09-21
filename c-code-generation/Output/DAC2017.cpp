@@ -53,7 +53,7 @@ static DATA_T B7_d[256];
 void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][224][224], DATA_T B[64], DATA_T W[64][3][3][3]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
-    int p = (1 *(224 - 1) - 224 + 3)/2; 
+    
 	for (m = 0; m<64; m++) {
 		for (x = 0; x<224; x++) {
 			for (y = 0; y<224; y++) {
@@ -61,8 +61,8 @@ void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][224][224], DATA_T B[64]
 				for (k = 0; k<3; k++) {
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
-							if (x + i < 224 + p && y + j < 224 + p && x + i -p >= 0 && y + j -p >= 0) { 
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+							if (x + i < 224 && y + j < 224) { 
+                                    ifm = I[k][x + i][y + j];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -71,10 +71,7 @@ void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][224][224], DATA_T B[64]
 						}
 					}
 				}
-				if (ofm < 0)
-					O[m][x][y] = 0;
-				else
-					O[m][x][y] = ofm;
+				O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -83,7 +80,7 @@ void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][224][224], DATA_T B[64]
 void SW_block1_conv2(DATA_T I[64][224][224], DATA_T O[64][224][224], DATA_T B[64], DATA_T W[64][64][3][3]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
-    int p = (1 *(224 - 1) - 224 + 3)/2; 
+    
 	for (m = 0; m<64; m++) {
 		for (x = 0; x<224; x++) {
 			for (y = 0; y<224; y++) {
@@ -91,8 +88,8 @@ void SW_block1_conv2(DATA_T I[64][224][224], DATA_T O[64][224][224], DATA_T B[64
 				for (k = 0; k<64; k++) {
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
-							if (x + i < 224 + p && y + j < 224 + p && x + i -p >= 0 && y + j -p >= 0) { 
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+							if (x + i < 224 && y + j < 224) { 
+                                    ifm = I[k][x + i][y + j];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -101,10 +98,7 @@ void SW_block1_conv2(DATA_T I[64][224][224], DATA_T O[64][224][224], DATA_T B[64
 						}
 					}
 				}
-				if (ofm < 0)
-					O[m][x][y] = 0;
-				else
-					O[m][x][y] = ofm;
+				O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -133,7 +127,7 @@ void SW_block1_pool(DATA_T I[64][224][224], DATA_T O[64][112][112])
 void SW_block2_conv1(DATA_T I[64][112][112], DATA_T O[128][112][112], DATA_T B[128], DATA_T W[128][64][3][3]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
-    int p = (1 *(112 - 1) - 112 + 3)/2; 
+    
 	for (m = 0; m<128; m++) {
 		for (x = 0; x<112; x++) {
 			for (y = 0; y<112; y++) {
@@ -141,8 +135,8 @@ void SW_block2_conv1(DATA_T I[64][112][112], DATA_T O[128][112][112], DATA_T B[1
 				for (k = 0; k<64; k++) {
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
-							if (x + i < 112 + p && y + j < 112 + p && x + i -p >= 0 && y + j -p >= 0) { 
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+							if (x + i < 112 && y + j < 112) { 
+                                    ifm = I[k][x + i][y + j];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -151,10 +145,7 @@ void SW_block2_conv1(DATA_T I[64][112][112], DATA_T O[128][112][112], DATA_T B[1
 						}
 					}
 				}
-				if (ofm < 0)
-					O[m][x][y] = 0;
-				else
-					O[m][x][y] = ofm;
+				O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -163,7 +154,7 @@ void SW_block2_conv1(DATA_T I[64][112][112], DATA_T O[128][112][112], DATA_T B[1
 void SW_block2_conv2(DATA_T I[128][112][112], DATA_T O[128][112][112], DATA_T B[128], DATA_T W[128][128][3][3]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
-    int p = (1 *(112 - 1) - 112 + 3)/2; 
+    
 	for (m = 0; m<128; m++) {
 		for (x = 0; x<112; x++) {
 			for (y = 0; y<112; y++) {
@@ -171,8 +162,8 @@ void SW_block2_conv2(DATA_T I[128][112][112], DATA_T O[128][112][112], DATA_T B[
 				for (k = 0; k<128; k++) {
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
-							if (x + i < 112 + p && y + j < 112 + p && x + i -p >= 0 && y + j -p >= 0) { 
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+							if (x + i < 112 && y + j < 112) { 
+                                    ifm = I[k][x + i][y + j];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -181,10 +172,7 @@ void SW_block2_conv2(DATA_T I[128][112][112], DATA_T O[128][112][112], DATA_T B[
 						}
 					}
 				}
-				if (ofm < 0)
-					O[m][x][y] = 0;
-				else
-					O[m][x][y] = ofm;
+				O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -213,7 +201,7 @@ void SW_block2_pool(DATA_T I[128][112][112], DATA_T O[128][56][56])
 void SW_block3_conv1(DATA_T I[128][56][56], DATA_T O[256][56][56], DATA_T B[256], DATA_T W[256][128][3][3]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
-    int p = (1 *(56 - 1) - 56 + 3)/2; 
+    
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<56; x++) {
 			for (y = 0; y<56; y++) {
@@ -221,8 +209,8 @@ void SW_block3_conv1(DATA_T I[128][56][56], DATA_T O[256][56][56], DATA_T B[256]
 				for (k = 0; k<128; k++) {
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
-							if (x + i < 56 + p && y + j < 56 + p && x + i -p >= 0 && y + j -p >= 0) { 
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+							if (x + i < 56 && y + j < 56) { 
+                                    ifm = I[k][x + i][y + j];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -231,10 +219,7 @@ void SW_block3_conv1(DATA_T I[128][56][56], DATA_T O[256][56][56], DATA_T B[256]
 						}
 					}
 				}
-				if (ofm < 0)
-					O[m][x][y] = 0;
-				else
-					O[m][x][y] = ofm;
+				O[m][x][y] = ofm;
 			}
 		}
 	}
