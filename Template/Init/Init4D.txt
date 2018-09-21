@@ -1,0 +1,10 @@
+for (m = 0; m <  ${fourth} ; m++) {
+	for (k = 0; k <  ${third} ; k++) {
+		for (i = 0; i < ${second} ; i++) {
+			for (j = 0; j < ${first} ; j++) {
+				fread(&trash, sizeof(DATA_IN), 1, ${fid});
+				${ary_name}[${iter4}][${iter3}][${iter2}][${iter1}] = (DATA_T) trash;
+			}
+		}
+	}
+}
