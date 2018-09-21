@@ -58,7 +58,10 @@ def add_MaxPooling2D(input_tensor=None, info=None):
                                         data_format= str(info['data_format']))(input_tensor)
     return output_tensor
 
-def add_BatchNormalization(input_tensor=None, info=None, fid=None, dtype=int):
+def add_BatchNormalization(input_tensor=None, info=None, fid=None, dtype=int, skip=False):
+    if skip == True:
+        return input_tensor
+
     #Read information of layer
     output_shape = eval(info['batch_output_shape'])
     
@@ -228,19 +231,14 @@ if __name__ == "__main__":
 
     #Check data type of weight and input files
     dtype = np.int32
-    dtype2 = "int"
     if sys.argv[4] == 'int':
         dtype = np.int32
-        dtype2 = "int"
     elif sys.argv[4] == 'unsigned int':
         dtype = np.uint32
-        dtype2 = "int"
     elif sys.argv[4] == 'float':
         dtype = np.float32
-        dtype2 = "float"
     elif sys.argv[4] == 'ap_uint<16>':
         dtype = np.uint16
-        dtype2 = "int"
     else:
         print('Wrong data type!')
     
@@ -260,12 +258,14 @@ if __name__ == "__main__":
         #check skip layer
         layer_type=row["layer_type"]
         if layer_type in skip_layers:
+            skip = True
             print('Skip {} layer')
-            continue
+        else
+            skip = False
+            line_num=line_num+1
+            print('[Keras_verifier.py]add a layer: ' + layer_type + '.' + str(line_num))
         
-        line_num=line_num+1
         layer_name=row['name']
-        print('[Keras_verifier.py]Operate ' + layer_type + '.' + str(line_num))
 
         #Switch
         if layer_type == 'InputLayer':
@@ -293,7 +293,7 @@ if __name__ == "__main__":
             #get input tensor
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             #get output of current layer and save it to dict
-            tensors[layer_name] = add_BatchNormalization(input_tensor, row, weights_bin, dtype)
+            tensors[layer_name] = add_BatchNormalization(input_tensor, row, weights_bin, dtype, skip)
             #append output of current layer to outputs_dict
             outputs_dict[layer_name] = tensors[layer_name]
                         
@@ -336,6 +336,14 @@ if __name__ == "__main__":
             tensors[layer_name] = add_Dense(input_tensor, row, weights_bin, dtype)
             #append output of current layer to outputs_dict
             outputs_dict[layer_name] = tensors[layer_name]
+
+        elif layer_type == 'Dropout':
+            #get input tensor
+            input_tensor = get_sing_input(row['connected_to'], tensors, outputs_dict)
+            #get output of current layer and save it to dict
+            tensors[layer_name] = inpur_tensor
+            #append output of current layer to outputs_dict
+            outputs_dict[layer_name] = tensors[layer_name]
             
         elif layer_type == 'Add':
             #get input tensors
@@ -344,7 +352,7 @@ if __name__ == "__main__":
             tensors[layer_name] = add_Add(input_tensors, row)
             #append output of current layer to outputs_dict
             outputs_dict[layer_name] = tensors[layer_name]
-            
+        
         else:
             print('Undefined Layer: {}'.format(layer_type))
     

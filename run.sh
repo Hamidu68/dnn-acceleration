@@ -13,7 +13,7 @@ Data_type="int"
 #Data_type="ap_unit<16>"
 Random_range="10"
 
-Use_trained_weight="T"
+Use_trained_weight=0
 Trained_weight_file=${Model_name}"_weights.bin"
 Image_file="image.bin"
 
@@ -22,9 +22,9 @@ if [ $# -eq 0 ];then
 
    cd keras-verification
    
-   if [ ${Use_trained_weight} -eq "T" ];then
+   if [ ${Use_trained_weight} -eq 1 ];then
 
-      ./verifier.sh ../${Test_dir} ${Random_range} ${Trained_weight_file} ${Image_file}
+      ./verifier.sh ../${Test_dir} ${Random_range} ${Trained_weight_file} ${Image_file} ${Data_type}
 
    else
 
