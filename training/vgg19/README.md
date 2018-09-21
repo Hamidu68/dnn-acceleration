@@ -1,8 +1,8 @@
 VGG19
 ===
 
-
-##Learning configs
+<a name="config"></a>
+## Learning configs
 
 * input shape = (3, 64, 64)
 * Don't use image normalization
