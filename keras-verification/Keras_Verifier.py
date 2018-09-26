@@ -153,7 +153,7 @@ if __name__ == "__main__":
 
     #Open file
     f = open('Output/keras_output.txt','w')
-
+    fn = open('Output/keras_output_num.txt','w')
     temp = model.predict(input_value)
 
     #Write input_value
@@ -187,6 +187,7 @@ if __name__ == "__main__":
                     f.write('[')
                     for y in range(layer_output.shape[3]):
                         f.write('{} '.format(int(layer_output[0][k][x][y])))
+			fn.write('{} '.format(int(layer_output[0][k][x][y])))
                     if x != (layer_output.shape[2] - 1):
                         f.write(']\n   ')
                     else:
@@ -198,6 +199,7 @@ if __name__ == "__main__":
         elif len(layer_output.shape) == 2:
             f.write('{}[['.format(layer_name[i+1]))
             for k in range(layer_output.shape[1]):
+                f.write('{} '.format(int(layer_output[0][k])))
                 f.write('{} '.format(int(layer_output[0][k])))
             f.write(']]\n\n')
 
