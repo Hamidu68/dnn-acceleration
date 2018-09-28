@@ -30,8 +30,8 @@ int main(int argc, char *argv[]){
   FILE *o_stream = fopen("Output/C_output.txt", "w");
   if (o_stream == NULL) printf("Output file was not opened");
   FILE *c_num = fopen("Output/c_output_num.txt", "w");
-  if (c_num == NULL) printf("keras output file was not opened");
-
+  if (c_num == NULL) printf("Output file was not opened");
+  
   printf("[C_verifier.cpp]Start Initialzation\n\n");
   $Initialization
   printf("[C_verifier.cpp]Finish Initialization\n\n");
@@ -41,44 +41,13 @@ int main(int argc, char *argv[]){
   printf("[C_verifier.cpp]Print Result\n");
   
   $result
-
-  FILE *k_out = fopen("Output/keras_output_num.txt", "rb");
-  if (k_out == NULL) printf("keras output file was not opened");
-  FILE *c_out = fopen("Output/c_output_num.txt", "rb");
-  if (c_out == NULL) printf("keras output file was not opened");
-
-  float a,b;
-  float a1,b1;
-  float error;
-  float maximum=-1.0;
-  while(true){
-	int temp;
-	if(fread(&temp, sizeof(int), 1, c_out)==0)
-		break;
-	a=(float)temp;
-  	fread(&temp, sizeof(int), 1, k_out);
-	b=(float)temp;
-	
-		if(a>b)
-			error=(a-b)/b;
-		else
-			error=(b-a)/b;
-		if(maximum<error){
-			maximum=error;
-			a1=a;
-			b1=b;
-		}
-	
-  }
-
-  printf("maximum error : %f a: %f b: %f\n",maximum,a1,b1); 
+   
     
   fclose(w_stream);
   fclose(b_stream);
   fclose(i_stream);
   fclose(o_stream);
-  fclose(c_out);
-  fclose(k_out);
+  fclose(c_num);
 
   return 0;
 }

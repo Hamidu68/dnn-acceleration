@@ -11,9 +11,10 @@ from keras import backend as K
 import numpy as np
 import csv
 import sys
+import re
 
 np.set_printoptions(threshold=np.inf)
-np.set_printoptions(linewidth=9223372036854775807)
+np.set_printoptions(linewidth=999999999999999999999999999999)
 csv_file=open(sys.argv[1])
 csv_reader=csv.DictReader(csv_file)
 
@@ -155,7 +156,7 @@ if __name__ == "__main__":
     f = open('Output/keras_output.txt','w')
     fn = open('Output/keras_output_num.txt','w')
     temp = model.predict(input_value)
-
+    
     #Write input_value
     f.write('{}[['.format(layer_name[0]))
     for k in range(input_value.shape[1]):
@@ -164,14 +165,15 @@ if __name__ == "__main__":
             f.write('[')
             for y in range(input_value.shape[3]):
                 f.write('{} '.format(int(input_value[0][k][x][y])))
+                fn.write('{} '.format(int(input_value[0][k][x][y])))     
             if x != (input_value.shape[2] - 1):
                 f.write(']\n   ')
             else:
-                f.write(']')
+                f.write(']')      
         if k != (input_value.shape[1] - 1):
             f.write(']\n\n  ')
     f.write(']]]\n\n')
-
+    
     #Write each layers output
     before_output = input_value
     for i in range(line_num):
@@ -187,23 +189,63 @@ if __name__ == "__main__":
                     f.write('[')
                     for y in range(layer_output.shape[3]):
                         f.write('{} '.format(int(layer_output[0][k][x][y])))
-			fn.write('{} '.format(int(layer_output[0][k][x][y])))
+                        fn.write('{} '.format(int(layer_output[0][k][x][y])))     
                     if x != (layer_output.shape[2] - 1):
                         f.write(']\n   ')
                     else:
                         f.write(']')
+                            
                 if k != (layer_output.shape[1] - 1):
                     f.write(']\n\n  ')
             f.write(']]]\n\n')
-
+            
         elif len(layer_output.shape) == 2:
             f.write('{}[['.format(layer_name[i+1]))
             for k in range(layer_output.shape[1]):
                 f.write('{} '.format(int(layer_output[0][k])))
-                f.write('{} '.format(int(layer_output[0][k])))
+                fn.write('{} '.format(int(layer_output[0][k])))
             f.write(']]\n\n')
-
-    #model.summary()
+    
     f.close()
+    fn.close()
+    
+    c_out = open("Output/c_output_num.txt",'r') 
+    k_out = open('Output/keras_output_num.txt','r')
+    
+    c_output_line=c_out.readline()
+    c=c_output_line.split()
+    
+    k_output_line=k_out.readline()
+    k=k_output_line.split()
+    
+    maximum=-1.0
+    c_max=0
+    k_max=0
+
+    print "len k :  ",len(k)
+    print "len c :  ",len(c)
+    
+    for i in range(len(c)):   
+        k_num=float(k[i])
+        c_num=float(c[i])
+        if c_num>k_num:
+            error=(c_num-k_num)/k_num
+        else:
+            error=(k_num-c_num)/k_num
+            
+        if maximum < error:
+            maximum=error
+            c_max=c_num
+            k_max=k_num
+         
+    
+    print "maximum error : ",maximum,"when c has an element of",c_max," and keras has an element of",k_max
+        
+    
+    #model.summary()
+    
+    
+    c_out.close()
+    k_out.close()
 
 
