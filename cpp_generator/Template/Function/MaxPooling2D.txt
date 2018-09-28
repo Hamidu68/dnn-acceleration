@@ -1,0 +1,20 @@
+void SW_$Name(DATA_T I[$Input_channel][$Input_width][$Input_height], DATA_T O[$Output_channel][$Output_width][$Output_height])
+{ 
+	int m, x, y, i, j;
+	DATA_T max;
+	for (m = 0; m<$Output_channel; m++) {
+		for (x = 0; x<$Output_width; x++) {
+			for (y = 0; y<$Output_height; y++) {
+				max = I[m][x*$Stride_width][y*$Stride_height];
+				for (i = 0; i<$Pool_width; i++) {
+					for (j = 0; j<$Pool_height; j++) {
+						if (I[m][x*$Stride_width + i][y*$Stride_height + j] > max) {
+							max = I[m][x*$Stride_width + i][y*$Stride_height + j];
+						}
+					}
+				}
+				O[m][x][y] = max;
+			}
+		}
+	}
+}

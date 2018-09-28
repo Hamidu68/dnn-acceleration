@@ -1,0 +1,9 @@
+void ${model_name}_sw($SW_variables) {
+
+  $Output_variables
+
+  int m, x, y, i, j, k;
+
+  $SW_functions
+
+}

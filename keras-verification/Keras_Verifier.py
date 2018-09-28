@@ -10,7 +10,34 @@ from keras import layers
 
 #np.set_printoptions(threshold=np.inf, linewidth=9223372036854775807)
 
-#######################################
+####################################################
+####################################################
+#Functions about input_tensors & outputs_dict
+def get_single_input(inbound_name='', tensors={}, outputs_dict={}):
+    #get output tensor of inbound layer
+    input_tensor = tensors[inbound_name]
+    
+    #delete output of inbound layer in outputs_dict
+    if inbound_name in outputs_dict:
+        del outputs_dict[inbound_name]
+    
+    return input_tensor
+
+def get_multi_inputs(inbound_names=[], tensors={}, outputs_dict={}):
+    #get output tensors of inbound layers
+    input_tensors = []
+
+    for name in inbound_names:
+        input_tensors.append(tensors[name])
+        
+        #delete outputs of inbound layers in outputs_dict
+        if name in outputs_dict:
+            del outputs_dict[name]
+    
+    return input_tensors
+
+
+####################################################
 #Keras layers functions
 def add_InputLayer(info=None, fid=None, dtype=int):
     input_shape = eval(info['batch_input_shape'])
@@ -133,7 +160,9 @@ def add_Add(input_tensors=[], info=None):
     output_tensor = layers.Add()(input_tensors)
     return output_tensor
 
-#######################################
+
+####################################################
+####################################################
 #Print function
 def print_result(model=None, input_values=None):
     def printXD(ary, fid=None, shape=()):
@@ -190,34 +219,10 @@ def print_result(model=None, input_values=None):
     
     #model.summary()
     f.close()
-    
 
-#######################################
-#Functions about input_tensors & outputs_dict
-def get_single_input(inbound_name='', tensors={}, outputs_dict={}):
-    #get output tensor of inbound layer
-    input_tensor = tensors[inbound_name]
-    
-    #delete output of inbound layer in outputs_dict
-    if inbound_name in outputs_dict:
-        del outputs_dict[inbound_name]
-    
-    return input_tensor
 
-def get_multi_inputs(inbound_names=[], tensors={}, outputs_dict={}):
-    #get output tensors of inbound layers
-    input_tensors = []
-
-    for name in inbound_names:
-        input_tensors.append(tensors[name])
-        
-        #delete outputs of inbound layers in outputs_dict
-        if name in outputs_dict:
-            del outputs_dict[name]
-    
-    return input_tensors
-
-#######################################
+####################################################
+####################################################
 #main
 if __name__ == "__main__":
 
@@ -277,82 +282,62 @@ if __name__ == "__main__":
             #get input tensor
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             #get output of current layer and save it to dict
-            tensors[layer_name] = add_Conv2D(input_tensor, row, weights_bin, dtype)
-            #append output of current layer to outputs_dict
-            outputs_dict[layer_name] = tensors[layer_name]
+            outputs_dict[layer_name] = tensors[layer_name] = add_Conv2D(input_tensor, row, weights_bin, dtype)
             
         elif layer_type == 'MaxPooling2D':
             #get input tensor
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             #get output of current layer and save it to dict
-            tensors[layer_name] = add_MaxPooling2D(input_tensor, row)
-            #append output of current layer to outputs_dict
-            outputs_dict[layer_name] = tensors[layer_name]
+            outputs_dict[layer_name] = tensors[layer_name] = add_MaxPooling2D(input_tensor, row)
             
         elif layer_type == 'BatchNormalization':
             #get input tensor
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             #get output of current layer and save it to dict
-            tensors[layer_name] = add_BatchNormalization(input_tensor, row, weights_bin, dtype, skip)
-            #append output of current layer to outputs_dict
-            outputs_dict[layer_name] = tensors[layer_name]
+            outputs_dict[layer_name] = tensors[layer_name] = add_BatchNormalization(input_tensor, row, weights_bin, dtype, skip)
                         
         elif layer_type == 'Activation':
             #get input tensor
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             #get output of current layer and save it to dict
-            tensors[layer_name] = add_Activation(input_tensor, row)
-            #append output of current layer to outputs_dict
-            outputs_dict[layer_name] = tensors[layer_name]
+            outputs_dict[layer_name] = tensors[layer_name] = add_Activation(input_tensor, row)
             
         elif layer_type == 'AveragePooling2D':
             #get input tensor
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             #get output of current layer and save it to dict
-            tensors[layer_name] = add_AveragePooling2D(input_tensor, row)
-            #append output of current layer to outputs_dict
-            outputs_dict[layer_name] = tensors[layer_name]
+            outputs_dict[layer_name] = tensors[layer_name] = add_AveragePooling2D(input_tensor, row)
             
         elif layer_type == 'ZeroPadding2D':
             #get input tensor
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             #get output of current layer and save it to dict
-            tensors[layer_name] = add_ZeroPadding2D(input_tensor, row)
-            #append output of current layer to outputs_dict
-            outputs_dict[layer_name] = tensors[layer_name]
+            outputs_dict[layer_name] = tensors[layer_name] = add_ZeroPadding2D(input_tensor, row)
 
         elif layer_type == 'Flatten':
             #get input tensor
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             #get output of current layer and save it to dict
-            tensors[layer_name] = add_Flatten(input_tensor, row)
-            #append output of current layer to outputs_dict
-            outputs_dict[layer_name] = tensors[layer_name]
+            outputs_dict[layer_name] = tensors[layer_name] = add_Flatten(input_tensor, row)
             
         elif layer_type == 'Dense':
             #get input tensor
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             #get output of current layer and save it to dict
-            tensors[layer_name] = add_Dense(input_tensor, row, weights_bin, dtype)
-            #append output of current layer to outputs_dict
-            outputs_dict[layer_name] = tensors[layer_name]
+            outputs_dict[layer_name] = tensors[layer_name] = add_Dense(input_tensor, row, weights_bin, dtype)
 
         elif layer_type == 'Dropout':
             #get input tensor
             input_tensor = get_sing_input(row['connected_to'], tensors, outputs_dict)
             #get output of current layer and save it to dict
-            tensors[layer_name] = inpur_tensor
-            #append output of current layer to outputs_dict
-            outputs_dict[layer_name] = tensors[layer_name]
+            outputs_dict[layer_name] = tensors[layer_name] = inpur_tensor
             
         elif layer_type == 'Add':
             #get input tensors
             input_tensors = get_multi_inputs(row['connected_to'].split('/'), tensors, outputs_dict)
             #get output of current layer and save it to dict
-            tensors[layer_name] = add_Add(input_tensors, row)
-            #append output of current layer to outputs_dict
-            outputs_dict[layer_name] = tensors[layer_name]
-        
+            outputs_dict[layer_name] = tensors[layer_name] = add_Add(input_tensors, row)
+            
         else:
             print('Undefined Layer: {}'.format(layer_type))
     

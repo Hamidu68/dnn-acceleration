@@ -1,6 +1,0 @@
-fprintf(o_stream,"%s","${Name} : [[");
-for (k = 0; k <  ${first} ; k++) {
-	fprintf(o_stream,"%.6f ",${output}[k]);
-}
-fprintf(o_stream,"%s","]]\n\n");
-

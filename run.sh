@@ -4,6 +4,8 @@
 #1. Result of C code vs keras code
 #2. model_test.cpp , model.cpp
 
+###########we need modity this file
+
 Model_name="vgg19"
 Test_dir="test_file/vgg19_test.csv"
 #Test_dir="test_file/"${Model_name}".csv"

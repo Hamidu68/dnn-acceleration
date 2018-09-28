@@ -1,0 +1,9 @@
+for (k = 0; k <  $Input_channel ; k++) {
+	for (x = 0; x < $Input_width ; x++) {
+		for(y = 0; y < $Input_height ; y++) {
+			fread(&trash, sizeof(int), 1, i_stream);
+            I[k][x][y] = (DATA_T) trash;
+			O0_SW[k][x][y] = (DATA_T) trash;
+		}
+	}
+}
