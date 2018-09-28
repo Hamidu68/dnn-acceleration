@@ -17,4 +17,16 @@ class C_verifier(CodeGenerators):
         return
     
     def generate():
+        f.write(template.format(inner='',
+                                sw_def_layer = get_sw_def_layer()))
         return
+
+    template = '''
+#include <iostream>
+using namespaces std;
+
+int main() {
+    {inner}
+    return;
+}
+'''
