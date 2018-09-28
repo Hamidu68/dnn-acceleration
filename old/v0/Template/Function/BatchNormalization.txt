@@ -1,0 +1,15 @@
+void SW_$Name(DATA_T I[$Input_channel][$Input_width][$Input_height], DATA_T O[$Output_channel][$Output_width][$Output_height]) {
+	int m, x, y;
+	DATA_T temp;
+	DATA_T mean = 0;
+	DATA_T dsd_dev = 1;
+	DATA_T size = $Input_channel * $Input_width * $Input_height;
+	DATA_T epsilon = 1e-3;
+for (m = 0; m < $Input_channel; m++){
+		for (x = 0; x < $Input_width; x++){
+			for (y = 0; y < $Input_height; y++){
+				O[m][x][y] = (I[m][x][y]-mean)/sqrt(dsd_dev+epsilon);
+			}
+		}
+	}
+}

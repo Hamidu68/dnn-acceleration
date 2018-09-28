@@ -1,0 +1,11 @@
+name,layer_type,batch_input_shape,batch_output_shape,filters,kernel_size,activation,padding,strides,pool_size,units,dtype,trainable,use_bias,bias_regularizer,bias_initializer,kernel_initializer,kernel_constraint,activity_regularizer,bias_constraint,data_format,dilation_rate,kernel_regularizer,sparse,,,,,,,,,
+input_1,InputLayer,"(None, 10, 10, 3)","(None, 10, 10, 3)",,,,,,,,float32,,,,,,,,,,,,FALSE,,,,,,,,,
+block1_conv1,Conv2D,"(None, 10, 10, 3)","(None, 8, 8, 4)",4,"(3, 3)",relu,valid,"(1, 1)",,,,TRUE,TRUE,,"{'class_name': 'Zeros', 'config': {}}","{'class_name': 'VarianceScaling', 'config': {'distribution': 'uniform', 'scale': 1.0, 'seed': None, 'mode': 'fan_avg'}}",,,,channels_last,"(1, 1)",,,,,,,,,,,
+bn2a_branch2a,BatchNormalization,"(None, 8, 8, 4)","(None, 8, 8, 4)",,,,,,,,,TRUE,,3,TRUE,"{'class_name': 'Zeros', 'config': {}}",,"{'class_name': 'Ones', 'config': {}}",,,,,0.99,"{'class_name': 'Ones', 'config': {}}",,,0.001,"{'class_name': 'Zeros', 'config': {}}",,TRUE,,
+block2_conv1,Conv2D,"(None, 8, 8, 4)","(None, 8, 8, 8)",8,"(3, 3)",relu,same,"(1, 1)",,,,TRUE,TRUE,,"{'class_name': 'Zeros', 'config': {}}","{'class_name': 'VarianceScaling', 'config': {'distribution': 'uniform', 'scale': 1.0, 'seed': None, 'mode': 'fan_avg'}}",,,,channels_last,"(1, 1)",,,,,,,,,,,
+block1_pool,MaxPooling2D,"(None, 8, 8, 8)","(None, 7, 7, 8)",,,,valid,"(1, 1)","(2, 2)",,,TRUE,,,,,,,,channels_last,,,,,,,,,,,,
+activation_2,Activation,"(None, 7, 7, 8)","(None, 7, 7, 8)",,,relu,,,,,,TRUE,,,,,,,,,,,,,,,,,,,,
+avg_pool,AveragePooling2D,"(None, 7, 7, 8)","(None, 1, 1, 8)",,,,valid,"(7, 7)","(7, 7)",,,TRUE,,,,,,,,,,,,,,,,,,,,channels_last
+flatten_1,Flatten,"(None, 1, 1, 8)","(None, 8)",,,,,,,,,TRUE,,,,,,,,,,,,,,,,,,,,channels_last
+fc2,Dense,"(None, 8)","(None, 8)",,,relu,,,,8,,TRUE,TRUE,,"{'class_name': 'Zeros', 'config': {}}","{'class_name': 'VarianceScaling', 'config': {'distribution': 'uniform', 'scale': 1.0, 'seed': None, 'mode': 'fan_avg'}}",,,,,,,,,,,,,,,,
+fc1000,Dense,"(None, 8)","(None, 3)",,,softmax,,,,3,,TRUE,TRUE,,,,,,,"{'class_name': 'Zeros', 'config': {}}",,,,,"{'class_name': 'VarianceScaling', 'config': {'distribution': 'uniform', 'scale': 1.0, 'seed': None, 'mode': 'fan_avg'}}",,,,,,,
