@@ -50,8 +50,11 @@ def replaceAndSaveSetting(params, index):
 
 class NHS(SweepTask):
     params = [
-        ParamHolder('M_L1_UF', [1, 2, 4, 8, 16, 32, 64]),
-        ParamHolder('M_L2_UF', [1, 2, 4, 8, 16, 32, 64,128])
+        ParamHolder('B1_L1_UF', [1, 2, 4, 8, 16, 32, 64]),
+        ParamHolder('B1_L2_UF', [1, 2, 4, 8, 16, 32, 64]),
+        ParamHolder('B2_L1_UF', [1, 2, 4, 8, 16, 32, 64,128]),
+        ParamHolder('B2_L2_UF', [1, 2, 4, 8, 16, 32, 64,128]),
+        ParamHolder('B3_L1_UF', [1, 2, 4, 8, 16, 32, 64,128,256])
             ] 
     containerIndex = 0
 
@@ -75,3 +78,6 @@ class NHS(SweepTask):
 if __name__ == '__main__':
     sweeper = Sweeper(NHS)
     sweeper.sweep()
+
+
+
