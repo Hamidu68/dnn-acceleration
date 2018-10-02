@@ -53,7 +53,7 @@ static DATA_T B7_i[256];
 void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][224][224], DATA_T B[64], DATA_T W[64][3][3][3]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
-    int p = (1 *(224 - 1) - 224 + 3)/2; 
+
 	for (m = 0; m<64; m++) {
 		for (x = 0; x<224; x++) {
 			for (y = 0; y<224; y++) {
@@ -61,8 +61,8 @@ void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][224][224], DATA_T B[64]
 				for (k = 0; k<3; k++) {
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
-							if (x + i < 224 + p && y + j < 224 + p && x + i -p >= 0 && y + j -p >= 0) { 
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+							if (x + i < 224 && y + j < 224 ) {
+                                    ifm = I[k][x + i][y + j];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -71,7 +71,10 @@ void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][224][224], DATA_T B[64]
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -80,7 +83,7 @@ void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][224][224], DATA_T B[64]
 void SW_block1_conv2(DATA_T I[64][224][224], DATA_T O[64][224][224], DATA_T B[64], DATA_T W[64][64][3][3]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
-    int p = (1 *(224 - 1) - 224 + 3)/2; 
+
 	for (m = 0; m<64; m++) {
 		for (x = 0; x<224; x++) {
 			for (y = 0; y<224; y++) {
@@ -88,8 +91,8 @@ void SW_block1_conv2(DATA_T I[64][224][224], DATA_T O[64][224][224], DATA_T B[64
 				for (k = 0; k<64; k++) {
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
-							if (x + i < 224 + p && y + j < 224 + p && x + i -p >= 0 && y + j -p >= 0) { 
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+							if (x + i < 224 && y + j < 224 ) {
+                                    ifm = I[k][x + i][y + j];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -98,14 +101,17 @@ void SW_block1_conv2(DATA_T I[64][224][224], DATA_T O[64][224][224], DATA_T B[64
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}
 }
 
 void SW_block1_pool(DATA_T I[64][224][224], DATA_T O[64][112][112])
-{ 
+{
 	int m, x, y, i, j;
 	DATA_T max;
 	for (m = 0; m<64; m++) {
@@ -127,7 +133,7 @@ void SW_block1_pool(DATA_T I[64][224][224], DATA_T O[64][112][112])
 void SW_block2_conv1(DATA_T I[64][112][112], DATA_T O[128][112][112], DATA_T B[128], DATA_T W[128][64][3][3]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
-    int p = (1 *(112 - 1) - 112 + 3)/2; 
+
 	for (m = 0; m<128; m++) {
 		for (x = 0; x<112; x++) {
 			for (y = 0; y<112; y++) {
@@ -135,8 +141,8 @@ void SW_block2_conv1(DATA_T I[64][112][112], DATA_T O[128][112][112], DATA_T B[1
 				for (k = 0; k<64; k++) {
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
-							if (x + i < 112 + p && y + j < 112 + p && x + i -p >= 0 && y + j -p >= 0) { 
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+							if (x + i < 112 && y + j < 112 ) {
+                                    ifm = I[k][x + i][y + j];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -145,7 +151,10 @@ void SW_block2_conv1(DATA_T I[64][112][112], DATA_T O[128][112][112], DATA_T B[1
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -154,7 +163,7 @@ void SW_block2_conv1(DATA_T I[64][112][112], DATA_T O[128][112][112], DATA_T B[1
 void SW_block2_conv2(DATA_T I[128][112][112], DATA_T O[128][112][112], DATA_T B[128], DATA_T W[128][128][3][3]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
-    int p = (1 *(112 - 1) - 112 + 3)/2; 
+
 	for (m = 0; m<128; m++) {
 		for (x = 0; x<112; x++) {
 			for (y = 0; y<112; y++) {
@@ -162,8 +171,8 @@ void SW_block2_conv2(DATA_T I[128][112][112], DATA_T O[128][112][112], DATA_T B[
 				for (k = 0; k<128; k++) {
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
-							if (x + i < 112 + p && y + j < 112 + p && x + i -p >= 0 && y + j -p >= 0) { 
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+							if (x + i < 112 && y + j < 112 ) {
+                                    ifm = I[k][x + i][y + j];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -172,14 +181,17 @@ void SW_block2_conv2(DATA_T I[128][112][112], DATA_T O[128][112][112], DATA_T B[
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}
 }
 
 void SW_block2_pool(DATA_T I[128][112][112], DATA_T O[128][56][56])
-{ 
+{
 	int m, x, y, i, j;
 	DATA_T max;
 	for (m = 0; m<128; m++) {
@@ -201,7 +213,7 @@ void SW_block2_pool(DATA_T I[128][112][112], DATA_T O[128][56][56])
 void SW_block3_conv1(DATA_T I[128][56][56], DATA_T O[256][56][56], DATA_T B[256], DATA_T W[256][128][3][3]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
-    int p = (1 *(56 - 1) - 56 + 3)/2; 
+
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<56; x++) {
 			for (y = 0; y<56; y++) {
@@ -209,8 +221,8 @@ void SW_block3_conv1(DATA_T I[128][56][56], DATA_T O[256][56][56], DATA_T B[256]
 				for (k = 0; k<128; k++) {
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
-							if (x + i < 56 + p && y + j < 56 + p && x + i -p >= 0 && y + j -p >= 0) { 
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+							if (x + i < 56 && y + j < 56 ) {
+                                    ifm = I[k][x + i][y + j];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -219,7 +231,10 @@ void SW_block3_conv1(DATA_T I[128][56][56], DATA_T O[256][56][56], DATA_T B[256]
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -231,7 +246,7 @@ void HW_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[64][3][3][3], DATA_T 
 #pragma HLS INLINE
   int m, x, y, i, j, k;
 
-  uint512_t O;
+  //uint512_t O;
 
   DATA_T I_0, I_1, I_2, I_3, I_4, I_5, I_6, I_7, I_8;
 
@@ -267,6 +282,7 @@ void HW_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[64][3][3][3], DATA_T 
 
   	 			Conv2D_1_m_loop: for (m=0; m<64; m++) {
 #pragma HLS PIPELINE
+
 
   	 				if (k==0) {
   	 					ofm[m] = B[m];
@@ -338,7 +354,9 @@ void HW_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[64][3][3][3], DATA_T 
   	 			if (k==3-1) {
   	 				for (m=0; m<64; m++) {
 #pragma HLS UNROLL
-  	 					O_strm.write(ofm[m]);
+  						if(ofm[m]<0)
+							ofm[m]=0;
+						O_strm.write(ofm[m]);
   	 				}
   	 			}
 
@@ -353,7 +371,7 @@ void HW_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[64][64][3][3], DATA_T
 #pragma HLS INLINE
   int m, x, y, i, j, k;
 
-  uint512_t O;
+  //uint512_t O;
 
   DATA_T I_0, I_1, I_2, I_3, I_4, I_5, I_6, I_7, I_8;
 
@@ -460,7 +478,9 @@ void HW_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[64][64][3][3], DATA_T
   	 			if (k==64-1) {
   	 				for (m=0; m<64; m++) {
 #pragma HLS UNROLL
-  	 					O_strm.write(ofm[m]);
+  						if(ofm[m]<0)
+							ofm[m]=0;
+						O_strm.write(ofm[m]);
   	 				}
   	 			}
 
@@ -473,7 +493,7 @@ void HW_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[64][64][3][3], DATA_T
 void HW_block1_pool(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {
 #pragma HLS INLINE
   int m, x, y, i, j;
-  ap_uint<32> max;
+  DATA_T max;
 
   DATA_T I[64][3][224];
 
@@ -522,7 +542,7 @@ void HW_block2_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[128][64][3][3], DATA_
 #pragma HLS INLINE
   int m, x, y, i, j, k;
 
-  uint512_t O;
+  //uint512_t O;
 
   DATA_T I_0, I_1, I_2, I_3, I_4, I_5, I_6, I_7, I_8;
 
@@ -629,7 +649,9 @@ void HW_block2_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[128][64][3][3], DATA_
   	 			if (k==64-1) {
   	 				for (m=0; m<128; m++) {
 #pragma HLS UNROLL
-  	 					O_strm.write(ofm[m]);
+  						if(ofm[m]<0)
+							ofm[m]=0;
+						O_strm.write(ofm[m]);
   	 				}
   	 			}
 
@@ -644,7 +666,7 @@ void HW_block2_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[128][128][3][3], DATA
 #pragma HLS INLINE
   int m, x, y, i, j, k;
 
-  uint512_t O;
+  //uint512_t O;
 
   DATA_T I_0, I_1, I_2, I_3, I_4, I_5, I_6, I_7, I_8;
 
@@ -751,7 +773,9 @@ void HW_block2_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[128][128][3][3], DATA
   	 			if (k==128-1) {
   	 				for (m=0; m<128; m++) {
 #pragma HLS UNROLL
-  	 					O_strm.write(ofm[m]);
+  						if(ofm[m]<0)
+							ofm[m]=0;
+						O_strm.write(ofm[m]);
   	 				}
   	 			}
 
@@ -764,7 +788,7 @@ void HW_block2_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[128][128][3][3], DATA
 void HW_block2_pool(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {
 #pragma HLS INLINE
   int m, x, y, i, j;
-  ap_uint<32> max;
+  DATA_T max;
 
   DATA_T I[128][3][112];
 
@@ -813,7 +837,7 @@ void HW_block3_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[256][128][3][3], DATA
 #pragma HLS INLINE
   int m, x, y, i, j, k;
 
-  uint512_t O;
+  //uint512_t O;
 
   DATA_T I_0, I_1, I_2, I_3, I_4, I_5, I_6, I_7, I_8;
 
@@ -920,7 +944,9 @@ void HW_block3_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[256][128][3][3], DATA
   	 			if (k==128-1) {
   	 				for (m=0; m<256; m++) {
 #pragma HLS UNROLL
-  	 					O_strm.write(ofm[m]);
+  						if(ofm[m]<0)
+							ofm[m]=0;
+						O_strm.write(ofm[m]);
   	 				}
   	 			}
 
@@ -958,7 +984,7 @@ void vgg19(DATA_T I[3][224][224], DATA_T W1_i[64][3][3][3], DATA_T B1_i[64],DATA
 
 #pragma HLS DATAFLOW
   hls::stream<uint256_t> O1_packed_strm("O1_packed_strm");
-  
+
   hls::stream<DATA_T> I_strm("I_strm");
 hls::stream<DATA_T> O1_strm("O1_strm");
 hls::stream<DATA_T> O2_strm("O2_strm");
@@ -969,7 +995,7 @@ hls::stream<DATA_T> O6_strm("O6_strm");
 hls::stream<DATA_T> O7_strm("O7_strm");
 
 
-  Stream_input(I, I_strm);          
+  Stream_input(I, I_strm);
   HW_block1_conv1(I_strm, W1_i, B1_i, O1_strm);
 HW_block1_conv2(O1_strm, W2_i, B2_i, O2_strm);
 HW_block1_pool(O2_strm, O3_strm);
@@ -1094,5 +1120,4 @@ SW_block3_conv1(O6_SW,O7_SW,B7,W7);
 
 
 }
-
 
