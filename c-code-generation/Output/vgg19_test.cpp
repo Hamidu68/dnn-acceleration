@@ -15,10 +15,10 @@ void vgg19_sw(DATA_T I[3][224][224],DATA_T W1[64][3][3][3], DATA_T B1[64],DATA_T
 
 int main(){
 
-  DATA_T temp;
+  DATA_T temp; 
   int m, x, y, i, j, k;
   int trash;
-
+  
   static DATA_T I[3][224][224];
 	static DATA_T O0_SW[3][224][224];
 	static DATA_T W1[64][3][3][3];
@@ -33,15 +33,15 @@ int main(){
 	static DATA_T B7[256];
 	static DATA_T O_SW[256][56][56];
 	static DATA_T O_HW[256][56][56];
-
-
+	
+  
   FILE *w_stream = fopen("init_Weight.bin", "r");
   if (w_stream == NULL) printf("weight file was not opened");
   FILE *b_stream = fopen("init_Bias.bin", "r");
   if (b_stream == NULL) printf("bias file was not opened");
   FILE *i_stream = fopen("init_Input.bin", "r");
   if (i_stream == NULL) printf("input file was not opened");
-
+  
   for (k = 0; k <  3 ; k++) {
 	for (x = 0; x < 224 ; x++) {
 		for(y = 0; y < 224 ; y++) {
@@ -107,8 +107,8 @@ int main(){
     fread(&B7[m], sizeof(int), 1, b_stream);
 }
 
-
-
+	
+ 
   vgg19_top(I,W1,B1,W2,B2,W4,B4,W5,B5,W7,B7,O_HW);
   vgg19_sw(I,W1,B1,W2,B2,W4,B4,W5,B5,W7,B7,O_SW);
 
@@ -116,9 +116,9 @@ int main(){
    for (m=0; m<256; m++) {
        for (x=0; x<56; x++) {
           for (y=0; y<56; y++) {
-	      cout<<"SW: O["<<m<<"]["<<x<<"]["<<y<<"] = "<<O_SW[m][x][y];
-       	      cout<<"HW: O["<<m<<"]["<<x<<"]["<<y<<"] = "<< O_HW[m][x][y]<<endl;
               if (O_HW[m][x][y] != O_SW[m][x][y]) {
+                printf("SW: O[%d][%d][%d] = %d", m, x, y, O_SW[m][x][y]);
+                printf("HW: O[%d][%d][%d] = %d", m, x, y, O_HW[m][x][y]);
                 err_cnt++;}
            }
        }
@@ -139,3 +139,4 @@ int main(){
   fclose(i_stream);
   return ret_val;
 }
+
