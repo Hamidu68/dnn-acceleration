@@ -1,4 +1,11 @@
 #include <iostream>
+
+/*on Hamid's machined*/
+//#include "/opt/Xilinx/Vivado/2018.2/include/gmp.h"
+
+/*on HPC*/ 
+//#include "/data/apps/Xilinx_Vivado/2018.2/include/gmp.h"
+
 #include <ap_int.h>
 #include <hls_stream.h>
 
