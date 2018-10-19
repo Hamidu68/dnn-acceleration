@@ -48,7 +48,7 @@ cosim_design -rtl verilog -trace_level all
 ##################
 # IMPLEMENTATION #
 ##################
-export_design -evaluate verilog -format ipxact
+#export_design -evaluate verilog -format ipxact
 
 
 exit
