@@ -6,3 +6,4 @@ keras_output.txt
 *.swo
 *.swp
 *.swn
+*.DS_Store
