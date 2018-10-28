@@ -160,11 +160,10 @@ class C_verifier(CodeGenerators):
         f.write(template.format(sw_def_layer = get_sw_def_layer(),
                                 sw_static_variables=gen_sw_static_variables(),
                                 sw_output_variables=gen_sw_output_variables(),
-                                Initialization=
+                                Initialization=gen_Initialization(),
                                 sw_call_layer=gen_sw_call_layer(),
-                                result=
+                                result=gen_print_result()
                                 ))
-        return
 
     template = '''
 #include <stdio.h>
