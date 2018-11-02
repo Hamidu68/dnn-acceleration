@@ -1,6 +1,7 @@
 from .Models import Models
 from ..Layers import *
 
+
 class Models_DAC2017(Models):
     def __init(self, model_name='', dtype='DATA_T', post='_DAC2017'):
         super().__init__(model_name, dtype, post)
@@ -9,7 +10,7 @@ class Models_DAC2017(Models):
         layer_name = config['name']
         layer_type = config['layer_type']
 
-        #Switch
+        # Switch
         if layer_type == 'Conv2D':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)

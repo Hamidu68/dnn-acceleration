@@ -1,5 +1,6 @@
 from ..Layers import *
 
+
 class Models():
     def __init__(self, model_name='', dtype='DATA_T', post=''):
         self.model_name = model_name
@@ -9,7 +10,7 @@ class Models():
         self.layers = []
         self.inputs = []
         self.outputs = []
-        #self.weights = []
+        # self.weights = []
         self.graphs = {}
 
     def add_graph(self, name='', connected=''):
@@ -25,7 +26,7 @@ class Models():
         return inputs
     
     def set_output(self):
-        if layer_num != -1:
+        if self.layer_num != -1:
             data = self.layers[-1].output
             data.name = 'O' + self.post
             self.outputs.append(data)
@@ -37,7 +38,7 @@ class Models():
         layer_name = config['name']
         layer_type = config['layer_type']
         
-        #Switch
+        # Switch
         if layer_type == 'InputLayer':
             layer = InputLayer(config, dtype=self.dtype, layer_odr=self.layer_num, post=self.post)
             self.layers.append(layer)

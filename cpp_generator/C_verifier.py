@@ -1,21 +1,22 @@
 import os, sys, csv
-from Models import *
-from CodeGenerators import *
+from .Models import *
+from .CodeGenerators import *
+
 
 def gen_C_verifier(test_file='', model_name='', dtype='int'):
     # Main) Read Layer Information from CSV
-    csv_reader = csv.DictReader(open(test_file))
+    csv_reader = csv.DictReader(open('../'+test_file))
 
     # Main) make model instance
     models = [Models(model_name=model_name, dtype='DATA_T', post='_SW')]
     
     # Main) Generate Function depending on layer_type
-    #Skip layers
+    # Skip layers
     skip_layers = ['Dropout']
     
-    #for each layers
+    # for each layers
     for row in csv_reader:
-        #check skip layer
+        # check skip layer
         if row["layer_type"] in skip_layers:
             for model in models:
                 model.skip_layer(row)
@@ -26,7 +27,6 @@ def gen_C_verifier(test_file='', model_name='', dtype='int'):
     for model in models:
         model.set_output()
 
-
-    #generate c_verifier.cpp
+    # generate c_verifier.cpp
     code_gen = C_verifier(models=models, dtype=dtype)
     code_gen.generate()

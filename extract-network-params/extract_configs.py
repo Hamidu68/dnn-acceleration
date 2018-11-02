@@ -31,10 +31,11 @@ params = [
     "units",
     ]
 
+
 def extract_configs(model,name):
     list_config = []
 
-    #relevant_nodes
+    # relevant_nodes
     relevant_nodes = []
     for v in model._nodes_by_depth.values():
         relevant_nodes += v
@@ -46,7 +47,7 @@ def extract_configs(model,name):
         dict_layer['batch_output_shape']= layer.output_shape #add output shape for hidder layers
         dict_layer['layer_type'] = (str(layer).split()[0]).split('.')[-1]
 
-        #custom
+        # custom
         connections = ''
         for node in layer._inbound_nodes:
             if relevant_nodes and node not in relevant_nodes:

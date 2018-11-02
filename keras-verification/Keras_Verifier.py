@@ -41,7 +41,7 @@ def get_multi_inputs(inbound_names=[], tensors={}, outputs_dict={}):
 #Keras layers functions
 def add_InputLayer(info=None, fid=None, dtype=int):
     input_shape = eval(info['batch_input_shape'])
-    #Read input value
+    # Read input value
     input_value = np.fromfile(file=fid, dtype=dtype, sep='', count=input_shape[1]*input_shape[2]*input_shape[3])
     input_value = input_value.reshape(input_shape[1:]).astype(np.float32)
     #Make input tensor
@@ -60,7 +60,7 @@ def add_Conv2D(input_tensor=None, info=None, fid=None, dtype=int):
     kernel = kernel.reshape((kernel_size[0],kernel_size[1],input_shape[3],output_shape[3])).astype(np.float32)
     weights.append(kernel)
                
-    if eval(info['use_bias']) == True:
+    if eval(info['use_bias']):
         bias = np.fromfile(file=fid, dtype=dtype, sep='', count=output_shape[3])
         bias = bias.reshape((output_shape[3],)).astype(np.float32)
         weights.append(bias)
@@ -86,7 +86,7 @@ def add_MaxPooling2D(input_tensor=None, info=None):
     return output_tensor
 
 def add_BatchNormalization(input_tensor=None, info=None, fid=None, dtype=int, skip=False):
-    if skip == True:
+    if skip:
         return input_tensor
 
     #Read information of layer
@@ -143,7 +143,7 @@ def add_Dense(input_tensor=None, info=None, fid=None, dtype=int):
     nodes = nodes.reshape((input_shape[1],output_shape[1])).astype(np.float32)
     weights.append(nodes)
                
-    if eval(info['use_bias']) == True:
+    if eval(info['use_bias']):
         bias = np.fromfile(file=fid, dtype=dtype, sep='', count=output_shape[1])
         bias = bias.reshape((output_shape[1],)).astype(np.float32)
         weights.append(bias)
@@ -156,7 +156,7 @@ def add_Dense(input_tensor=None, info=None, fid=None, dtype=int):
     return output_tensor
 
 def add_Add(input_tensors=[], info=None):
-    #Get output tensor
+    # Get output tensor
     output_tensor = layers.Add()(input_tensors)
     return output_tensor
 
@@ -207,14 +207,14 @@ def print_result(model=None, input_values=None):
         f.write('{} : '.format(layer_type))
         if layer_type == 'InputLayer':
             #Write input values
-            printXD(input_values[i], f, input_values[i].shape))
+            printXD(input_values[i], f, input_values[i].shape)
 
         else:
             #Get output values of each layer
             get_3rd_layer_output = K.function([model.layers[0].input], [layer.output])
             layer_output = get_3rd_layer_output([input_values])(0)
             #Write output values
-            printXD(layer_output[0], f, layer_output[0].shape))
+            printXD(layer_output[0], f, layer_output[0].shape)
         f.write('\n\n')
     
     #model.summary()
@@ -328,9 +328,9 @@ if __name__ == "__main__":
 
         elif layer_type == 'Dropout':
             #get input tensor
-            input_tensor = get_sing_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             #get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = inpur_tensor
+            outputs_dict[layer_name] = tensors[layer_name] = input_tensor
             
         elif layer_type == 'Add':
             #get input tensors
