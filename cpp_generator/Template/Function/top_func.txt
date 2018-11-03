@@ -1,14 +1,14 @@
-void $model_name($variables) {
+void {model_name}({variables}) {{
 
-$Optimized_code
+{Optimized_code}
 
 #pragma HLS DATAFLOW
   hls::stream<uint256_t> O1_packed_strm("O1_packed_strm");
   
-  $Stream_declaration
+  {Stream_declaration}
 
   Stream_input(I, I_strm);          
-  $Function_call
-  Stream_output(O${line_num}_strm, O);
+  {Function_call}
+  Stream_output(O{line_num}_strm, O);
 
-}
+}}

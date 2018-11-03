@@ -3,9 +3,9 @@ from .Models import *
 from .CodeGenerators import *
 
 
-def gen_C_verifier(test_file='', model_name='', dtype='int'):
+def gen_c_verifier(test_file='', model_name='', dtype='int'):
     # Main) Read Layer Information from CSV
-    csv_reader = csv.DictReader(open('../'+test_file))
+    csv_reader = csv.DictReader(open(test_file))
 
     # Main) make model instance
     models = [Models(model_name=model_name, dtype='DATA_T', post='_SW')]

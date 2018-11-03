@@ -1,8 +1,8 @@
-void SW_$Name(DATA_T I[$Input_channel], DATA_T O[$Output_channel]) {
+void SW_{Name}(DATA_T I[{Input_channel}], DATA_T O[{Output_channel}]) {{
 	int i;
 	DATA_T denom = I[0];
-	for (i = 1; i < $Input_channel; i++)
+	for (i = 1; i < {Input_channel}; i++)
 		denom += I[i];
-	for (i = 0; i < $Input_channel; i++)
+	for (i = 0; i < {Input_channel}; i++)
 		O[i] = I[i] / denom; //float
-}
+}}

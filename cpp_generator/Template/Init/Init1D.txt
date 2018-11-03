@@ -1,4 +1,4 @@
-for (j = 0; j < ${first} ; j++) {
-	fread(&trash, sizeof(DATA_IN), 1, ${fid});
-	${ary_name}[${iter1}] = (DATA_T) trash;
-}
+for (j = 0; j < {first} ; j++) {{
+	fread(&trash, sizeof(DATA_IN), 1, {fid});
+	{ary_name}[{iter1}] = (DATA_T) trash;
+}}

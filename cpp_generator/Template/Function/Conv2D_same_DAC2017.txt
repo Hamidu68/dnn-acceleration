@@ -1,4 +1,4 @@
-void DAC2017_$Name(hls::stream<DATA_T> &I_strm, DATA_T W[$Output_channel][$Input_channel][$Filter_width][$Filter_height], DATA_T B[$Output_channel], hls::stream<DATA_T> &O_strm) {
+void DAC2017_{Name}(hls::stream<DATA_T> &I_strm, DATA_T W[$Output_channel][$Input_channel][$Filter_width][$Filter_height], DATA_T B[$Output_channel], hls::stream<DATA_T> &O_strm) {
 
 #pragma HLS INLINE
   int m, x, y, i, j, k;

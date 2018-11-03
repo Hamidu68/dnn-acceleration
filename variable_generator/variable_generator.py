@@ -1,5 +1,6 @@
 
 import os, sys
+from sys import argv
 import csv
 import numpy as np
 

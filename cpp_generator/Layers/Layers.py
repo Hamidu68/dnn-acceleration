@@ -12,8 +12,7 @@ class Layers:
         self.output = None
         self.weights = []
         self.weights_odr = []
-        self.function = {'name': self.config['name']+post,
-                         'params': [],
+        self.function = {'name': post+'_'+self.config['name'],
                          'code': ''}  
 
     def set_output(self, shape=(), odr=0):
@@ -111,13 +110,13 @@ class MaxPooling2D(Layers):
 
         # code
         mxp = open("cpp_generator/Template/Function/MaxPooling2D.txt")
-        mxpool2d = Template(mxp.read())
-        l = {'Name': self.config["name"], 'Input_channel': input_shape[3], 'Input_width': input_shape[1],
-             'Input_height': input_shape[2], 'Output_channel': output_shape[3],
-             'Output_width': output_shape[1], 'Output_height': output_shape[2], 'Stride_width': stride_shape[0],
-             'Stride_height': stride_shape[1],
-             'Pool_width': pool_shape[0], 'Pool_height': pool_shape[1]}
-        self.function['code']=mxpool2d.substitute(l) + "\n"
+        template = mxp.read()
+        func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
+                               Input_height=input_shape[2], Output_channel=output_shape[3],
+                               Output_width=output_shape[1], Output_height=output_shape[2],
+                               Stride_width=stride_shape[0], Stride_height=stride_shape[1],
+                               Pool_width=pool_shape[0], Pool_height=pool_shape[1])
+        self.function['code'] = func + "\n"
 
 
 class MaxPooling2D_HW(Layers):
@@ -158,11 +157,11 @@ class BatchNormalization(Layers):
 
         # code
         batch_normal = open("cpp_generator/Template/Function/BatchNormalization.txt")
-        batchnorm = Template(batch_normal.read())
-        l = {'Name': self.config['name'], 'Input_channel': input_shape[3], 'Input_width': input_shape[1],
-             'Input_height': input_shape[2], 'Output_channel': output_shape[3],
-             'Output_width': output_shape[1], 'Output_height': output_shape[2]}
-        self.function['code'] = batchnorm.substitute(l) + "\n"
+        template = batch_normal.read()
+        func = template.format(Name=self.config['name'], Input_channel= input_shape[3], Input_width= input_shape[1],
+                               Input_height=input_shape[2], Output_channel=output_shape[3], Output_width=output_shape[1]
+                               , Output_height=output_shape[2])
+        self.function['code'] = func + "\n"
 
 
 class Activation(Layers):
@@ -183,11 +182,11 @@ class Activation(Layers):
 
         # code
         rl = open("cpp_generator/Template/Function/Relu.txt")
-        relu = Template(rl.read())
-        l = {'Name': self.config["name"], 'Input_channel': input_shape[3], 'Input_width': input_shape[1],
-             'Input_height': input_shape[2], 'Output_channel': output_shape[3],
-             'Output_width': output_shape[1], 'Output_height': output_shape[2]}
-        self.function['code']=relu.substitute(l) + "\n"
+        template = rl.read()
+        func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
+                               Input_height=input_shape[2], Output_channel=output_shape[3],
+                               Output_width=output_shape[1], Output_height=output_shape[2])
+        self.function['code'] = func + "\n"
 
 
 class AveragePooling2D(Layers):
@@ -210,13 +209,12 @@ class AveragePooling2D(Layers):
 
         # code
         avp = open("cpp_generator/Template/Function/AveragePooling2D.txt")
-        avepooling2d = Template(avp.read())
-        l = {'Name': self.config["name"], 'Input_channel': input_shape[3], 'Input_width': input_shape[1],
-             'Input_height': input_shape[2], 'Output_channel': output_shape[3],
-             'Output_width': output_shape[1], 'Output_height': output_shape[2], 'Stride_width': stride_shape[0],
-             'Stride_height': stride_shape[1],
-             'Pool_width': pool_shape[0], 'Pool_height': pool_shape[1]}
-        self.function['code']=avepooling2d.substitute(l) + "\n"
+        template = avp.read()
+        func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
+                               Input_height=input_shape[2], Output_channel=output_shape[3], Output_width=output_shape[1],
+                               Output_height=output_shape[2], Stride_width=stride_shape[0], Stride_height=stride_shape[1],
+                               Pool_width=pool_shape[0], Pool_height=pool_shape[1])
+        self.function['code'] = func + "\n"
 
 
 class ZeroPadding2D(Layers):
@@ -238,11 +236,11 @@ class ZeroPadding2D(Layers):
 
         # code
         zp = open("cpp_generator/Template/Function/ZeroPadding.txt")
-        zeropad2d = Template(zp.read())
-        l = {'Name': self.config["name"], 'Input_channel': input_shape[3], 'Input_width': input_shape[1],
-             'Input_height': input_shape[2], 'Output_channel': output_shape[3],
-             'Output_width': output_shape[1], 'Output_height': output_shape[2], 'Padding_size': padding[0][0]}
-        self.function['code']=zeropad2d.substitute(l) + "\n"
+        template = zp.read()
+        func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
+                               Input_height=input_shape[2], Output_channel=output_shape[3], Output_width=output_shape[1],
+                               Output_height=output_shape[2], Padding_size=padding[0][0])
+        self.function['code'] = func + "\n"
 
 
 class Flatten(Layers):
@@ -263,10 +261,10 @@ class Flatten(Layers):
 
         # code
         fla = open("cpp_generator/Template/Function/Flatten.txt")
-        flatten = Template(fla.read())
-        l = {'Name': self.config["name"], 'Input_channel': input_shape[3], 'Input_width': input_shape[1],
-             'Input_height': input_shape[2], 'Output_channel': output_shape[1]}
-        self.function['code']=flatten.substitute(l) + "\n"
+        template = fla.read()
+        func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
+                               Input_height=input_shape[2], Output_channel=output_shape[1])
+        self.function['code'] = func + "\n"
 
 
 class Dense(Layers):
@@ -277,6 +275,7 @@ class Dense(Layers):
         # get shape
         input_shape = eval(self.config['batch_input_shape'])
         output_shape = eval(self.config['batch_output_shape'])
+        use_bias = eval(self.config['use_bias'])
 
         # set_output
         self.set_output(output_shape[1:], self.layer_odr)
@@ -288,13 +287,25 @@ class Dense(Layers):
         # code
         den_s = open("cpp_generator/Template/Function/Dense_Softmax.txt")
         den_r = open("cpp_generator/Template/Function/Dense_Relu.txt")
-        dense_softmax = Template(den_s.read())
-        dense_relu = Template(den_r.read())
-        l = {'Name': self.config["name"], 'Input_channel': input_shape[1], 'Output_channel': output_shape[1]}
+        dense_softmax = den_s.read()
+        dense_relu = den_r.read()
+        comment = ''
+        comment1 = '\'\'\''
+
+        if not use_bias:
+            comment = '//'
+            comment1 = '\'\'\''
+
         if self.config['activation'] == 'relu':  # Activation = relu
-            self.function['code'] += dense_relu.substitute(l) + "\n"
+            func = dense_softmax.format(Name=self.config["name"], Input_channel=input_shape[1],
+                                        Output_channel=output_shape[1], comment_begin=comment1,
+                                        comment_end=comment1, comment=comment)
+            self.function['code'] += func + "\n"
         else:  # Activation = softmax
-            self.function['code'] += dense_softmax.substitute(l) + "\n"
+            func = dense_relu.format(Name=self.config["name"], Input_channel=input_shape[1],
+                                     Output_channel=output_shape[1], comment_begin=comment1,
+                                     comment_end=comment1, comment=comment)
+            self.function['code'] += func + "\n"
 
         
 class Add(Layers):
@@ -314,9 +325,10 @@ class Add(Layers):
 
         # code
         ad = open("cpp_generator/Template/Function/Add.txt")
-        add = Template(ad.read())
-        l = {'Name': self.config['name'], 'Input_channel1': output_shape[3], 'Input_width1': output_shape[1],
-             'Input_height1': output_shape[2], 'Input_channel2': output_shape[3], 'Input_width2': output_shape[1],
-             'Input_height2': output_shape[2], 'Output_channel': output_shape[3], 'Output_width': output_shape[1],
-             'Output_height': output_shape[2]}
-        self.function['code']=add.substitute(l) + "\n"
+        template = ad.read()
+        func = template.format(Name=self.config['name'], Input_channel1=output_shape[3], Input_width1=output_shape[1],
+                               Input_height1=output_shape[2], Input_channel2=output_shape[3],
+                               Input_width2=output_shape[1], Input_height2=output_shape[2],
+                               Output_channel=output_shape[3], Output_width=output_shape[1],
+                               Output_height=output_shape[2])
+        self.function['code'] = func + "\n"

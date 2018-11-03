@@ -20,7 +20,7 @@ if __name__ == '__main__':
     dtype = sys.argv[6]
 
     if make_C_verifier:
-        gen_C_verifier(test_file, model_name, dtype)
+        gen_c_verifier(test_file, model_name, dtype)
     if make_HW_test:
         gen_HW_test(test_file, model_name, dtype)
     if make_DAC2017_test:

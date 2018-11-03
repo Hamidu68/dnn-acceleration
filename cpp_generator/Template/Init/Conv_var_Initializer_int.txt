@@ -1,10 +1,10 @@
-for (m = 0; m <  $Output_channel ; m++) {
-	for (k = 0; k < $Input_channel ; k++) {
-		for (i = 0; i < $Filter_width ; i++) {
-			for (j = 0; j < $Filter_height ; j++) {
-                fread(&W${line_number}[m][k][i][j], sizeof(int), 1, w_stream);
-			}
-		}
-	}
-    fread(&B${line_number}[m], sizeof(int), 1, b_stream);
-}
+for (m = 0; m <  {Output_channel} ; m++) {{
+	for (k = 0; k < {Input_channel} ; k++) {{
+		for (i = 0; i < {Filter_width} ; i++) {{
+			for (j = 0; j < {Filter_height} ; j++) {{
+                fread(&W{line_number}[m][k][i][j], sizeof(int), 1, w_stream);
+			}}
+		}}
+	}}
+    fread(&B{line_number}[m], sizeof(int), 1, b_stream);
+}}
