@@ -241,10 +241,8 @@ void HW_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[64][3][3][3], DATA_T 
 
   DATA_T I[3][3][224];
 
-#pragma HLS ARRAY_PARTITION variable=I complete dim=1
 #pragma HLS ARRAY_PARTITION variable=I complete dim=2
-#pragma HLS ARRAY_PARTITION variable=I complete dim=3
-
+    
  	Conv2D_1_x_loop: for (x=0; x<224+2; x++) {
  		Conv2D_1_y_loop: for (y=0; y<224+2; y++) {
   		Conv2D_1_k_loop: for (k=0; k<3; k++) {
@@ -337,7 +335,7 @@ void HW_block1_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[64][3][3][3], DATA_T 
 	 				}
   	 			if (k==3-1) {
   	 				for (m=0; m<64; m++) {
-#pragma HLS UNROLL
+
   	 					O_strm.write(ofm[m]);
   	 				}
   	 			}
@@ -363,9 +361,7 @@ void HW_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[64][64][3][3], DATA_T
 
   DATA_T I[64][3][224];
 
-#pragma HLS ARRAY_PARTITION variable=I complete dim=1
 #pragma HLS ARRAY_PARTITION variable=I complete dim=2
-#pragma HLS ARRAY_PARTITION variable=I complete dim=3
 
  	Conv2D_2_x_loop: for (x=0; x<224+2; x++) {
  		Conv2D_2_y_loop: for (y=0; y<224+2; y++) {
@@ -459,7 +455,6 @@ void HW_block1_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[64][64][3][3], DATA_T
 	 				}
   	 			if (k==64-1) {
   	 				for (m=0; m<64; m++) {
-#pragma HLS UNROLL
   	 					O_strm.write(ofm[m]);
   	 				}
   	 			}
@@ -532,10 +527,8 @@ void HW_block2_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[128][64][3][3], DATA_
 
   DATA_T I[64][3][112];
 
-#pragma HLS ARRAY_PARTITION variable=I complete dim=1
 #pragma HLS ARRAY_PARTITION variable=I complete dim=2
-#pragma HLS ARRAY_PARTITION variable=I complete dim=3
-
+    
  	Conv2D_3_x_loop: for (x=0; x<112+2; x++) {
  		Conv2D_3_y_loop: for (y=0; y<112+2; y++) {
   		Conv2D_3_k_loop: for (k=0; k<64; k++) {
@@ -628,7 +621,6 @@ void HW_block2_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[128][64][3][3], DATA_
 	 				}
   	 			if (k==64-1) {
   	 				for (m=0; m<128; m++) {
-#pragma HLS UNROLL
   	 					O_strm.write(ofm[m]);
   	 				}
   	 			}
@@ -654,9 +646,7 @@ void HW_block2_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[128][128][3][3], DATA
 
   DATA_T I[128][3][112];
 
-#pragma HLS ARRAY_PARTITION variable=I complete dim=1
 #pragma HLS ARRAY_PARTITION variable=I complete dim=2
-#pragma HLS ARRAY_PARTITION variable=I complete dim=3
 
  	Conv2D_4_x_loop: for (x=0; x<112+2; x++) {
  		Conv2D_4_y_loop: for (y=0; y<112+2; y++) {
@@ -750,8 +740,7 @@ void HW_block2_conv2(hls::stream<DATA_T> &I_strm, DATA_T W[128][128][3][3], DATA
 	 				}
   	 			if (k==128-1) {
   	 				for (m=0; m<128; m++) {
-#pragma HLS UNROLL
-  	 					O_strm.write(ofm[m]);
+                        O_strm.write(ofm[m]);
   	 				}
   	 			}
 
@@ -823,9 +812,7 @@ void HW_block3_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[256][128][3][3], DATA
 
   DATA_T I[128][3][56];
 
-#pragma HLS ARRAY_PARTITION variable=I complete dim=1
 #pragma HLS ARRAY_PARTITION variable=I complete dim=2
-#pragma HLS ARRAY_PARTITION variable=I complete dim=3
 
  	Conv2D_5_x_loop: for (x=0; x<56+2; x++) {
  		Conv2D_5_y_loop: for (y=0; y<56+2; y++) {
@@ -919,7 +906,6 @@ void HW_block3_conv1(hls::stream<DATA_T> &I_strm, DATA_T W[256][128][3][3], DATA
 	 				}
   	 			if (k==128-1) {
   	 				for (m=0; m<256; m++) {
-#pragma HLS UNROLL
   	 					O_strm.write(ofm[m]);
   	 				}
   	 			}
