@@ -117,11 +117,11 @@ class C_verifier(CodeGenerators):
         file.close()
 
     template = """#include <stdio.h>
-#include<iostream>
+#include <iostream>
 #include <stdlib.h>
-#include<string>
-#include<string.h>
-#include<math.h>
+#include <string>
+#include <string.h>
+#include <math.h>
     
 using namespace std;
 
@@ -129,7 +129,7 @@ typedef float DATA_T;
 
 {sw_def_layer}
 
-//argv[1] = init_weight.txt , argv[2] = init_bias.txt , argv[3] = init_input.txt
+//argv[1] = init_weight.txt, argv[3] = init_input.txt
 int main(int argc, char *argv[]){{
 
     DATA_T temp;
@@ -142,9 +142,7 @@ int main(int argc, char *argv[]){{
 
     FILE *w_stream = fopen(argv[1], "rb");
     if (w_stream == NULL) printf("weight file was not opened");
-    FILE *b_stream = fopen(argv[2], "rb");
-    if (b_stream == NULL) printf("bias file was not opened");
-    FILE *i_stream = fopen(argv[3], "rb");
+    FILE *i_stream = fopen(argv[2], "rb");
     if (i_stream == NULL) printf("input file was not opened");
     FILE *o_stream = fopen("Output/C_output.txt", "w");
     if (o_stream == NULL) printf("Output file was not opened");
@@ -163,7 +161,6 @@ int main(int argc, char *argv[]){{
 
 
     fclose(w_stream);
-    fclose(b_stream);
     fclose(i_stream);
     fclose(o_stream);
     fclose(c_num);

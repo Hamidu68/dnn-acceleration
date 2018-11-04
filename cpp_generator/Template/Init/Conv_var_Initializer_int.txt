@@ -6,5 +6,5 @@ for (m = 0; m <  {Output_channel} ; m++) {{
 			}}
 		}}
 	}}
-    fread(&B{line_number}[m], sizeof(int), 1, b_stream);
+    fread(&B{line_number}[m], sizeof(int), 1, w_stream);
 }}

@@ -9,6 +9,8 @@ from keras import backend as K
 from keras import Model
 from keras import layers
 
+
+
 # np.set_printoptions(threshold=np.inf, linewidth=9223372036854775807)
 
 ####################################################
@@ -47,7 +49,7 @@ def add_InputLayer(info=None, fid=None, dtype=int):
     input_shape = eval(info['batch_input_shape'])
     # Read input value
     input_value = np.fromfile(file=fid, dtype=dtype, sep='', count=input_shape[1]*input_shape[2]*input_shape[3])
-    input_value = input_value.reshape(input_shape[1:]).astype(np.float32)
+    input_value = input_value.reshape((1, input_shape[1], input_shape[2], input_shape[3])).astype(np.float32)
     # Make input tensor
     input_tensor = layers.Input(shape=input_shape[1:])
     return input_value, input_tensor
@@ -60,9 +62,9 @@ def add_Conv2D(input_tensor=None, info=None, fid=None, dtype=int):
     kernel_size = eval(info['kernel_size'])
 
     # Read weights from file
-    weights=[]
+    weights = []
     kernel = np.fromfile(file=fid, dtype=dtype, sep='', count=kernel_size[0]*kernel_size[1]*input_shape[3]*output_shape[3])
-    kernel = kernel.reshape((kernel_size[0],kernel_size[1],input_shape[3],output_shape[3])).astype(np.float32)
+    kernel = kernel.reshape((kernel_size[0], kernel_size[1], input_shape[3], output_shape[3])).astype(np.float32)
     weights.append(kernel)
                
     if eval(info['use_bias']):
@@ -71,24 +73,24 @@ def add_Conv2D(input_tensor=None, info=None, fid=None, dtype=int):
         weights.append(bias)
 
     # Get output tensor
-    output_tensor = layer.Conv2D(filters= int(info['filters']),
-                                 kernel_size= eval(info['kernel_size']),
-                                 strides= eval(info['strides']),
-                                 padding= str(info['padding']),
-                                 data_format= str(info['data_format']),
-                                 dilation_rate= eval(info['dilation_rate']),
-                                 activation= str(info['activation']),
-                                 use_bias= eval(info['use_bias']),
-                                 weights=weights)(input_tensor)
+    output_tensor = layers.Conv2D(filters=int(info['filters']),
+                                  kernel_size=eval(info['kernel_size']),
+                                  strides=eval(info['strides']),
+                                  padding=str(info['padding']),
+                                  data_format=str(info['data_format']),
+                                  dilation_rate=eval(info['dilation_rate']),
+                                  activation=str(info['activation']),
+                                  use_bias=eval(info['use_bias']),
+                                  weights=weights)(input_tensor)
     return output_tensor
 
 
 def add_MaxPooling2D(input_tensor=None, info=None):
     # Get output tensor
-    output_tensor = layers.MaxPooling2D(pool_size= eval(info['pool_size']),
-                                        strides= eval(info['strides']),
-                                        padding= str(info['padding']),
-                                        data_format= str(info['data_format']))(input_tensor)
+    output_tensor = layers.MaxPooling2D(pool_size=eval(info['pool_size']),
+                                        strides=eval(info['strides']),
+                                        padding=str(info['padding']),
+                                        data_format=str(info['data_format']))(input_tensor)
     return output_tensor
 
 
@@ -101,46 +103,46 @@ def add_BatchNormalization(input_tensor=None, info=None, fid=None, dtype=int, sk
     
     # Read weights from file
     weights = []
-    for _ in range(4):  #Order: gamma, beta, running mean and running std
+    for _ in range(4):  # Order: gamma, beta, running mean and running std
         temp_weights = np.fromfile(file=fid, dtype=dtype, sep='', count=output_shape[3])
         temp_weights = temp_weights.reshape((output_shape[3],)).astype(np.float32)
         weights.append(temp_weights)
     
     # Get output tensor
-    output_tensor = layers.BatchNormalization(axis= int(info['axis']),
-                                              momentum= float(info['momentum']),
-                                              epsilon= float(info['epsilon']),
-                                              center= eval(info['center']),
-                                              scale= eval(info['scale']),
+    output_tensor = layers.BatchNormalization(axis=int(info['axis']),
+                                              momentum=float(info['momentum']),
+                                              epsilon=float(info['epsilon']),
+                                              center=eval(info['center']),
+                                              scale=eval(info['scale']),
                                               weights=weights)(input_tensor)
     return output_tensor
 
 
 def add_Activation(input_tensor=None, info=None):
     # Get output tensor
-    output_tensor = layers.Activation(activation= str(info['activation']))(input_tensor)
+    output_tensor = layers.Activation(activation=str(info['activation']))(input_tensor)
     return output_tensor
 
 
 def add_AveragePooling2D(input_tensor=None, info=None):
     # Get output tensor
-    output_tensor = layers.AveragePooling2D(pool_size= eval(info['pool_size']),
-                                            strides= eval(info['strides']),
-                                            padding= str(info['padding']),
-                                            data_format= str(info['data_format']))(input_tensor)
+    output_tensor = layers.AveragePooling2D(pool_size=eval(info['pool_size']),
+                                            strides=eval(info['strides']),
+                                            padding=str(info['padding']),
+                                            data_format=str(info['data_format']))(input_tensor)
     return output_tensor
 
 
 def add_ZeroPadding2D(input_tensor=None, info=None):
     # Get output tensor
-    output_tensor = layers.ZeroPadding2D(padding= eval(info['padding']),
-                                         data_format= str(info['data_format']))(input_tensor)
+    output_tensor = layers.ZeroPadding2D(padding=eval(info['padding']),
+                                         data_format=str(info['data_format']))(input_tensor)
     return output_tensor
 
 
 def add_Flatten(input_tensor=None, info=None):
     # Get output tensor
-    output_tensor = layers.Flatten(data_format= str(info['data_format']))(input_tensor)
+    output_tensor = layers.Flatten(data_format=str(info['data_format']))(input_tensor)
     return output_tensor
 
 
@@ -161,9 +163,9 @@ def add_Dense(input_tensor=None, info=None, fid=None, dtype=int):
         weights.append(bias)
     
     # Get output tensor
-    output_tensor = layers.Dense(units= int(info['units']),
-                                 activation= str(info['activation']),
-                                 use_bias= eval(info['use_bias']),
+    output_tensor = layers.Dense(units=int(info['units']),
+                                 activation=str(info['activation']),
+                                 use_bias=eval(info['use_bias']),
                                  weights=weights)(input_tensor)
     return output_tensor
 
@@ -178,6 +180,9 @@ def add_Add(input_tensors=[], info=None):
 ####################################################
 # Print function
 def print_result(model=None, input_values=None):
+    np.set_printoptions(threshold=np.inf)
+    np.set_printoptions(linewidth=999999999999999999999999999999)
+
     def printXD(ary, fid=None, shape=()):
         if len(shape) == 1:
             print1D(ary, fid, shape)
@@ -210,7 +215,7 @@ def print_result(model=None, input_values=None):
     print("[Keras_verifier.py]Print Result")
     
     # Open file
-    f = open('Output/keras_output.txt','w')
+    f = open('Output/keras_output.txt', 'w')
 
     # Write values
     i = 0
@@ -225,7 +230,7 @@ def print_result(model=None, input_values=None):
         else:
             # Get output values of each layer
             get_3rd_layer_output = K.function([model.layers[0].input], [layer.output])
-            layer_output = get_3rd_layer_output([input_values])(0)
+            layer_output = get_3rd_layer_output([input_values])[0]
             # Write output values
             printXD(layer_output[0], f, layer_output[0].shape)
         f.write('\n\n')
@@ -239,13 +244,14 @@ def print_result(model=None, input_values=None):
 # main
 if __name__ == "__main__":
 
+
     # Read csv file
     csv_file=open(sys.argv[1])
     csv_reader=csv.DictReader(csv_file)
 
     # Read weight and input file
-    weights_bin=open(sys.argv[2],'rb')
-    inputs_bin=open(sys.argv[3],'rb')
+    weights_bin=open(sys.argv[2], 'rb')
+    inputs_bin=open(sys.argv[3], 'rb')
 
     # Check data type of weight and input files
     dtype = np.int32
@@ -264,7 +270,7 @@ if __name__ == "__main__":
     skip_layers = ['Dropout']
 
     # init parameters
-    line_num =-1
+    line_num = -1
     input_values = np.array([])
     inputs = []
     outputs = []
@@ -278,18 +284,18 @@ if __name__ == "__main__":
         if layer_type in skip_layers:
             skip = True
             print('Skip {} layer')
-        else :
+        else:
             skip = False
             line_num=line_num+1
             print('[Keras_verifier.py]add a layer: ' + layer_type + '.' + str(line_num))
         
-        layer_name=row['name']
+        layer_name = row['name']
 
         # Switch
         if layer_type == 'InputLayer':
             input_value, tensors[layer_name] = add_InputLayer(row, inputs_bin, dtype)
-            input_values.append(input_value)
-            inputs.append(tensors[layer_name])            
+            input_values = input_value
+            inputs.append(tensors[layer_name])
             
         elif layer_type == 'Conv2D':
             # get input tensor
@@ -357,6 +363,7 @@ if __name__ == "__main__":
     # Build model
     for output in outputs_dict.values():
         outputs.append(output)
+
     model = Model(inputs=inputs, outputs=outputs)
     temp = model.predict(input_values)
 

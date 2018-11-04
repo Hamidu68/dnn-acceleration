@@ -3,50 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="cda377c0-9f25-46f8-9145-e88ab30bdb28" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/C_verifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/C_verifier.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cpp_generator/CodeGenerators/C_verifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/CodeGenerators/C_verifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/CodeGenerators/CodeGenerators.py" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/CodeGenerators/CodeGenerators.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Layers/Conv2D.py" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Layers/Conv2D.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Layers/Layers.py" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Layers/Layers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/Add.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/Add.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/AveragePooling2D.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/AveragePooling2D.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/BatchNormalization.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/BatchNormalization.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/Conv2D_same.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/Conv2D_same.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/Conv2D_same_DAC2017.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/Conv2D_same_DAC2017.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/Conv2D_valid.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/Conv2D_valid.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/Dense_Relu.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/Dense_Relu.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/Dense_Softmax.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/Dense_Softmax.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/Flatten.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/Flatten.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/GlobalAveragePooling.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/GlobalAveragePooling.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/GlobalMaxPooling.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/GlobalMaxPooling.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/MaxPooling2D.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/MaxPooling2D.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/Relu.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/Relu.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/Softmax.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/Softmax.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/Stream_io.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/Stream_io.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/Stream_io_dense.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/Stream_io_dense.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/ZeroPadding.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/ZeroPadding.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/sw.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/sw.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/top.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/top.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/top_dense.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/top_dense.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Function/top_func.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Function/top_func.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Init/Conv_var_Initializer_f.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Init/Conv_var_Initializer_f.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Init/Conv_var_Initializer_int.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Init/Conv_var_Initializer_int.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Init/Dense_var_Initializer_f.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Init/Dense_var_Initializer_f.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Init/Dense_var_Initializer_int.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Init/Dense_var_Initializer_int.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Init/Init1D.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Init/Init1D.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Init/Init2D.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Init/Init2D.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Init/Init3D.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Init/Init3D.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Init/Init4D.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Init/Init4D.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Init/Input_var_Initializer_f.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Init/Input_var_Initializer_f.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Init/Input_var_Initializer_int.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Init/Input_var_Initializer_int.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Init/Stream_io_1D.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Init/Stream_io_1D.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Init/Stream_io_3D.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Init/Stream_io_3D.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Print/Print_Output1D.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Print/Print_Output1D.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/Template/Print/Print_Output3D.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/Template/Print/Print_Output3D.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cpp_generator/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cpp_generator/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extract-network-params/extract_configs.py" beforeDir="false" afterPath="$PROJECT_DIR$/extract-network-params/extract_configs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/keras-verification/Keras_Verifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/keras-verification/Keras_Verifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resent50.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resnet50.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/variable_generator/variable_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/variable_generator/variable_generator.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -59,87 +20,75 @@
     <session id="412586065">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="6" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.5" value="2" />
+          <entry key="project.open.time.6" value="2" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="cpp" value="4" />
           <entry key="csv" value="1" />
-          <entry key="md" value="1" />
-          <entry key="py" value="63" />
-          <entry key="sh" value="8" />
-          <entry key="txt" value="151" />
+          <entry key="md" value="2" />
+          <entry key="py" value="69" />
+          <entry key="sh" value="9" />
+          <entry key="txt" value="160" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="C++" value="4" />
-          <entry key="Markdown" value="1" />
-          <entry key="PLAIN_TEXT" value="160" />
-          <entry key="Python" value="63" />
+          <entry key="Markdown" value="2" />
+          <entry key="PLAIN_TEXT" value="170" />
+          <entry key="Python" value="69" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cpp" value="1" />
+          <entry key="cpp" value="68" />
           <entry key="dummy" value="1" />
-          <entry key="py" value="3285" />
-          <entry key="txt" value="538" />
+          <entry key="py" value="4129" />
+          <entry key="txt" value="540" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="C++" value="1" />
-          <entry key="PLAIN_TEXT" value="539" />
-          <entry key="Python" value="3285" />
+          <entry key="C++" value="68" />
+          <entry key="PLAIN_TEXT" value="541" />
+          <entry key="Python" value="4129" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cpp_generator/CodeGenerators/CodeGenerators.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="28" column="29" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
-              <folding>
-                <element signature="e#0#22#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/C_verifier.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="228" column="9" lean-forward="true" selection-start-line="228" selection-start-column="9" selection-end-line="228" selection-end-column="9" />
+            <state relative-caret-position="399">
+              <caret line="507" column="31" selection-start-line="507" selection-start-column="31" selection-end-line="507" selection-end-column="31" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Function/Conv2D_valid.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="2" selection-start-line="25" selection-start-column="2" selection-end-line="25" selection-end-column="2" />
+        <entry file="file://$PROJECT_DIR$/cpp_generator/Template/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor />
+              <second_editor />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Function/Conv2D_same.txt">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Function/Conv2D_same_relu.txt">
+        <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Print/Print_Output3D.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="3" lean-forward="true" selection-start-column="3" selection-end-column="3" />
+            <state relative-caret-position="195">
+              <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -147,11 +96,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/keras-verification/Keras_Verifier.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="352" column="12" lean-forward="true" selection-start-line="352" selection-start-column="12" selection-end-line="352" selection-end-column="12" />
+            <state relative-caret-position="85">
+              <caret line="249" column="39" selection-start-line="249" selection-start-column="39" selection-end-line="249" selection-end-column="39" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
+                <marker date="1541365820831" expanded="true" signature="7551:7560" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Init/Conv_var_Initializer_f.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -159,8 +118,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cpp_generator/CodeGenerators/C_verifier.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="89" column="4" lean-forward="true" selection-start-line="89" selection-start-column="4" selection-end-line="89" selection-end-column="4" />
+            <state relative-caret-position="1214">
+              <caret line="165" column="18" selection-start-line="165" selection-start-column="18" selection-end-line="165" selection-end-column="18" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -171,26 +130,38 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/keras-verification/verifier.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+            <state relative-caret-position="363">
+              <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Function/Dense_Relu.txt">
+        <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Print/Print_Output1D.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="2" selection-start-line="13" selection-start-column="2" selection-end-line="13" selection-end-column="2" />
+            <state relative-caret-position="90">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Function/Dense_Softmax.txt">
+        <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Init/Conv_var_Initializer_int.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
+            <state relative-caret-position="30">
+              <caret line="2" column="48" selection-start-line="2" selection-start-column="48" selection-end-line="2" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cpp_generator/C_verifier.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="465">
+              <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -207,11 +178,9 @@
         <option value="$PROJECT_DIR$/cpp_generator/Models/Models_DAC2017.py" />
         <option value="$PROJECT_DIR$/cpp_generator/Models/Models_HW.py" />
         <option value="$PROJECT_DIR$/cpp_generator/HW_test.py" />
-        <option value="$PROJECT_DIR$/extract-network-params/extract_configs.py" />
         <option value="$PROJECT_DIR$/cpp_generator/__init__.py" />
         <option value="$PROJECT_DIR$/cpp_generator/Layers/InputLayer.py" />
         <option value="$PROJECT_DIR$/run.py" />
-        <option value="$PROJECT_DIR$/C_verifier.cpp" />
         <option value="$PROJECT_DIR$/cpp_generator/Template/Function/Conv2D_same_DAC2017.txt" />
         <option value="$PROJECT_DIR$/cpp_generator/Template/Function/ZeroPadding.txt" />
         <option value="$PROJECT_DIR$/cpp_generator/Template/Function/Add.txt" />
@@ -232,8 +201,6 @@
         <option value="$PROJECT_DIR$/cpp_generator/Template/Function/top.txt" />
         <option value="$PROJECT_DIR$/cpp_generator/Template/Function/top_dense.txt" />
         <option value="$PROJECT_DIR$/cpp_generator/Template/Function/top_func.txt" />
-        <option value="$PROJECT_DIR$/cpp_generator/Template/Init/Conv_var_Initializer_f.txt" />
-        <option value="$PROJECT_DIR$/cpp_generator/Template/Init/Conv_var_Initializer_int.txt" />
         <option value="$PROJECT_DIR$/cpp_generator/Template/Init/Dense_var_Initializer_f.txt" />
         <option value="$PROJECT_DIR$/cpp_generator/Template/Init/Dense_var_Initializer_int.txt" />
         <option value="$PROJECT_DIR$/cpp_generator/Template/Init/Init1D.txt" />
@@ -251,8 +218,12 @@
         <option value="$PROJECT_DIR$/cpp_generator/Template/Function/BatchNormalization.txt" />
         <option value="$PROJECT_DIR$/cpp_generator/CodeGenerators/CodeGenerators.py" />
         <option value="$PROJECT_DIR$/cpp_generator/C_verifier.py" />
+        <option value="$PROJECT_DIR$/extract-network-params/extract_configs.py" />
+        <option value="$PROJECT_DIR$/cpp_generator/Template/Init/Conv_var_Initializer_f.txt" />
+        <option value="$PROJECT_DIR$/cpp_generator/Template/Init/Conv_var_Initializer_int.txt" />
         <option value="$PROJECT_DIR$/variable_generator/variable_generator.py" />
         <option value="$PROJECT_DIR$/cpp_generator/CodeGenerators/C_verifier.py" />
+        <option value="$PROJECT_DIR$/C_verifier.cpp" />
         <option value="$PROJECT_DIR$/keras-verification/Keras_Verifier.py" />
       </list>
     </option>
@@ -264,8 +235,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="57" />
-    <option name="y" value="46" />
+    <option name="x" value="168" />
+    <option name="y" value="394" />
     <option name="width" value="1352" />
     <option name="height" value="777" />
   </component>
@@ -274,6 +245,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -290,24 +262,6 @@
               <item name="ML-acceleration" type="b2602c69:ProjectViewProjectNode" />
               <item name="ML-acceleration" type="462c0819:PsiDirectoryNode" />
               <item name="cpp_generator" type="462c0819:PsiDirectoryNode" />
-              <item name="CodeGenerators" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ML-acceleration" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ML-acceleration" type="462c0819:PsiDirectoryNode" />
-              <item name="cpp_generator" type="462c0819:PsiDirectoryNode" />
-              <item name="Layers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ML-acceleration" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ML-acceleration" type="462c0819:PsiDirectoryNode" />
-              <item name="cpp_generator" type="462c0819:PsiDirectoryNode" />
-              <item name="Models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ML-acceleration" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ML-acceleration" type="462c0819:PsiDirectoryNode" />
-              <item name="cpp_generator" type="462c0819:PsiDirectoryNode" />
               <item name="Template" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -315,18 +269,27 @@
               <item name="ML-acceleration" type="462c0819:PsiDirectoryNode" />
               <item name="cpp_generator" type="462c0819:PsiDirectoryNode" />
               <item name="Template" type="462c0819:PsiDirectoryNode" />
-              <item name="Function" type="462c0819:PsiDirectoryNode" />
+              <item name="Print" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ML-acceleration" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ML-acceleration" type="462c0819:PsiDirectoryNode" />
+              <item name="extract-network-params" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ML-acceleration" type="b2602c69:ProjectViewProjectNode" />
               <item name="ML-acceleration" type="462c0819:PsiDirectoryNode" />
               <item name="keras-verification" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ML-acceleration" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ML-acceleration" type="462c0819:PsiDirectoryNode" />
+              <item name="variable_generator" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -361,18 +324,12 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="57" y="46" width="1352" height="777" extended-state="0" />
+    <frame x="168" y="394" width="1352" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.170229" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24885496" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Python Console" weight="0.329927" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.19562043" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -380,11 +337,17 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="SciView" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.329927" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
     </layout>
     <layout-to-restore>
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -417,9 +380,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Function/Conv2D_same_HW.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Function/Flatten.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -569,23 +529,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="705">
           <caret line="63" column="39" selection-start-line="63" selection-start-column="39" selection-end-line="63" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Function/BatchNormalization.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Init/Conv_var_Initializer_f.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="2" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -603,75 +546,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Init/Conv_var_Initializer_int.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="53" selection-start-line="3" selection-start-column="53" selection-end-line="3" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Init/Input_var_Initializer_int.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="2" lean-forward="true" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Init/Input_var_Initializer_f.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="2" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Print/Print_Output3D.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="35" lean-forward="true" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Print/Print_Output1D.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resnet50.csv">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/run.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-119" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cpp_generator/C_verifier.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="1" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/variable_generator/variable_generator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="39" column="14" selection-start-line="39" selection-start-column="14" selection-end-line="39" selection-end-column="14" />
-          <folding>
-            <element signature="e#1#15#0" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cpp_generator/Models/Models.py">
@@ -685,10 +565,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="438">
           <caret line="77" column="11" selection-start-line="77" selection-start-column="11" selection-end-line="77" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-            <marker date="1541225990546" expanded="true" signature="11545:11551" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -699,27 +575,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cpp_generator/CodeGenerators/CodeGenerators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="28" column="29" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Function/Conv2D_same.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Function/Conv2D_same_relu.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="3" lean-forward="true" selection-start-column="3" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cpp_generator/CodeGenerators/CodeGenerators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="28" column="29" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Function/Dense_Softmax.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
+          <caret column="3" selection-start-column="3" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -730,39 +599,128 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/C_verifier.cpp">
+    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Function/Dense_Softmax.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="228" column="9" lean-forward="true" selection-start-line="228" selection-start-column="9" selection-end-line="228" selection-end-column="9" />
+        <state relative-caret-position="135">
+          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Function/Conv2D_same.txt">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/extract-network-params/extract_configs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1020">
+          <caret line="68" column="15" selection-start-line="68" selection-start-column="15" selection-end-line="68" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Function/BatchNormalization.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="16" lean-forward="true" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Init/Input_var_Initializer_int.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="2" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Init/Input_var_Initializer_f.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="2" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/variable_generator/variable_generator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
+          <folding>
+            <element signature="e#1#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Init/Conv_var_Initializer_f.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Init/Conv_var_Initializer_int.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="48" selection-start-line="2" selection-start-column="48" selection-end-line="2" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/keras-verification/verifier.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cpp_generator/CodeGenerators/C_verifier.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="89" column="4" lean-forward="true" selection-start-line="89" selection-start-column="4" selection-end-line="89" selection-end-column="4" />
+        <state relative-caret-position="1214">
+          <caret line="165" column="18" selection-start-line="165" selection-start-column="18" selection-end-line="165" selection-end-column="18" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/keras-verification/verifier.sh">
+    <entry file="file://$PROJECT_DIR$/cpp_generator/C_verifier.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+        <state relative-caret-position="465">
+          <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Print/Print_Output1D.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cpp_generator/Template/Print/Print_Output3D.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/C_verifier.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="507" column="31" selection-start-line="507" selection-start-column="31" selection-end-line="507" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/keras-verification/Keras_Verifier.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="352" column="12" lean-forward="true" selection-start-line="352" selection-start-column="12" selection-end-line="352" selection-end-column="12" />
+        <state relative-caret-position="85">
+          <caret line="249" column="39" selection-start-line="249" selection-start-column="39" selection-end-line="249" selection-end-column="39" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+            <marker date="1541365820831" expanded="true" signature="7551:7560" ph="..." />
           </folding>
         </state>
       </provider>

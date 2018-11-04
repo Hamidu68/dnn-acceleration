@@ -66,15 +66,15 @@ def extract_configs(model,name):
 
     keys=[]
     for layer in model.layers: #get union of keys (input layer has different keys)
-        keys=list(set().union(keys,layer.get_config().keys()))
+        keys = list(set().union(keys, layer.get_config().keys()))
     
-    #add new params to keys! (new params that are not exists in summary of Keras)
+    # add new params to keys! (new params that are not exists in summary of Keras)
     for param in params:
         if param not in keys:
             keys.append(param)
 
-    #sort parmaters to be write in the csv file
-    #params.reverse()        
+    # sort parmaters to be write in the csv file
+    # params.reverse()
     for param in params[::-1]:
         keys.insert(0, keys.pop(keys.index(param)))
     
@@ -92,9 +92,9 @@ extract_configs(model,'vgg16')
 
 model = VGG19   (include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************vgg19**************************************')
-extract_configs(model,'vgg19')
+extract_configs(model, 'vgg19')
 
 
 model = ResNet50(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************resnet50***********************************')
-extract_configs(model,'resent50')
+extract_configs(model, 'resent50')
