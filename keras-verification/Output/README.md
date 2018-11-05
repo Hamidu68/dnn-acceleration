@@ -1,1 +1,0 @@
-# Storage for output (Keras_output.txt , C_output.txt )

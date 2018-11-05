@@ -160,7 +160,8 @@ class BatchNormalization(Layers):
         template = batch_normal.read()
         func = template.format(Name=self.config['name'], Input_channel= input_shape[3], Input_width= input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[3], Output_width=output_shape[1]
-                               , Output_height=output_shape[2])
+                               , Output_height=output_shape[2], epsilon=self.config['epsilon'],
+                               momentum=self.config['momentum'])
         self.function['code'] = func + "\n"
 
 

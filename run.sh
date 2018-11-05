@@ -6,12 +6,11 @@
 
 ###########we need modity this file
 
-Model_name="vgg19"
-Test_dir="test_file/vgg19_test.csv"
-#Test_dir="test_file/"${Model_name}".csv"
-Data_type="int"
+Model_name="resnet50"
+Test_dir="test_file/resnet50_test.csv"
+#Data_type="int"
 #Data_type="unsigned int"
-#Data_type="float"
+Data_type="float"
 #Data_type="ap_unit<16>"
 Random_range="10"
 
@@ -26,20 +25,20 @@ if [ $# -eq 0 ];then
    
    if [ ${Use_trained_weight} -eq 1 ];then
 
-      ./verifier.sh ../${Test_dir} ${Random_range} ${Trained_weight_file} ${Image_file} ${Data_type}
+      ./verifier.sh ../${Test_dir} ${Random_range} ${Trained_weight_file} ${Image_file} ${Data_type} ${Model_name}
 
    else
 
-      ./verifier.sh ../${Test_dir} ${Random_range} ${Data_type}
+      ./verifier.sh ../${Test_dir} ${Random_range} ${Data_type} ${Model_name}
    fi
 
    cd ..
 fi
 
 #Generate cpp files for Vivado
-cd c-code-generation
-python Test_Generator.py ../${Test_dir} ${Model_name} ${Data_type}
-python Cpp_Generator.py ../${Test_dir} ${Model_name} ${Data_type}
-python DAC2017_Test_Generator.py ../${Test_dir} ${Model_name} ${Data_type}
-python DAC2017_Cpp_Generator.py ../${Test_dir} ${Model_name} ${Data_type}
+#cd c-code-generation
+#python Test_Generator.py ../${Test_dir} ${Model_name} ${Data_type}
+#python Cpp_Generator.py ../${Test_dir} ${Model_name} ${Data_type}
+#python DAC2017_Test_Generator.py ../${Test_dir} ${Model_name} ${Data_type}
+#python DAC2017_Cpp_Generator.py ../${Test_dir} ${Model_name} ${Data_type}
 

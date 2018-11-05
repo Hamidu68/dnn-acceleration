@@ -51,6 +51,8 @@ class C_verifier(CodeGenerators):
             elif layer_type == 'Dense':
                 sw_static_variables += 'static DATA_T B{}[{}];\n\t'.format(l_n, output_shape[1])
                 sw_static_variables += 'static DATA_T W{}[{}][{}];\n\t'.format(l_n, output_shape[1], input_shape[1])
+            elif layer_type == 'BatchNormalization':
+                sw_static_variables += 'static DATA_T W{}[4][{}];\n\t'.format(l_n, output_shape[3])
         return sw_static_variables
 
     def gen_sw_output_variables(self):
@@ -73,20 +75,25 @@ class C_verifier(CodeGenerators):
             l_n = layer.layer_odr
             if layer_type == 'Conv2D':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate Conv2D{}\\n\\n\");\n\t'.format(layer.layer_odr)
+                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
                 sw_call_layer += 'SW_{}(O{}_SW,O{line_num}_SW,W{line_num},B{line_num});\n\t'.format(layer.config['name']
-                                                                                                    , l_n-1, line_num=l_n)
+                                                                                                    , inp, line_num=l_n)
             elif layer_type == 'BatchNormalization':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate BatchNormalization{}\\n\\n\");\n\t'.format(l_n)
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],l_n-1,l_n)
+                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
+                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW, W{});\n\t'.format(layer.config['name'], inp, l_n, l_n)
             elif layer_type == 'Activation':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate Activation(Relu){}\\n\\n\");\n\t'.format(l_n)
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],l_n-1,l_n)
+                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
+                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
             elif layer_type == 'MaxPooling2D':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate MaxPooling2D{}\\n\\n\");\n\t'.format(l_n)
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],l_n-1,l_n)
+                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
+                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
             elif layer_type == 'AveragePooling2D':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate AveragePooling2D{}\\n\\n\");\n\t'.format(l_n)
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],l_n-1,l_n)
+                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
+                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
             elif layer_type == 'Add':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate Add{}\\n\\n\");\n\t'.format(l_n)
                 a1 = self.model_sw.graphs[layer.config['name']]['in'][0]
@@ -94,15 +101,18 @@ class C_verifier(CodeGenerators):
                 sw_call_layer += 'SW_{}(O{}_SW,O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],a1,a2,l_n)
             elif layer_type == 'ZeroPadding2D':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate ZeroPadding2D{}\\n\\n\");\n\t'.format(l_n)
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],l_n-1,l_n)
+                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
+                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
             elif layer_type == 'InputLayer':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]InputLayer\\n\\n\");\n\t'
             elif layer_type == 'Flatten':
                 sw_call_layer += 'printf(\"[C_verifier.py]Calculate Flatten{}\\n\\n\");\n\t'.format(l_n)
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],l_n-1,l_n)
+                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
+                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
             elif layer_type == 'Dense' :
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate Dense{}\\n\\n\");\n\t'.format(l_n)
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW,W{},B{});\n\t'.format(layer.config['name'], l_n-1, l_n, l_n, l_n)
+                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
+                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW,W{},B{});\n\t'.format(layer.config['name'], inp, l_n, l_n, l_n)
         return sw_call_layer
 
     def generate(self):

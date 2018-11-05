@@ -8,12 +8,10 @@ void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T 
 				for (k = 0; k<{Input_channel}; k++) {{
 					for (i = 0; i<{Filter_width}; i++) {{
 						for (j = 0; j<{Filter_height}; j++) {{
-							if (x + i < {Input_width} && y + j < {Input_height}) {{
+							if (x + i <= {Input_width} && y + j <= {Input_height}) {{
 								ifm = I[k][x*{Stride_width} + i][y*{Stride_height} + j];
 							}}
-							else {{
-								ifm = 0; // zero padding
-							}}
+
 							ofm = ofm + ifm * W[m][k][i][j];
 						}}
 					}}

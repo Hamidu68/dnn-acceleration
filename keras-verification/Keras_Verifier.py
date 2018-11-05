@@ -11,7 +11,7 @@ from keras import layers
 
 
 
-# np.set_printoptions(threshold=np.inf, linewidth=9223372036854775807)
+np.set_printoptions(threshold=np.inf, linewidth=922337203685477)
 
 ####################################################
 ####################################################
@@ -183,19 +183,20 @@ def print_result(model=None, input_values=None):
     np.set_printoptions(threshold=np.inf)
     np.set_printoptions(linewidth=999999999999999999999999999999)
 
-    def printXD(ary, fid=None, shape=()):
+    def printXD(ary, fid=None,fn=None, shape=()):
         if len(shape) == 1:
-            print1D(ary, fid, shape)
+            print1D(ary, fid, fn, shape)
         elif len(shape) == 3:
-            print3D(ary, fid, shape)
+            print3D(ary, fid, fn, shape)
             
-    def print1D(ary1D, fid=None, shape=()):
+    def print1D(ary1D, fid=None, fn=None, shape=()):
         fid.write('[[')
         for x in range(shape[0]):
-            f.write('{:.6f} '.format(ary1D[x]))
-        fid.write(']]')
+            fid.write('{:.6f} '.format(ary1D[x]))
+            fn.write('{:.6f} '.format(ary1D[x]))
+        fid.write(']]\n\n')
         
-    def print3D(ary3D, fid=None, shape=()):
+    def print3D(ary3D, fid=None, fn=None, shape=()):
         fid.write('[[')
         for x in range(shape[0]):
             fid.write('[')
@@ -203,19 +204,21 @@ def print_result(model=None, input_values=None):
                 fid.write('[')
                 for z in range(shape[2]):
                     fid.write('{:.6f} '.format(ary3D[x][y][z]))
+                    fn.write('{:.6f} '.format(ary3D[x][y][z]))
                 if y != (shape[1] - 1):
                     fid.write(']\n   ')
                 else:
                     fid.write(']')
             if x != (shape[0] - 1):
                 fid.write(']\n\n  ')
-        fid.write(']]]')
+        fid.write(']]]\n\n')
     
     # Print result
     print("[Keras_verifier.py]Print Result")
     
     # Open file
     f = open('Output/keras_output.txt', 'w')
+    fn = open('Output/keras_output_num.txt', 'w')
 
     # Write values
     i = 0
@@ -225,15 +228,14 @@ def print_result(model=None, input_values=None):
         f.write('{} : '.format(layer_type))
         if layer_type == 'InputLayer':
             # Write input values
-            printXD(input_values[i], f, input_values[i].shape)
+            printXD(input_values[i], f, fn, input_values[i].shape)
 
         else:
             # Get output values of each layer
             get_3rd_layer_output = K.function([model.layers[0].input], [layer.output])
             layer_output = get_3rd_layer_output([input_values])[0]
             # Write output values
-            printXD(layer_output[0], f, layer_output[0].shape)
-        f.write('\n\n')
+            printXD(layer_output[0], f, fn, layer_output[0].shape)
     
     # model.summary()
     f.close()
@@ -373,3 +375,45 @@ if __name__ == "__main__":
     # Close weight and input binary files
     weights_bin.close()
     inputs_bin.close()
+
+    c_out = open("../Output/c_output_num.txt", 'r')
+    k_out = open('Output/keras_output_num.txt', 'r')
+
+    c_output_line = c_out.readline()
+    c = c_output_line.split()
+
+    k_output_line = k_out.readline()
+    k = k_output_line.split()
+
+    maximum = -1.0
+    c_max = 0
+    k_max = 0
+
+    print
+    "len k :  ", len(k)
+    print
+    "len c :  ", len(c)
+
+    for i in range(len(c)):
+        k_num = float(k[i])
+        c_num = float(c[i])
+        if c_num > k_num:
+            if k_num == 0.0:
+                error = c_num - k_num
+            else:
+                error = (c_num - k_num) / k_num
+        else:
+            if k_num == 0.0:
+                error = k_num - c_num
+            else:
+                error = (k_num - c_num) / k_num
+
+        if maximum < error:
+            maximum = error
+            c_max = c_num
+            k_max = k_num
+    print("maximum error : " + str(maximum) + " when c has an element of " + str(c_max) +
+          " and keras has an element of " + str(k_max))
+
+    c_out.close()
+    k_out.close()

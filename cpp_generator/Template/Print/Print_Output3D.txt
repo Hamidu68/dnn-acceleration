@@ -1,17 +1,18 @@
 fprintf(o_stream,"%s","{Name} : [[");
-for (k = 0; k < {third} ; k++) {{
+for (k = 0; k < {first} ; k++) {{
 	fprintf(o_stream,"%s","[");
 	for (x = 0; x < {second} ; x++) {{
 		fprintf(o_stream,"%s","[");
-		for(y = 0; y < {first} ; y++) {{
-			fprintf(o_stream,"%.6f ",{output}[k][x][y]);
+		for(y = 0; y < {third} ; y++) {{
+			fprintf(o_stream,"%.6f ",{output}[y][k][x]);
+			fprintf(c_num,"%.6f ",{output}[y][k][x]);
 		}}
 		if(x != {second} -1 )
 			fprintf(o_stream,"%s","]\n   ");
 		else
 			fprintf(o_stream,"%s","]");
 	}}
-	if(k != {third} -1 )
+	if(k != {first} -1 )
 		fprintf(o_stream,"%s","]\n\n  ");
 }}
 fprintf(o_stream,"%s","]]]\n\n");

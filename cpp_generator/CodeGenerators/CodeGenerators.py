@@ -24,8 +24,8 @@ class CodeGenerators:
                 func = output1d.format(Name=layer_type, first=output_shape[1], output='O'+str(layer.layer_odr)+'_SW')
                 print_result += func+"\n"
             else:
-                func = output3d.format(Name=layer_type, third=output_shape[3], second=output_shape[1],
-                                       first=output_shape[2], output='O'+str(layer.layer_odr)+'_SW')
+                func = output3d.format(Name=layer_type, third=output_shape[3], second=output_shape[2],
+                                       first=output_shape[1], output='O'+str(layer.layer_odr)+'_SW')
                 print_result += func+"\n"
         return print_result
 
@@ -54,6 +54,11 @@ class CodeGenerators:
                 dense_input = d_input.read()
                 func = dense_input.format(Input_channel=input_shape[1], Output_channel=output_shape[1],
                                           line_number=l_n)
+                initialization += func + "\n\t"
+            elif layer_type == 'BatchNormalization':
+                b_input = open("cpp_generator/Template/Init/Batch_var_Initializer_f.txt")
+                batch_input = b_input.read()
+                func = batch_input.format(Output_channel=output_shape[3], line_number=l_n)
                 initialization += func + "\n\t"
         return initialization
     

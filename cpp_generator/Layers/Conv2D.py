@@ -36,7 +36,7 @@ class Conv2D(Layers):
         #self.function['params'] = self.get_params()
 
         # code
-        conv_s = open("cpp_generator/Template/Function/Conv2D_same.txt")
+        conv_s = open("cpp_generator/Template/Function/Conv2D_same_stride.txt")
         conv_v = open("cpp_generator/Template/Function/Conv2D_valid.txt")
         conv2d_same = conv_s.read()
         conv2d_valid = conv_v.read()
@@ -47,7 +47,7 @@ class Conv2D(Layers):
             comment1 = '\'\'\''
 
         if self.config['padding'] == 'valid':
-            func = conv2d_same.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1]
+            func = conv2d_valid.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1]
                                       ,Stride_width=stride_shape[0], Stride_height=stride_shape[1],
                                       Input_height=input_shape[2], Output_channel=output_shape[3],
                                       Filter_width=filter_shape[0], Filter_height=filter_shape[1],
@@ -55,7 +55,7 @@ class Conv2D(Layers):
                                       comment_begin=comment1, comment_end=comment1, comment=comment)
             self.function['code'] = func + "\n"
         else:
-            func = conv2d_valid.format(Name=self.config["name"], Input_channel=input_shape[3],
+            func = conv2d_same.format(Name=self.config["name"], Input_channel=input_shape[3],
                                        Input_width=input_shape[1], Stride_width=stride_shape[0],
                                        Stride_height=stride_shape[1], Input_height=input_shape[2],
                                        Output_channel=output_shape[3], Filter_width=filter_shape[0],
