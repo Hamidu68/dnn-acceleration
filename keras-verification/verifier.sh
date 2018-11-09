@@ -31,16 +31,21 @@ fi
 
 Test_path="test_file/resnet50_test.csv"
 python3 run.py True False False ${Test_path} ${Model_name} ${Data_type}
+
+cd C_verifier_code/resnet50
+
 g++ -std=c++0x C_verifier.cpp -o out
-variable_path=Variable_Generator/
+variable_path=../../Variable_Generator/
 #C-code
 ./out ${variable_path}${Weight_file} ${variable_path}${Input_file}
 
 #Run Verifier
 #Keras code
-cd keras-verification
+cd ../../keras-verification
 python Keras_Verifier.py ${Test_dir} ${Variable_dir}${Weight_file} ${Variable_dir}${Input_file} ${Data_type}
 
+cd ../cpp_generator/
+
 #Compare result
-vimdiff Output/keras_output.txt ../Output/C_output.txt
+vimdiff Output/${Model_name}/keras_output.txt Output/${Model_name}/C_output.txt
 

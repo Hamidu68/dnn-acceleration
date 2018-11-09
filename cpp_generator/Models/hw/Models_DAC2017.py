@@ -1,5 +1,8 @@
-from .Models import Models
-from ..Layers import *
+#from .Models import Models
+#from ..Layers import *
+
+from ..resnet50 import Models
+from .. import *
 
 
 class Models_DAC2017(Models):

@@ -10,7 +10,6 @@ from keras import Model
 from keras import layers
 
 
-
 np.set_printoptions(threshold=np.inf, linewidth=922337203685477)
 
 ####################################################
@@ -217,8 +216,8 @@ def print_result(model=None, input_values=None):
     print("[Keras_verifier.py]Print Result")
     
     # Open file
-    f = open('Output/keras_output.txt', 'w')
-    fn = open('Output/keras_output_num.txt', 'w')
+    f = open('../cpp_generator/Output/resnet50/keras_output.txt', 'w')
+    fn = open('../cpp_generator/Output/resnet50/keras_output_num.txt', 'w')
 
     # Write values
     i = 0
@@ -376,8 +375,8 @@ if __name__ == "__main__":
     weights_bin.close()
     inputs_bin.close()
 
-    c_out = open("../Output/c_output_num.txt", 'r')
-    k_out = open('Output/keras_output_num.txt', 'r')
+    c_out = open("../cpp_generator/Output/resnet50/c_output_num.txt", 'r')
+    k_out = open('../cpp_generator/Output/resnet50/keras_output_num.txt', 'r')
 
     c_output_line = c_out.readline()
     c = c_output_line.split()

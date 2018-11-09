@@ -367,9 +367,9 @@ int main(int argc, char *argv[]){
     if (w_stream == NULL) printf("weight file was not opened");
     FILE *i_stream = fopen(argv[2], "rb");
     if (i_stream == NULL) printf("input file was not opened");
-    FILE *o_stream = fopen("Output/C_output.txt", "w");
+    FILE *o_stream = fopen("../../cpp_generator/Output/resnet50/C_output.txt", "w");
     if (o_stream == NULL) printf("Output file was not opened");
-    FILE *c_num = fopen("Output/c_output_num.txt", "w");
+    FILE *c_num = fopen("../../cpp_generator/Output/resnet50/c_output_num.txt", "w");
     if (c_num == NULL) printf("Output file was not opened");
 
     printf("[C_verifier.cpp]Start Initialzation");
