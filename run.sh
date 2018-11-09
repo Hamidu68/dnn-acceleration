@@ -4,14 +4,6 @@
 #1. Result of C code vs keras code
 #2. model_test.cpp , model.cpp
 
-<<<<<<< HEAD
-Test_dir="Test_file/vgg19_test.csv"
-Model_name="vgg19"
-Data_type="int"
-Random_range="20"
-return_dir="../"
-Relu="False"
-=======
 ###########we need modity this file
 
 Model_name="resnet50"
@@ -21,7 +13,6 @@ Test_dir="test_file/resnet50_test.csv"
 Data_type="float"
 #Data_type="ap_unit<16>"
 Random_range="10"
->>>>>>> jinbae
 
 Use_trained_weight=0
 Trained_weight_file=${Model_name}"_weights.bin"

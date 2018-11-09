@@ -40,17 +40,11 @@ variable_path=../../Variable_Generator/
 ./out ${variable_path}${Weight_file} ${variable_path}${Input_file}
 
 #Run Verifier
-<<<<<<< HEAD
-g++ -std=c++0x C_Verifier.cpp -o out
-./out $Variable_dir$Weight_file $Variable_dir$Bias_file $Variable_dir$Input_file
-python Keras_Verifier.py $1 $Variable_dir$Weight_file $Variable_dir$Bias_file $Variable_dir$Input_file $
-=======
 #Keras code
 cd ../../keras-verification
 python Keras_Verifier.py ${Test_dir} ${Variable_dir}${Weight_file} ${Variable_dir}${Input_file} ${Data_type}
 
 cd ../cpp_generator/
->>>>>>> jinbae
 
 #Compare result
 vimdiff Output/${Model_name}/keras_output.txt Output/${Model_name}/C_output.txt

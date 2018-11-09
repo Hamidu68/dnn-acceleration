@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<autopilotfilemapping:AutoPilotFileMapping xmlns:autopilotfilemapping="www.autoesl.com/autopilotfilemapping">
-  <source>
-    <originFiles name="stream_sample.cpp" path="C:\Users\seto\Desktop\stream_sample\stream_sample.cpp"/>
-  </source>
-  <testbench>
-    <originFiles name="stream_sample_test.cpp" path="C:\Users\seto\Desktop\stream_sample\stream_sample_test.cpp"/>
-  </testbench>
-</autopilotfilemapping:AutoPilotFileMapping>

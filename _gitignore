@@ -1,0 +1,10 @@
+out
+C_output.txt
+keras_output.txt
+*.bin
+*.swo
+*.swp
+*.swn
+*~
+*.pyc
+
