@@ -1,9 +1,14 @@
-*.bin
 out
-C_Verifier.cpp
 C_output.txt
 keras_output.txt
+*.bin
 *.swo
 *.swp
 *.swn
+<<<<<<< HEAD
 *.DS_Store
+=======
+*~
+*.pyc
+
+>>>>>>> jinbae

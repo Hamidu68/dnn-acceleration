@@ -1,0 +1,14 @@
+void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T O[{Input_channel}]) {{
+	int m, x, y;
+	double avg;
+	int div = {Input_width} * {Input_height};
+	for (m = 0; m < {Input_channel}; m++){{
+		avg = 0;
+		for (x = 0; x < {Input_width}; x++) {{
+			for (y = 0; y < {Input_height}; y++) {{
+				avg += I[m][x][y];
+			}}
+		}}
+		O[m] = avg/div;
+	}}
+}}
