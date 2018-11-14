@@ -6,8 +6,8 @@
 
 ###########we need modity this file
 
-Model_name="resnet50"
-Test_dir="test_file/resnet50_test.csv"
+Model_name="vgg19"
+Test_dir="Test_file/${Model_name}_test.csv"
 #Data_type="int"
 #Data_type="unsigned int"
 Data_type="float"

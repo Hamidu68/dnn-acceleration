@@ -5,7 +5,7 @@ from cpp_generator import *
 # sys.argv[1] : make_C_verifier (T/F)
 # sys.argv[2] : make_HW_test (T/F)
 # sys.argv[3] : make_DAC2017_test (T/F)
-# sys.argv[4] : test file (./tes.csv)
+# sys.argv[4] : test file (./test.csv)
 # sys.argv[5] : model_name
 # sys.argv[6] : data type (int, unsinged int, float, ap_uint<16>)
 

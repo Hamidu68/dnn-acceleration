@@ -29,10 +29,10 @@ fi
 
 #Generate C_Verifier
 
-Test_path="test_file/resnet50_test.csv"
+Test_path="Test_file/${Model_name}_test.csv"
 python3 run.py True False False ${Test_path} ${Model_name} ${Data_type}
 
-cd C_verifier_code/resnet50
+cd C_verifier_code/${Model_name}
 
 g++ -std=c++0x C_verifier.cpp -o out
 variable_path=../../Variable_Generator/
@@ -42,10 +42,10 @@ variable_path=../../Variable_Generator/
 #Run Verifier
 #Keras code
 cd ../../keras-verification
-python Keras_Verifier.py ${Test_dir} ${Variable_dir}${Weight_file} ${Variable_dir}${Input_file} ${Data_type}
+python Keras_Verifier.py ${Test_dir} ${Variable_dir}${Weight_file} ${Variable_dir}${Input_file} ${Data_type} ${Model_name}
 
-cd ../cpp_generator/
+cd ../cpp_generator/${Model_name}
 
 #Compare result
-vimdiff Output/${Model_name}/keras_output.txt Output/${Model_name}/C_output.txt
+vimdiff Output/keras_output.txt Output/C_output.txt
 

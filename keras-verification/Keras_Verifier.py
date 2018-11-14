@@ -178,11 +178,11 @@ def add_Add(input_tensors=[], info=None):
 ####################################################
 ####################################################
 # Print function
-def print_result(model=None, input_values=None):
+def print_result(model=None, input_values=None, name=None):
     np.set_printoptions(threshold=np.inf)
     np.set_printoptions(linewidth=999999999999999999999999999999)
 
-    def printXD(ary, fid=None,fn=None, shape=()):
+    def printXD(ary, fid=None, fn=None, shape=()):
         if len(shape) == 1:
             print1D(ary, fid, fn, shape)
         elif len(shape) == 3:
@@ -216,8 +216,8 @@ def print_result(model=None, input_values=None):
     print("[Keras_verifier.py]Print Result")
     
     # Open file
-    f = open('../cpp_generator/Output/resnet50/keras_output.txt', 'w')
-    fn = open('../cpp_generator/Output/resnet50/keras_output_num.txt', 'w')
+    f = open('../cpp_generator/'+name+'/Output/keras_output.txt', 'w')
+    fn = open('../cpp_generator/'+name+'/Output/keras_output_num.txt', 'w')
 
     # Write values
     i = 0
@@ -367,16 +367,17 @@ if __name__ == "__main__":
 
     model = Model(inputs=inputs, outputs=outputs)
     temp = model.predict(input_values)
+    name = sys.argv[5]
 
     # Print the result
-    print_result(model, input_values)
+    print_result(model, input_values, name)
 
     # Close weight and input binary files
     weights_bin.close()
     inputs_bin.close()
 
-    c_out = open("../cpp_generator/Output/resnet50/c_output_num.txt", 'r')
-    k_out = open('../cpp_generator/Output/resnet50/keras_output_num.txt', 'r')
+    c_out = open("../cpp_generator/"+name+"/Output/c_output_num.txt", 'r')
+    k_out = open("../cpp_generator/"+name+"/Output/keras_output_num.txt", 'r')
 
     c_output_line = c_out.readline()
     c = c_output_line.split()
