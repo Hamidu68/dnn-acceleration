@@ -41,7 +41,7 @@ class Conv2D_HW(Layers):
         self.set_output(output_shape[1:], self.layer_odr)
 
         # set_weight
-        weight_shape=(output_shape[3],input_shape[3],kernel_size[0],kernel_size[1])
+        weight_shape=(output_shape[3], input_shape[3], kernel_size[0], kernel_size[1])
         self.weights.append(Data(dtype=self.dtype, shape=weight_shape, name='W{}'.format(self.layer_odr)))
         if use_bias :
             self.weights.append(Data(dtype=self.dtype, shape=(output_shape[3],), name='B{}'.format(self.layer_odr)))
@@ -109,7 +109,7 @@ class MaxPooling2D(Layers):
         # init part
 
         # code
-        mxp = open("cpp_generator/resnet50/Template/Function/MaxPooling2D.txt")
+        mxp = open("cpp_generator/inceptionv3/Template/Function/MaxPooling2D.txt")
         template = mxp.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[3],
@@ -156,7 +156,7 @@ class BatchNormalization(Layers):
         # init part
 
         # code
-        batch_normal = open("cpp_generator/resnet50/Template/Function/BatchNormalization.txt")
+        batch_normal = open("cpp_generator/inceptionv3/Template/Function/BatchNormalization_no_scale.txt")
         template = batch_normal.read()
         func = template.format(Name=self.config['name'], Input_channel= input_shape[3], Input_width= input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[3], Output_width=output_shape[1]
@@ -182,7 +182,7 @@ class Activation(Layers):
         # init part
 
         # code
-        rl = open("cpp_generator/resnet50/Template/Function/Relu.txt")
+        rl = open("cpp_generator/inceptionv3/Template/Function/Relu.txt")
         template = rl.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[3],
@@ -209,7 +209,7 @@ class AveragePooling2D(Layers):
         # init part
 
         # code
-        avp = open("cpp_generator/resnet50/Template/Function/AveragePooling2D.txt")
+        avp = open("cpp_generator/inceptionv3/Template/Function/AveragePooling2D.txt")
         template = avp.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[3], Output_width=output_shape[1],
@@ -236,7 +236,7 @@ class ZeroPadding2D(Layers):
         # init part
 
         # code
-        zp = open("cpp_generator/resnet50/Template/Function/ZeroPadding.txt")
+        zp = open("cpp_generator/inceptionv3/Template/Function/ZeroPadding.txt")
         template = zp.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[3], Output_width=output_shape[1],
@@ -261,7 +261,7 @@ class Flatten(Layers):
         # init part
 
         # code
-        fla = open("cpp_generator/resnet50/Template/Function/Flatten.txt")
+        fla = open("cpp_generator/inceptionv3/Template/Function/Flatten.txt")
         template = fla.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[1])
@@ -286,26 +286,24 @@ class Dense(Layers):
         # init part
 
         # code
-        den_s = open("cpp_generator/resnet50/Template/Function/Dense_Softmax.txt")
-        den_r = open("cpp_generator/resnet50/Template/Function/Dense_Relu.txt")
-        dense_softmax = den_s.read()
-        dense_relu = den_r.read()
-        comment = ''
-        comment1 = '\'\'\''
-
-        if not use_bias:
-            comment = '//'
-            comment1 = '\'\'\''
+        if use_bias:
+            den_s = open("cpp_generator/inceptionv3/Template/Function/Dense_Softmax_bias.txt")
+            den_r = open("cpp_generator/inceptionv3/Template/Function/Dense_Relu_bias.txt")
+            dense_softmax = den_s.read()
+            dense_relu = den_r.read()
+        else:
+            den_s = open("cpp_generator/inceptionv3/Template/Function/Dense_Softmax.txt")
+            den_r = open("cpp_generator/inceptionv3/Template/Function/Dense_Relu.txt")
+            dense_softmax = den_s.read()
+            dense_relu = den_r.read()
 
         if self.config['activation'] == 'relu':  # Activation = relu
             func = dense_softmax.format(Name=self.config["name"], Input_channel=input_shape[1],
-                                        Output_channel=output_shape[1], comment_begin=comment1,
-                                        comment_end=comment1, comment=comment)
+                                        Output_channel=output_shape[1])
             self.function['code'] += func + "\n"
         else:  # Activation = softmax
             func = dense_relu.format(Name=self.config["name"], Input_channel=input_shape[1],
-                                     Output_channel=output_shape[1], comment_begin=comment1,
-                                     comment_end=comment1, comment=comment)
+                                     Output_channel=output_shape[1])
             self.function['code'] += func + "\n"
 
         
@@ -325,11 +323,45 @@ class Add(Layers):
         # init part
 
         # code
-        ad = open("cpp_generator/resnet50/Template/Function/Add.txt")
+        ad = open("cpp_generator/inceptionv3/Template/Function/Add.txt")
         template = ad.read()
         func = template.format(Name=self.config['name'], Input_channel1=output_shape[3], Input_width1=output_shape[1],
                                Input_height1=output_shape[2], Input_channel2=output_shape[3],
                                Input_width2=output_shape[1], Input_height2=output_shape[2],
                                Output_channel=output_shape[3], Output_width=output_shape[1],
                                Output_height=output_shape[2])
+        self.function['code'] = func + "\n"
+
+
+class Concatenate(Layers):
+
+    def __init__(self, config={}, inputs=[], dtype='DATA_T', layer_odr=0, post=''):
+        super().__init__(config, inputs, dtype, layer_odr, post)
+
+        # get shape
+        output_shape = eval(self.config['batch_output_shape'])
+        input_shape = eval(self.config['batch_input_shape'])
+
+        # set_output
+        self.set_output(output_shape[1:], self.layer_odr)
+
+        # set_weight
+
+        # init part
+
+        # code
+        con3 = open("cpp_generator/inceptionv3/Template/Function/Concatenate3.txt")
+        con4 = open("cpp_generator/inceptionv3/Template/Function/Concatenate4.txt")
+        con3_r = con3.read()
+        con4_r = con4.read()
+        if len(input_shape) == 3:
+            func = con3_r.format(Name=self.config['name'], Input_channel1=input_shape[0][3],
+                                 Input_channel2=input_shape[1][3], Input_channel3=input_shape[2][3],
+                                 Output_channel=output_shape[3], Output_width=output_shape[1],
+                                 Output_height=output_shape[2])
+        elif len(input_shape) == 4:
+            func = con4_r.format(Name=self.config['name'], Input_channel1=input_shape[0][3],
+                                 Input_channel2=input_shape[1][3], Input_channel3=input_shape[2][3],
+                                 Input_channel4=input_shape[3][3], Output_channel=output_shape[3],
+                                 Output_width=output_shape[1], Output_height=output_shape[2])
         self.function['code'] = func + "\n"

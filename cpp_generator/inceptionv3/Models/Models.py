@@ -14,8 +14,8 @@ class Models():
         self.graphs = {}
 
     def add_graph(self, name='', connected=''):
-        self.graphs[name] = {'in':[],
-                             'odr':self.layer_num}
+        self.graphs[name] = {'in': [],
+                             'odr': self.layer_num}
         for pre_name in connected.split('/'):
             self.graphs[name]['in'].append(self.graphs[pre_name]['odr'])
 
@@ -89,6 +89,11 @@ class Models():
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)
             self.layers.append(Add(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+
+        elif layer_type == 'Concatenate':
+            self.add_graph(layer_name, config['connected_to'])
+            inputs = self.get_inputs(layer_name)
+            self.layers.append(Concatenate(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
             
         else:
             print('Undefined Layer: {}'.format(layer_type))

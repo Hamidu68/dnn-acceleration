@@ -3,7 +3,8 @@
 from keras.applications.vgg16 import VGG16
 from keras.applications.vgg19 import VGG19
 from keras.applications.resnet50 import ResNet50
-# from keras.applications.inception_v3 import InceptionV3
+from keras.applications.inception_v3 import InceptionV3
+from keras.applications.
 # from keras.applications.inception_resnet_v2 import InceptionResNetV2
 # from keras.applications.mobilenet import MobileNet
 # from keras.applications.densenet import DenseNet121
@@ -98,3 +99,7 @@ extract_configs(model, 'vgg19')
 model = ResNet50(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************resnet50***********************************')
 extract_configs(model, 'resent50')
+
+model = InceptionV3(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
+print('**********************************resnet50***********************************')
+extract_configs(model, 'inceptionv3')

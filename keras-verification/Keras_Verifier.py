@@ -102,7 +102,7 @@ def add_BatchNormalization(input_tensor=None, info=None, fid=None, dtype=int, sk
     
     # Read weights from file
     weights = []
-    for _ in range(4):  # Order: gamma, beta, running mean and running std
+    for _ in range(3):  # Order: gamma, beta, running mean and running std
         temp_weights = np.fromfile(file=fid, dtype=dtype, sep='', count=output_shape[3])
         temp_weights = temp_weights.reshape((output_shape[3],)).astype(np.float32)
         weights.append(temp_weights)
@@ -174,6 +174,11 @@ def add_Add(input_tensors=[], info=None):
     output_tensor = layers.Add()(input_tensors)
     return output_tensor
 
+
+def add_Concatenate(input_tensors=[], info=None):
+    # Get output tensor
+    output_tensor = layers.Concatenate(axis=-1)(input_tensors)
+    return output_tensor
 
 ####################################################
 ####################################################
@@ -357,6 +362,12 @@ if __name__ == "__main__":
             input_tensors = get_multi_inputs(row['connected_to'].split('/'), tensors, outputs_dict)
             # get output of current layer and save it to dict
             outputs_dict[layer_name] = tensors[layer_name] = add_Add(input_tensors, row)
+
+        elif layer_type == 'Concatenate':
+            # get input tensors
+            input_tensors = get_multi_inputs(row['connected_to'].split('/'), tensors, outputs_dict)
+            # get output of current layer and save it to dict
+            outputs_dict[layer_name] = tensors[layer_name] = add_Concatenate(input_tensors, row)
             
         else:
             print('Undefined Layer: {}'.format(layer_type))

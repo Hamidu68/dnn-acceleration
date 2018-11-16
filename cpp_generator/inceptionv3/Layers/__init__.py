@@ -15,3 +15,4 @@ from .Layers import ZeroPadding2D
 from .Layers import Flatten
 from .Layers import Dense
 from .Layers import Add
+from .Layers import Concatenate
