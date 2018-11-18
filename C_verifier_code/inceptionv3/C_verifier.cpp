@@ -518,19 +518,25 @@ void SW_average_pooling2d_1(DATA_T I[192][25][25], DATA_T O[192][25][25])
 	int m, x, y, i, j;
 	DATA_T sum;
 	int p = (1*(25-1) - 25 + 3)/2;
-    DATA_T div = (DATA_T)(3*3);
+    DATA_T div;
 	for (m = 0; m<192; m++) {
 		for (x = 0; x<25; x++) {
 			for (y = 0; y<25; y++) {
                 sum = (DATA_T)0;
+                if(x!=0 && x!=25-1 && y!=0 && y!=25-1)
+                    div = 9;
+                else if((x==0 || x==25-1) && (y==0 || y==25-1))
+                    div = 4;
+                else
+                    div = 6;
 				for (i = 0; i<3; i++) {
 					for (j = 0; j<3; j++) {
 
 						if (x + i < 25 + p && y + j < 25 + p && x + i -p >= 0 && y + j -p >= 0)
-						    sum += I[m][x*1 + i][y*1 + j];
+						    sum += I[m][x*1 + i -p][y*1 + j -p];
 					}
 				}
-				O[m][x][y] = sum;
+				O[m][x][y] = sum/div;
 			}
 		}
 	}
@@ -783,19 +789,19 @@ void SW_mixed0(DATA_T I1[64][25][25], DATA_T I2[64][25][25], DATA_T I3[96][25][2
 		for(y = 0; y < 25; y++) {
 			ch=0;
 			for(k = ch; k < ch+64; k++){
-				O[x][y][k] = I1[x][y][k];
+				O[k][x][y] = I1[k][x][y];
 			}
 			ch+=64;
 			for(k = ch; k < ch+64; k++){
-				O[x][y][k] = I2[x][y][k-ch];
+				O[k][x][y] = I2[k-ch][x][y];
 			}
 			ch+=64;
 			for(k = ch; k < ch+96; k++){
-				O[x][y][k] = I3[x][y][k-ch];
+				O[k][x][y] = I3[k-ch][x][y];
 			}
 			ch+=96;
 			for(k = ch; k < ch+32; k++){
-				O[x][y][k] = I4[x][y][k-ch];
+				O[k][x][y] = I4[k-ch][x][y];
 			}
 		}
 	}
