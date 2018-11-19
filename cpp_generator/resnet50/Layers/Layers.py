@@ -336,3 +336,4 @@ class Add(Layers):
                                Output_channel=output_shape[3], Output_width=output_shape[1],
                                Output_height=output_shape[2])
         self.function['code'] = func + "\n"
+

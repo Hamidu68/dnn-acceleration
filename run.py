@@ -14,7 +14,6 @@ if __name__ == '__main__':
     make_C_verifier = eval(sys.argv[1])
     make_HW_test = eval(sys.argv[2])
     make_DAC2017_test = eval(sys.argv[3])
-
     test_file = sys.argv[4]
     model_name = sys.argv[5]
     dtype = sys.argv[6]

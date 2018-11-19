@@ -85,7 +85,7 @@ def extract_configs(model,name):
         dict_writer.writerows(list_config)
 
 
-'''model = VGG16   (include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
+model = VGG16   (include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************vgg16**************************************')
 extract_configs(model,'vgg16')
 
@@ -102,7 +102,7 @@ extract_configs(model, 'resnet50')
 
 model = InceptionV3(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************inceptionv3***********************************')
-extract_configs(model, 'inceptionv3')'''
+extract_configs(model, 'inceptionv3')
 
 model = MobileNet(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************mobilenet***********************************')

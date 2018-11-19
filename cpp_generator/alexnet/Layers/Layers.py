@@ -281,10 +281,3 @@ class Dense(Layers):
             func = dense_relu.format(Name=self.config["name"], Input_channel=input_shape[1],
                                      Output_channel=output_shape[1])
             self.function['code'] += func + "\n"
-
-
-class DropOut(Layers):
-
-    def __init__(self, config={}, inputs=[], dtype='DATA_T', layer_odr=0, post=''):
-        super().__init__(config, inputs, dtype, layer_odr, post)
-
