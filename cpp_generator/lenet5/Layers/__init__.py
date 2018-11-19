@@ -8,8 +8,5 @@ from .Layers import Conv2D_HW
 from .Layers import Conv2D_DAC2017
 from .Layers import MaxPooling2D
 from .Layers import MaxPooling2D_HW
-from .Layers import BatchNormalization
-from .Layers import Activation
-from .Layers import ZeroPadding2D
 from .Layers import Flatten
 from .Layers import Dense
