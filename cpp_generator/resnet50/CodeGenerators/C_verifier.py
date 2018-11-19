@@ -52,7 +52,10 @@ class C_verifier(CodeGenerators):
                 sw_static_variables += 'static DATA_T B{}[{}];\n\t'.format(l_n, output_shape[1])
                 sw_static_variables += 'static DATA_T W{}[{}][{}];\n\t'.format(l_n, output_shape[1], input_shape[1])
             elif layer_type == 'BatchNormalization':
-                sw_static_variables += 'static DATA_T W{}[4][{}];\n\t'.format(l_n, output_shape[3])
+                if layer.config['scale'] == 'False':
+                    sw_static_variables += 'static DATA_T W{}[3][{}];\n\t'.format(l_n, output_shape[3])
+                else:
+                    sw_static_variables += 'static DATA_T W{}[4][{}];\n\t'.format(l_n, output_shape[3])
         return sw_static_variables
 
     def gen_sw_output_variables(self):

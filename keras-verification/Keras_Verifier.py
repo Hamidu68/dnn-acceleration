@@ -102,10 +102,17 @@ def add_BatchNormalization(input_tensor=None, info=None, fid=None, dtype=int, sk
     
     # Read weights from file
     weights = []
-    for _ in range(3):  # Order: gamma, beta, running mean and running std
-        temp_weights = np.fromfile(file=fid, dtype=dtype, sep='', count=output_shape[3])
-        temp_weights = temp_weights.reshape((output_shape[3],)).astype(np.float32)
-        weights.append(temp_weights)
+
+    if info['scale'] == 'False':
+        for _ in range(3):  # Order: gamma, beta, running mean and running std
+            temp_weights = np.fromfile(file=fid, dtype=dtype, sep='', count=output_shape[3])
+            temp_weights = temp_weights.reshape((output_shape[3],)).astype(np.float32)
+            weights.append(temp_weights)
+    else:
+        for _ in range(4):  # Order: gamma, beta, running mean and running std
+            temp_weights = np.fromfile(file=fid, dtype=dtype, sep='', count=output_shape[3])
+            temp_weights = temp_weights.reshape((output_shape[3],)).astype(np.float32)
+            weights.append(temp_weights)
     
     # Get output tensor
     output_tensor = layers.BatchNormalization(axis=int(info['axis']),

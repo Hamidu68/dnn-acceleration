@@ -9,23 +9,37 @@ using namespace std;
 
 typedef float DATA_T;
 
-void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][224][224], DATA_T W[64][3][3][3], DATA_T B[64]) {
+void SW_conv1_pad(DATA_T I[3][224][224],DATA_T O[3][230][230]) {
+	int m, x, y, i, j;
+	for (m = 0; m < 3; m++) {
+		for (x = 0; x < 230; x++) {
+			for (y = 0; y < 230; y++) {
+				O[m][x][y] = 0;
+			}
+		}
+	}
+	for (m = 0; m < 3; m++) {
+		for (x = 0; x < 224; x++) {
+			for (y = 0; y < 224; y++) {
+				O[m][x+ 3][y+ 3] = I[m][x][y];
+			}
+		}
+	}
+}
+void SW_conv1(DATA_T I[3][230][230], DATA_T O[64][112][112], DATA_T W[64][3][7][7], DATA_T B[64]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
-    int p = (1 *(224 - 1) - 224 + 3)/2;
 	for (m = 0; m<64; m++) {
-		for (x = 0; x<224; x++) {
-			for (y = 0; y<224; y++) {
+		for (x = 0; x<112; x++) {
+			for (y = 0; y<112; y++) {
 				ofm = 0;
 				for (k = 0; k<3; k++) {
-					for (i = 0; i<3; i++) {
-						for (j = 0; j<3; j++) {
-							if (x + i < 224 + p && y + j < 224 + p && x + i -p >= 0 && y + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+					for (i = 0; i<7; i++) {
+						for (j = 0; j<7; j++) {
+							if (x + i <= 230 && y + j <= 230) {
+								ifm = I[k][x*2 + i][y*2 + j];
 							}
-							else {
-								ifm = 0; // zero padding
-							}
+
 							ofm = ofm + ifm * W[m][k][i][j];
 						}
 					}
@@ -37,18 +51,129 @@ void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][224][224], DATA_T W[64]
 	}
 }
 
-void SW_block1_conv2(DATA_T I[64][224][224], DATA_T O[64][224][224], DATA_T W[64][64][3][3], DATA_T B[64]) {
+void SW_bn_conv1(DATA_T I[64][112][112], DATA_T O[64][112][112], DATA_T W[4][64]) {
+	int m, x, y;
+	DATA_T epsilon = 0.001;
+
+    for (m = 0; m < 64; m++){
+        DATA_T gamma = W[0][m];
+        DATA_T beta = W[1][m];
+        DATA_T mean = W[2][m];
+        DATA_T var = W[3][m];
+
+		for (x = 0; x < 112; x++){
+			for (y = 0; y < 112; y++){
+				O[m][x][y] = ((gamma * (I[m][x][y]-mean))/sqrt(var+epsilon)) + beta;
+			}
+		}
+	}
+}
+void SW_activation_1(DATA_T I[64][112][112], DATA_T O[64][112][112])
+{
+	int m, x, y;
+	DATA_T ifm;
+	for (m = 0; m<64; m++) {
+		for (x = 0; x<112; x++) {
+			for (y = 0; y<112; y++) {
+				ifm = I[m][x][y];
+				if (ifm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ifm;
+			}
+		}
+	}
+}
+void SW_max_pooling2d_1(DATA_T I[64][112][112], DATA_T O[64][55][55])
+{
+	int m, x, y, i, j;
+	DATA_T max;
+	for (m = 0; m<64; m++) {
+		for (x = 0; x<55; x++) {
+			for (y = 0; y<55; y++) {
+				max = I[m][x*2][y*2];
+				for (i = 0; i<3; i++) {
+					for (j = 0; j<3; j++) {
+						if (I[m][x*2 + i][y*2 + j] > max) {
+							max = I[m][x*2 + i][y*2 + j];
+						}
+					}
+				}
+				O[m][x][y] = max;
+			}
+		}
+	}
+}
+void SW_res2a_branch2a(DATA_T I[64][55][55], DATA_T O[64][55][55], DATA_T W[64][64][1][1], DATA_T B[64]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
-    int p = (1 *(224 - 1) - 224 + 3)/2;
 	for (m = 0; m<64; m++) {
-		for (x = 0; x<224; x++) {
-			for (y = 0; y<224; y++) {
+		for (x = 0; x<55; x++) {
+			for (y = 0; y<55; y++) {
+				ofm = 0;
+				for (k = 0; k<64; k++) {
+					for (i = 0; i<1; i++) {
+						for (j = 0; j<1; j++) {
+							if (x + i <= 55 && y + j <= 55) {
+								ifm = I[k][x*1 + i][y*1 + j];
+							}
+
+							ofm = ofm + ifm * W[m][k][i][j];
+						}
+					}
+				}
+				ofm += B[m];
+				O[m][x][y] = ofm;
+			}
+		}
+	}
+}
+
+void SW_bn2a_branch2a(DATA_T I[64][55][55], DATA_T O[64][55][55], DATA_T W[4][64]) {
+	int m, x, y;
+	DATA_T epsilon = 0.001;
+
+    for (m = 0; m < 64; m++){
+        DATA_T gamma = W[0][m];
+        DATA_T beta = W[1][m];
+        DATA_T mean = W[2][m];
+        DATA_T var = W[3][m];
+
+		for (x = 0; x < 55; x++){
+			for (y = 0; y < 55; y++){
+				O[m][x][y] = ((gamma * (I[m][x][y]-mean))/sqrt(var+epsilon)) + beta;
+			}
+		}
+	}
+}
+void SW_activation_2(DATA_T I[64][55][55], DATA_T O[64][55][55])
+{
+	int m, x, y;
+	DATA_T ifm;
+	for (m = 0; m<64; m++) {
+		for (x = 0; x<55; x++) {
+			for (y = 0; y<55; y++) {
+				ifm = I[m][x][y];
+				if (ifm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ifm;
+			}
+		}
+	}
+}
+void SW_res2a_branch2b(DATA_T I[64][55][55], DATA_T O[64][55][55], DATA_T W[64][64][3][3], DATA_T B[64]) {
+	int m, x, y, i, j, k;
+	DATA_T ifm, ofm;
+    int p = (1 *(55 - 1) - 55 + 3)/2;
+	for (m = 0; m<64; m++) {
+		for (x = 0; x<55; x++) {
+			for (y = 0; y<55; y++) {
 				ofm = 0;
 				for (k = 0; k<64; k++) {
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
-							if (x + i < 224 + p && y + j < 224 + p && x + i -p >= 0 && y + j -p >= 0) {
+							if (x + i < 55 + p && y + j < 55 + p && x + i -p >= 0 && y + j -p >= 0) {
                                     ifm = I[k][x*1 + i - p][y*1 + j -p];
 							}
 							else {
@@ -65,43 +190,53 @@ void SW_block1_conv2(DATA_T I[64][224][224], DATA_T O[64][224][224], DATA_T W[64
 	}
 }
 
-void SW_block1_pool(DATA_T I[64][224][224], DATA_T O[64][112][112])
-{
-	int m, x, y, i, j;
-	DATA_T max;
-	for (m = 0; m<64; m++) {
-		for (x = 0; x<112; x++) {
-			for (y = 0; y<112; y++) {
-				max = I[m][x*2][y*2];
-				for (i = 0; i<2; i++) {
-					for (j = 0; j<2; j++) {
-						if (I[m][x*2 + i][y*2 + j] > max) {
-							max = I[m][x*2 + i][y*2 + j];
-						}
-					}
-				}
-				O[m][x][y] = max;
+void SW_bn2a_branch2b(DATA_T I[64][55][55], DATA_T O[64][55][55], DATA_T W[4][64]) {
+	int m, x, y;
+	DATA_T epsilon = 0.001;
+
+    for (m = 0; m < 64; m++){
+        DATA_T gamma = W[0][m];
+        DATA_T beta = W[1][m];
+        DATA_T mean = W[2][m];
+        DATA_T var = W[3][m];
+
+		for (x = 0; x < 55; x++){
+			for (y = 0; y < 55; y++){
+				O[m][x][y] = ((gamma * (I[m][x][y]-mean))/sqrt(var+epsilon)) + beta;
 			}
 		}
 	}
 }
-void SW_block2_conv1(DATA_T I[64][112][112], DATA_T O[128][112][112], DATA_T W[128][64][3][3], DATA_T B[128]) {
+void SW_activation_3(DATA_T I[64][55][55], DATA_T O[64][55][55])
+{
+	int m, x, y;
+	DATA_T ifm;
+	for (m = 0; m<64; m++) {
+		for (x = 0; x<55; x++) {
+			for (y = 0; y<55; y++) {
+				ifm = I[m][x][y];
+				if (ifm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ifm;
+			}
+		}
+	}
+}
+void SW_res2a_branch2c(DATA_T I[64][55][55], DATA_T O[256][55][55], DATA_T W[256][64][1][1], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
-    int p = (1 *(112 - 1) - 112 + 3)/2;
-	for (m = 0; m<128; m++) {
-		for (x = 0; x<112; x++) {
-			for (y = 0; y<112; y++) {
+	for (m = 0; m<256; m++) {
+		for (x = 0; x<55; x++) {
+			for (y = 0; y<55; y++) {
 				ofm = 0;
 				for (k = 0; k<64; k++) {
-					for (i = 0; i<3; i++) {
-						for (j = 0; j<3; j++) {
-							if (x + i < 112 + p && y + j < 112 + p && x + i -p >= 0 && y + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+					for (i = 0; i<1; i++) {
+						for (j = 0; j<1; j++) {
+							if (x + i <= 55 && y + j <= 55) {
+								ifm = I[k][x*1 + i][y*1 + j];
 							}
-							else {
-								ifm = 0; // zero padding
-							}
+
 							ofm = ofm + ifm * W[m][k][i][j];
 						}
 					}
@@ -113,23 +248,20 @@ void SW_block2_conv1(DATA_T I[64][112][112], DATA_T O[128][112][112], DATA_T W[1
 	}
 }
 
-void SW_block2_conv2(DATA_T I[128][112][112], DATA_T O[128][112][112], DATA_T W[128][128][3][3], DATA_T B[128]) {
+void SW_res2a_branch1(DATA_T I[64][55][55], DATA_T O[256][55][55], DATA_T W[256][64][1][1], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
-    int p = (1 *(112 - 1) - 112 + 3)/2;
-	for (m = 0; m<128; m++) {
-		for (x = 0; x<112; x++) {
-			for (y = 0; y<112; y++) {
+	for (m = 0; m<256; m++) {
+		for (x = 0; x<55; x++) {
+			for (y = 0; y<55; y++) {
 				ofm = 0;
-				for (k = 0; k<128; k++) {
-					for (i = 0; i<3; i++) {
-						for (j = 0; j<3; j++) {
-							if (x + i < 112 + p && y + j < 112 + p && x + i -p >= 0 && y + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+				for (k = 0; k<64; k++) {
+					for (i = 0; i<1; i++) {
+						for (j = 0; j<1; j++) {
+							if (x + i <= 55 && y + j <= 55) {
+								ifm = I[k][x*1 + i][y*1 + j];
 							}
-							else {
-								ifm = 0; // zero padding
-							}
+
 							ofm = ofm + ifm * W[m][k][i][j];
 						}
 					}
@@ -141,154 +273,46 @@ void SW_block2_conv2(DATA_T I[128][112][112], DATA_T O[128][112][112], DATA_T W[
 	}
 }
 
-void SW_block2_pool(DATA_T I[128][112][112], DATA_T O[128][56][56])
-{
-	int m, x, y, i, j;
-	DATA_T max;
-	for (m = 0; m<128; m++) {
-		for (x = 0; x<56; x++) {
-			for (y = 0; y<56; y++) {
-				max = I[m][x*2][y*2];
-				for (i = 0; i<2; i++) {
-					for (j = 0; j<2; j++) {
-						if (I[m][x*2 + i][y*2 + j] > max) {
-							max = I[m][x*2 + i][y*2 + j];
-						}
-					}
-				}
-				O[m][x][y] = max;
-			}
-		}
-	}
-}
-void SW_block3_conv1(DATA_T I[128][56][56], DATA_T O[256][56][56], DATA_T W[256][128][3][3], DATA_T B[256]) {
-	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
-    int p = (1 *(56 - 1) - 56 + 3)/2;
-	for (m = 0; m<256; m++) {
-		for (x = 0; x<56; x++) {
-			for (y = 0; y<56; y++) {
-				ofm = 0;
-				for (k = 0; k<128; k++) {
-					for (i = 0; i<3; i++) {
-						for (j = 0; j<3; j++) {
-							if (x + i < 56 + p && y + j < 56 + p && x + i -p >= 0 && y + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
-							}
-							else {
-								ifm = 0; // zero padding
-							}
-							ofm = ofm + ifm * W[m][k][i][j];
-						}
-					}
-				}
-				ofm += B[m];
-				O[m][x][y] = ofm;
-			}
-		}
-	}
-}
+void SW_bn2a_branch2c(DATA_T I[256][55][55], DATA_T O[256][55][55], DATA_T W[4][256]) {
+	int m, x, y;
+	DATA_T epsilon = 0.001;
 
-void SW_block3_conv2(DATA_T I[256][56][56], DATA_T O[256][56][56], DATA_T W[256][256][3][3], DATA_T B[256]) {
-	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
-    int p = (1 *(56 - 1) - 56 + 3)/2;
-	for (m = 0; m<256; m++) {
-		for (x = 0; x<56; x++) {
-			for (y = 0; y<56; y++) {
-				ofm = 0;
-				for (k = 0; k<256; k++) {
-					for (i = 0; i<3; i++) {
-						for (j = 0; j<3; j++) {
-							if (x + i < 56 + p && y + j < 56 + p && x + i -p >= 0 && y + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
-							}
-							else {
-								ifm = 0; // zero padding
-							}
-							ofm = ofm + ifm * W[m][k][i][j];
-						}
-					}
-				}
-				ofm += B[m];
-				O[m][x][y] = ofm;
+    for (m = 0; m < 256; m++){
+        DATA_T gamma = W[0][m];
+        DATA_T beta = W[1][m];
+        DATA_T mean = W[2][m];
+        DATA_T var = W[3][m];
+
+		for (x = 0; x < 55; x++){
+			for (y = 0; y < 55; y++){
+				O[m][x][y] = ((gamma * (I[m][x][y]-mean))/sqrt(var+epsilon)) + beta;
 			}
 		}
 	}
 }
+void SW_bn2a_branch1(DATA_T I[256][55][55], DATA_T O[256][55][55], DATA_T W[4][256]) {
+	int m, x, y;
+	DATA_T epsilon = 0.001;
 
-void SW_block3_conv3(DATA_T I[256][56][56], DATA_T O[256][56][56], DATA_T W[256][256][3][3], DATA_T B[256]) {
-	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
-    int p = (1 *(56 - 1) - 56 + 3)/2;
-	for (m = 0; m<256; m++) {
-		for (x = 0; x<56; x++) {
-			for (y = 0; y<56; y++) {
-				ofm = 0;
-				for (k = 0; k<256; k++) {
-					for (i = 0; i<3; i++) {
-						for (j = 0; j<3; j++) {
-							if (x + i < 56 + p && y + j < 56 + p && x + i -p >= 0 && y + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
-							}
-							else {
-								ifm = 0; // zero padding
-							}
-							ofm = ofm + ifm * W[m][k][i][j];
-						}
-					}
-				}
-				ofm += B[m];
-				O[m][x][y] = ofm;
+    for (m = 0; m < 256; m++){
+        DATA_T gamma = W[0][m];
+        DATA_T beta = W[1][m];
+        DATA_T mean = W[2][m];
+        DATA_T var = W[3][m];
+
+		for (x = 0; x < 55; x++){
+			for (y = 0; y < 55; y++){
+				O[m][x][y] = ((gamma * (I[m][x][y]-mean))/sqrt(var+epsilon)) + beta;
 			}
 		}
 	}
 }
-
-void SW_block3_conv4(DATA_T I[256][56][56], DATA_T O[256][56][56], DATA_T W[256][256][3][3], DATA_T B[256]) {
-	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
-    int p = (1 *(56 - 1) - 56 + 3)/2;
-	for (m = 0; m<256; m++) {
-		for (x = 0; x<56; x++) {
-			for (y = 0; y<56; y++) {
-				ofm = 0;
-				for (k = 0; k<256; k++) {
-					for (i = 0; i<3; i++) {
-						for (j = 0; j<3; j++) {
-							if (x + i < 56 + p && y + j < 56 + p && x + i -p >= 0 && y + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
-							}
-							else {
-								ifm = 0; // zero padding
-							}
-							ofm = ofm + ifm * W[m][k][i][j];
-						}
-					}
-				}
-				ofm += B[m];
-				O[m][x][y] = ofm;
-			}
-		}
-	}
-}
-
-void SW_block3_pool(DATA_T I[256][56][56], DATA_T O[256][28][28])
-{
-	int m, x, y, i, j;
-	DATA_T max;
-	for (m = 0; m<256; m++) {
-		for (x = 0; x<28; x++) {
-			for (y = 0; y<28; y++) {
-				max = I[m][x*2][y*2];
-				for (i = 0; i<2; i++) {
-					for (j = 0; j<2; j++) {
-						if (I[m][x*2 + i][y*2 + j] > max) {
-							max = I[m][x*2 + i][y*2 + j];
-						}
-					}
-				}
-				O[m][x][y] = max;
+void SW_add_1(DATA_T I1[256][55][55], DATA_T I2[256][55][55], DATA_T O[256][55][55]) {
+	int m, x, y;
+	for (m = 0; m< 256; m++) {
+		for (x = 0; x < 55; x++) {
+			for(y = 0; y < 55; y++) {
+				O[m][x][y] = I1[m][x][y] + I2[m][x][y];
 			}
 		}
 	}
@@ -303,36 +327,40 @@ int main(int argc, char *argv[]){
     int trash;
 
     static DATA_T I[3][224][224];
-	static DATA_T W1[64][3][3][3];
-	static DATA_T B1[64];
-	static DATA_T W2[64][64][3][3];
+	static DATA_T W2[64][3][7][7];
 	static DATA_T B2[64];
-	static DATA_T W4[128][64][3][3];
-	static DATA_T B4[128];
-	static DATA_T W5[128][128][3][3];
-	static DATA_T B5[128];
-	static DATA_T W7[256][128][3][3];
-	static DATA_T B7[256];
-	static DATA_T W8[256][256][3][3];
-	static DATA_T B8[256];
-	static DATA_T W9[256][256][3][3];
-	static DATA_T B9[256];
-	static DATA_T W10[256][256][3][3];
-	static DATA_T B10[256];
+	static DATA_T W3[4][64];
+	static DATA_T W6[64][64][1][1];
+	static DATA_T B6[64];
+	static DATA_T W7[4][64];
+	static DATA_T W9[64][64][3][3];
+	static DATA_T B9[64];
+	static DATA_T W10[4][64];
+	static DATA_T W12[256][64][1][1];
+	static DATA_T B12[256];
+	static DATA_T W13[256][64][1][1];
+	static DATA_T B13[256];
+	static DATA_T W14[4][256];
+	static DATA_T W15[4][256];
 	
 
     static DATA_T O0_SW[3][224][224];
-	static DATA_T O1_SW[64][224][224];
-	static DATA_T O2_SW[64][224][224];
+	static DATA_T O1_SW[3][230][230];
+	static DATA_T O2_SW[64][112][112];
 	static DATA_T O3_SW[64][112][112];
-	static DATA_T O4_SW[128][112][112];
-	static DATA_T O5_SW[128][112][112];
-	static DATA_T O6_SW[128][56][56];
-	static DATA_T O7_SW[256][56][56];
-	static DATA_T O8_SW[256][56][56];
-	static DATA_T O9_SW[256][56][56];
-	static DATA_T O10_SW[256][56][56];
-	static DATA_T O11_SW[256][28][28];
+	static DATA_T O4_SW[64][112][112];
+	static DATA_T O5_SW[64][55][55];
+	static DATA_T O6_SW[64][55][55];
+	static DATA_T O7_SW[64][55][55];
+	static DATA_T O8_SW[64][55][55];
+	static DATA_T O9_SW[64][55][55];
+	static DATA_T O10_SW[64][55][55];
+	static DATA_T O11_SW[64][55][55];
+	static DATA_T O12_SW[256][55][55];
+	static DATA_T O13_SW[256][55][55];
+	static DATA_T O14_SW[256][55][55];
+	static DATA_T O15_SW[256][55][55];
+	static DATA_T O16_SW[256][55][55];
 	
 
     FILE *w_stream = fopen(argv[1], "rb");
@@ -355,26 +383,9 @@ int main(int argc, char *argv[]){
 	}
 }
 
-	for (m = 0; m <  3 ; m++) {
-	for (k = 0; k < 3 ; k++) {
+	for (m = 0; m <  7 ; m++) {
+	for (k = 0; k < 7 ; k++) {
 		for (i = 0; i < 3 ; i++) {
-			for (j = 0; j < 64 ; j++) {
-				fread(&trash, sizeof(int), 1, w_stream);
-                W1[j][i][m][k] = (DATA_T) trash;
-			}
-		}
-	}
-}
-
-for (m = 0; m < 64 ; m++) {
-    fread(&trash, sizeof(int), 1, w_stream);
-    B1[m] = (DATA_T) trash;
-}
-
-
-	for (m = 0; m <  3 ; m++) {
-	for (k = 0; k < 3 ; k++) {
-		for (i = 0; i < 64 ; i++) {
 			for (j = 0; j < 64 ; j++) {
 				fread(&trash, sizeof(int), 1, w_stream);
                 W2[j][i][m][k] = (DATA_T) trash;
@@ -389,78 +400,39 @@ for (m = 0; m < 64 ; m++) {
 }
 
 
+	for (x = 0; x < 4; x++) {
+    for (y = 0; y < 64 ; y++) {
+        fread(&trash, sizeof(int), 1, w_stream);
+        W3[x][y] = (DATA_T) trash;
+    }
+}
+	for (m = 0; m <  1 ; m++) {
+	for (k = 0; k < 1 ; k++) {
+		for (i = 0; i < 64 ; i++) {
+			for (j = 0; j < 64 ; j++) {
+				fread(&trash, sizeof(int), 1, w_stream);
+                W6[j][i][m][k] = (DATA_T) trash;
+			}
+		}
+	}
+}
+
+for (m = 0; m < 64 ; m++) {
+    fread(&trash, sizeof(int), 1, w_stream);
+    B6[m] = (DATA_T) trash;
+}
+
+
+	for (x = 0; x < 4; x++) {
+    for (y = 0; y < 64 ; y++) {
+        fread(&trash, sizeof(int), 1, w_stream);
+        W7[x][y] = (DATA_T) trash;
+    }
+}
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 64 ; i++) {
-			for (j = 0; j < 128 ; j++) {
-				fread(&trash, sizeof(int), 1, w_stream);
-                W4[j][i][m][k] = (DATA_T) trash;
-			}
-		}
-	}
-}
-
-for (m = 0; m < 128 ; m++) {
-    fread(&trash, sizeof(int), 1, w_stream);
-    B4[m] = (DATA_T) trash;
-}
-
-
-	for (m = 0; m <  3 ; m++) {
-	for (k = 0; k < 3 ; k++) {
-		for (i = 0; i < 128 ; i++) {
-			for (j = 0; j < 128 ; j++) {
-				fread(&trash, sizeof(int), 1, w_stream);
-                W5[j][i][m][k] = (DATA_T) trash;
-			}
-		}
-	}
-}
-
-for (m = 0; m < 128 ; m++) {
-    fread(&trash, sizeof(int), 1, w_stream);
-    B5[m] = (DATA_T) trash;
-}
-
-
-	for (m = 0; m <  3 ; m++) {
-	for (k = 0; k < 3 ; k++) {
-		for (i = 0; i < 128 ; i++) {
-			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(int), 1, w_stream);
-                W7[j][i][m][k] = (DATA_T) trash;
-			}
-		}
-	}
-}
-
-for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(int), 1, w_stream);
-    B7[m] = (DATA_T) trash;
-}
-
-
-	for (m = 0; m <  3 ; m++) {
-	for (k = 0; k < 3 ; k++) {
-		for (i = 0; i < 256 ; i++) {
-			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(int), 1, w_stream);
-                W8[j][i][m][k] = (DATA_T) trash;
-			}
-		}
-	}
-}
-
-for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(int), 1, w_stream);
-    B8[m] = (DATA_T) trash;
-}
-
-
-	for (m = 0; m <  3 ; m++) {
-	for (k = 0; k < 3 ; k++) {
-		for (i = 0; i < 256 ; i++) {
-			for (j = 0; j < 256 ; j++) {
+			for (j = 0; j < 64 ; j++) {
 				fread(&trash, sizeof(int), 1, w_stream);
                 W9[j][i][m][k] = (DATA_T) trash;
 			}
@@ -468,18 +440,24 @@ for (m = 0; m < 256 ; m++) {
 	}
 }
 
-for (m = 0; m < 256 ; m++) {
+for (m = 0; m < 64 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B9[m] = (DATA_T) trash;
 }
 
 
-	for (m = 0; m <  3 ; m++) {
-	for (k = 0; k < 3 ; k++) {
-		for (i = 0; i < 256 ; i++) {
+	for (x = 0; x < 4; x++) {
+    for (y = 0; y < 64 ; y++) {
+        fread(&trash, sizeof(int), 1, w_stream);
+        W10[x][y] = (DATA_T) trash;
+    }
+}
+	for (m = 0; m <  1 ; m++) {
+	for (k = 0; k < 1 ; k++) {
+		for (i = 0; i < 64 ; i++) {
 			for (j = 0; j < 256 ; j++) {
 				fread(&trash, sizeof(int), 1, w_stream);
-                W10[j][i][m][k] = (DATA_T) trash;
+                W12[j][i][m][k] = (DATA_T) trash;
 			}
 		}
 	}
@@ -487,36 +465,75 @@ for (m = 0; m < 256 ; m++) {
 
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
-    B10[m] = (DATA_T) trash;
+    B12[m] = (DATA_T) trash;
 }
 
 
+	for (m = 0; m <  1 ; m++) {
+	for (k = 0; k < 1 ; k++) {
+		for (i = 0; i < 64 ; i++) {
+			for (j = 0; j < 256 ; j++) {
+				fread(&trash, sizeof(int), 1, w_stream);
+                W13[j][i][m][k] = (DATA_T) trash;
+			}
+		}
+	}
+}
+
+for (m = 0; m < 256 ; m++) {
+    fread(&trash, sizeof(int), 1, w_stream);
+    B13[m] = (DATA_T) trash;
+}
+
+
+	for (x = 0; x < 4; x++) {
+    for (y = 0; y < 256 ; y++) {
+        fread(&trash, sizeof(int), 1, w_stream);
+        W14[x][y] = (DATA_T) trash;
+    }
+}
+	for (x = 0; x < 4; x++) {
+    for (y = 0; y < 256 ; y++) {
+        fread(&trash, sizeof(int), 1, w_stream);
+        W15[x][y] = (DATA_T) trash;
+    }
+}
 	
     printf("[C_verifier.cpp]Finish Initialization");
 
     printf("[C_verifier.cpp]InputLayer\n\n");
-	printf("[C_verifier.cpp]Calculate Conv2D1\n\n");
-	SW_block1_conv1(O0_SW,O1_SW,W1,B1);
+	printf("[C_verifier.cpp]Calculate ZeroPadding2D1\n\n");
+	SW_conv1_pad(O0_SW,O1_SW);
 	printf("[C_verifier.cpp]Calculate Conv2D2\n\n");
-	SW_block1_conv2(O1_SW,O2_SW,W2,B2);
-	printf("[C_verifier.cpp]Calculate MaxPooling2D3\n\n");
-	SW_block1_pool(O2_SW,O3_SW);
-	printf("[C_verifier.cpp]Calculate Conv2D4\n\n");
-	SW_block2_conv1(O3_SW,O4_SW,W4,B4);
-	printf("[C_verifier.cpp]Calculate Conv2D5\n\n");
-	SW_block2_conv2(O4_SW,O5_SW,W5,B5);
-	printf("[C_verifier.cpp]Calculate MaxPooling2D6\n\n");
-	SW_block2_pool(O5_SW,O6_SW);
-	printf("[C_verifier.cpp]Calculate Conv2D7\n\n");
-	SW_block3_conv1(O6_SW,O7_SW,W7,B7);
-	printf("[C_verifier.cpp]Calculate Conv2D8\n\n");
-	SW_block3_conv2(O7_SW,O8_SW,W8,B8);
+	SW_conv1(O1_SW,O2_SW,W2,B2);
+	printf("[C_verifier.cpp]Calculate BatchNormalization3\n\n");
+	SW_bn_conv1(O2_SW,O3_SW, W3);
+	printf("[C_verifier.cpp]Calculate Activation(Relu)4\n\n");
+	SW_activation_1(O3_SW,O4_SW);
+	printf("[C_verifier.cpp]Calculate MaxPooling2D5\n\n");
+	SW_max_pooling2d_1(O4_SW,O5_SW);
+	printf("[C_verifier.cpp]Calculate Conv2D6\n\n");
+	SW_res2a_branch2a(O5_SW,O6_SW,W6,B6);
+	printf("[C_verifier.cpp]Calculate BatchNormalization7\n\n");
+	SW_bn2a_branch2a(O6_SW,O7_SW, W7);
+	printf("[C_verifier.cpp]Calculate Activation(Relu)8\n\n");
+	SW_activation_2(O7_SW,O8_SW);
 	printf("[C_verifier.cpp]Calculate Conv2D9\n\n");
-	SW_block3_conv3(O8_SW,O9_SW,W9,B9);
-	printf("[C_verifier.cpp]Calculate Conv2D10\n\n");
-	SW_block3_conv4(O9_SW,O10_SW,W10,B10);
-	printf("[C_verifier.cpp]Calculate MaxPooling2D11\n\n");
-	SW_block3_pool(O10_SW,O11_SW);
+	SW_res2a_branch2b(O8_SW,O9_SW,W9,B9);
+	printf("[C_verifier.cpp]Calculate BatchNormalization10\n\n");
+	SW_bn2a_branch2b(O9_SW,O10_SW, W10);
+	printf("[C_verifier.cpp]Calculate Activation(Relu)11\n\n");
+	SW_activation_3(O10_SW,O11_SW);
+	printf("[C_verifier.cpp]Calculate Conv2D12\n\n");
+	SW_res2a_branch2c(O11_SW,O12_SW,W12,B12);
+	printf("[C_verifier.cpp]Calculate Conv2D13\n\n");
+	SW_res2a_branch1(O5_SW,O13_SW,W13,B13);
+	printf("[C_verifier.cpp]Calculate BatchNormalization14\n\n");
+	SW_bn2a_branch2c(O12_SW,O14_SW, W14);
+	printf("[C_verifier.cpp]Calculate BatchNormalization15\n\n");
+	SW_bn2a_branch1(O13_SW,O15_SW, W15);
+	printf("[C_verifier.cpp]Calculate Add16\n\n");
+	SW_add_1(O14_SW,O15_SW,O16_SW);
 	
 
     printf("[C_verifier.cpp]Print Result");
@@ -542,47 +559,47 @@ for (k = 0; k < 224 ; k++) {
 fprintf(o_stream,"%s","]]]\n\n");
 
 
-fprintf(o_stream,"%s","Conv2D : [[");
-for (k = 0; k < 224 ; k++) {
+fprintf(o_stream,"%s","ZeroPadding2D : [[");
+for (k = 0; k < 230 ; k++) {
 	fprintf(o_stream,"%s","[");
-	for (x = 0; x < 224 ; x++) {
+	for (x = 0; x < 230 ; x++) {
 		fprintf(o_stream,"%s","[");
-		for(y = 0; y < 64 ; y++) {
+		for(y = 0; y < 3 ; y++) {
 			fprintf(o_stream,"%.6f ",O1_SW[y][k][x]);
 			fprintf(c_num,"%.6f ",O1_SW[y][k][x]);
 		}
-		if(x != 224 -1 )
+		if(x != 230 -1 )
 			fprintf(o_stream,"%s","]\n   ");
 		else
 			fprintf(o_stream,"%s","]");
 	}
-	if(k != 224 -1 )
+	if(k != 230 -1 )
 		fprintf(o_stream,"%s","]\n\n  ");
 }
 fprintf(o_stream,"%s","]]]\n\n");
 
 
 fprintf(o_stream,"%s","Conv2D : [[");
-for (k = 0; k < 224 ; k++) {
+for (k = 0; k < 112 ; k++) {
 	fprintf(o_stream,"%s","[");
-	for (x = 0; x < 224 ; x++) {
+	for (x = 0; x < 112 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 64 ; y++) {
 			fprintf(o_stream,"%.6f ",O2_SW[y][k][x]);
 			fprintf(c_num,"%.6f ",O2_SW[y][k][x]);
 		}
-		if(x != 224 -1 )
+		if(x != 112 -1 )
 			fprintf(o_stream,"%s","]\n   ");
 		else
 			fprintf(o_stream,"%s","]");
 	}
-	if(k != 224 -1 )
+	if(k != 112 -1 )
 		fprintf(o_stream,"%s","]\n\n  ");
 }
 fprintf(o_stream,"%s","]]]\n\n");
 
 
-fprintf(o_stream,"%s","MaxPooling2D : [[");
+fprintf(o_stream,"%s","BatchNormalization : [[");
 for (k = 0; k < 112 ; k++) {
 	fprintf(o_stream,"%s","[");
 	for (x = 0; x < 112 ; x++) {
@@ -602,12 +619,12 @@ for (k = 0; k < 112 ; k++) {
 fprintf(o_stream,"%s","]]]\n\n");
 
 
-fprintf(o_stream,"%s","Conv2D : [[");
+fprintf(o_stream,"%s","Activation : [[");
 for (k = 0; k < 112 ; k++) {
 	fprintf(o_stream,"%s","[");
 	for (x = 0; x < 112 ; x++) {
 		fprintf(o_stream,"%s","[");
-		for(y = 0; y < 128 ; y++) {
+		for(y = 0; y < 64 ; y++) {
 			fprintf(o_stream,"%.6f ",O4_SW[y][k][x]);
 			fprintf(c_num,"%.6f ",O4_SW[y][k][x]);
 		}
@@ -622,141 +639,241 @@ for (k = 0; k < 112 ; k++) {
 fprintf(o_stream,"%s","]]]\n\n");
 
 
-fprintf(o_stream,"%s","Conv2D : [[");
-for (k = 0; k < 112 ; k++) {
+fprintf(o_stream,"%s","MaxPooling2D : [[");
+for (k = 0; k < 55 ; k++) {
 	fprintf(o_stream,"%s","[");
-	for (x = 0; x < 112 ; x++) {
+	for (x = 0; x < 55 ; x++) {
 		fprintf(o_stream,"%s","[");
-		for(y = 0; y < 128 ; y++) {
+		for(y = 0; y < 64 ; y++) {
 			fprintf(o_stream,"%.6f ",O5_SW[y][k][x]);
 			fprintf(c_num,"%.6f ",O5_SW[y][k][x]);
 		}
-		if(x != 112 -1 )
+		if(x != 55 -1 )
 			fprintf(o_stream,"%s","]\n   ");
 		else
 			fprintf(o_stream,"%s","]");
 	}
-	if(k != 112 -1 )
+	if(k != 55 -1 )
 		fprintf(o_stream,"%s","]\n\n  ");
 }
 fprintf(o_stream,"%s","]]]\n\n");
 
 
-fprintf(o_stream,"%s","MaxPooling2D : [[");
-for (k = 0; k < 56 ; k++) {
+fprintf(o_stream,"%s","Conv2D : [[");
+for (k = 0; k < 55 ; k++) {
 	fprintf(o_stream,"%s","[");
-	for (x = 0; x < 56 ; x++) {
+	for (x = 0; x < 55 ; x++) {
 		fprintf(o_stream,"%s","[");
-		for(y = 0; y < 128 ; y++) {
+		for(y = 0; y < 64 ; y++) {
 			fprintf(o_stream,"%.6f ",O6_SW[y][k][x]);
 			fprintf(c_num,"%.6f ",O6_SW[y][k][x]);
 		}
-		if(x != 56 -1 )
+		if(x != 55 -1 )
 			fprintf(o_stream,"%s","]\n   ");
 		else
 			fprintf(o_stream,"%s","]");
 	}
-	if(k != 56 -1 )
+	if(k != 55 -1 )
 		fprintf(o_stream,"%s","]\n\n  ");
 }
 fprintf(o_stream,"%s","]]]\n\n");
 
 
-fprintf(o_stream,"%s","Conv2D : [[");
-for (k = 0; k < 56 ; k++) {
+fprintf(o_stream,"%s","BatchNormalization : [[");
+for (k = 0; k < 55 ; k++) {
 	fprintf(o_stream,"%s","[");
-	for (x = 0; x < 56 ; x++) {
+	for (x = 0; x < 55 ; x++) {
 		fprintf(o_stream,"%s","[");
-		for(y = 0; y < 256 ; y++) {
+		for(y = 0; y < 64 ; y++) {
 			fprintf(o_stream,"%.6f ",O7_SW[y][k][x]);
 			fprintf(c_num,"%.6f ",O7_SW[y][k][x]);
 		}
-		if(x != 56 -1 )
+		if(x != 55 -1 )
 			fprintf(o_stream,"%s","]\n   ");
 		else
 			fprintf(o_stream,"%s","]");
 	}
-	if(k != 56 -1 )
+	if(k != 55 -1 )
 		fprintf(o_stream,"%s","]\n\n  ");
 }
 fprintf(o_stream,"%s","]]]\n\n");
 
 
-fprintf(o_stream,"%s","Conv2D : [[");
-for (k = 0; k < 56 ; k++) {
+fprintf(o_stream,"%s","Activation : [[");
+for (k = 0; k < 55 ; k++) {
 	fprintf(o_stream,"%s","[");
-	for (x = 0; x < 56 ; x++) {
+	for (x = 0; x < 55 ; x++) {
 		fprintf(o_stream,"%s","[");
-		for(y = 0; y < 256 ; y++) {
+		for(y = 0; y < 64 ; y++) {
 			fprintf(o_stream,"%.6f ",O8_SW[y][k][x]);
 			fprintf(c_num,"%.6f ",O8_SW[y][k][x]);
 		}
-		if(x != 56 -1 )
+		if(x != 55 -1 )
 			fprintf(o_stream,"%s","]\n   ");
 		else
 			fprintf(o_stream,"%s","]");
 	}
-	if(k != 56 -1 )
+	if(k != 55 -1 )
 		fprintf(o_stream,"%s","]\n\n  ");
 }
 fprintf(o_stream,"%s","]]]\n\n");
 
 
 fprintf(o_stream,"%s","Conv2D : [[");
-for (k = 0; k < 56 ; k++) {
+for (k = 0; k < 55 ; k++) {
 	fprintf(o_stream,"%s","[");
-	for (x = 0; x < 56 ; x++) {
+	for (x = 0; x < 55 ; x++) {
 		fprintf(o_stream,"%s","[");
-		for(y = 0; y < 256 ; y++) {
+		for(y = 0; y < 64 ; y++) {
 			fprintf(o_stream,"%.6f ",O9_SW[y][k][x]);
 			fprintf(c_num,"%.6f ",O9_SW[y][k][x]);
 		}
-		if(x != 56 -1 )
+		if(x != 55 -1 )
 			fprintf(o_stream,"%s","]\n   ");
 		else
 			fprintf(o_stream,"%s","]");
 	}
-	if(k != 56 -1 )
+	if(k != 55 -1 )
+		fprintf(o_stream,"%s","]\n\n  ");
+}
+fprintf(o_stream,"%s","]]]\n\n");
+
+
+fprintf(o_stream,"%s","BatchNormalization : [[");
+for (k = 0; k < 55 ; k++) {
+	fprintf(o_stream,"%s","[");
+	for (x = 0; x < 55 ; x++) {
+		fprintf(o_stream,"%s","[");
+		for(y = 0; y < 64 ; y++) {
+			fprintf(o_stream,"%.6f ",O10_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",O10_SW[y][k][x]);
+		}
+		if(x != 55 -1 )
+			fprintf(o_stream,"%s","]\n   ");
+		else
+			fprintf(o_stream,"%s","]");
+	}
+	if(k != 55 -1 )
+		fprintf(o_stream,"%s","]\n\n  ");
+}
+fprintf(o_stream,"%s","]]]\n\n");
+
+
+fprintf(o_stream,"%s","Activation : [[");
+for (k = 0; k < 55 ; k++) {
+	fprintf(o_stream,"%s","[");
+	for (x = 0; x < 55 ; x++) {
+		fprintf(o_stream,"%s","[");
+		for(y = 0; y < 64 ; y++) {
+			fprintf(o_stream,"%.6f ",O11_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",O11_SW[y][k][x]);
+		}
+		if(x != 55 -1 )
+			fprintf(o_stream,"%s","]\n   ");
+		else
+			fprintf(o_stream,"%s","]");
+	}
+	if(k != 55 -1 )
 		fprintf(o_stream,"%s","]\n\n  ");
 }
 fprintf(o_stream,"%s","]]]\n\n");
 
 
 fprintf(o_stream,"%s","Conv2D : [[");
-for (k = 0; k < 56 ; k++) {
+for (k = 0; k < 55 ; k++) {
 	fprintf(o_stream,"%s","[");
-	for (x = 0; x < 56 ; x++) {
+	for (x = 0; x < 55 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 256 ; y++) {
-			fprintf(o_stream,"%.6f ",O10_SW[y][k][x]);
-			fprintf(c_num,"%.6f ",O10_SW[y][k][x]);
+			fprintf(o_stream,"%.6f ",O12_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",O12_SW[y][k][x]);
 		}
-		if(x != 56 -1 )
+		if(x != 55 -1 )
 			fprintf(o_stream,"%s","]\n   ");
 		else
 			fprintf(o_stream,"%s","]");
 	}
-	if(k != 56 -1 )
+	if(k != 55 -1 )
 		fprintf(o_stream,"%s","]\n\n  ");
 }
 fprintf(o_stream,"%s","]]]\n\n");
 
 
-fprintf(o_stream,"%s","MaxPooling2D : [[");
-for (k = 0; k < 28 ; k++) {
+fprintf(o_stream,"%s","Conv2D : [[");
+for (k = 0; k < 55 ; k++) {
 	fprintf(o_stream,"%s","[");
-	for (x = 0; x < 28 ; x++) {
+	for (x = 0; x < 55 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 256 ; y++) {
-			fprintf(o_stream,"%.6f ",O11_SW[y][k][x]);
-			fprintf(c_num,"%.6f ",O11_SW[y][k][x]);
+			fprintf(o_stream,"%.6f ",O13_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",O13_SW[y][k][x]);
 		}
-		if(x != 28 -1 )
+		if(x != 55 -1 )
 			fprintf(o_stream,"%s","]\n   ");
 		else
 			fprintf(o_stream,"%s","]");
 	}
-	if(k != 28 -1 )
+	if(k != 55 -1 )
+		fprintf(o_stream,"%s","]\n\n  ");
+}
+fprintf(o_stream,"%s","]]]\n\n");
+
+
+fprintf(o_stream,"%s","BatchNormalization : [[");
+for (k = 0; k < 55 ; k++) {
+	fprintf(o_stream,"%s","[");
+	for (x = 0; x < 55 ; x++) {
+		fprintf(o_stream,"%s","[");
+		for(y = 0; y < 256 ; y++) {
+			fprintf(o_stream,"%.6f ",O14_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",O14_SW[y][k][x]);
+		}
+		if(x != 55 -1 )
+			fprintf(o_stream,"%s","]\n   ");
+		else
+			fprintf(o_stream,"%s","]");
+	}
+	if(k != 55 -1 )
+		fprintf(o_stream,"%s","]\n\n  ");
+}
+fprintf(o_stream,"%s","]]]\n\n");
+
+
+fprintf(o_stream,"%s","BatchNormalization : [[");
+for (k = 0; k < 55 ; k++) {
+	fprintf(o_stream,"%s","[");
+	for (x = 0; x < 55 ; x++) {
+		fprintf(o_stream,"%s","[");
+		for(y = 0; y < 256 ; y++) {
+			fprintf(o_stream,"%.6f ",O15_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",O15_SW[y][k][x]);
+		}
+		if(x != 55 -1 )
+			fprintf(o_stream,"%s","]\n   ");
+		else
+			fprintf(o_stream,"%s","]");
+	}
+	if(k != 55 -1 )
+		fprintf(o_stream,"%s","]\n\n  ");
+}
+fprintf(o_stream,"%s","]]]\n\n");
+
+
+fprintf(o_stream,"%s","Add : [[");
+for (k = 0; k < 55 ; k++) {
+	fprintf(o_stream,"%s","[");
+	for (x = 0; x < 55 ; x++) {
+		fprintf(o_stream,"%s","[");
+		for(y = 0; y < 256 ; y++) {
+			fprintf(o_stream,"%.6f ",O16_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",O16_SW[y][k][x]);
+		}
+		if(x != 55 -1 )
+			fprintf(o_stream,"%s","]\n   ");
+		else
+			fprintf(o_stream,"%s","]");
+	}
+	if(k != 55 -1 )
 		fprintf(o_stream,"%s","]\n\n  ");
 }
 fprintf(o_stream,"%s","]]]\n\n");

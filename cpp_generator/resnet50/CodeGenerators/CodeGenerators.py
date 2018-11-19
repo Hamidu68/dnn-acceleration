@@ -58,7 +58,10 @@ class CodeGenerators:
             elif layer_type == 'BatchNormalization':
                 b_input = open("cpp_generator/resnet50/Template/Init/Batch_var_Initializer_f.txt")
                 batch_input = b_input.read()
-                func = batch_input.format(Output_channel=output_shape[3], line_number=l_n)
+                if layer.config['scale'] == 'False':
+                    func = batch_input.format(Output_channel=output_shape[3], line_number=l_n, num=3)
+                else:
+                    func = batch_input.format(Output_channel=output_shape[3], line_number=l_n, num=4)
                 initialization += func + "\n\t"
         return initialization
     
