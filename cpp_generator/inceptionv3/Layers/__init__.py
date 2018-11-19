@@ -16,3 +16,5 @@ from .Layers import Flatten
 from .Layers import Dense
 from .Layers import Add
 from .Layers import Concatenate
+from .Layers import GlobalAveragePooling
+

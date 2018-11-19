@@ -35,6 +35,8 @@ class C_verifier(CodeGenerators):
                 sw_def_layer += layer.function['code']
             elif layer_type == 'Concatenate':
                 sw_def_layer += layer.function['code']
+            elif layer_type == 'GlobalAveragePooling':
+                sw_def_layer += layer.function['code']
         return sw_def_layer
 
     def gen_sw_static_variables(self):
@@ -68,7 +70,7 @@ class C_verifier(CodeGenerators):
             output_shape = eval(layer.config['batch_output_shape'])
             layer_type = layer.config['layer_type']
             l_n=layer.layer_odr
-            if layer_type == 'Flatten' or layer_type == 'Dense':
+            if layer_type == 'Flatten' or layer_type == 'Dense' or layer_type == 'GlobalAveragePooling':
                 sw_output_variables += 'static DATA_T O{}_SW[{}];\n\t'.format(l_n,output_shape[1])
             else :
                 sw_output_variables += 'static DATA_T O{}_SW[{}][{}][{}];\n\t'.format(l_n, output_shape[3],
@@ -127,6 +129,10 @@ class C_verifier(CodeGenerators):
                     sw_call_layer += 'SW_{}(O{}_SW,O{}_SW,W{},B{});\n\t'.format(layer.config['name'], inp, l_n, l_n, l_n)
                 else:
                     sw_call_layer += 'SW_{}(O{}_SW,O{}_SW,W{});\n\t'.format(layer.config['name'], inp, l_n, l_n)
+            elif layer_type == 'GlobalAveragePooling':
+                sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate GlobalAveragePooling{}\\n\\n\");\n\t'.format(l_n)
+                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
+                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
             elif layer_type == 'Concatenate' :
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate Concatenate{}\\n\\n\");\n\t'.format(l_n)
                 if len(self.model_sw.graphs[layer.config['name']]['in']) == 3 :
