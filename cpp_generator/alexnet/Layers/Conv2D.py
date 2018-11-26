@@ -14,8 +14,8 @@ class Conv2D(Layers):
         output_shape = eval(self.config['batch_output_shape'])
         filter_shape = eval(self.config['kernel_size'])
         stride_shape = eval(self.config['strides'])
-        dilation_rate = eval(self.config['dilation_rate'])
-        padding = str(self.config['padding'])
+        #dilation_rate = eval(self.config['dilation_rate'])
+        #padding = str(self.config['padding'])
         use_bias = eval(self.config['use_bias'])
         
         # set_output

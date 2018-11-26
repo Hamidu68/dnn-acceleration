@@ -152,6 +152,12 @@ def add_Flatten(input_tensor=None, info=None):
     return output_tensor
 
 
+def add_Dropout(input_tensor=None, info=None):
+    # Get output tensor
+    output_tensor = layers.Dropout(rate=eval(info['rate']))(input_tensor)
+    return output_tensor
+
+
 def add_Dense(input_tensor=None, info=None, fid=None, dtype=int):
     # Read information of layer
     input_shape = eval(info['batch_input_shape'])
@@ -280,7 +286,7 @@ if __name__ == "__main__":
         print('Wrong data type!')
     
     # Skip layers
-    skip_layers = ['Dropout']
+    skip_layers = []
 
     # init parameters
     line_num = -1
@@ -362,7 +368,7 @@ if __name__ == "__main__":
             # get input tensor
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = input_tensor
+            outputs_dict[layer_name] = tensors[layer_name] = add_Dropout(input_tensor, row)
             
         elif layer_type == 'Add':
             # get input tensors

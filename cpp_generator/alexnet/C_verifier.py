@@ -12,7 +12,7 @@ def gen_c_verifier(test_file='', model_name='', dtype='int'):
     
     # Main) Generate Function depending on layer_type
     # Skip layers
-    skip_layers = ['Dropout']
+    skip_layers = []
     
     # for each layers
     for row in csv_reader:

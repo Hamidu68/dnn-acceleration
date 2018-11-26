@@ -13,3 +13,4 @@ from .Layers import Activation
 from .Layers import ZeroPadding2D
 from .Layers import Flatten
 from .Layers import Dense
+from .Layers import Dropout
