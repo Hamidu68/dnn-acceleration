@@ -6,7 +6,7 @@
 
 ###########we need modity this file
 
-Model_name="alexnet"
+Model_name="mobilenet"
 Test_dir="Test_file/${Model_name}_test.csv"
 #Data_type="int"
 #Data_type="unsigned int"

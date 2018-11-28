@@ -9,6 +9,9 @@ from keras import backend as K
 from keras import Model
 from keras import layers
 
+#import tensorflow as tf
+#from tensorflow.keras import layers
+
 
 np.set_printoptions(threshold=np.inf, linewidth=922337203685477)
 
@@ -158,6 +161,30 @@ def add_Dropout(input_tensor=None, info=None):
     return output_tensor
 
 
+def add_DepthConv2D(input_tensor=None, info=None, fid=None,  dtype=int):
+    # Read information of layer
+    output_shape = eval(info['batch_output_shape'])
+    kernel_size = eval(info['kernel_size'])
+
+    # Read weights from file
+    weights = []
+    kernel = np.fromfile(file=fid, dtype=dtype, sep='',
+                         count=kernel_size[0] * kernel_size[1] * output_shape[3])
+    kernel = kernel.reshape((kernel_size[0], kernel_size[1], output_shape[3], 1)).astype(np.float32)
+    weights.append(kernel)
+
+    # Get output tensor
+    output_tensor = layers.DepthwiseConv2D(kernel_size=eval(info['kernel_size']),
+                                           strides=eval(info['strides']),
+                                           padding=str(info['padding']),
+                                           data_format=str(info['data_format']),
+                                           activation=str(info['activation']),
+                                           use_bias=eval(info['use_bias']),
+                                           weights=weights
+                                           )(input_tensor)
+    return output_tensor
+
+
 def add_Dense(input_tensor=None, info=None, fid=None, dtype=int):
     # Read information of layer
     input_shape = eval(info['batch_input_shape'])
@@ -166,7 +193,7 @@ def add_Dense(input_tensor=None, info=None, fid=None, dtype=int):
     # Read weights from file
     weights=[]
     nodes = np.fromfile(file=fid, dtype=dtype, sep='', count=input_shape[1]*output_shape[1])
-    nodes = nodes.reshape((input_shape[1],output_shape[1])).astype(np.float32)
+    nodes = nodes.reshape((input_shape[1], output_shape[1])).astype(np.float32)
     weights.append(nodes)
                
     if eval(info['use_bias']):
@@ -182,9 +209,24 @@ def add_Dense(input_tensor=None, info=None, fid=None, dtype=int):
     return output_tensor
 
 
+def add_ReLU(input_tensor=None, info=None):
+    # Get output tensor
+    output_tensor = layers.ReLU(max_value=int(info['max_value']))(input_tensor)
+    return output_tensor
+
+
 def add_Add(input_tensors=[], info=None):
     # Get output tensor
     output_tensor = layers.Add()(input_tensors)
+    return output_tensor
+
+
+def add_Reshape(input_tensors=[], info=None):
+    # Read information of layer
+    output_shape = eval(info['batch_output_shape'])
+
+    # Get output tensor
+    output_tensor = layers.Reshape(output_shape)(input_tensors)
     return output_tensor
 
 
@@ -192,6 +234,7 @@ def add_Concatenate(input_tensors=[], info=None):
     # Get output tensor
     output_tensor = layers.Concatenate(axis=-1)(input_tensors)
     return output_tensor
+
 
 ####################################################
 ####################################################
@@ -321,7 +364,13 @@ if __name__ == "__main__":
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             # get output of current layer and save it to dict
             outputs_dict[layer_name] = tensors[layer_name] = add_Conv2D(input_tensor, row, weights_bin, dtype)
-            
+
+        elif layer_type == 'DepthwiseConv2D':
+            # get input tensor
+            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            # get output of current layer and save it to dict
+            outputs_dict[layer_name] = tensors[layer_name] = add_DepthConv2D(input_tensor, row, weights_bin, dtype)
+
         elif layer_type == 'MaxPooling2D':
             # get input tensor
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
@@ -333,12 +382,23 @@ if __name__ == "__main__":
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             # get output of current layer and save it to dict
             outputs_dict[layer_name] = tensors[layer_name] = add_BatchNormalization(input_tensor, row, weights_bin, dtype, skip)
+
+        elif layer_type == 'ReLU':
+            # get input tensor
+            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            # get output of current layer and save it to dict
+            outputs_dict[layer_name] = tensors[layer_name] = add_ReLU(input_tensor, row)
                         
         elif layer_type == 'Activation':
             # get input tensor
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             # get output of current layer and save it to dict
             outputs_dict[layer_name] = tensors[layer_name] = add_Activation(input_tensor, row)
+
+        elif layer_type == 'Reshape':
+            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            # get output of current layer and save it to dict
+            outputs_dict[layer_name] = tensors[layer_name] = add_Reshape(input_tensor, row)
             
         elif layer_type == 'AveragePooling2D':
             # get input tensor

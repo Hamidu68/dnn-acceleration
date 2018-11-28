@@ -29,8 +29,7 @@ class C_verifier(CodeGenerators):
                 sw_def_layer += layer.function['code']
             elif layer_type == 'Dense':
                 sw_def_layer += layer.function['code']
-            elif layer_type == 'Dropout':
-                sw_def_layer += layer.function['code']
+
         return sw_def_layer
 
     def gen_sw_static_variables(self):
@@ -105,10 +104,6 @@ class C_verifier(CodeGenerators):
                 sw_call_layer += 'printf(\"[C_verifier.cpp]InputLayer\\n\\n\");\n\t'
             elif layer_type == 'Flatten':
                 sw_call_layer += 'printf(\"[C_verifier.py]Calculate Flatten{}\\n\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
-            elif layer_type == 'Dropout':
-                sw_call_layer += 'printf(\"[C_verifier.py]Calculate Dropout{}\\n\\n\");\n\t'.format(l_n)
                 inp = self.model_sw.graphs[layer.config['name']]['in'][0]
                 sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
             elif layer_type == 'Dense':

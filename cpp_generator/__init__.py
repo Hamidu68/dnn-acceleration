@@ -2,5 +2,6 @@
 #from .vgg19 import *
 #from .inceptionv3 import *
 #from .lenet5 import *
-from .alexnet import *
+#from .alexnet import *
+from .mobilenet import *
 #from .googlenet import *
