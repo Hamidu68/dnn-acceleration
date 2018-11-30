@@ -1,5 +1,0 @@
-for (x = 0; x < 4; x++) {{
-    for (y = 0; y < {Output_channel} ; y++) {{
-        fread(&W{line_number}[x][y], sizeof(int), 1, w_stream);
-    }}
-}}

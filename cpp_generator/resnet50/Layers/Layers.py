@@ -289,26 +289,24 @@ class Dense(Layers):
         # init part
 
         # code
-        den_s = open("cpp_generator/resnet50/Template/Function/Dense_Softmax.txt")
-        den_r = open("cpp_generator/resnet50/Template/Function/Dense_Relu.txt")
-        dense_softmax = den_s.read()
-        dense_relu = den_r.read()
-        comment = ''
-        comment1 = '\'\'\''
-
-        if not use_bias:
-            comment = '//'
-            comment1 = '\'\'\''
+        if use_bias:
+            den_s = open("cpp_generator/resnet50/Template/Function/Dense_Softmax_bias.txt")
+            den_r = open("cpp_generator/resnet50/Template/Function/Dense_Relu_bias.txt")
+            dense_softmax = den_s.read()
+            dense_relu = den_r.read()
+        else:
+            den_s = open("cpp_generator/resnet50/Template/Function/Dense_Softmax.txt")
+            den_r = open("cpp_generator/resnet50/Template/Function/Dense_Relu.txt")
+            dense_softmax = den_s.read()
+            dense_relu = den_r.read()
 
         if self.config['activation'] == 'relu':  # Activation = relu
             func = dense_softmax.format(Name=self.config["name"], Input_channel=input_shape[1],
-                                        Output_channel=output_shape[1], comment_begin=comment1,
-                                        comment_end=comment1, comment=comment)
+                                        Output_channel=output_shape[1])
             self.function['code'] += func + "\n"
         else:  # Activation = softmax
             func = dense_relu.format(Name=self.config["name"], Input_channel=input_shape[1],
-                                     Output_channel=output_shape[1], comment_begin=comment1,
-                                     comment_end=comment1, comment=comment)
+                                     Output_channel=output_shape[1])
             self.function['code'] += func + "\n"
 
         

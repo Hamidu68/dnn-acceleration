@@ -1,4 +1,4 @@
-void SW_{Name}(DATA_T I[{Input_channel}], DATA_T O[{Output_channel}], DATA_T W[{Output_channel}][{Input_channel}]{comment_begin}, DATA_T B[{Output_channel}]{comment_end})
+void SW_{Name}(DATA_T I[{Input_channel}], DATA_T O[{Output_channel}], DATA_T W[{Output_channel}][{Input_channel}])
 {{
     //Dense
 	int m, c;
@@ -7,7 +7,6 @@ void SW_{Name}(DATA_T I[{Input_channel}], DATA_T O[{Output_channel}], DATA_T W[{
 		for (c = 0; c < {Input_channel}; c++){{
             O[m] += W[m][c] * I[c];
         }}
-        {comment}O[m] += B[m];
         if (O[m] < 0) //Relu
             O[m] = 0;
      }}

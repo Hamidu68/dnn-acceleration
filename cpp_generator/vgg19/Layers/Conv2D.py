@@ -48,18 +48,18 @@ class Conv2D(Layers):
 
         if self.config['padding'] == 'valid':
             func = conv2d_valid.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1]
-                                      ,Stride_width=stride_shape[0], Stride_height=stride_shape[1],
-                                      Input_height=input_shape[2], Output_channel=output_shape[3],
-                                      Filter_width=filter_shape[0], Filter_height=filter_shape[1],
-                                      Output_width=output_shape[1], Output_height=output_shape[2],
-                                      comment_begin=comment1, comment_end=comment1, comment=comment)
+                                       , Stride_width=stride_shape[0], Stride_height=stride_shape[1],
+                                       Input_height=input_shape[2], Output_channel=output_shape[3],
+                                       Filter_width=filter_shape[0], Filter_height=filter_shape[1],
+                                       Output_width=output_shape[1], Output_height=output_shape[2],
+                                       comment_begin=comment1, comment_end=comment1, comment=comment)
             self.function['code'] = func + "\n"
         else:
             func = conv2d_same.format(Name=self.config["name"], Input_channel=input_shape[3],
-                                       Input_width=input_shape[1], Stride_width=stride_shape[0],
-                                       Stride_height=stride_shape[1], Input_height=input_shape[2],
-                                       Output_channel=output_shape[3], Filter_width=filter_shape[0],
-                                       Filter_height=filter_shape[1], Output_width=output_shape[1],
-                                       Output_height=output_shape[2], comment_begin=comment1,
-                                       comment_end=comment1, comment=comment)
+                                      Input_width=input_shape[1], Stride_width=stride_shape[0],
+                                      Stride_height=stride_shape[1], Input_height=input_shape[2],
+                                      Output_channel=output_shape[3], Filter_width=filter_shape[0],
+                                      Filter_height=filter_shape[1], Output_width=output_shape[1],
+                                      Output_height=output_shape[2], comment_begin=comment1,
+                                      comment_end=comment1, comment=comment)
             self.function['code'] = func + "\n"

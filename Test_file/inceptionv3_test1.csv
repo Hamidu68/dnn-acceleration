@@ -39,3 +39,4 @@ activation_55,Activation,"(None, 25, 25, 64)","(None, 25, 25, 64)",batch_normali
 activation_57,Activation,"(None, 25, 25, 64)","(None, 25, 25, 64)",batch_normalization_8,0,,,relu,,,,,,True,,,,,,,,,,,,,,,,,,,,,,,,
 activation_60,Activation,"(None, 25, 25, 96)","(None, 25, 25, 96)",batch_normalization_11,0,,,relu,,,,,,True,,,,,,,,,,,,,,,,,,,,,,,,
 activation_61,Activation,"(None, 25, 25, 32)","(None, 25, 25, 32)",batch_normalization_12,0,,,relu,,,,,,True,,,,,,,,,,,,,,,,,,,,,,,,
+mixed0,Concatenate,"[(None, 25, 25, 64), (None, 25, 25, 64), (None, 25, 25, 96), (None, 25, 25, 32)]","(None, 25, 25, 256)",activation_55/activation_57/activation_60/activation_61,0,,,,,,,,,True,,3,,,,,,,,,,,,,,,,,,,,,,

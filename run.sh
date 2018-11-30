@@ -6,11 +6,11 @@
 
 ###########we need modity this file
 
-Model_name="mobilenetv2"
+Model_name="resnet50"
 Test_dir="Test_file/${Model_name}_test.csv"
 #Data_type="int"
 #Data_type="unsigned int"
-Data_type="float"
+Data_type="double"
 #Data_type="ap_unit<16>"
 Random_range="10"
 
