@@ -186,12 +186,20 @@ class Activation(Layers):
         # init part
 
         # code
-        rl = open("cpp_generator/inceptionv3/Template/Function/Relu.txt")
-        template = rl.read()
-        func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
-                               Input_height=input_shape[2], Output_channel=output_shape[3],
-                               Output_width=output_shape[1], Output_height=output_shape[2])
-        self.function['code'] = func + "\n"
+        if self.config['activation'] == 'relu':
+            rl = open("cpp_generator/inceptionv3/Template/Function/Activation_relu.txt")
+            template = rl.read()
+            func = template.format(Name=self.config["name"], Input_channel= input_shape[3],
+                                   Input_width= input_shape[1], Input_height=input_shape[2],
+                                   Output_channel=output_shape[3], Output_width=output_shape[1],
+                                   Output_height=output_shape[2])
+            self.function['code'] = func + "\n"
+        elif self.config['activation'] == 'softmax':
+            rl = open("cpp_generator/inceptionv3/Template/Function/Activation_softmax.txt")
+            template = rl.read()
+            func = template.format(Name=self.config["name"], Output_channel=output_shape[3],
+                                   Input_channel=input_shape[3])
+            self.function['code'] = func + "\n"
 
 
 class AveragePooling2D(Layers):
@@ -363,12 +371,13 @@ class Concatenate(Layers):
                                  Input_channel2=input_shape[1][3], Input_channel3=input_shape[2][3],
                                  Output_channel=output_shape[3], Output_width=output_shape[1],
                                  Output_height=output_shape[2])
+            self.function['code'] = func + "\n"
         elif len(input_shape) == 4:
             func = con4_r.format(Name=self.config['name'], Input_channel1=input_shape[0][3],
                                  Input_channel2=input_shape[1][3], Input_channel3=input_shape[2][3],
                                  Input_channel4=input_shape[3][3], Output_channel=output_shape[3],
                                  Output_width=output_shape[1], Output_height=output_shape[2])
-        self.function['code'] = func + "\n"
+            self.function['code'] = func + "\n"
 
 
 class GlobalAveragePooling(Layers):
