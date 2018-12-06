@@ -6,13 +6,13 @@
 
 ###########we need modity this file
 
-Model_name="inceptionv3"
+Model_name="mobilenetv2"
 Test_dir="Test_file/${Model_name}_test.csv"
 #Data_type="int"
 #Data_type="unsigned int"
-Data_type="double"
+Data_type="float"
 #Data_type="ap_unit<16>"
-Random_range="10"
+Random_range="5"
 
 Use_trained_weight=0
 Trained_weight_file=${Model_name}"_weights.bin"

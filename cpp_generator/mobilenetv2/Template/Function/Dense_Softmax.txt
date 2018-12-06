@@ -1,30 +1,30 @@
-void SW_{Name}(DATA_T I[{Input_channel}], DATA_T O[{Output_channel}], DATA_T W[{Output_channel}][{Input_channel}]{comment_begin})
+void SW_{Name}(DATA_T I[{Input_channel}], DATA_T O[{Output_channel}], DATA_T W[{Output_channel}][{Input_channel}])
 {{
     //Dense
-	int m, c;    
-	DATA_T denom = 0;
+	int m, c;
+	DATA_T denom=0;
+	DATA_T maximum;
 	for(m=0; m<{Output_channel}; m++){{
         O[m] = 0;
 		for (c = 0; c < {Input_channel}; c++){{
 			O[m] += W[m][c] * I[c];
          }}
-        denom += O[m]; //Sum of Output
+        denom+=O[m];
+
     }}
     //Softmax
-    float max = 0;
-	for (m = 0; m < {Output_channel}; m++)
-		if(O[m]>max)
-          max = O[m];
-        
-     for (m = 0; m < {Output_channel}; m++){{
-		if(O[m] != max)
-          O[m] = 0;
-        else
-          O[m] = 1;}
 
-/*
-	for (m = 0; m < {Output_channel}; m++)
-		O[m] = O[m] / denom; 
-*/
+    //maximum=O[0]/denom;
+    for (m = 0; m < {Output_channel}; m++){{
+		O[m]=O[m]/denom;
+		//if(maximum<O[m])
+		//    maximum=O[m];
+    }}
 
+    /*for (m = 0; m < {Output_channel}; m++){{
+	    if(maximum!=O[m])
+	        O[m]=0;
+	    else
+	        O[m]=1;
+	}}*/
 }}

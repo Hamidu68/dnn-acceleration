@@ -29,7 +29,7 @@ class C_verifier(CodeGenerators):
                 sw_def_layer += layer.function['code']
             elif layer_type == 'Activation':
                 sw_def_layer += layer.function['code']
-            elif layer_type == 'GlobalAveragePooling':
+            elif layer_type == 'GlobalAveragePooling2D':
                 sw_def_layer += layer.function['code']
         return sw_def_layer
 
@@ -64,7 +64,7 @@ class C_verifier(CodeGenerators):
             output_shape = eval(layer.config['batch_output_shape'])
             layer_type = layer.config['layer_type']
             l_n=layer.layer_odr
-            if layer_type == 'GlobalAveragePooling' or layer_type == 'Reshape':
+            if len(output_shape)<=2:
                 sw_output_variables += 'static DATA_T O{}_SW[{}];\n\t'.format(l_n, output_shape[1])
             else:
                 sw_output_variables += 'static DATA_T O{}_SW[{}][{}][{}];\n\t'.format(l_n, output_shape[3],
@@ -112,8 +112,8 @@ class C_verifier(CodeGenerators):
                 sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
             elif layer_type == 'InputLayer':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]InputLayer\\n\\n\");\n\t'
-            elif layer_type == 'GlobalAveragePooling':
-                sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate GlobalAveragePooling{}\\n\\n\");\n\t'.format(l_n)
+            elif layer_type == 'GlobalAveragePooling2D':
+                sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate GlobalAveragePooling2D{}\\n\\n\");\n\t'.format(l_n)
                 inp = self.model_sw.graphs[layer.config['name']]['in'][0]
                 sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
 

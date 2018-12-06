@@ -211,7 +211,7 @@ def add_Dense(input_tensor=None, info=None, fid=None, dtype=int):
 
 def add_ReLU(input_tensor=None, info=None):
     # Get output tensor
-    output_tensor = layers.ReLU(max_value=int(info['max_value']))(input_tensor)
+    output_tensor = layers.ReLU(max_value=int(eval(info['max_value'])))(input_tensor)
     return output_tensor
 
 
@@ -226,13 +226,19 @@ def add_Reshape(input_tensors=[], info=None):
     output_shape = eval(info['batch_output_shape'])
 
     # Get output tensor
-    output_tensor = layers.Reshape(output_shape)(input_tensors)
+    output_tensor = layers.Reshape(target_shape=output_shape[1:])(input_tensors)
     return output_tensor
 
 
 def add_Concatenate(input_tensors=[], info=None):
     # Get output tensor
     output_tensor = layers.Concatenate(axis=-1)(input_tensors)
+    return output_tensor
+
+
+def add_GlobalAveragePooling2D(input_tensors=[], info=None):
+    # Get output tensor
+    output_tensor = layers.GlobalAveragePooling2D(data_format=str(info['data_format']))(input_tensors)
     return output_tensor
 
 
@@ -285,6 +291,11 @@ def print_result(model=None, input_values=None, name=None):
     for layer in model.layers:
         layer_type = (str(layer).split()[0]).split('.')[-1]
 
+        skip_layers = ['Dropout']
+        if layer_type in skip_layers:
+            skip = True
+            continue
+
         f.write('{} : '.format(layer_type))
         if layer_type == 'InputLayer':
             # Write input values
@@ -329,7 +340,7 @@ if __name__ == "__main__":
         print('Wrong data type!')
     
     # Skip layers
-    skip_layers = []
+    skip_layers = ['Dropout']
 
     # init parameters
     line_num = -1
@@ -441,6 +452,12 @@ if __name__ == "__main__":
             input_tensors = get_multi_inputs(row['connected_to'].split('/'), tensors, outputs_dict)
             # get output of current layer and save it to dict
             outputs_dict[layer_name] = tensors[layer_name] = add_Concatenate(input_tensors, row)
+
+        elif layer_type == 'GlobalAveragePooling2D':
+            # get input tensor
+            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            # get output of current layer and save it to dict
+            outputs_dict[layer_name] = tensors[layer_name] = add_GlobalAveragePooling2D(input_tensor, row)
             
         else:
             print('Undefined Layer: {}'.format(layer_type))

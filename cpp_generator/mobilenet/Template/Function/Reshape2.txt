@@ -1,0 +1,6 @@
+void SW_{Name}(DATA_T I[{Input_channel}], DATA_T O[{Output_channel}][1][1]) {{
+	int i;
+
+	for (i = 0; i < {Input_channel}; i++)
+		O[i][0][0] = I[i];
+}}

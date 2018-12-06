@@ -20,8 +20,7 @@ class CodeGenerators:
             o2 = open("cpp_generator/mobilenet/Template/Print/Print_Output1D.txt")
             output3d = o1.read()
             output1d = o2.read()
-            if layer_type == 'Flatten' or layer_type == 'Dense' or layer_type == 'GlobalAveragePooling' or \
-               layer_type == 'Reshape':
+            if len(output_shape)<=2:
                 func = output1d.format(Name=layer_type, first=output_shape[1], output='O'+str(layer.layer_odr)+'_SW')
                 print_result += func+"\n"
             else:

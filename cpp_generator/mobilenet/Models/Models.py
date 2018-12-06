@@ -65,10 +65,10 @@ class Models():
             inputs = self.get_inputs(layer_name)
             self.layers.append(ZeroPadding2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
 
-        elif layer_type == 'GlobalAveragePooling':
+        elif layer_type == 'GlobalAveragePooling2D':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)
-            self.layers.append(GlobalAveragePooling(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+            self.layers.append(GlobalAveragePooling2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
 
         elif layer_type == 'DepthwiseConv2D':
             self.add_graph(layer_name, config['connected_to'])

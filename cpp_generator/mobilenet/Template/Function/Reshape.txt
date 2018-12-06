@@ -1,6 +1,0 @@
-void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T O[{Output_channel}]) {{
-	int i;
-
-	for (i = 0; i < {Input_channel}; i++)
-		O[i] = I[i][0][0];
-}}

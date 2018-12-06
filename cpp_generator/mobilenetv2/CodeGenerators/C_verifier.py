@@ -27,7 +27,7 @@ class C_verifier(CodeGenerators):
                 sw_def_layer += layer.function['code']
             elif layer_type == 'Add':
                 sw_def_layer += layer.function['code']
-            elif layer_type == 'GlobalAveragePooling':
+            elif layer_type == 'GlobalAveragePooling2D':
                 sw_def_layer += layer.function['code']
         return sw_def_layer
 
@@ -65,7 +65,7 @@ class C_verifier(CodeGenerators):
             output_shape = eval(layer.config['batch_output_shape'])
             layer_type = layer.config['layer_type']
             l_n=layer.layer_odr
-            if layer_type == 'GlobalAveragePooling' or layer_type == 'Dense':
+            if layer_type == 'GlobalAveragePooling2D' or layer_type == 'Dense':
                 sw_output_variables += 'static DATA_T O{}_SW[{}];\n\t'.format(l_n, output_shape[1])
             else:
                 sw_output_variables += 'static DATA_T O{}_SW[{}][{}][{}];\n\t'.format(l_n, output_shape[3],
@@ -101,11 +101,11 @@ class C_verifier(CodeGenerators):
                 sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
             elif layer_type == 'InputLayer':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]InputLayer\\n\\n\");\n\t'
-            elif layer_type == 'GlobalAveragePooling':
-                sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate GlobalAveragePooling{}\\n\\n\");\n\t'.format(l_n)
+            elif layer_type == 'GlobalAveragePooling2D':
+                sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate GlobalAveragePooling2D{}\\n\\n\");\n\t'.format(l_n)
                 inp = self.model_sw.graphs[layer.config['name']]['in'][0]
                 sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
-            elif layer_type == 'Dense' :
+            elif layer_type == 'Dense':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate Dense{}\\n\\n\");\n\t'.format(l_n)
                 inp = self.model_sw.graphs[layer.config['name']]['in'][0]
                 sw_call_layer += 'SW_{}(O{}_SW,O{}_SW,W{},B{});\n\t'.format(layer.config['name'], inp, l_n, l_n, l_n)
@@ -162,7 +162,9 @@ int main(int argc, char *argv[]){{
     if (c_num == NULL) printf("Output file was not opened");
 
     printf("[C_verifier.cpp]Start Initialzation");
+    
     {Initialization}
+    
     printf("[C_verifier.cpp]Finish Initialization");
 
     {sw_call_layer}

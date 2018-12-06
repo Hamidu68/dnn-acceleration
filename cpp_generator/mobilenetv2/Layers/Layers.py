@@ -175,7 +175,7 @@ class ReLU(Layers):
         # get shape
         input_shape = eval(self.config['batch_input_shape'])
         output_shape = eval(self.config['batch_output_shape'])
-        max_value = int(self.config['max_value'])
+        max_value = int(eval(self.config['max_value']))
 
         # set_output
         self.set_output(output_shape[1:], self.layer_odr)
@@ -193,7 +193,7 @@ class ReLU(Layers):
         self.function['code'] = func + "\n"
 
 
-class GlobalAveragePooling(Layers):
+class GlobalAveragePooling2D(Layers):
 
     def __init__(self, config={}, inputs=[], dtype='DATA_T', layer_odr=0, post=''):
         super().__init__(config, inputs, dtype, layer_odr, post)
@@ -210,7 +210,7 @@ class GlobalAveragePooling(Layers):
         # init part
 
         # code
-        mxp = open("cpp_generator/mobilenetv2/Template/Function/GlobalAveragePooling.txt")
+        mxp = open("cpp_generator/mobilenetv2/Template/Function/GlobalAveragePooling2D.txt")
         template = mxp.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2])
@@ -235,26 +235,25 @@ class Dense(Layers):
         # init part
 
         # code
-        den_s = open("cpp_generator/mobilenetv2/Template/Function/Dense_Softmax.txt")
-        den_r = open("cpp_generator/mobilenetv2/Template/Function/Dense_Relu.txt")
-        dense_softmax = den_s.read()
-        dense_relu = den_r.read()
-        comment = ''
-        comment1 = '\'\'\''
-
-        if not use_bias:
-            comment = '//'
-            comment1 = '\'\'\''
+        # code
+        if use_bias:
+            den_s = open("cpp_generator/mobilenetv2/Template/Function/Dense_Softmax_bias.txt")
+            den_r = open("cpp_generator/mobilenetv2/Template/Function/Dense_Relu_bias.txt")
+            dense_softmax = den_s.read()
+            dense_relu = den_r.read()
+        else:
+            den_s = open("cpp_generator/mobilenetv2/Template/Function/Dense_Softmax.txt")
+            den_r = open("cpp_generator/mobilenetv2/Template/Function/Dense_Relu.txt")
+            dense_softmax = den_s.read()
+            dense_relu = den_r.read()
 
         if self.config['activation'] == 'relu':  # Activation = relu
-            func = dense_softmax.format(Name=self.config["name"], Input_channel=input_shape[1],
-                                        Output_channel=output_shape[1], comment_begin=comment1,
-                                        comment_end=comment1, comment=comment)
+            func = dense_relu.format(Name=self.config["name"], Input_channel=input_shape[1],
+                                        Output_channel=output_shape[1])
             self.function['code'] += func + "\n"
         else:  # Activation = softmax
-            func = dense_relu.format(Name=self.config["name"], Input_channel=input_shape[1],
-                                     Output_channel=output_shape[1], comment_begin=comment1,
-                                     comment_end=comment1, comment=comment)
+            func = dense_softmax.format(Name=self.config["name"], Input_channel=input_shape[1],
+                                     Output_channel=output_shape[1])
             self.function['code'] += func + "\n"
 
 

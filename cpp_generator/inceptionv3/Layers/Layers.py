@@ -380,7 +380,7 @@ class Concatenate(Layers):
             self.function['code'] = func + "\n"
 
 
-class GlobalAveragePooling(Layers):
+class GlobalAveragePooling2D(Layers):
 
     def __init__(self, config={}, inputs=[], dtype='DATA_T', layer_odr=0, post=''):
         super().__init__(config, inputs, dtype, layer_odr, post)
@@ -397,7 +397,7 @@ class GlobalAveragePooling(Layers):
         # init part
 
         # code
-        mxp = open("cpp_generator/inceptionv3/Template/Function/GlobalAveragePooling.txt")
+        mxp = open("cpp_generator/inceptionv3/Template/Function/GlobalAveragePooling2D.txt")
         template = mxp.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2])

@@ -1,4 +1,5 @@
 from string import Template
+from .Data import Data
 
 
 class Layers:
@@ -46,7 +47,7 @@ class Conv2D_HW(Layers):
             self.weights.append(Data(dtype=self.dtype, shape=(output_shape[3],), name='B{}'.format(self.layer_odr)))
 
         # init part
-        self.weights_odr.append([3,2,0,1])  # keras: kernel_width, kernel_height, input_channel, output_channel
+        self.weights_odr.append([3, 2, 0, 1])  # keras: kernel_width, kernel_height, input_channel, output_channel
         if use_bias :
             self.weights_odr.append([0])
 
