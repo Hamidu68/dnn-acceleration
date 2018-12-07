@@ -1,0 +1,14 @@
+void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T O[{Input_channel}]) {{
+	int m, x, y;
+	double max;
+	for (m = 0; m < {Input_channel}; m++) {{
+		max = I[m][0][0];
+		for (x = 0; x < {Input_width}; x++) {{
+			for (y = 0; y < {Input_height}; y++) {{
+				if (I[m][x][y] > max)
+					max = I[m][x][y];
+			}}
+		}}
+		O[m] = max;
+	}}
+}}

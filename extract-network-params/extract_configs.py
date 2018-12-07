@@ -4,14 +4,13 @@ from keras.applications.vgg16 import VGG16
 from keras.applications.vgg19 import VGG19
 from keras.applications.resnet50 import ResNet50
 from keras.applications.inception_v3 import InceptionV3
-
-# from keras.applications.inception_resnet_v2 import InceptionResNetV2
-#from keras.applications.mobilenet import MobileNet
-# from keras.applications.densenet import DenseNet121
-# from keras.applications.densenet import DenseNet169
-# from keras.applications.densenet import DenseNet201
-# from keras.applications.nasnet import NASNetLarge
-# from keras.applications.nasnet import NASNetMobile
+from keras.applications.inception_resnet_v2 import InceptionResNetV2
+from keras.applications.xception import Xception
+from keras.applications.densenet import DenseNet121
+from keras.applications.densenet import DenseNet169
+from keras.applications.densenet import DenseNet201
+from keras.applications.nasnet import NASNetLarge
+from keras.applications.nasnet import NASNetMobile
 from keras.applications.mobilenetv2 import MobileNetV2
 
 import csv, sys
@@ -85,12 +84,12 @@ def extract_configs(model,name):
         dict_writer.writerows(list_config)
 
 
-'''model = VGG16   (include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
+model = VGG16   (include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************vgg16**************************************')
 extract_configs(model,'vgg16')
 
 
-
+'''
 model = VGG19   (include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************vgg19**************************************')
 extract_configs(model, 'vgg19')
@@ -106,9 +105,38 @@ extract_configs(model, 'inceptionv3')
 
 model = MobileNet(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************mobilenet***********************************')
-extract_configs(model, 'mobilenet')'''
+extract_configs(model, 'mobilenet')
 
 model = MobileNetV2(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************mobilenetv2***********************************')
 extract_configs(model, 'mobilenetv2')
+
+model = InceptionResNetV2(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
+print('**********************************inceptionresnetv2***********************************')
+extract_configs(model, 'inceptionresnetv2')
+
+model = Xception(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
+print('**********************************xception***********************************')
+extract_configs(model, 'xception')
+
+model = DenseNet121(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
+print('**********************************densenet121***********************************')
+extract_configs(model, 'densenet121')
+
+model = DenseNet169(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
+print('**********************************densenet169***********************************')
+extract_configs(model, 'densenet169')
+
+model = DenseNet201(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
+print('**********************************densenet201***********************************')
+extract_configs(model, 'densenet201')
+
+model = NASNetLarge(include_top=True, weights='imagenet', input_tensor=None, input_shape=(331,331,3), pooling=None, classes=1000)
+print('**********************************nasnetlarge***********************************')
+extract_configs(model, 'nasnetlarge')
+
+model = NASNetMobile(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
+print('**********************************nasnetmobile***********************************')
+extract_configs(model, 'nasnetmobile')'''
+
 

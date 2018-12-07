@@ -1,2 +1,2 @@
 #from .[model_name] import *
-from .mobilenetv2 import *
+from .vgg16 import *
