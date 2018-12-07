@@ -19,7 +19,7 @@ add_files $SRC_PATH/vgg16.cpp
 add_files -tb  $SRC_PATH/vgg16_test.cpp
 
 # Set top module of the design
-set_top vgg19_top
+set_top VGG16_top
 
 # Solution settings
 open_solution -reset $Solution
