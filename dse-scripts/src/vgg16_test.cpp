@@ -1,4 +1,6 @@
 #include <iostream>
+//#include "/opt/Xilinx/Vivado/2018.2/include/gmp.h" //on Hamid's system
+#include "/data/apps/Xilinx_Vivado/2018.2/include/gmp.h" //on HPC
 #include <ap_int.h>
 #include "hls_stream.h"
 
