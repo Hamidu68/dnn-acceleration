@@ -17,4 +17,5 @@ from .Layers import Dense
 from .Layers import Add
 from .Layers import Concatenate
 from .Layers import GlobalAveragePooling2D
+from .Layers import Lambda
 

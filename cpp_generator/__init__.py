@@ -1,2 +1,2 @@
 #from .[model_name] import *
-from .vgg16 import *
+from .xception import *

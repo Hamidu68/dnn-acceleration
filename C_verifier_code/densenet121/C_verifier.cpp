@@ -232,6 +232,24 @@ void SW_conv2_block1_2_conv(DATA_T I[128][56][56], DATA_T O[32][56][56], DATA_T 
 	}
 }
 
+void SW_conv2_block1_concat(DATA_T I1[64][56][56], DATA_T I2[32][56][56], DATA_T O[96][56][56]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 56; x++) {
+		for(y = 0; y < 56; y++) {
+			ch=0;
+			for(k = ch; k < ch+64; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=64;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv2_block2_0_bn(DATA_T I[96][56][56], DATA_T O[96][56][56], DATA_T W[4][96]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -346,6 +364,24 @@ void SW_conv2_block2_2_conv(DATA_T I[128][56][56], DATA_T O[32][56][56], DATA_T 
 	}
 }
 
+void SW_conv2_block2_concat(DATA_T I1[96][56][56], DATA_T I2[32][56][56], DATA_T O[128][56][56]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 56; x++) {
+		for(y = 0; y < 56; y++) {
+			ch=0;
+			for(k = ch; k < ch+96; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=96;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv2_block3_0_bn(DATA_T I[128][56][56], DATA_T O[128][56][56], DATA_T W[4][128]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -460,6 +496,24 @@ void SW_conv2_block3_2_conv(DATA_T I[128][56][56], DATA_T O[32][56][56], DATA_T 
 	}
 }
 
+void SW_conv2_block3_concat(DATA_T I1[128][56][56], DATA_T I2[32][56][56], DATA_T O[160][56][56]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 56; x++) {
+		for(y = 0; y < 56; y++) {
+			ch=0;
+			for(k = ch; k < ch+128; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=128;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv2_block4_0_bn(DATA_T I[160][56][56], DATA_T O[160][56][56], DATA_T W[4][160]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -574,6 +628,24 @@ void SW_conv2_block4_2_conv(DATA_T I[128][56][56], DATA_T O[32][56][56], DATA_T 
 	}
 }
 
+void SW_conv2_block4_concat(DATA_T I1[160][56][56], DATA_T I2[32][56][56], DATA_T O[192][56][56]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 56; x++) {
+		for(y = 0; y < 56; y++) {
+			ch=0;
+			for(k = ch; k < ch+160; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=160;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv2_block5_0_bn(DATA_T I[192][56][56], DATA_T O[192][56][56], DATA_T W[4][192]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -688,6 +760,24 @@ void SW_conv2_block5_2_conv(DATA_T I[128][56][56], DATA_T O[32][56][56], DATA_T 
 	}
 }
 
+void SW_conv2_block5_concat(DATA_T I1[192][56][56], DATA_T I2[32][56][56], DATA_T O[224][56][56]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 56; x++) {
+		for(y = 0; y < 56; y++) {
+			ch=0;
+			for(k = ch; k < ch+192; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=192;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv2_block6_0_bn(DATA_T I[224][56][56], DATA_T O[224][56][56], DATA_T W[4][224]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -802,6 +892,24 @@ void SW_conv2_block6_2_conv(DATA_T I[128][56][56], DATA_T O[32][56][56], DATA_T 
 	}
 }
 
+void SW_conv2_block6_concat(DATA_T I1[224][56][56], DATA_T I2[32][56][56], DATA_T O[256][56][56]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 56; x++) {
+		for(y = 0; y < 56; y++) {
+			ch=0;
+			for(k = ch; k < ch+224; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=224;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_pool2_bn(DATA_T I[256][56][56], DATA_T O[256][56][56], DATA_T W[4][256]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -999,6 +1107,24 @@ void SW_conv3_block1_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 	}
 }
 
+void SW_conv3_block1_concat(DATA_T I1[128][28][28], DATA_T I2[32][28][28], DATA_T O[160][28][28]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 28; x++) {
+		for(y = 0; y < 28; y++) {
+			ch=0;
+			for(k = ch; k < ch+128; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=128;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv3_block2_0_bn(DATA_T I[160][28][28], DATA_T O[160][28][28], DATA_T W[4][160]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -1113,6 +1239,24 @@ void SW_conv3_block2_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 	}
 }
 
+void SW_conv3_block2_concat(DATA_T I1[160][28][28], DATA_T I2[32][28][28], DATA_T O[192][28][28]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 28; x++) {
+		for(y = 0; y < 28; y++) {
+			ch=0;
+			for(k = ch; k < ch+160; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=160;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv3_block3_0_bn(DATA_T I[192][28][28], DATA_T O[192][28][28], DATA_T W[4][192]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -1227,6 +1371,24 @@ void SW_conv3_block3_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 	}
 }
 
+void SW_conv3_block3_concat(DATA_T I1[192][28][28], DATA_T I2[32][28][28], DATA_T O[224][28][28]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 28; x++) {
+		for(y = 0; y < 28; y++) {
+			ch=0;
+			for(k = ch; k < ch+192; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=192;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv3_block4_0_bn(DATA_T I[224][28][28], DATA_T O[224][28][28], DATA_T W[4][224]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -1341,6 +1503,24 @@ void SW_conv3_block4_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 	}
 }
 
+void SW_conv3_block4_concat(DATA_T I1[224][28][28], DATA_T I2[32][28][28], DATA_T O[256][28][28]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 28; x++) {
+		for(y = 0; y < 28; y++) {
+			ch=0;
+			for(k = ch; k < ch+224; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=224;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv3_block5_0_bn(DATA_T I[256][28][28], DATA_T O[256][28][28], DATA_T W[4][256]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -1455,6 +1635,24 @@ void SW_conv3_block5_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 	}
 }
 
+void SW_conv3_block5_concat(DATA_T I1[256][28][28], DATA_T I2[32][28][28], DATA_T O[288][28][28]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 28; x++) {
+		for(y = 0; y < 28; y++) {
+			ch=0;
+			for(k = ch; k < ch+256; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=256;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv3_block6_0_bn(DATA_T I[288][28][28], DATA_T O[288][28][28], DATA_T W[4][288]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -1569,6 +1767,24 @@ void SW_conv3_block6_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 	}
 }
 
+void SW_conv3_block6_concat(DATA_T I1[288][28][28], DATA_T I2[32][28][28], DATA_T O[320][28][28]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 28; x++) {
+		for(y = 0; y < 28; y++) {
+			ch=0;
+			for(k = ch; k < ch+288; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=288;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv3_block7_0_bn(DATA_T I[320][28][28], DATA_T O[320][28][28], DATA_T W[4][320]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -1683,6 +1899,24 @@ void SW_conv3_block7_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 	}
 }
 
+void SW_conv3_block7_concat(DATA_T I1[320][28][28], DATA_T I2[32][28][28], DATA_T O[352][28][28]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 28; x++) {
+		for(y = 0; y < 28; y++) {
+			ch=0;
+			for(k = ch; k < ch+320; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=320;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv3_block8_0_bn(DATA_T I[352][28][28], DATA_T O[352][28][28], DATA_T W[4][352]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -1797,6 +2031,24 @@ void SW_conv3_block8_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 	}
 }
 
+void SW_conv3_block8_concat(DATA_T I1[352][28][28], DATA_T I2[32][28][28], DATA_T O[384][28][28]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 28; x++) {
+		for(y = 0; y < 28; y++) {
+			ch=0;
+			for(k = ch; k < ch+352; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=352;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv3_block9_0_bn(DATA_T I[384][28][28], DATA_T O[384][28][28], DATA_T W[4][384]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -1911,6 +2163,24 @@ void SW_conv3_block9_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 	}
 }
 
+void SW_conv3_block9_concat(DATA_T I1[384][28][28], DATA_T I2[32][28][28], DATA_T O[416][28][28]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 28; x++) {
+		for(y = 0; y < 28; y++) {
+			ch=0;
+			for(k = ch; k < ch+384; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=384;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv3_block10_0_bn(DATA_T I[416][28][28], DATA_T O[416][28][28], DATA_T W[4][416]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -2025,6 +2295,24 @@ void SW_conv3_block10_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T
 	}
 }
 
+void SW_conv3_block10_concat(DATA_T I1[416][28][28], DATA_T I2[32][28][28], DATA_T O[448][28][28]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 28; x++) {
+		for(y = 0; y < 28; y++) {
+			ch=0;
+			for(k = ch; k < ch+416; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=416;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv3_block11_0_bn(DATA_T I[448][28][28], DATA_T O[448][28][28], DATA_T W[4][448]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -2139,6 +2427,24 @@ void SW_conv3_block11_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T
 	}
 }
 
+void SW_conv3_block11_concat(DATA_T I1[448][28][28], DATA_T I2[32][28][28], DATA_T O[480][28][28]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 28; x++) {
+		for(y = 0; y < 28; y++) {
+			ch=0;
+			for(k = ch; k < ch+448; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=448;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv3_block12_0_bn(DATA_T I[480][28][28], DATA_T O[480][28][28], DATA_T W[4][480]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -2253,6 +2559,24 @@ void SW_conv3_block12_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T
 	}
 }
 
+void SW_conv3_block12_concat(DATA_T I1[480][28][28], DATA_T I2[32][28][28], DATA_T O[512][28][28]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 28; x++) {
+		for(y = 0; y < 28; y++) {
+			ch=0;
+			for(k = ch; k < ch+480; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=480;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_pool3_bn(DATA_T I[512][28][28], DATA_T O[512][28][28], DATA_T W[4][512]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -2450,6 +2774,24 @@ void SW_conv4_block1_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 	}
 }
 
+void SW_conv4_block1_concat(DATA_T I1[256][14][14], DATA_T I2[32][14][14], DATA_T O[288][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+256; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=256;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block2_0_bn(DATA_T I[288][14][14], DATA_T O[288][14][14], DATA_T W[4][288]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -2564,6 +2906,24 @@ void SW_conv4_block2_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 	}
 }
 
+void SW_conv4_block2_concat(DATA_T I1[288][14][14], DATA_T I2[32][14][14], DATA_T O[320][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+288; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=288;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block3_0_bn(DATA_T I[320][14][14], DATA_T O[320][14][14], DATA_T W[4][320]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -2678,6 +3038,24 @@ void SW_conv4_block3_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 	}
 }
 
+void SW_conv4_block3_concat(DATA_T I1[320][14][14], DATA_T I2[32][14][14], DATA_T O[352][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+320; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=320;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block4_0_bn(DATA_T I[352][14][14], DATA_T O[352][14][14], DATA_T W[4][352]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -2792,6 +3170,24 @@ void SW_conv4_block4_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 	}
 }
 
+void SW_conv4_block4_concat(DATA_T I1[352][14][14], DATA_T I2[32][14][14], DATA_T O[384][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+352; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=352;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block5_0_bn(DATA_T I[384][14][14], DATA_T O[384][14][14], DATA_T W[4][384]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -2906,6 +3302,24 @@ void SW_conv4_block5_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 	}
 }
 
+void SW_conv4_block5_concat(DATA_T I1[384][14][14], DATA_T I2[32][14][14], DATA_T O[416][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+384; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=384;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block6_0_bn(DATA_T I[416][14][14], DATA_T O[416][14][14], DATA_T W[4][416]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -3020,6 +3434,24 @@ void SW_conv4_block6_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 	}
 }
 
+void SW_conv4_block6_concat(DATA_T I1[416][14][14], DATA_T I2[32][14][14], DATA_T O[448][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+416; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=416;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block7_0_bn(DATA_T I[448][14][14], DATA_T O[448][14][14], DATA_T W[4][448]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -3134,6 +3566,24 @@ void SW_conv4_block7_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 	}
 }
 
+void SW_conv4_block7_concat(DATA_T I1[448][14][14], DATA_T I2[32][14][14], DATA_T O[480][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+448; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=448;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block8_0_bn(DATA_T I[480][14][14], DATA_T O[480][14][14], DATA_T W[4][480]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -3248,6 +3698,24 @@ void SW_conv4_block8_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 	}
 }
 
+void SW_conv4_block8_concat(DATA_T I1[480][14][14], DATA_T I2[32][14][14], DATA_T O[512][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+480; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=480;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block9_0_bn(DATA_T I[512][14][14], DATA_T O[512][14][14], DATA_T W[4][512]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -3362,6 +3830,24 @@ void SW_conv4_block9_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 	}
 }
 
+void SW_conv4_block9_concat(DATA_T I1[512][14][14], DATA_T I2[32][14][14], DATA_T O[544][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+512; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=512;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block10_0_bn(DATA_T I[544][14][14], DATA_T O[544][14][14], DATA_T W[4][544]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -3476,6 +3962,24 @@ void SW_conv4_block10_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block10_concat(DATA_T I1[544][14][14], DATA_T I2[32][14][14], DATA_T O[576][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+544; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=544;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block11_0_bn(DATA_T I[576][14][14], DATA_T O[576][14][14], DATA_T W[4][576]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -3590,6 +4094,24 @@ void SW_conv4_block11_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block11_concat(DATA_T I1[576][14][14], DATA_T I2[32][14][14], DATA_T O[608][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+576; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=576;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block12_0_bn(DATA_T I[608][14][14], DATA_T O[608][14][14], DATA_T W[4][608]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -3704,6 +4226,24 @@ void SW_conv4_block12_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block12_concat(DATA_T I1[608][14][14], DATA_T I2[32][14][14], DATA_T O[640][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+608; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=608;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block13_0_bn(DATA_T I[640][14][14], DATA_T O[640][14][14], DATA_T W[4][640]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -3818,6 +4358,24 @@ void SW_conv4_block13_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block13_concat(DATA_T I1[640][14][14], DATA_T I2[32][14][14], DATA_T O[672][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+640; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=640;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block14_0_bn(DATA_T I[672][14][14], DATA_T O[672][14][14], DATA_T W[4][672]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -3932,6 +4490,24 @@ void SW_conv4_block14_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block14_concat(DATA_T I1[672][14][14], DATA_T I2[32][14][14], DATA_T O[704][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+672; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=672;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block15_0_bn(DATA_T I[704][14][14], DATA_T O[704][14][14], DATA_T W[4][704]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -4046,6 +4622,24 @@ void SW_conv4_block15_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block15_concat(DATA_T I1[704][14][14], DATA_T I2[32][14][14], DATA_T O[736][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+704; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=704;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block16_0_bn(DATA_T I[736][14][14], DATA_T O[736][14][14], DATA_T W[4][736]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -4160,6 +4754,24 @@ void SW_conv4_block16_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block16_concat(DATA_T I1[736][14][14], DATA_T I2[32][14][14], DATA_T O[768][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+736; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=736;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block17_0_bn(DATA_T I[768][14][14], DATA_T O[768][14][14], DATA_T W[4][768]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -4274,6 +4886,24 @@ void SW_conv4_block17_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block17_concat(DATA_T I1[768][14][14], DATA_T I2[32][14][14], DATA_T O[800][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+768; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=768;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block18_0_bn(DATA_T I[800][14][14], DATA_T O[800][14][14], DATA_T W[4][800]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -4388,6 +5018,24 @@ void SW_conv4_block18_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block18_concat(DATA_T I1[800][14][14], DATA_T I2[32][14][14], DATA_T O[832][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+800; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=800;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block19_0_bn(DATA_T I[832][14][14], DATA_T O[832][14][14], DATA_T W[4][832]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -4502,6 +5150,24 @@ void SW_conv4_block19_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block19_concat(DATA_T I1[832][14][14], DATA_T I2[32][14][14], DATA_T O[864][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+832; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=832;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block20_0_bn(DATA_T I[864][14][14], DATA_T O[864][14][14], DATA_T W[4][864]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -4616,6 +5282,24 @@ void SW_conv4_block20_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block20_concat(DATA_T I1[864][14][14], DATA_T I2[32][14][14], DATA_T O[896][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+864; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=864;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block21_0_bn(DATA_T I[896][14][14], DATA_T O[896][14][14], DATA_T W[4][896]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -4730,6 +5414,24 @@ void SW_conv4_block21_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block21_concat(DATA_T I1[896][14][14], DATA_T I2[32][14][14], DATA_T O[928][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+896; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=896;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block22_0_bn(DATA_T I[928][14][14], DATA_T O[928][14][14], DATA_T W[4][928]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -4844,6 +5546,24 @@ void SW_conv4_block22_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block22_concat(DATA_T I1[928][14][14], DATA_T I2[32][14][14], DATA_T O[960][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+928; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=928;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block23_0_bn(DATA_T I[960][14][14], DATA_T O[960][14][14], DATA_T W[4][960]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -4958,6 +5678,24 @@ void SW_conv4_block23_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block23_concat(DATA_T I1[960][14][14], DATA_T I2[32][14][14], DATA_T O[992][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+960; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=960;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv4_block24_0_bn(DATA_T I[992][14][14], DATA_T O[992][14][14], DATA_T W[4][992]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -5072,6 +5810,24 @@ void SW_conv4_block24_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 	}
 }
 
+void SW_conv4_block24_concat(DATA_T I1[992][14][14], DATA_T I2[32][14][14], DATA_T O[1024][14][14]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 14; x++) {
+		for(y = 0; y < 14; y++) {
+			ch=0;
+			for(k = ch; k < ch+992; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=992;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_pool4_bn(DATA_T I[1024][14][14], DATA_T O[1024][14][14], DATA_T W[4][1024]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -5269,6 +6025,24 @@ void SW_conv5_block1_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 	}
 }
 
+void SW_conv5_block1_concat(DATA_T I1[512][7][7], DATA_T I2[32][7][7], DATA_T O[544][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+512; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=512;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block2_0_bn(DATA_T I[544][7][7], DATA_T O[544][7][7], DATA_T W[4][544]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -5383,6 +6157,24 @@ void SW_conv5_block2_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 	}
 }
 
+void SW_conv5_block2_concat(DATA_T I1[544][7][7], DATA_T I2[32][7][7], DATA_T O[576][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+544; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=544;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block3_0_bn(DATA_T I[576][7][7], DATA_T O[576][7][7], DATA_T W[4][576]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -5497,6 +6289,24 @@ void SW_conv5_block3_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 	}
 }
 
+void SW_conv5_block3_concat(DATA_T I1[576][7][7], DATA_T I2[32][7][7], DATA_T O[608][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+576; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=576;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block4_0_bn(DATA_T I[608][7][7], DATA_T O[608][7][7], DATA_T W[4][608]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -5611,6 +6421,24 @@ void SW_conv5_block4_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 	}
 }
 
+void SW_conv5_block4_concat(DATA_T I1[608][7][7], DATA_T I2[32][7][7], DATA_T O[640][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+608; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=608;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block5_0_bn(DATA_T I[640][7][7], DATA_T O[640][7][7], DATA_T W[4][640]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -5725,6 +6553,24 @@ void SW_conv5_block5_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 	}
 }
 
+void SW_conv5_block5_concat(DATA_T I1[640][7][7], DATA_T I2[32][7][7], DATA_T O[672][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+640; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=640;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block6_0_bn(DATA_T I[672][7][7], DATA_T O[672][7][7], DATA_T W[4][672]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -5839,6 +6685,24 @@ void SW_conv5_block6_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 	}
 }
 
+void SW_conv5_block6_concat(DATA_T I1[672][7][7], DATA_T I2[32][7][7], DATA_T O[704][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+672; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=672;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block7_0_bn(DATA_T I[704][7][7], DATA_T O[704][7][7], DATA_T W[4][704]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -5953,6 +6817,24 @@ void SW_conv5_block7_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 	}
 }
 
+void SW_conv5_block7_concat(DATA_T I1[704][7][7], DATA_T I2[32][7][7], DATA_T O[736][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+704; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=704;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block8_0_bn(DATA_T I[736][7][7], DATA_T O[736][7][7], DATA_T W[4][736]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -6067,6 +6949,24 @@ void SW_conv5_block8_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 	}
 }
 
+void SW_conv5_block8_concat(DATA_T I1[736][7][7], DATA_T I2[32][7][7], DATA_T O[768][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+736; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=736;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block9_0_bn(DATA_T I[768][7][7], DATA_T O[768][7][7], DATA_T W[4][768]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -6181,6 +7081,24 @@ void SW_conv5_block9_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 	}
 }
 
+void SW_conv5_block9_concat(DATA_T I1[768][7][7], DATA_T I2[32][7][7], DATA_T O[800][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+768; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=768;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block10_0_bn(DATA_T I[800][7][7], DATA_T O[800][7][7], DATA_T W[4][800]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -6295,6 +7213,24 @@ void SW_conv5_block10_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 	}
 }
 
+void SW_conv5_block10_concat(DATA_T I1[800][7][7], DATA_T I2[32][7][7], DATA_T O[832][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+800; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=800;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block11_0_bn(DATA_T I[832][7][7], DATA_T O[832][7][7], DATA_T W[4][832]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -6409,6 +7345,24 @@ void SW_conv5_block11_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 	}
 }
 
+void SW_conv5_block11_concat(DATA_T I1[832][7][7], DATA_T I2[32][7][7], DATA_T O[864][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+832; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=832;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block12_0_bn(DATA_T I[864][7][7], DATA_T O[864][7][7], DATA_T W[4][864]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -6523,6 +7477,24 @@ void SW_conv5_block12_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 	}
 }
 
+void SW_conv5_block12_concat(DATA_T I1[864][7][7], DATA_T I2[32][7][7], DATA_T O[896][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+864; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=864;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block13_0_bn(DATA_T I[896][7][7], DATA_T O[896][7][7], DATA_T W[4][896]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -6637,6 +7609,24 @@ void SW_conv5_block13_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 	}
 }
 
+void SW_conv5_block13_concat(DATA_T I1[896][7][7], DATA_T I2[32][7][7], DATA_T O[928][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+896; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=896;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block14_0_bn(DATA_T I[928][7][7], DATA_T O[928][7][7], DATA_T W[4][928]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -6751,6 +7741,24 @@ void SW_conv5_block14_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 	}
 }
 
+void SW_conv5_block14_concat(DATA_T I1[928][7][7], DATA_T I2[32][7][7], DATA_T O[960][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+928; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=928;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block15_0_bn(DATA_T I[960][7][7], DATA_T O[960][7][7], DATA_T W[4][960]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -6865,6 +7873,24 @@ void SW_conv5_block15_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 	}
 }
 
+void SW_conv5_block15_concat(DATA_T I1[960][7][7], DATA_T I2[32][7][7], DATA_T O[992][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+960; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=960;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_conv5_block16_0_bn(DATA_T I[992][7][7], DATA_T O[992][7][7], DATA_T W[4][992]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -6979,6 +8005,24 @@ void SW_conv5_block16_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 	}
 }
 
+void SW_conv5_block16_concat(DATA_T I1[992][7][7], DATA_T I2[32][7][7], DATA_T O[1024][7][7]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 7; x++) {
+		for(y = 0; y < 7; y++) {
+			ch=0;
+			for(k = ch; k < ch+992; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=992;
+			for(k = ch; k < ch+32; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_bn(DATA_T I[1024][7][7], DATA_T O[1024][7][7], DATA_T W[4][1024]) {
 	int m, x, y;
 	DATA_T epsilon = 1.001E-05;
@@ -10657,6 +11701,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D12\n\n");
 	SW_conv2_block1_2_conv(O11_SW,O12_SW,W12);
 	printf("[C_verifier.cpp]Calculate Concatenate13\n\n");
+	SW_conv2_block1_concat(O6_SW, O12_SW, O13_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization14\n\n");
 	SW_conv2_block2_0_bn(O13_SW,O14_SW, W14);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)15\n\n");
@@ -10670,6 +11715,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D19\n\n");
 	SW_conv2_block2_2_conv(O18_SW,O19_SW,W19);
 	printf("[C_verifier.cpp]Calculate Concatenate20\n\n");
+	SW_conv2_block2_concat(O13_SW, O19_SW, O20_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization21\n\n");
 	SW_conv2_block3_0_bn(O20_SW,O21_SW, W21);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)22\n\n");
@@ -10683,6 +11729,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D26\n\n");
 	SW_conv2_block3_2_conv(O25_SW,O26_SW,W26);
 	printf("[C_verifier.cpp]Calculate Concatenate27\n\n");
+	SW_conv2_block3_concat(O20_SW, O26_SW, O27_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization28\n\n");
 	SW_conv2_block4_0_bn(O27_SW,O28_SW, W28);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)29\n\n");
@@ -10696,6 +11743,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D33\n\n");
 	SW_conv2_block4_2_conv(O32_SW,O33_SW,W33);
 	printf("[C_verifier.cpp]Calculate Concatenate34\n\n");
+	SW_conv2_block4_concat(O27_SW, O33_SW, O34_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization35\n\n");
 	SW_conv2_block5_0_bn(O34_SW,O35_SW, W35);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)36\n\n");
@@ -10709,6 +11757,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D40\n\n");
 	SW_conv2_block5_2_conv(O39_SW,O40_SW,W40);
 	printf("[C_verifier.cpp]Calculate Concatenate41\n\n");
+	SW_conv2_block5_concat(O34_SW, O40_SW, O41_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization42\n\n");
 	SW_conv2_block6_0_bn(O41_SW,O42_SW, W42);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)43\n\n");
@@ -10722,6 +11771,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D47\n\n");
 	SW_conv2_block6_2_conv(O46_SW,O47_SW,W47);
 	printf("[C_verifier.cpp]Calculate Concatenate48\n\n");
+	SW_conv2_block6_concat(O41_SW, O47_SW, O48_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization49\n\n");
 	SW_pool2_bn(O48_SW,O49_SW, W49);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)50\n\n");
@@ -10743,6 +11793,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D58\n\n");
 	SW_conv3_block1_2_conv(O57_SW,O58_SW,W58);
 	printf("[C_verifier.cpp]Calculate Concatenate59\n\n");
+	SW_conv3_block1_concat(O52_SW, O58_SW, O59_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization60\n\n");
 	SW_conv3_block2_0_bn(O59_SW,O60_SW, W60);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)61\n\n");
@@ -10756,6 +11807,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D65\n\n");
 	SW_conv3_block2_2_conv(O64_SW,O65_SW,W65);
 	printf("[C_verifier.cpp]Calculate Concatenate66\n\n");
+	SW_conv3_block2_concat(O59_SW, O65_SW, O66_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization67\n\n");
 	SW_conv3_block3_0_bn(O66_SW,O67_SW, W67);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)68\n\n");
@@ -10769,6 +11821,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D72\n\n");
 	SW_conv3_block3_2_conv(O71_SW,O72_SW,W72);
 	printf("[C_verifier.cpp]Calculate Concatenate73\n\n");
+	SW_conv3_block3_concat(O66_SW, O72_SW, O73_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization74\n\n");
 	SW_conv3_block4_0_bn(O73_SW,O74_SW, W74);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)75\n\n");
@@ -10782,6 +11835,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D79\n\n");
 	SW_conv3_block4_2_conv(O78_SW,O79_SW,W79);
 	printf("[C_verifier.cpp]Calculate Concatenate80\n\n");
+	SW_conv3_block4_concat(O73_SW, O79_SW, O80_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization81\n\n");
 	SW_conv3_block5_0_bn(O80_SW,O81_SW, W81);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)82\n\n");
@@ -10795,6 +11849,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D86\n\n");
 	SW_conv3_block5_2_conv(O85_SW,O86_SW,W86);
 	printf("[C_verifier.cpp]Calculate Concatenate87\n\n");
+	SW_conv3_block5_concat(O80_SW, O86_SW, O87_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization88\n\n");
 	SW_conv3_block6_0_bn(O87_SW,O88_SW, W88);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)89\n\n");
@@ -10808,6 +11863,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D93\n\n");
 	SW_conv3_block6_2_conv(O92_SW,O93_SW,W93);
 	printf("[C_verifier.cpp]Calculate Concatenate94\n\n");
+	SW_conv3_block6_concat(O87_SW, O93_SW, O94_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization95\n\n");
 	SW_conv3_block7_0_bn(O94_SW,O95_SW, W95);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)96\n\n");
@@ -10821,6 +11877,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D100\n\n");
 	SW_conv3_block7_2_conv(O99_SW,O100_SW,W100);
 	printf("[C_verifier.cpp]Calculate Concatenate101\n\n");
+	SW_conv3_block7_concat(O94_SW, O100_SW, O101_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization102\n\n");
 	SW_conv3_block8_0_bn(O101_SW,O102_SW, W102);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)103\n\n");
@@ -10834,6 +11891,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D107\n\n");
 	SW_conv3_block8_2_conv(O106_SW,O107_SW,W107);
 	printf("[C_verifier.cpp]Calculate Concatenate108\n\n");
+	SW_conv3_block8_concat(O101_SW, O107_SW, O108_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization109\n\n");
 	SW_conv3_block9_0_bn(O108_SW,O109_SW, W109);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)110\n\n");
@@ -10847,6 +11905,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D114\n\n");
 	SW_conv3_block9_2_conv(O113_SW,O114_SW,W114);
 	printf("[C_verifier.cpp]Calculate Concatenate115\n\n");
+	SW_conv3_block9_concat(O108_SW, O114_SW, O115_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization116\n\n");
 	SW_conv3_block10_0_bn(O115_SW,O116_SW, W116);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)117\n\n");
@@ -10860,6 +11919,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D121\n\n");
 	SW_conv3_block10_2_conv(O120_SW,O121_SW,W121);
 	printf("[C_verifier.cpp]Calculate Concatenate122\n\n");
+	SW_conv3_block10_concat(O115_SW, O121_SW, O122_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization123\n\n");
 	SW_conv3_block11_0_bn(O122_SW,O123_SW, W123);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)124\n\n");
@@ -10873,6 +11933,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D128\n\n");
 	SW_conv3_block11_2_conv(O127_SW,O128_SW,W128);
 	printf("[C_verifier.cpp]Calculate Concatenate129\n\n");
+	SW_conv3_block11_concat(O122_SW, O128_SW, O129_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization130\n\n");
 	SW_conv3_block12_0_bn(O129_SW,O130_SW, W130);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)131\n\n");
@@ -10886,6 +11947,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D135\n\n");
 	SW_conv3_block12_2_conv(O134_SW,O135_SW,W135);
 	printf("[C_verifier.cpp]Calculate Concatenate136\n\n");
+	SW_conv3_block12_concat(O129_SW, O135_SW, O136_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization137\n\n");
 	SW_pool3_bn(O136_SW,O137_SW, W137);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)138\n\n");
@@ -10907,6 +11969,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D146\n\n");
 	SW_conv4_block1_2_conv(O145_SW,O146_SW,W146);
 	printf("[C_verifier.cpp]Calculate Concatenate147\n\n");
+	SW_conv4_block1_concat(O140_SW, O146_SW, O147_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization148\n\n");
 	SW_conv4_block2_0_bn(O147_SW,O148_SW, W148);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)149\n\n");
@@ -10920,6 +11983,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D153\n\n");
 	SW_conv4_block2_2_conv(O152_SW,O153_SW,W153);
 	printf("[C_verifier.cpp]Calculate Concatenate154\n\n");
+	SW_conv4_block2_concat(O147_SW, O153_SW, O154_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization155\n\n");
 	SW_conv4_block3_0_bn(O154_SW,O155_SW, W155);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)156\n\n");
@@ -10933,6 +11997,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D160\n\n");
 	SW_conv4_block3_2_conv(O159_SW,O160_SW,W160);
 	printf("[C_verifier.cpp]Calculate Concatenate161\n\n");
+	SW_conv4_block3_concat(O154_SW, O160_SW, O161_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization162\n\n");
 	SW_conv4_block4_0_bn(O161_SW,O162_SW, W162);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)163\n\n");
@@ -10946,6 +12011,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D167\n\n");
 	SW_conv4_block4_2_conv(O166_SW,O167_SW,W167);
 	printf("[C_verifier.cpp]Calculate Concatenate168\n\n");
+	SW_conv4_block4_concat(O161_SW, O167_SW, O168_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization169\n\n");
 	SW_conv4_block5_0_bn(O168_SW,O169_SW, W169);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)170\n\n");
@@ -10959,6 +12025,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D174\n\n");
 	SW_conv4_block5_2_conv(O173_SW,O174_SW,W174);
 	printf("[C_verifier.cpp]Calculate Concatenate175\n\n");
+	SW_conv4_block5_concat(O168_SW, O174_SW, O175_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization176\n\n");
 	SW_conv4_block6_0_bn(O175_SW,O176_SW, W176);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)177\n\n");
@@ -10972,6 +12039,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D181\n\n");
 	SW_conv4_block6_2_conv(O180_SW,O181_SW,W181);
 	printf("[C_verifier.cpp]Calculate Concatenate182\n\n");
+	SW_conv4_block6_concat(O175_SW, O181_SW, O182_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization183\n\n");
 	SW_conv4_block7_0_bn(O182_SW,O183_SW, W183);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)184\n\n");
@@ -10985,6 +12053,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D188\n\n");
 	SW_conv4_block7_2_conv(O187_SW,O188_SW,W188);
 	printf("[C_verifier.cpp]Calculate Concatenate189\n\n");
+	SW_conv4_block7_concat(O182_SW, O188_SW, O189_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization190\n\n");
 	SW_conv4_block8_0_bn(O189_SW,O190_SW, W190);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)191\n\n");
@@ -10998,6 +12067,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D195\n\n");
 	SW_conv4_block8_2_conv(O194_SW,O195_SW,W195);
 	printf("[C_verifier.cpp]Calculate Concatenate196\n\n");
+	SW_conv4_block8_concat(O189_SW, O195_SW, O196_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization197\n\n");
 	SW_conv4_block9_0_bn(O196_SW,O197_SW, W197);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)198\n\n");
@@ -11011,6 +12081,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D202\n\n");
 	SW_conv4_block9_2_conv(O201_SW,O202_SW,W202);
 	printf("[C_verifier.cpp]Calculate Concatenate203\n\n");
+	SW_conv4_block9_concat(O196_SW, O202_SW, O203_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization204\n\n");
 	SW_conv4_block10_0_bn(O203_SW,O204_SW, W204);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)205\n\n");
@@ -11024,6 +12095,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D209\n\n");
 	SW_conv4_block10_2_conv(O208_SW,O209_SW,W209);
 	printf("[C_verifier.cpp]Calculate Concatenate210\n\n");
+	SW_conv4_block10_concat(O203_SW, O209_SW, O210_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization211\n\n");
 	SW_conv4_block11_0_bn(O210_SW,O211_SW, W211);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)212\n\n");
@@ -11037,6 +12109,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D216\n\n");
 	SW_conv4_block11_2_conv(O215_SW,O216_SW,W216);
 	printf("[C_verifier.cpp]Calculate Concatenate217\n\n");
+	SW_conv4_block11_concat(O210_SW, O216_SW, O217_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization218\n\n");
 	SW_conv4_block12_0_bn(O217_SW,O218_SW, W218);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)219\n\n");
@@ -11050,6 +12123,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D223\n\n");
 	SW_conv4_block12_2_conv(O222_SW,O223_SW,W223);
 	printf("[C_verifier.cpp]Calculate Concatenate224\n\n");
+	SW_conv4_block12_concat(O217_SW, O223_SW, O224_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization225\n\n");
 	SW_conv4_block13_0_bn(O224_SW,O225_SW, W225);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)226\n\n");
@@ -11063,6 +12137,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D230\n\n");
 	SW_conv4_block13_2_conv(O229_SW,O230_SW,W230);
 	printf("[C_verifier.cpp]Calculate Concatenate231\n\n");
+	SW_conv4_block13_concat(O224_SW, O230_SW, O231_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization232\n\n");
 	SW_conv4_block14_0_bn(O231_SW,O232_SW, W232);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)233\n\n");
@@ -11076,6 +12151,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D237\n\n");
 	SW_conv4_block14_2_conv(O236_SW,O237_SW,W237);
 	printf("[C_verifier.cpp]Calculate Concatenate238\n\n");
+	SW_conv4_block14_concat(O231_SW, O237_SW, O238_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization239\n\n");
 	SW_conv4_block15_0_bn(O238_SW,O239_SW, W239);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)240\n\n");
@@ -11089,6 +12165,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D244\n\n");
 	SW_conv4_block15_2_conv(O243_SW,O244_SW,W244);
 	printf("[C_verifier.cpp]Calculate Concatenate245\n\n");
+	SW_conv4_block15_concat(O238_SW, O244_SW, O245_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization246\n\n");
 	SW_conv4_block16_0_bn(O245_SW,O246_SW, W246);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)247\n\n");
@@ -11102,6 +12179,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D251\n\n");
 	SW_conv4_block16_2_conv(O250_SW,O251_SW,W251);
 	printf("[C_verifier.cpp]Calculate Concatenate252\n\n");
+	SW_conv4_block16_concat(O245_SW, O251_SW, O252_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization253\n\n");
 	SW_conv4_block17_0_bn(O252_SW,O253_SW, W253);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)254\n\n");
@@ -11115,6 +12193,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D258\n\n");
 	SW_conv4_block17_2_conv(O257_SW,O258_SW,W258);
 	printf("[C_verifier.cpp]Calculate Concatenate259\n\n");
+	SW_conv4_block17_concat(O252_SW, O258_SW, O259_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization260\n\n");
 	SW_conv4_block18_0_bn(O259_SW,O260_SW, W260);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)261\n\n");
@@ -11128,6 +12207,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D265\n\n");
 	SW_conv4_block18_2_conv(O264_SW,O265_SW,W265);
 	printf("[C_verifier.cpp]Calculate Concatenate266\n\n");
+	SW_conv4_block18_concat(O259_SW, O265_SW, O266_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization267\n\n");
 	SW_conv4_block19_0_bn(O266_SW,O267_SW, W267);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)268\n\n");
@@ -11141,6 +12221,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D272\n\n");
 	SW_conv4_block19_2_conv(O271_SW,O272_SW,W272);
 	printf("[C_verifier.cpp]Calculate Concatenate273\n\n");
+	SW_conv4_block19_concat(O266_SW, O272_SW, O273_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization274\n\n");
 	SW_conv4_block20_0_bn(O273_SW,O274_SW, W274);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)275\n\n");
@@ -11154,6 +12235,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D279\n\n");
 	SW_conv4_block20_2_conv(O278_SW,O279_SW,W279);
 	printf("[C_verifier.cpp]Calculate Concatenate280\n\n");
+	SW_conv4_block20_concat(O273_SW, O279_SW, O280_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization281\n\n");
 	SW_conv4_block21_0_bn(O280_SW,O281_SW, W281);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)282\n\n");
@@ -11167,6 +12249,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D286\n\n");
 	SW_conv4_block21_2_conv(O285_SW,O286_SW,W286);
 	printf("[C_verifier.cpp]Calculate Concatenate287\n\n");
+	SW_conv4_block21_concat(O280_SW, O286_SW, O287_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization288\n\n");
 	SW_conv4_block22_0_bn(O287_SW,O288_SW, W288);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)289\n\n");
@@ -11180,6 +12263,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D293\n\n");
 	SW_conv4_block22_2_conv(O292_SW,O293_SW,W293);
 	printf("[C_verifier.cpp]Calculate Concatenate294\n\n");
+	SW_conv4_block22_concat(O287_SW, O293_SW, O294_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization295\n\n");
 	SW_conv4_block23_0_bn(O294_SW,O295_SW, W295);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)296\n\n");
@@ -11193,6 +12277,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D300\n\n");
 	SW_conv4_block23_2_conv(O299_SW,O300_SW,W300);
 	printf("[C_verifier.cpp]Calculate Concatenate301\n\n");
+	SW_conv4_block23_concat(O294_SW, O300_SW, O301_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization302\n\n");
 	SW_conv4_block24_0_bn(O301_SW,O302_SW, W302);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)303\n\n");
@@ -11206,6 +12291,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D307\n\n");
 	SW_conv4_block24_2_conv(O306_SW,O307_SW,W307);
 	printf("[C_verifier.cpp]Calculate Concatenate308\n\n");
+	SW_conv4_block24_concat(O301_SW, O307_SW, O308_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization309\n\n");
 	SW_pool4_bn(O308_SW,O309_SW, W309);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)310\n\n");
@@ -11227,6 +12313,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D318\n\n");
 	SW_conv5_block1_2_conv(O317_SW,O318_SW,W318);
 	printf("[C_verifier.cpp]Calculate Concatenate319\n\n");
+	SW_conv5_block1_concat(O312_SW, O318_SW, O319_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization320\n\n");
 	SW_conv5_block2_0_bn(O319_SW,O320_SW, W320);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)321\n\n");
@@ -11240,6 +12327,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D325\n\n");
 	SW_conv5_block2_2_conv(O324_SW,O325_SW,W325);
 	printf("[C_verifier.cpp]Calculate Concatenate326\n\n");
+	SW_conv5_block2_concat(O319_SW, O325_SW, O326_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization327\n\n");
 	SW_conv5_block3_0_bn(O326_SW,O327_SW, W327);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)328\n\n");
@@ -11253,6 +12341,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D332\n\n");
 	SW_conv5_block3_2_conv(O331_SW,O332_SW,W332);
 	printf("[C_verifier.cpp]Calculate Concatenate333\n\n");
+	SW_conv5_block3_concat(O326_SW, O332_SW, O333_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization334\n\n");
 	SW_conv5_block4_0_bn(O333_SW,O334_SW, W334);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)335\n\n");
@@ -11266,6 +12355,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D339\n\n");
 	SW_conv5_block4_2_conv(O338_SW,O339_SW,W339);
 	printf("[C_verifier.cpp]Calculate Concatenate340\n\n");
+	SW_conv5_block4_concat(O333_SW, O339_SW, O340_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization341\n\n");
 	SW_conv5_block5_0_bn(O340_SW,O341_SW, W341);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)342\n\n");
@@ -11279,6 +12369,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D346\n\n");
 	SW_conv5_block5_2_conv(O345_SW,O346_SW,W346);
 	printf("[C_verifier.cpp]Calculate Concatenate347\n\n");
+	SW_conv5_block5_concat(O340_SW, O346_SW, O347_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization348\n\n");
 	SW_conv5_block6_0_bn(O347_SW,O348_SW, W348);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)349\n\n");
@@ -11292,6 +12383,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D353\n\n");
 	SW_conv5_block6_2_conv(O352_SW,O353_SW,W353);
 	printf("[C_verifier.cpp]Calculate Concatenate354\n\n");
+	SW_conv5_block6_concat(O347_SW, O353_SW, O354_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization355\n\n");
 	SW_conv5_block7_0_bn(O354_SW,O355_SW, W355);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)356\n\n");
@@ -11305,6 +12397,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D360\n\n");
 	SW_conv5_block7_2_conv(O359_SW,O360_SW,W360);
 	printf("[C_verifier.cpp]Calculate Concatenate361\n\n");
+	SW_conv5_block7_concat(O354_SW, O360_SW, O361_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization362\n\n");
 	SW_conv5_block8_0_bn(O361_SW,O362_SW, W362);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)363\n\n");
@@ -11318,6 +12411,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D367\n\n");
 	SW_conv5_block8_2_conv(O366_SW,O367_SW,W367);
 	printf("[C_verifier.cpp]Calculate Concatenate368\n\n");
+	SW_conv5_block8_concat(O361_SW, O367_SW, O368_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization369\n\n");
 	SW_conv5_block9_0_bn(O368_SW,O369_SW, W369);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)370\n\n");
@@ -11331,6 +12425,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D374\n\n");
 	SW_conv5_block9_2_conv(O373_SW,O374_SW,W374);
 	printf("[C_verifier.cpp]Calculate Concatenate375\n\n");
+	SW_conv5_block9_concat(O368_SW, O374_SW, O375_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization376\n\n");
 	SW_conv5_block10_0_bn(O375_SW,O376_SW, W376);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)377\n\n");
@@ -11344,6 +12439,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D381\n\n");
 	SW_conv5_block10_2_conv(O380_SW,O381_SW,W381);
 	printf("[C_verifier.cpp]Calculate Concatenate382\n\n");
+	SW_conv5_block10_concat(O375_SW, O381_SW, O382_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization383\n\n");
 	SW_conv5_block11_0_bn(O382_SW,O383_SW, W383);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)384\n\n");
@@ -11357,6 +12453,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D388\n\n");
 	SW_conv5_block11_2_conv(O387_SW,O388_SW,W388);
 	printf("[C_verifier.cpp]Calculate Concatenate389\n\n");
+	SW_conv5_block11_concat(O382_SW, O388_SW, O389_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization390\n\n");
 	SW_conv5_block12_0_bn(O389_SW,O390_SW, W390);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)391\n\n");
@@ -11370,6 +12467,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D395\n\n");
 	SW_conv5_block12_2_conv(O394_SW,O395_SW,W395);
 	printf("[C_verifier.cpp]Calculate Concatenate396\n\n");
+	SW_conv5_block12_concat(O389_SW, O395_SW, O396_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization397\n\n");
 	SW_conv5_block13_0_bn(O396_SW,O397_SW, W397);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)398\n\n");
@@ -11383,6 +12481,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D402\n\n");
 	SW_conv5_block13_2_conv(O401_SW,O402_SW,W402);
 	printf("[C_verifier.cpp]Calculate Concatenate403\n\n");
+	SW_conv5_block13_concat(O396_SW, O402_SW, O403_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization404\n\n");
 	SW_conv5_block14_0_bn(O403_SW,O404_SW, W404);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)405\n\n");
@@ -11396,6 +12495,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D409\n\n");
 	SW_conv5_block14_2_conv(O408_SW,O409_SW,W409);
 	printf("[C_verifier.cpp]Calculate Concatenate410\n\n");
+	SW_conv5_block14_concat(O403_SW, O409_SW, O410_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization411\n\n");
 	SW_conv5_block15_0_bn(O410_SW,O411_SW, W411);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)412\n\n");
@@ -11409,6 +12509,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D416\n\n");
 	SW_conv5_block15_2_conv(O415_SW,O416_SW,W416);
 	printf("[C_verifier.cpp]Calculate Concatenate417\n\n");
+	SW_conv5_block15_concat(O410_SW, O416_SW, O417_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization418\n\n");
 	SW_conv5_block16_0_bn(O417_SW,O418_SW, W418);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)419\n\n");
@@ -11422,6 +12523,7 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Conv2D423\n\n");
 	SW_conv5_block16_2_conv(O422_SW,O423_SW,W423);
 	printf("[C_verifier.cpp]Calculate Concatenate424\n\n");
+	SW_conv5_block16_concat(O417_SW, O423_SW, O424_SW);
 	printf("[C_verifier.cpp]Calculate BatchNormalization425\n\n");
 	SW_bn(O424_SW,O425_SW, W425);
 	printf("[C_verifier.cpp]Calculate GlobalAveragePooling2D426\n\n");

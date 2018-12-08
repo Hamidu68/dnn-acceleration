@@ -122,19 +122,11 @@ class C_verifier(CodeGenerators):
                 sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
             elif layer_type == 'Concatenate':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate Concatenate{}\\n\\n\");\n\t'.format(l_n)
-                if len(self.model_sw.graphs[layer.config['name']]['in']) == 3 :
+                if len(self.model_sw.graphs[layer.config['name']]['in']) == 2 :
                     inp1 = self.model_sw.graphs[layer.config['name']]['in'][0]
                     inp2 = self.model_sw.graphs[layer.config['name']]['in'][1]
-                    inp3 = self.model_sw.graphs[layer.config['name']]['in'][2]
-                    sw_call_layer += 'SW_{}(O{}_SW, O{}_SW, O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],
-                                                                                        inp1, inp2, inp3, l_n)
-                elif len(self.model_sw.graphs[layer.config['name']]['in']) == 4 :
-                    inp1 = self.model_sw.graphs[layer.config['name']]['in'][0]
-                    inp2 = self.model_sw.graphs[layer.config['name']]['in'][1]
-                    inp3 = self.model_sw.graphs[layer.config['name']]['in'][2]
-                    inp4 = self.model_sw.graphs[layer.config['name']]['in'][3]
-                    sw_call_layer += 'SW_{}(O{}_SW, O{}_SW, O{}_SW, O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],
-                                                                                                inp1, inp2, inp3, inp4, l_n)
+                    sw_call_layer += 'SW_{}(O{}_SW, O{}_SW, O{}_SW);\n\t'.format(layer.config['name'],
+                                                                                 inp1, inp2, l_n)
         return sw_call_layer
 
     def generate(self):

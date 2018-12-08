@@ -25,11 +25,7 @@ class C_verifier(CodeGenerators):
                 sw_def_layer += layer.function['code']
             elif layer_type == 'AveragePooling2D':
                 sw_def_layer += layer.function['code']
-            elif layer_type == 'Add':
-                sw_def_layer += layer.function['code']
             elif layer_type == 'ZeroPadding2D':
-                sw_def_layer += layer.function['code']
-            elif layer_type == 'Flatten':
                 sw_def_layer += layer.function['code']
             elif layer_type == 'Dense':
                 sw_def_layer += layer.function['code']
@@ -70,7 +66,7 @@ class C_verifier(CodeGenerators):
             output_shape = eval(layer.config['batch_output_shape'])
             layer_type = layer.config['layer_type']
             l_n=layer.layer_odr
-            if layer_type == 'Flatten' or layer_type == 'Dense' or layer_type == 'GlobalAveragePooling2D':
+            if len(output_shape) <= 2:
                 sw_output_variables += 'static DATA_T O{}_SW[{}];\n\t'.format(l_n, output_shape[1])
             else :
                 sw_output_variables += 'static DATA_T O{}_SW[{}][{}][{}];\n\t'.format(l_n, output_shape[3],
@@ -107,21 +103,12 @@ class C_verifier(CodeGenerators):
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate AveragePooling2D{}\\n\\n\");\n\t'.format(l_n)
                 inp = self.model_sw.graphs[layer.config['name']]['in'][0]
                 sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
-            elif layer_type == 'Add':
-                sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate Add{}\\n\\n\");\n\t'.format(l_n)
-                a1 = self.model_sw.graphs[layer.config['name']]['in'][0]
-                a2 = self.model_sw.graphs[layer.config['name']]['in'][1]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],a1,a2,l_n)
             elif layer_type == 'ZeroPadding2D':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate ZeroPadding2D{}\\n\\n\");\n\t'.format(l_n)
                 inp = self.model_sw.graphs[layer.config['name']]['in'][0]
                 sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
             elif layer_type == 'InputLayer':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]InputLayer\\n\\n\");\n\t'
-            elif layer_type == 'Flatten':
-                sw_call_layer += 'printf(\"[C_verifier.py]Calculate Flatten{}\\n\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
             elif layer_type == 'Dense':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate Dense{}\\n\\n\");\n\t'.format(l_n)
                 inp = self.model_sw.graphs[layer.config['name']]['in'][0]
@@ -135,23 +122,15 @@ class C_verifier(CodeGenerators):
                 sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
             elif layer_type == 'Concatenate':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate Concatenate{}\\n\\n\");\n\t'.format(l_n)
-                if len(self.model_sw.graphs[layer.config['name']]['in']) == 3 :
+                if len(self.model_sw.graphs[layer.config['name']]['in']) == 2 :
                     inp1 = self.model_sw.graphs[layer.config['name']]['in'][0]
                     inp2 = self.model_sw.graphs[layer.config['name']]['in'][1]
-                    inp3 = self.model_sw.graphs[layer.config['name']]['in'][2]
-                    sw_call_layer += 'SW_{}(O{}_SW, O{}_SW, O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],
-                                                                                        inp1, inp2, inp3, l_n)
-                elif len(self.model_sw.graphs[layer.config['name']]['in']) == 4 :
-                    inp1 = self.model_sw.graphs[layer.config['name']]['in'][0]
-                    inp2 = self.model_sw.graphs[layer.config['name']]['in'][1]
-                    inp3 = self.model_sw.graphs[layer.config['name']]['in'][2]
-                    inp4 = self.model_sw.graphs[layer.config['name']]['in'][3]
-                    sw_call_layer += 'SW_{}(O{}_SW, O{}_SW, O{}_SW, O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],
-                                                                                                inp1, inp2, inp3, inp4, l_n)
+                    sw_call_layer += 'SW_{}(O{}_SW, O{}_SW, O{}_SW);\n\t'.format(layer.config['name'],
+                                                                                 inp1, inp2, l_n)
         return sw_call_layer
 
     def generate(self):
-        file = open('C_verifier_code/inceptionv3/C_verifier.cpp', 'w')
+        file = open('C_verifier_code/densenet201/C_verifier.cpp', 'w')
         file.write(C_verifier.template.format(sw_def_layer=self.gen_sw_def_layer(),
                                               sw_static_variables=self.gen_sw_static_variables(),
                                               sw_output_variables=self.gen_sw_output_variables(),
@@ -189,9 +168,9 @@ int main(int argc, char *argv[]){{
     if (w_stream == NULL) printf("weight file was not opened");
     FILE *i_stream = fopen(argv[2], "rb");
     if (i_stream == NULL) printf("input file was not opened");
-    FILE *o_stream = fopen("../../cpp_generator/inceptionv3/Output/C_output.txt", "w");
+    FILE *o_stream = fopen("../../cpp_generator/densenet201/Output/C_output.txt", "w");
     if (o_stream == NULL) printf("Output file was not opened");
-    FILE *c_num = fopen("../../cpp_generator/inceptionv3/Output/c_output_num.txt", "w");
+    FILE *c_num = fopen("../../cpp_generator/densenet201/Output/c_output_num.txt", "w");
     if (c_num == NULL) printf("Output file was not opened");
 
     printf("[C_verifier.cpp]Start Initialzation");

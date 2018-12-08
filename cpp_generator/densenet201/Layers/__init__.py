@@ -12,9 +12,7 @@ from .Layers import BatchNormalization
 from .Layers import Activation
 from .Layers import AveragePooling2D
 from .Layers import ZeroPadding2D
-from .Layers import Flatten
 from .Layers import Dense
-from .Layers import Add
 from .Layers import Concatenate
 from .Layers import GlobalAveragePooling2D
 

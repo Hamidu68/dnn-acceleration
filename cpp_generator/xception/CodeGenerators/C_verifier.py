@@ -23,17 +23,11 @@ class C_verifier(CodeGenerators):
                 sw_def_layer += layer.function['code']
             elif layer_type == 'MaxPooling2D':
                 sw_def_layer += layer.function['code']
-            elif layer_type == 'AveragePooling2D':
-                sw_def_layer += layer.function['code']
             elif layer_type == 'Add':
                 sw_def_layer += layer.function['code']
-            elif layer_type == 'ZeroPadding2D':
-                sw_def_layer += layer.function['code']
-            elif layer_type == 'Flatten':
+            elif layer_type == 'SeparableConv2D':
                 sw_def_layer += layer.function['code']
             elif layer_type == 'Dense':
-                sw_def_layer += layer.function['code']
-            elif layer_type == 'Concatenate':
                 sw_def_layer += layer.function['code']
             elif layer_type == 'GlobalAveragePooling2D':
                 sw_def_layer += layer.function['code']
@@ -51,6 +45,11 @@ class C_verifier(CodeGenerators):
                 sw_static_variables += 'static DATA_T W{}[{}][{}][{}][{}];\n\t'.format(l_n,output_shape[3],input_shape[3], filter_shape[0], filter_shape[1])
                 if layer.config['use_bias'] == 'True':
                     sw_static_variables += 'static DATA_T B{}[{}];\n\t'.format(l_n, output_shape[3])
+            elif layer_type == 'SeparableConv2D':
+                filter_shape = eval(layer.config['kernel_size'])
+                if layer.config['use_bias'] == 'False':
+                    sw_static_variables += 'static DATA_T W{}_1[{}][{}][{}];\n\t'.format(l_n, input_shape[3], filter_shape[0], filter_shape[1])
+                    sw_static_variables += 'static DATA_T W{}_2[{}][{}];\n\t'.format(l_n, output_shape[3], input_shape[3])
             elif layer_type == 'InputLayer':
                 sw_static_variables += 'static DATA_T I[{}][{}][{}];\n\t'.format(input_shape[3], input_shape[1], input_shape[2])
             elif layer_type == 'Dense':
@@ -91,6 +90,11 @@ class C_verifier(CodeGenerators):
                 else:
                     sw_call_layer += 'SW_{}(O{}_SW,O{line_num}_SW,W{line_num});\n\t'.format(layer.config['name'], inp,
                                                                                             line_num=l_n)
+            elif layer_type == 'SeparableConv2D':
+                sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate SeparableConv2D{}\\n\\n\");\n\t'.format(layer.layer_odr)
+                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
+                sw_call_layer += 'SW_{}(O{}_SW,O{line_num}_SW,W{line_num}_1,W{line_num}_2);\n\t'.format(layer.config['name']
+                                                                                                    , inp, line_num=l_n)
             elif layer_type == 'BatchNormalization':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate BatchNormalization{}\\n\\n\");\n\t'.format(l_n)
                 inp = self.model_sw.graphs[layer.config['name']]['in'][0]
@@ -151,7 +155,7 @@ class C_verifier(CodeGenerators):
         return sw_call_layer
 
     def generate(self):
-        file = open('C_verifier_code/inceptionv3/C_verifier.cpp', 'w')
+        file = open('C_verifier_code/xception/C_verifier.cpp', 'w')
         file.write(C_verifier.template.format(sw_def_layer=self.gen_sw_def_layer(),
                                               sw_static_variables=self.gen_sw_static_variables(),
                                               sw_output_variables=self.gen_sw_output_variables(),
@@ -189,9 +193,9 @@ int main(int argc, char *argv[]){{
     if (w_stream == NULL) printf("weight file was not opened");
     FILE *i_stream = fopen(argv[2], "rb");
     if (i_stream == NULL) printf("input file was not opened");
-    FILE *o_stream = fopen("../../cpp_generator/inceptionv3/Output/C_output.txt", "w");
+    FILE *o_stream = fopen("../../cpp_generator/xception/Output/C_output.txt", "w");
     if (o_stream == NULL) printf("Output file was not opened");
-    FILE *c_num = fopen("../../cpp_generator/inceptionv3/Output/c_output_num.txt", "w");
+    FILE *c_num = fopen("../../cpp_generator/xception/Output/c_output_num.txt", "w");
     if (c_num == NULL) printf("Output file was not opened");
 
     printf("[C_verifier.cpp]Start Initialzation");

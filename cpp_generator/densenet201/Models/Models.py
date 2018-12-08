@@ -20,7 +20,7 @@ class Models():
             self.graphs[name]['in'].append(self.graphs[pre_name]['odr'])
 
     def get_inputs(self, name=''):
-        inputs=[]
+        inputs = []
         for pre_odr in self.graphs[name]['in']:
             inputs.append(self.layers[pre_odr].output)
         return inputs
@@ -74,21 +74,11 @@ class Models():
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)
             self.layers.append(ZeroPadding2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
-            
-        elif layer_type == 'Flatten':
-            self.add_graph(layer_name, config['connected_to'])
-            inputs = self.get_inputs(layer_name)
-            self.layers.append(Flatten(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
-            
+
         elif layer_type == 'Dense':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)
             self.layers.append(Dense(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
-            
-        elif layer_type == 'Add':
-            self.add_graph(layer_name, config['connected_to'])
-            inputs = self.get_inputs(layer_name)
-            self.layers.append(Add(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
 
         elif layer_type == 'Concatenate':
             self.add_graph(layer_name, config['connected_to'])

@@ -6,7 +6,7 @@
 
 ###########we need modity this file
 
-Model_name="vgg16"
+Model_name="xception"
 Test_dir="Test_file/${Model_name}_test.csv"
 #Data_type="int"
 #Data_type="unsigned int"

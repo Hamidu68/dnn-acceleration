@@ -49,7 +49,12 @@ class Models():
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)
             self.layers.append(Conv2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
-            
+
+        elif layer_type == 'SeparableConv2D':
+            self.add_graph(layer_name, config['connected_to'])
+            inputs = self.get_inputs(layer_name)
+            self.layers.append(SeparableConv2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+
         elif layer_type == 'MaxPooling2D':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)

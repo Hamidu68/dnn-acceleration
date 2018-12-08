@@ -161,6 +161,12 @@ def add_Dropout(input_tensor=None, info=None):
     return output_tensor
 
 
+def add_Lambda(input_tensor=None, info=None):
+    # Get output tensor
+    output_tensor = layers.Lambda()(input_tensors)
+    return output_tensor
+
+
 def add_DepthConv2D(input_tensor=None, info=None, fid=None,  dtype=int):
     # Read information of layer
     output_shape = eval(info['batch_output_shape'])
@@ -177,6 +183,38 @@ def add_DepthConv2D(input_tensor=None, info=None, fid=None,  dtype=int):
     output_tensor = layers.DepthwiseConv2D(kernel_size=eval(info['kernel_size']),
                                            strides=eval(info['strides']),
                                            padding=str(info['padding']),
+                                           data_format=str(info['data_format']),
+                                           activation=str(info['activation']),
+                                           use_bias=eval(info['use_bias']),
+                                           weights=weights
+                                           )(input_tensor)
+    return output_tensor
+
+
+def add_SeparableConv2D(input_tensor=None, info=None, fid=None,  dtype=int):
+    # Read information of layer
+    output_shape = eval(info['batch_output_shape'])
+    input_shape = eval(info['batch_input_shape'])
+    kernel_size = eval(info['kernel_size'])
+
+    # Read weights from file
+    weights = []
+    kernel = np.fromfile(file=fid, dtype=dtype, sep='',
+                         count=kernel_size[0] * kernel_size[1] * input_shape[3])
+    kernel = kernel.reshape((kernel_size[0], kernel_size[1], input_shape[3], 1)).astype(np.float32)
+    weights.append(kernel)
+
+    kernel = np.fromfile(file=fid, dtype=dtype, sep='',
+                         count=output_shape[3] * input_shape[3])
+    kernel = kernel.reshape((output_shape[3], input_shape[3])).astype(np.float32)
+    weights.append(kernel)
+
+    # Get output tensor
+    output_tensor = layers.SeparableConv2D(kernel_size=eval(info['kernel_size']),
+                                           strides=eval(info['strides']),
+                                           padding=str(info['padding']),
+                                           depth_multiplier=int(info(['depth_multiplier'])),
+                                           dilation_rate=eval(info['dilation_rate']),
                                            data_format=str(info['data_format']),
                                            activation=str(info['activation']),
                                            use_bias=eval(info['use_bias']),
@@ -382,6 +420,12 @@ if __name__ == "__main__":
             # get output of current layer and save it to dict
             outputs_dict[layer_name] = tensors[layer_name] = add_DepthConv2D(input_tensor, row, weights_bin, dtype)
 
+        elif layer_type == 'SeparableConv2D':
+            # get input tensor
+            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            # get output of current layer and save it to dict
+            outputs_dict[layer_name] = tensors[layer_name] = add_SeparableConv2D(input_tensor, row, weights_bin, dtype)
+
         elif layer_type == 'MaxPooling2D':
             # get input tensor
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
@@ -452,6 +496,12 @@ if __name__ == "__main__":
             input_tensors = get_multi_inputs(row['connected_to'].split('/'), tensors, outputs_dict)
             # get output of current layer and save it to dict
             outputs_dict[layer_name] = tensors[layer_name] = add_Concatenate(input_tensors, row)
+
+        elif layer_type == 'Lambda':
+            # get input tensors
+            input_tensors = get_multi_inputs(row['connected_to'].split('/'), tensors, outputs_dict)
+            # get output of current layer and save it to dict
+            outputs_dict[layer_name] = tensors[layer_name] = add_Lambda(input_tensors, row)
 
         elif layer_type == 'GlobalAveragePooling2D':
             # get input tensor

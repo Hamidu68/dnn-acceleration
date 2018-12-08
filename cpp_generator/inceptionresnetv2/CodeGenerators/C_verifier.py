@@ -25,11 +25,7 @@ class C_verifier(CodeGenerators):
                 sw_def_layer += layer.function['code']
             elif layer_type == 'AveragePooling2D':
                 sw_def_layer += layer.function['code']
-            elif layer_type == 'Add':
-                sw_def_layer += layer.function['code']
-            elif layer_type == 'ZeroPadding2D':
-                sw_def_layer += layer.function['code']
-            elif layer_type == 'Flatten':
+            elif layer_type == 'Lambda':
                 sw_def_layer += layer.function['code']
             elif layer_type == 'Dense':
                 sw_def_layer += layer.function['code']
@@ -135,23 +131,34 @@ class C_verifier(CodeGenerators):
                 sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
             elif layer_type == 'Concatenate':
                 sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate Concatenate{}\\n\\n\");\n\t'.format(l_n)
-                if len(self.model_sw.graphs[layer.config['name']]['in']) == 3 :
+                if len(self.model_sw.graphs[layer.config['name']]['in']) == 2:
+                    inp1 = self.model_sw.graphs[layer.config['name']]['in'][0]
+                    inp2 = self.model_sw.graphs[layer.config['name']]['in'][1]
+                    sw_call_layer += 'SW_{}(O{}_SW, O{}_SW, O{}_SW);\n\t'.format(layer.config['name'], inp1, inp2, l_n)
+                elif len(self.model_sw.graphs[layer.config['name']]['in']) == 3:
                     inp1 = self.model_sw.graphs[layer.config['name']]['in'][0]
                     inp2 = self.model_sw.graphs[layer.config['name']]['in'][1]
                     inp3 = self.model_sw.graphs[layer.config['name']]['in'][2]
                     sw_call_layer += 'SW_{}(O{}_SW, O{}_SW, O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],
                                                                                         inp1, inp2, inp3, l_n)
-                elif len(self.model_sw.graphs[layer.config['name']]['in']) == 4 :
+                elif len(self.model_sw.graphs[layer.config['name']]['in']) == 4:
                     inp1 = self.model_sw.graphs[layer.config['name']]['in'][0]
                     inp2 = self.model_sw.graphs[layer.config['name']]['in'][1]
                     inp3 = self.model_sw.graphs[layer.config['name']]['in'][2]
                     inp4 = self.model_sw.graphs[layer.config['name']]['in'][3]
                     sw_call_layer += 'SW_{}(O{}_SW, O{}_SW, O{}_SW, O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],
                                                                                                 inp1, inp2, inp3, inp4, l_n)
+            elif layer_type == 'Lambda':
+                sw_call_layer += 'printf(\"[C_verifier.cpp]Calculate Lambda{}\\n\\n\");\n\t'.format(l_n)
+                if len(self.model_sw.graphs[layer.config['name']]['in']) == 2:
+                    inp1 = self.model_sw.graphs[layer.config['name']]['in'][0]
+                    inp2 = self.model_sw.graphs[layer.config['name']]['in'][1]
+                    sw_call_layer += 'SW_{}(O{}_SW, O{}_SW, O{}_SW);\n\t'.format(layer.config['name'], inp1, inp2, l_n)
+
         return sw_call_layer
 
     def generate(self):
-        file = open('C_verifier_code/inceptionv3/C_verifier.cpp', 'w')
+        file = open('C_verifier_code/inceptionresnetv2/C_verifier.cpp', 'w')
         file.write(C_verifier.template.format(sw_def_layer=self.gen_sw_def_layer(),
                                               sw_static_variables=self.gen_sw_static_variables(),
                                               sw_output_variables=self.gen_sw_output_variables(),
@@ -189,9 +196,9 @@ int main(int argc, char *argv[]){{
     if (w_stream == NULL) printf("weight file was not opened");
     FILE *i_stream = fopen(argv[2], "rb");
     if (i_stream == NULL) printf("input file was not opened");
-    FILE *o_stream = fopen("../../cpp_generator/inceptionv3/Output/C_output.txt", "w");
+    FILE *o_stream = fopen("../../cpp_generator/inceptionresnetv2/Output/C_output.txt", "w");
     if (o_stream == NULL) printf("Output file was not opened");
-    FILE *c_num = fopen("../../cpp_generator/inceptionv3/Output/c_output_num.txt", "w");
+    FILE *c_num = fopen("../../cpp_generator/inceptionresnetv2/Output/c_output_num.txt", "w");
     if (c_num == NULL) printf("Output file was not opened");
 
     printf("[C_verifier.cpp]Start Initialzation");

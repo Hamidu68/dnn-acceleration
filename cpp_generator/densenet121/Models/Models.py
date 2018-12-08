@@ -20,7 +20,7 @@ class Models():
             self.graphs[name]['in'].append(self.graphs[pre_name]['odr'])
 
     def get_inputs(self, name=''):
-        inputs=[]
+        inputs = []
         for pre_odr in self.graphs[name]['in']:
             inputs.append(self.layers[pre_odr].output)
         return inputs

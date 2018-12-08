@@ -312,20 +312,11 @@ class Concatenate(Layers):
         # init part
 
         # code
-        con3 = open("cpp_generator/densenet121/Template/Function/Concatenate3.txt")
-        con4 = open("cpp_generator/densenet121/Template/Function/Concatenate4.txt")
-        con3_r = con3.read()
-        con4_r = con4.read()
-        if len(input_shape) == 3:
-            func = con3_r.format(Name=self.config['name'], Input_channel1=input_shape[0][3],
-                                 Input_channel2=input_shape[1][3], Input_channel3=input_shape[2][3],
-                                 Output_channel=output_shape[3], Output_width=output_shape[1],
-                                 Output_height=output_shape[2])
-            self.function['code'] = func + "\n"
-        elif len(input_shape) == 4:
-            func = con4_r.format(Name=self.config['name'], Input_channel1=input_shape[0][3],
-                                 Input_channel2=input_shape[1][3], Input_channel3=input_shape[2][3],
-                                 Input_channel4=input_shape[3][3], Output_channel=output_shape[3],
+        con2 = open("cpp_generator/densenet121/Template/Function/Concatenate2.txt")
+        con2_r = con2.read()
+        if len(input_shape) == 2:
+            func = con2_r.format(Name=self.config['name'], Input_channel1=input_shape[0][3],
+                                 Input_channel2=input_shape[1][3], Output_channel=output_shape[3],
                                  Output_width=output_shape[1], Output_height=output_shape[2])
             self.function['code'] = func + "\n"
 

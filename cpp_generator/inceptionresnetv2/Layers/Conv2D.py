@@ -37,13 +37,13 @@ class Conv2D(Layers):
 
         # code
         if use_bias:
-            conv_s = open("cpp_generator/inceptionv3/Template/Function/Conv2D_same_stride_bias.txt")
-            conv_v = open("cpp_generator/inceptionv3/Template/Function/Conv2D_valid_bias.txt")
+            conv_s = open("cpp_generator/inceptionresnetv2/Template/Function/Conv2D_same_stride_bias.txt")
+            conv_v = open("cpp_generator/inceptionresnetv2/Template/Function/Conv2D_valid_bias.txt")
             conv2d_same = conv_s.read()
             conv2d_valid = conv_v.read()
         else:
-            conv_s = open("cpp_generator/inceptionv3/Template/Function/Conv2D_same_stride.txt")
-            conv_v = open("cpp_generator/inceptionv3/Template/Function/Conv2D_valid.txt")
+            conv_s = open("cpp_generator/inceptionresnetv2/Template/Function/Conv2D_same_stride.txt")
+            conv_v = open("cpp_generator/inceptionresnetv2/Template/Function/Conv2D_valid.txt")
             conv2d_same = conv_s.read()
             conv2d_valid = conv_v.read()
 

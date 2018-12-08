@@ -95,6 +95,11 @@ class Models():
             inputs = self.get_inputs(layer_name)
             self.layers.append(Concatenate(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
 
+        elif layer_type == 'Lambda':
+            self.add_graph(layer_name, config['connected_to'])
+            inputs = self.get_inputs(layer_name)
+            self.layers.append(Lambda(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+
         elif layer_type == 'GlobalAveragePooling2D':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)
