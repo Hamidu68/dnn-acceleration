@@ -22,7 +22,7 @@ class Conv2D(Layers):
         self.set_output(output_shape[1:], self.layer_odr)
 
         # set_weight
-        weight_shape=(output_shape[3], input_shape[3], filter_shape[0], filter_shape[1])
+        weight_shape = (output_shape[3], input_shape[3], filter_shape[0], filter_shape[1])
         self.weights.append(Data(dtype=self.dtype, shape=weight_shape, name='W{}'.format(self.layer_odr)))
         if use_bias:
             self.weights.append(Data(dtype=self.dtype, shape=(output_shape[3],), name='B{}'.format(self.layer_odr)))

@@ -121,7 +121,7 @@ void SW_block1_conv2_act(DATA_T I[64][109][109], DATA_T O[64][109][109]) {
 
 void SW_block2_sepconv1(DATA_T I[64][109][109], DATA_T O[128][109][109], DATA_T W1[64][3][3], DATA_T W2[128][64]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(109 - 1) - 109 + 3)/2;
 	for (m = 0; m<64; m++) {
 		for (x = 0; x<109; x++) {
@@ -143,18 +143,21 @@ void SW_block2_sepconv1(DATA_T I[64][109][109], DATA_T O[128][109][109], DATA_T 
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<128;m++){
         for(i=0;i<109;i++){
-            for(j=0;j<109;i++){
-                ofm=0;
+            for(j=0;j<109;j++){
+                ofm1=0;
                 for(k=0;k<64;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -191,7 +194,7 @@ void SW_block2_sepconv2_act(DATA_T I[128][109][109], DATA_T O[128][109][109]) {
 
 void SW_block2_sepconv2(DATA_T I[128][109][109], DATA_T O[128][109][109], DATA_T W1[128][3][3], DATA_T W2[128][128]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(109 - 1) - 109 + 3)/2;
 	for (m = 0; m<128; m++) {
 		for (x = 0; x<109; x++) {
@@ -213,18 +216,21 @@ void SW_block2_sepconv2(DATA_T I[128][109][109], DATA_T O[128][109][109], DATA_T
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<128;m++){
         for(i=0;i<109;i++){
-            for(j=0;j<109;i++){
-                ofm=0;
+            for(j=0;j<109;j++){
+                ofm1=0;
                 for(k=0;k<128;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -336,7 +342,7 @@ void SW_block3_sepconv1_act(DATA_T I[128][55][55], DATA_T O[128][55][55]) {
 
 void SW_block3_sepconv1(DATA_T I[128][55][55], DATA_T O[256][55][55], DATA_T W1[128][3][3], DATA_T W2[256][128]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(55 - 1) - 55 + 3)/2;
 	for (m = 0; m<128; m++) {
 		for (x = 0; x<55; x++) {
@@ -358,18 +364,21 @@ void SW_block3_sepconv1(DATA_T I[128][55][55], DATA_T O[256][55][55], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<256;m++){
         for(i=0;i<55;i++){
-            for(j=0;j<55;i++){
-                ofm=0;
+            for(j=0;j<55;j++){
+                ofm1=0;
                 for(k=0;k<128;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -406,7 +415,7 @@ void SW_block3_sepconv2_act(DATA_T I[256][55][55], DATA_T O[256][55][55]) {
 
 void SW_block3_sepconv2(DATA_T I[256][55][55], DATA_T O[256][55][55], DATA_T W1[256][3][3], DATA_T W2[256][256]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(55 - 1) - 55 + 3)/2;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<55; x++) {
@@ -428,18 +437,21 @@ void SW_block3_sepconv2(DATA_T I[256][55][55], DATA_T O[256][55][55], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<256;m++){
         for(i=0;i<55;i++){
-            for(j=0;j<55;i++){
-                ofm=0;
+            for(j=0;j<55;j++){
+                ofm1=0;
                 for(k=0;k<256;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -551,7 +563,7 @@ void SW_block4_sepconv1_act(DATA_T I[256][28][28], DATA_T O[256][28][28]) {
 
 void SW_block4_sepconv1(DATA_T I[256][28][28], DATA_T O[728][28][28], DATA_T W1[256][3][3], DATA_T W2[728][256]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(28 - 1) - 28 + 3)/2;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<28; x++) {
@@ -573,18 +585,21 @@ void SW_block4_sepconv1(DATA_T I[256][28][28], DATA_T O[728][28][28], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<28;i++){
-            for(j=0;j<28;i++){
-                ofm=0;
+            for(j=0;j<28;j++){
+                ofm1=0;
                 for(k=0;k<256;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -621,7 +636,7 @@ void SW_block4_sepconv2_act(DATA_T I[728][28][28], DATA_T O[728][28][28]) {
 
 void SW_block4_sepconv2(DATA_T I[728][28][28], DATA_T O[728][28][28], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(28 - 1) - 28 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<28; x++) {
@@ -643,18 +658,21 @@ void SW_block4_sepconv2(DATA_T I[728][28][28], DATA_T O[728][28][28], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<28;i++){
-            for(j=0;j<28;i++){
-                ofm=0;
+            for(j=0;j<28;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -766,7 +784,7 @@ void SW_block5_sepconv1_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block5_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -788,18 +806,21 @@ void SW_block5_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -836,7 +857,7 @@ void SW_block5_sepconv2_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block5_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -858,18 +879,21 @@ void SW_block5_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -906,7 +930,7 @@ void SW_block5_sepconv3_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block5_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -928,18 +952,21 @@ void SW_block5_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -986,7 +1013,7 @@ void SW_block6_sepconv1_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block6_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -1008,18 +1035,21 @@ void SW_block6_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -1056,7 +1086,7 @@ void SW_block6_sepconv2_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block6_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -1078,18 +1108,21 @@ void SW_block6_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -1126,7 +1159,7 @@ void SW_block6_sepconv3_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block6_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -1148,18 +1181,21 @@ void SW_block6_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -1206,7 +1242,7 @@ void SW_block7_sepconv1_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block7_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -1228,18 +1264,21 @@ void SW_block7_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -1276,7 +1315,7 @@ void SW_block7_sepconv2_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block7_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -1298,18 +1337,21 @@ void SW_block7_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -1346,7 +1388,7 @@ void SW_block7_sepconv3_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block7_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -1368,18 +1410,21 @@ void SW_block7_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -1426,7 +1471,7 @@ void SW_block8_sepconv1_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block8_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -1448,18 +1493,21 @@ void SW_block8_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -1496,7 +1544,7 @@ void SW_block8_sepconv2_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block8_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -1518,18 +1566,21 @@ void SW_block8_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -1566,7 +1617,7 @@ void SW_block8_sepconv3_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block8_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -1588,18 +1639,21 @@ void SW_block8_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -1646,7 +1700,7 @@ void SW_block9_sepconv1_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block9_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -1668,18 +1722,21 @@ void SW_block9_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -1716,7 +1773,7 @@ void SW_block9_sepconv2_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block9_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -1738,18 +1795,21 @@ void SW_block9_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -1786,7 +1846,7 @@ void SW_block9_sepconv3_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block9_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -1808,18 +1868,21 @@ void SW_block9_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -1866,7 +1929,7 @@ void SW_block10_sepconv1_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block10_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -1888,18 +1951,21 @@ void SW_block10_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -1936,7 +2002,7 @@ void SW_block10_sepconv2_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block10_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -1958,18 +2024,21 @@ void SW_block10_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -2006,7 +2075,7 @@ void SW_block10_sepconv3_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block10_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -2028,18 +2097,21 @@ void SW_block10_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -2086,7 +2158,7 @@ void SW_block11_sepconv1_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block11_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -2108,18 +2180,21 @@ void SW_block11_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -2156,7 +2231,7 @@ void SW_block11_sepconv2_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block11_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -2178,18 +2253,21 @@ void SW_block11_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -2226,7 +2304,7 @@ void SW_block11_sepconv3_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block11_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -2248,18 +2326,21 @@ void SW_block11_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -2306,7 +2387,7 @@ void SW_block12_sepconv1_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block12_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -2328,18 +2409,21 @@ void SW_block12_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -2376,7 +2460,7 @@ void SW_block12_sepconv2_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block12_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -2398,18 +2482,21 @@ void SW_block12_sepconv2(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -2446,7 +2533,7 @@ void SW_block12_sepconv3_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block12_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -2468,18 +2555,21 @@ void SW_block12_sepconv3(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -2526,7 +2616,7 @@ void SW_block13_sepconv1_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block13_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1[728][3][3], DATA_T W2[728][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -2548,18 +2638,21 @@ void SW_block13_sepconv1(DATA_T I[728][14][14], DATA_T O[728][14][14], DATA_T W1
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<728;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -2596,7 +2689,7 @@ void SW_block13_sepconv2_act(DATA_T I[728][14][14], DATA_T O[728][14][14]) {
 
 void SW_block13_sepconv2(DATA_T I[728][14][14], DATA_T O[1024][14][14], DATA_T W1[728][3][3], DATA_T W2[1024][728]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(14 - 1) - 14 + 3)/2;
 	for (m = 0; m<728; m++) {
 		for (x = 0; x<14; x++) {
@@ -2618,18 +2711,21 @@ void SW_block13_sepconv2(DATA_T I[728][14][14], DATA_T O[1024][14][14], DATA_T W
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<1024;m++){
         for(i=0;i<14;i++){
-            for(j=0;j<14;i++){
-                ofm=0;
+            for(j=0;j<14;j++){
+                ofm1=0;
                 for(k=0;k<728;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -2727,7 +2823,7 @@ void SW_add_12(DATA_T I1[1024][7][7], DATA_T I2[1024][7][7], DATA_T O[1024][7][7
 }
 void SW_block14_sepconv1(DATA_T I[1024][7][7], DATA_T O[1536][7][7], DATA_T W1[1024][3][3], DATA_T W2[1536][1024]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(7 - 1) - 7 + 3)/2;
 	for (m = 0; m<1024; m++) {
 		for (x = 0; x<7; x++) {
@@ -2749,18 +2845,21 @@ void SW_block14_sepconv1(DATA_T I[1024][7][7], DATA_T O[1536][7][7], DATA_T W1[1
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<1536;m++){
         for(i=0;i<7;i++){
-            for(j=0;j<7;i++){
-                ofm=0;
+            for(j=0;j<7;j++){
+                ofm1=0;
                 for(k=0;k<1024;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -2797,7 +2896,7 @@ void SW_block14_sepconv1_act(DATA_T I[1536][7][7], DATA_T O[1536][7][7]) {
 
 void SW_block14_sepconv2(DATA_T I[1536][7][7], DATA_T O[2048][7][7], DATA_T W1[1536][3][3], DATA_T W2[2048][1536]) {
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = (1 *(7 - 1) - 7 + 3)/2;
 	for (m = 0; m<1536; m++) {
 		for (x = 0; x<7; x++) {
@@ -2819,18 +2918,21 @@ void SW_block14_sepconv2(DATA_T I[1536][7][7], DATA_T O[2048][7][7], DATA_T W1[1
 			}
 		}
 	}
+	DATA_T ofm1=0;
 
 	for(m=0;m<2048;m++){
         for(i=0;i<7;i++){
-            for(j=0;j<7;i++){
-                ofm=0;
+            for(j=0;j<7;j++){
+                ofm1=0;
                 for(k=0;k<1536;k++){
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }
 	    }
 	}
+
 
 }
 
@@ -3228,18 +3330,21 @@ for (m = 0; m < 64 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 64 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W7_1[i][m][k] = (DATA_T) trash;
 		}
 	}
 }
 
-for (m = 0; m < 128 ; m++) {
-    for (k = 0; k < 64 ; k++) {
+for (m = 0; m < 64 ; m++) {
+    for (k = 0; k < 128 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W7_2[m][k] = (DATA_T) trash;
+        W7_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 128 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3249,6 +3354,8 @@ for (m = 0; m < 128 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 128 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W10_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3258,9 +3365,10 @@ for (m = 0; m < 128 ; m++) {
 for (m = 0; m < 128 ; m++) {
     for (k = 0; k < 128 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W10_2[m][k] = (DATA_T) trash;
+        W10_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 128 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3294,18 +3402,21 @@ for (m = 0; m < 128 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 128 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W17_1[i][m][k] = (DATA_T) trash;
 		}
 	}
 }
 
-for (m = 0; m < 256 ; m++) {
-    for (k = 0; k < 128 ; k++) {
+for (m = 0; m < 128 ; m++) {
+    for (k = 0; k < 256 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W17_2[m][k] = (DATA_T) trash;
+        W17_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 256 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3315,6 +3426,8 @@ for (m = 0; m < 256 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 256 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W20_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3324,9 +3437,10 @@ for (m = 0; m < 256 ; m++) {
 for (m = 0; m < 256 ; m++) {
     for (k = 0; k < 256 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W20_2[m][k] = (DATA_T) trash;
+        W20_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 256 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3360,18 +3474,21 @@ for (m = 0; m < 256 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 256 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W27_1[i][m][k] = (DATA_T) trash;
 		}
 	}
 }
 
-for (m = 0; m < 728 ; m++) {
-    for (k = 0; k < 256 ; k++) {
+for (m = 0; m < 256 ; m++) {
+    for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W27_2[m][k] = (DATA_T) trash;
+        W27_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3381,6 +3498,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W30_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3390,9 +3509,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W30_2[m][k] = (DATA_T) trash;
+        W30_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3426,6 +3546,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W37_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3435,9 +3557,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W37_2[m][k] = (DATA_T) trash;
+        W37_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3447,6 +3570,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W40_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3456,9 +3581,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W40_2[m][k] = (DATA_T) trash;
+        W40_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3468,6 +3594,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W43_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3477,9 +3605,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W43_2[m][k] = (DATA_T) trash;
+        W43_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3489,6 +3618,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W47_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3498,9 +3629,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W47_2[m][k] = (DATA_T) trash;
+        W47_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3510,6 +3642,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W50_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3519,9 +3653,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W50_2[m][k] = (DATA_T) trash;
+        W50_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3531,6 +3666,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W53_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3540,9 +3677,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W53_2[m][k] = (DATA_T) trash;
+        W53_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3552,6 +3690,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W57_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3561,9 +3701,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W57_2[m][k] = (DATA_T) trash;
+        W57_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3573,6 +3714,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W60_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3582,9 +3725,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W60_2[m][k] = (DATA_T) trash;
+        W60_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3594,6 +3738,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W63_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3603,9 +3749,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W63_2[m][k] = (DATA_T) trash;
+        W63_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3615,6 +3762,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W67_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3624,9 +3773,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W67_2[m][k] = (DATA_T) trash;
+        W67_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3636,6 +3786,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W70_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3645,9 +3797,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W70_2[m][k] = (DATA_T) trash;
+        W70_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3657,6 +3810,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W73_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3666,9 +3821,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W73_2[m][k] = (DATA_T) trash;
+        W73_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3678,6 +3834,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W77_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3687,9 +3845,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W77_2[m][k] = (DATA_T) trash;
+        W77_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3699,6 +3858,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W80_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3708,9 +3869,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W80_2[m][k] = (DATA_T) trash;
+        W80_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3720,6 +3882,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W83_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3729,9 +3893,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W83_2[m][k] = (DATA_T) trash;
+        W83_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3741,6 +3906,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W87_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3750,9 +3917,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W87_2[m][k] = (DATA_T) trash;
+        W87_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3762,6 +3930,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W90_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3771,9 +3941,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W90_2[m][k] = (DATA_T) trash;
+        W90_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3783,6 +3954,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W93_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3792,9 +3965,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W93_2[m][k] = (DATA_T) trash;
+        W93_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3804,6 +3978,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W97_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3813,9 +3989,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W97_2[m][k] = (DATA_T) trash;
+        W97_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3825,6 +4002,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W100_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3834,9 +4013,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W100_2[m][k] = (DATA_T) trash;
+        W100_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3846,6 +4026,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W103_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3855,9 +4037,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W103_2[m][k] = (DATA_T) trash;
+        W103_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3867,6 +4050,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W107_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3876,9 +4061,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W107_2[m][k] = (DATA_T) trash;
+        W107_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3888,6 +4074,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W110_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3897,9 +4085,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W110_2[m][k] = (DATA_T) trash;
+        W110_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3909,6 +4098,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W113_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3918,9 +4109,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W113_2[m][k] = (DATA_T) trash;
+        W113_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3930,6 +4122,8 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W117_1[i][m][k] = (DATA_T) trash;
 		}
@@ -3939,9 +4133,10 @@ for (m = 0; m < 728 ; m++) {
 for (m = 0; m < 728 ; m++) {
     for (k = 0; k < 728 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W117_2[m][k] = (DATA_T) trash;
+        W117_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 728 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3951,18 +4146,21 @@ for (m = 0; m < 728 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 728 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W120_1[i][m][k] = (DATA_T) trash;
 		}
 	}
 }
 
-for (m = 0; m < 1024 ; m++) {
-    for (k = 0; k < 728 ; k++) {
+for (m = 0; m < 728 ; m++) {
+    for (k = 0; k < 1024 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W120_2[m][k] = (DATA_T) trash;
+        W120_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 1024 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -3996,18 +4194,21 @@ for (m = 0; m < 1024 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 1024 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W126_1[i][m][k] = (DATA_T) trash;
 		}
 	}
 }
 
-for (m = 0; m < 1536 ; m++) {
-    for (k = 0; k < 1024 ; k++) {
+for (m = 0; m < 1024 ; m++) {
+    for (k = 0; k < 1536 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W126_2[m][k] = (DATA_T) trash;
+        W126_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 1536 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);
@@ -4017,18 +4218,21 @@ for (m = 0; m < 1536 ; m++) {
 	for (m = 0; m <  3 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 1536 ; i++) {
+
+
 				fread(&trash, sizeof(int), 1, w_stream);
                	W129_1[i][m][k] = (DATA_T) trash;
 		}
 	}
 }
 
-for (m = 0; m < 2048 ; m++) {
-    for (k = 0; k < 1536 ; k++) {
+for (m = 0; m < 1536 ; m++) {
+    for (k = 0; k < 2048 ; k++) {
         fread(&trash, sizeof(int), 1, w_stream);
-        W129_2[m][k] = (DATA_T) trash;
+        W129_2[k][m] = (DATA_T) trash;
     }
 }
+
 	for (x = 0; x < 4; x++) {
     for (y = 0; y < 2048 ; y++) {
         fread(&trash, sizeof(int), 1, w_stream);

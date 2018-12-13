@@ -1,6 +1,6 @@
 void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T O[{Output_channel}][{Output_width}][{Output_height}], DATA_T W1[{Input_channel}][{Filter_width}][{Filter_height}], DATA_T W2[{Output_channel}][{Input_channel}]) {{
 	int m, x, y, i, j, k;
-	DATA_T ifm, ofm;
+	DATA_T ifm=0, ofm=0;
     int p = ({Stride_width} *({Output_width} - 1) - {Input_width} + {Filter_width})/2;
 	for (m = 0; m<{Input_channel}; m++) {{
 		for (x = 0; x<{Input_width}; x++) {{
@@ -22,17 +22,20 @@ void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T 
 			}}
 		}}
 	}}
+	DATA_T ofm1=0;
 
 	for(m=0;m<{Output_channel};m++){{
         for(i=0;i<{Input_width};i++){{
-            for(j=0;j<{Input_height};i++){{
-                ofm=0;
+            for(j=0;j<{Input_height};j++){{
+                ofm1=0;
                 for(k=0;k<{Input_channel};k++){{
-	                ofm+=I[k][i][j]*W2[m][k];
+	                ofm1+=I[k][i][j]*W2[m][k];
 	            }}
-                O[m][i][j]=ofm;
+                O[m][i][j]=ofm1;
+
 	        }}
 	    }}
 	}}
+
 
 }}

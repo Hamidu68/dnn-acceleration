@@ -96,6 +96,12 @@ def add_MaxPooling2D(input_tensor=None, info=None):
     return output_tensor
 
 
+def add_Cropping2D(input_tensor=None, info=None):
+    # Get output tensor
+    output_tensor = layers.MaxPooling2D(cropping=eval(info['cropping']), dim_ordering='tf')(input_tensor)
+    return output_tensor
+
+
 def add_BatchNormalization(input_tensor=None, info=None, fid=None, dtype=int, skip=False):
     if skip:
         return input_tensor
@@ -198,27 +204,28 @@ def add_SeparableConv2D(input_tensor=None, info=None, fid=None,  dtype=int):
     kernel_size = eval(info['kernel_size'])
 
     # Read weights from file
-    weights = []
-    kernel = np.fromfile(file=fid, dtype=dtype, sep='',
-                         count=kernel_size[0] * kernel_size[1] * input_shape[3])
-    kernel = kernel.reshape((kernel_size[0], kernel_size[1], input_shape[3], 1)).astype(np.float32)
-    weights.append(kernel)
+    weight1 = []
+    weight2 = []
+    kernel1 = np.fromfile(file=fid, dtype=dtype, sep='',
+                          count=kernel_size[0] * kernel_size[1] * input_shape[3])
+    kernel1 = kernel1.reshape((kernel_size[0], kernel_size[1], input_shape[3])).astype(np.float32)
+    weight1.append(kernel1)
 
-    kernel = np.fromfile(file=fid, dtype=dtype, sep='',
-                         count=output_shape[3] * input_shape[3])
-    kernel = kernel.reshape((output_shape[3], input_shape[3])).astype(np.float32)
-    weights.append(kernel)
+    kernel2 = np.fromfile(file=fid, dtype=dtype, sep='',
+                          count=output_shape[3] * input_shape[3])
+    kernel2 = kernel2.reshape((input_shape[3], output_shape[3])).astype(np.float32)
+    weight2.append(kernel2)
 
     # Get output tensor
     output_tensor = layers.SeparableConv2D(kernel_size=eval(info['kernel_size']),
                                            strides=eval(info['strides']),
                                            padding=str(info['padding']),
-                                           depth_multiplier=int(info(['depth_multiplier'])),
+                                           depth_multiplier=1,
                                            dilation_rate=eval(info['dilation_rate']),
                                            data_format=str(info['data_format']),
                                            activation=str(info['activation']),
                                            use_bias=eval(info['use_bias']),
-                                           weights=weights
+                                           weights=[weight1, weight2]
                                            )(input_tensor)
     return output_tensor
 
@@ -508,6 +515,12 @@ if __name__ == "__main__":
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             # get output of current layer and save it to dict
             outputs_dict[layer_name] = tensors[layer_name] = add_GlobalAveragePooling2D(input_tensor, row)
+
+        elif layer_type == 'Cropping2D':
+            # get input tensor
+            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            # get output of current layer and save it to dict
+            outputs_dict[layer_name] = tensors[layer_name] = add_Cropping2D(input_tensor, row)
             
         else:
             print('Undefined Layer: {}'.format(layer_type))
