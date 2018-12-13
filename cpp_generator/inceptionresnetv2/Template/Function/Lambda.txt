@@ -1,23 +1,11 @@
-void SW_{Name}(DATA_T I1[{Input_channel1}][{Output_width}][{Output_height}], DATA_T I2[{Input_channel2}][{Output_width}][{Output_height}], DATA_T O[{Output_channel}][{Output_width}][{Output_height}]) {{
+void SW_{Name}(DATA_T I1[{Output_channel}][{Output_width}][{Output_height}], DATA_T I2[{Output_channel}][{Output_width}][{Output_height}], DATA_T O[{Output_channel}][{Output_width}][{Output_height}]) {{
 	int x, y, k;
-	int ch=0;
+	DATA_T scale={scale};
 	
 	for (x = 0; x < {Output_width}; x++) {{
 		for(y = 0; y < {Output_height}; y++) {{
-			ch=0;
-			for(k = ch; k < ch+{Input_channel1}; k++){{
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}}
-			ch+={Input_channel1};
-			for(k = ch; k < ch+{Input_channel2}; k++){{
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}}
+			for(k = 0; k < {Output_channel}; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}}
 	}}
 

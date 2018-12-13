@@ -1,6 +1,7 @@
 import os, sys
 import csv
 import numpy as np
+import ast
 
 # import keras
 # from keras.layers import Conv2D, MaxPooling2D, AveragePooling2D, BatchNormalization, ZeroPadding2D, Flatten, Dense, Activation
@@ -8,6 +9,7 @@ import numpy as np
 from keras import backend as K
 from keras import Model
 from keras import layers
+from keras.engine.topology import get_source_inputs
 
 #import tensorflow as tf
 #from tensorflow.keras import layers
@@ -168,8 +170,17 @@ def add_Dropout(input_tensor=None, info=None):
 
 
 def add_Lambda(input_tensor=None, info=None):
+    input_shape = eval(info['batch_input_shape'])
+    output_shape = eval(info['batch_output_shape'])
+    scale = ast.literal_eval(info['arguments'])
+
+    if input_tensor is not None:
+        inputs = get_source_inputs(input_tensor)
+
     # Get output tensor
-    output_tensor = layers.Lambda()(input_tensors)
+    output_tensor = layers.Lambda(lambda input_shape, scale: inputs[0] + inputs[1] * scale,
+                                  output_shape=output_shape[1:],
+                                  arguments=scale)(input_tensors)
     return output_tensor
 
 

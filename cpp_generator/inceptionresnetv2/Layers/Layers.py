@@ -1,4 +1,5 @@
 from .Data import Data
+import ast
 from string import Template
 
 
@@ -394,8 +395,8 @@ class Lambda(Layers):
 
         # get shape
         output_shape = eval(self.config['batch_output_shape'])
-        input_shape = eval(self.config['batch_input_shape'])
-
+        scale_dict = ast.literal_eval(self.config['arguments'])
+        scale = scale_dict['scale']
         # set_output
         self.set_output(output_shape[1:], self.layer_odr)
 
@@ -407,8 +408,7 @@ class Lambda(Layers):
         lamda = open("cpp_generator/inceptionresnetv2/Template/Function/Lambda.txt")
         lamda_r = lamda.read()
 
-        func = lamda_r.format(Name=self.config['name'], Input_channel1=input_shape[0][3],
-                              Input_channel2=input_shape[1][3], Output_channel=output_shape[3],
+        func = lamda_r.format(Name=self.config['name'], Output_channel=output_shape[3], scale=scale,
                               Output_width=output_shape[1], Output_height=output_shape[2])
         self.function['code'] = func + "\n"
 

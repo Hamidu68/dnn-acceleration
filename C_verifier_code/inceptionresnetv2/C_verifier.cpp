@@ -1183,24 +1183,12 @@ void SW_block35_1_conv(DATA_T I[128][25][25], DATA_T O[320][25][25], DATA_T W[32
 
 void SW_block35_1(DATA_T I1[320][25][25], DATA_T I2[320][25][25], DATA_T O[320][25][25]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.17;
 	
 	for (x = 0; x < 25; x++) {
 		for(y = 0; y < 25; y++) {
-			ch=0;
-			for(k = ch; k < ch+320; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=320;
-			for(k = ch; k < ch+320; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 320; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -1619,24 +1607,12 @@ void SW_block35_2_conv(DATA_T I[128][25][25], DATA_T O[320][25][25], DATA_T W[32
 
 void SW_block35_2(DATA_T I1[320][25][25], DATA_T I2[320][25][25], DATA_T O[320][25][25]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.17;
 	
 	for (x = 0; x < 25; x++) {
 		for(y = 0; y < 25; y++) {
-			ch=0;
-			for(k = ch; k < ch+320; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=320;
-			for(k = ch; k < ch+320; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 320; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -2055,24 +2031,12 @@ void SW_block35_3_conv(DATA_T I[128][25][25], DATA_T O[320][25][25], DATA_T W[32
 
 void SW_block35_3(DATA_T I1[320][25][25], DATA_T I2[320][25][25], DATA_T O[320][25][25]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.17;
 	
 	for (x = 0; x < 25; x++) {
 		for(y = 0; y < 25; y++) {
-			ch=0;
-			for(k = ch; k < ch+320; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=320;
-			for(k = ch; k < ch+320; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 320; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -2491,24 +2455,12 @@ void SW_block35_4_conv(DATA_T I[128][25][25], DATA_T O[320][25][25], DATA_T W[32
 
 void SW_block35_4(DATA_T I1[320][25][25], DATA_T I2[320][25][25], DATA_T O[320][25][25]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.17;
 	
 	for (x = 0; x < 25; x++) {
 		for(y = 0; y < 25; y++) {
-			ch=0;
-			for(k = ch; k < ch+320; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=320;
-			for(k = ch; k < ch+320; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 320; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -2927,24 +2879,12 @@ void SW_block35_5_conv(DATA_T I[128][25][25], DATA_T O[320][25][25], DATA_T W[32
 
 void SW_block35_5(DATA_T I1[320][25][25], DATA_T I2[320][25][25], DATA_T O[320][25][25]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.17;
 	
 	for (x = 0; x < 25; x++) {
 		for(y = 0; y < 25; y++) {
-			ch=0;
-			for(k = ch; k < ch+320; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=320;
-			for(k = ch; k < ch+320; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 320; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -3363,24 +3303,12 @@ void SW_block35_6_conv(DATA_T I[128][25][25], DATA_T O[320][25][25], DATA_T W[32
 
 void SW_block35_6(DATA_T I1[320][25][25], DATA_T I2[320][25][25], DATA_T O[320][25][25]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.17;
 	
 	for (x = 0; x < 25; x++) {
 		for(y = 0; y < 25; y++) {
-			ch=0;
-			for(k = ch; k < ch+320; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=320;
-			for(k = ch; k < ch+320; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 320; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -3799,24 +3727,12 @@ void SW_block35_7_conv(DATA_T I[128][25][25], DATA_T O[320][25][25], DATA_T W[32
 
 void SW_block35_7(DATA_T I1[320][25][25], DATA_T I2[320][25][25], DATA_T O[320][25][25]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.17;
 	
 	for (x = 0; x < 25; x++) {
 		for(y = 0; y < 25; y++) {
-			ch=0;
-			for(k = ch; k < ch+320; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=320;
-			for(k = ch; k < ch+320; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 320; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -4235,24 +4151,12 @@ void SW_block35_8_conv(DATA_T I[128][25][25], DATA_T O[320][25][25], DATA_T W[32
 
 void SW_block35_8(DATA_T I1[320][25][25], DATA_T I2[320][25][25], DATA_T O[320][25][25]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.17;
 	
 	for (x = 0; x < 25; x++) {
 		for(y = 0; y < 25; y++) {
-			ch=0;
-			for(k = ch; k < ch+320; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=320;
-			for(k = ch; k < ch+320; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 320; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -4671,24 +4575,12 @@ void SW_block35_9_conv(DATA_T I[128][25][25], DATA_T O[320][25][25], DATA_T W[32
 
 void SW_block35_9(DATA_T I1[320][25][25], DATA_T I2[320][25][25], DATA_T O[320][25][25]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.17;
 	
 	for (x = 0; x < 25; x++) {
 		for(y = 0; y < 25; y++) {
-			ch=0;
-			for(k = ch; k < ch+320; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=320;
-			for(k = ch; k < ch+320; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 320; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -5107,24 +4999,12 @@ void SW_block35_10_conv(DATA_T I[128][25][25], DATA_T O[320][25][25], DATA_T W[3
 
 void SW_block35_10(DATA_T I1[320][25][25], DATA_T I2[320][25][25], DATA_T O[320][25][25]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.17;
 	
 	for (x = 0; x < 25; x++) {
 		for(y = 0; y < 25; y++) {
-			ch=0;
-			for(k = ch; k < ch+320; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=320;
-			for(k = ch; k < ch+320; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 320; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -5689,24 +5569,12 @@ void SW_block17_1_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[1
 
 void SW_block17_1(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -6005,24 +5873,12 @@ void SW_block17_2_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[1
 
 void SW_block17_2(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -6321,24 +6177,12 @@ void SW_block17_3_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[1
 
 void SW_block17_3(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -6637,24 +6481,12 @@ void SW_block17_4_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[1
 
 void SW_block17_4(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -6953,24 +6785,12 @@ void SW_block17_5_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[1
 
 void SW_block17_5(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -7269,24 +7089,12 @@ void SW_block17_6_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[1
 
 void SW_block17_6(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -7585,24 +7393,12 @@ void SW_block17_7_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[1
 
 void SW_block17_7(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -7901,24 +7697,12 @@ void SW_block17_8_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[1
 
 void SW_block17_8(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -8217,24 +8001,12 @@ void SW_block17_9_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[1
 
 void SW_block17_9(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -8533,24 +8305,12 @@ void SW_block17_10_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[
 
 void SW_block17_10(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -8849,24 +8609,12 @@ void SW_block17_11_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[
 
 void SW_block17_11(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -9165,24 +8913,12 @@ void SW_block17_12_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[
 
 void SW_block17_12(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -9481,24 +9217,12 @@ void SW_block17_13_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[
 
 void SW_block17_13(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -9797,24 +9521,12 @@ void SW_block17_14_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[
 
 void SW_block17_14(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -10113,24 +9825,12 @@ void SW_block17_15_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[
 
 void SW_block17_15(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -10429,24 +10129,12 @@ void SW_block17_16_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[
 
 void SW_block17_16(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -10745,24 +10433,12 @@ void SW_block17_17_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[
 
 void SW_block17_17(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -11061,24 +10737,12 @@ void SW_block17_18_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[
 
 void SW_block17_18(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -11377,24 +11041,12 @@ void SW_block17_19_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[
 
 void SW_block17_19(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -11693,24 +11345,12 @@ void SW_block17_20_conv(DATA_T I[384][12][12], DATA_T O[1088][12][12], DATA_T W[
 
 void SW_block17_20(DATA_T I1[1088][12][12], DATA_T I2[1088][12][12], DATA_T O[1088][12][12]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.1;
 	
 	for (x = 0; x < 12; x++) {
 		for(y = 0; y < 12; y++) {
-			ch=0;
-			for(k = ch; k < ch+1088; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=1088;
-			for(k = ch; k < ch+1088; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 1088; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -12449,24 +12089,12 @@ void SW_block8_1_conv(DATA_T I[448][5][5], DATA_T O[2080][5][5], DATA_T W[2080][
 
 void SW_block8_1(DATA_T I1[2080][5][5], DATA_T I2[2080][5][5], DATA_T O[2080][5][5]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.2;
 	
 	for (x = 0; x < 5; x++) {
 		for(y = 0; y < 5; y++) {
-			ch=0;
-			for(k = ch; k < ch+2080; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=2080;
-			for(k = ch; k < ch+2080; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 2080; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -12765,24 +12393,12 @@ void SW_block8_2_conv(DATA_T I[448][5][5], DATA_T O[2080][5][5], DATA_T W[2080][
 
 void SW_block8_2(DATA_T I1[2080][5][5], DATA_T I2[2080][5][5], DATA_T O[2080][5][5]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.2;
 	
 	for (x = 0; x < 5; x++) {
 		for(y = 0; y < 5; y++) {
-			ch=0;
-			for(k = ch; k < ch+2080; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=2080;
-			for(k = ch; k < ch+2080; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 2080; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -13081,24 +12697,12 @@ void SW_block8_3_conv(DATA_T I[448][5][5], DATA_T O[2080][5][5], DATA_T W[2080][
 
 void SW_block8_3(DATA_T I1[2080][5][5], DATA_T I2[2080][5][5], DATA_T O[2080][5][5]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.2;
 	
 	for (x = 0; x < 5; x++) {
 		for(y = 0; y < 5; y++) {
-			ch=0;
-			for(k = ch; k < ch+2080; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=2080;
-			for(k = ch; k < ch+2080; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 2080; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -13397,24 +13001,12 @@ void SW_block8_4_conv(DATA_T I[448][5][5], DATA_T O[2080][5][5], DATA_T W[2080][
 
 void SW_block8_4(DATA_T I1[2080][5][5], DATA_T I2[2080][5][5], DATA_T O[2080][5][5]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.2;
 	
 	for (x = 0; x < 5; x++) {
 		for(y = 0; y < 5; y++) {
-			ch=0;
-			for(k = ch; k < ch+2080; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=2080;
-			for(k = ch; k < ch+2080; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 2080; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -13713,24 +13305,12 @@ void SW_block8_5_conv(DATA_T I[448][5][5], DATA_T O[2080][5][5], DATA_T W[2080][
 
 void SW_block8_5(DATA_T I1[2080][5][5], DATA_T I2[2080][5][5], DATA_T O[2080][5][5]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.2;
 	
 	for (x = 0; x < 5; x++) {
 		for(y = 0; y < 5; y++) {
-			ch=0;
-			for(k = ch; k < ch+2080; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=2080;
-			for(k = ch; k < ch+2080; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 2080; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -14029,24 +13609,12 @@ void SW_block8_6_conv(DATA_T I[448][5][5], DATA_T O[2080][5][5], DATA_T W[2080][
 
 void SW_block8_6(DATA_T I1[2080][5][5], DATA_T I2[2080][5][5], DATA_T O[2080][5][5]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.2;
 	
 	for (x = 0; x < 5; x++) {
 		for(y = 0; y < 5; y++) {
-			ch=0;
-			for(k = ch; k < ch+2080; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=2080;
-			for(k = ch; k < ch+2080; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 2080; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -14345,24 +13913,12 @@ void SW_block8_7_conv(DATA_T I[448][5][5], DATA_T O[2080][5][5], DATA_T W[2080][
 
 void SW_block8_7(DATA_T I1[2080][5][5], DATA_T I2[2080][5][5], DATA_T O[2080][5][5]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.2;
 	
 	for (x = 0; x < 5; x++) {
 		for(y = 0; y < 5; y++) {
-			ch=0;
-			for(k = ch; k < ch+2080; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=2080;
-			for(k = ch; k < ch+2080; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 2080; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -14661,24 +14217,12 @@ void SW_block8_8_conv(DATA_T I[448][5][5], DATA_T O[2080][5][5], DATA_T W[2080][
 
 void SW_block8_8(DATA_T I1[2080][5][5], DATA_T I2[2080][5][5], DATA_T O[2080][5][5]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.2;
 	
 	for (x = 0; x < 5; x++) {
 		for(y = 0; y < 5; y++) {
-			ch=0;
-			for(k = ch; k < ch+2080; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=2080;
-			for(k = ch; k < ch+2080; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 2080; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -14977,24 +14521,12 @@ void SW_block8_9_conv(DATA_T I[448][5][5], DATA_T O[2080][5][5], DATA_T W[2080][
 
 void SW_block8_9(DATA_T I1[2080][5][5], DATA_T I2[2080][5][5], DATA_T O[2080][5][5]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=0.2;
 	
 	for (x = 0; x < 5; x++) {
 		for(y = 0; y < 5; y++) {
-			ch=0;
-			for(k = ch; k < ch+2080; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=2080;
-			for(k = ch; k < ch+2080; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 2080; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 
@@ -15293,24 +14825,12 @@ void SW_block8_10_conv(DATA_T I[448][5][5], DATA_T O[2080][5][5], DATA_T W[2080]
 
 void SW_block8_10(DATA_T I1[2080][5][5], DATA_T I2[2080][5][5], DATA_T O[2080][5][5]) {
 	int x, y, k;
-	int ch=0;
+	DATA_T scale=1.0;
 	
 	for (x = 0; x < 5; x++) {
 		for(y = 0; y < 5; y++) {
-			ch=0;
-			for(k = ch; k < ch+2080; k++){
-				if(I1[k][x][y]<0)
-					O[k][x][y] = -I1[k][x][y];
-				else
-					O[k][x][y] = I1[k][x][y];
-			}
-			ch+=2080;
-			for(k = ch; k < ch+2080; k++){
-				if(I2[k][x][y]<0)
-					O[k][x][y] = -I2[k][x][y];
-				else
-					O[k][x][y] = I2[k][x][y];
-			}
+			for(k = 0; k < 2080; k++)
+				O[k][x][y] = I1[k][x][y]+I2[k][x][y]*scale;
 		}
 	}
 

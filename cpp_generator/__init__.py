@@ -1,2 +1,2 @@
 #from .[model_name] import *
-from .xception import *
+from .inceptionresnetv2 import *
