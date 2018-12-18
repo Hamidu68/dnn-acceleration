@@ -298,6 +298,12 @@ def add_GlobalAveragePooling2D(input_tensors=[], info=None):
     return output_tensor
 
 
+def add_GlobalMaxPooling2D(input_tensors=[], info=None):
+    # Get output tensor
+    output_tensor = layers.GlobalMaxPooling2D(data_format=str(info['data_format']))(input_tensors)
+    return output_tensor
+
+
 ####################################################
 ####################################################
 # Print function
@@ -526,6 +532,12 @@ if __name__ == "__main__":
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             # get output of current layer and save it to dict
             outputs_dict[layer_name] = tensors[layer_name] = add_GlobalAveragePooling2D(input_tensor, row)
+
+        elif layer_type == 'GlobalMaxPooling2D':
+            # get input tensor
+            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            # get output of current layer and save it to dict
+            outputs_dict[layer_name] = tensors[layer_name] = add_GlobalMaxPooling2D(input_tensor, row)
 
         elif layer_type == 'Cropping2D':
             # get input tensor

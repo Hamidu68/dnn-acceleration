@@ -1,0 +1,10 @@
+void SW_{Name}(DATA_T I1[{Input_channel1}][{Input_width1}][{Input_height1}], DATA_T I2[{Input_channel2}][{Input_width2}][{Input_height2}], DATA_T O[{Output_channel}][{Output_width}][{Output_height}]) {{
+	int m, x, y;
+	for (m = 0; m< {Input_channel1}; m++) {{
+		for (x = 0; x < {Input_width1}; x++) {{
+			for(y = 0; y < {Input_height1}; y++) {{
+				O[m][x][y] = I1[m][x][y] + I2[m][x][y];
+			}}
+		}}
+	}}
+}}
