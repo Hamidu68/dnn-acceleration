@@ -4,7 +4,7 @@ import numpy as np
 import ast
 
 # import keras
-# from keras.layers import Conv2D, MaxPooling2D, AveragePooling2D, BatchNormalization, ZeroPadding2D, Flatten, Dense, Activation
+# from keras.layers import Conv2D, MaxPooling2D, AveragePooling2D, BatchNormalization, ZeroPadding2D, Flatten, Dense, Activation, SeparableConv2D
 
 from keras import backend as K
 from keras import Model
@@ -100,7 +100,7 @@ def add_MaxPooling2D(input_tensor=None, info=None):
 
 def add_Cropping2D(input_tensor=None, info=None):
     # Get output tensor
-    output_tensor = layers.MaxPooling2D(cropping=eval(info['cropping']), dim_ordering='tf')(input_tensor)
+    output_tensor = layers.Cropping2D(cropping=eval(info['cropping']), data_format=str(info['data_format']))(input_tensor)
     return output_tensor
 
 
@@ -196,6 +196,7 @@ def add_DepthConv2D(input_tensor=None, info=None, fid=None,  dtype=int):
     kernel = kernel.reshape((kernel_size[0], kernel_size[1], output_shape[3], 1)).astype(np.float32)
     weights.append(kernel)
 
+
     # Get output tensor
     output_tensor = layers.DepthwiseConv2D(kernel_size=eval(info['kernel_size']),
                                            strides=eval(info['strides']),
@@ -208,35 +209,34 @@ def add_DepthConv2D(input_tensor=None, info=None, fid=None,  dtype=int):
     return output_tensor
 
 
-def add_SeparableConv2D(input_tensor=None, info=None, fid=None,  dtype=int):
+def add_SepConv2D(input_tensor=None, info=None, fid=None,  dtype=int):
     # Read information of layer
     output_shape = eval(info['batch_output_shape'])
     input_shape = eval(info['batch_input_shape'])
     kernel_size = eval(info['kernel_size'])
 
     # Read weights from file
-    weight1 = []
-    weight2 = []
-    kernel1 = np.fromfile(file=fid, dtype=dtype, sep='',
+    weights = []
+    weight1 = np.fromfile(file=fid, dtype=dtype, sep='',
                           count=kernel_size[0] * kernel_size[1] * input_shape[3])
-    kernel1 = kernel1.reshape((kernel_size[0], kernel_size[1], input_shape[3])).astype(np.float32)
-    weight1.append(kernel1)
+    weight1 = weight1.reshape((kernel_size[0], kernel_size[1], input_shape[3])).astype(np.float32)
+    weights.append(weight1)
 
-    kernel2 = np.fromfile(file=fid, dtype=dtype, sep='',
+    weight2 = np.fromfile(file=fid, dtype=dtype, sep='',
                           count=output_shape[3] * input_shape[3])
-    kernel2 = kernel2.reshape((input_shape[3], output_shape[3])).astype(np.float32)
-    weight2.append(kernel2)
+    weight2 = weight2.reshape((input_shape[3], output_shape[3],)).astype(np.float32)
+    weights.append(weight2)
 
     # Get output tensor
-    output_tensor = layers.SeparableConv2D(kernel_size=eval(info['kernel_size']),
+    output_tensor = layers.SeparableConv2D(kernel_size=kernel_size,
                                            strides=eval(info['strides']),
                                            padding=str(info['padding']),
                                            depth_multiplier=1,
                                            dilation_rate=eval(info['dilation_rate']),
                                            data_format=str(info['data_format']),
                                            activation=str(info['activation']),
-                                           use_bias=eval(info['use_bias']),
-                                           weights=[weight1, weight2]
+                                           use_bias=str(info['use_bias']),
+                                           weights=weights
                                            )(input_tensor)
     return output_tensor
 
@@ -442,7 +442,7 @@ if __name__ == "__main__":
             # get input tensor
             input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_SeparableConv2D(input_tensor, row, weights_bin, dtype)
+            outputs_dict[layer_name] = tensors[layer_name] = add_SepConv2D(input_tensor, row, weights_bin, dtype)
 
         elif layer_type == 'MaxPooling2D':
             # get input tensor

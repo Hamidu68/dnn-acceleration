@@ -1,0 +1,17 @@
+for (m = 0; m <  {Filter_width} ; m++) {{
+	for (k = 0; k < {Filter_height} ; k++) {{
+		for (i = 0; i < {Input_channel} ; i++) {{
+
+
+				fread(&trash, sizeof(int), 1, w_stream);
+               	W{line_number}_1[i][m][k] = (DATA_T) trash;
+		}}
+	}}
+}}
+
+for (m = 0; m < {Input_channel} ; m++) {{
+    for (k = 0; k < {Output_channel} ; k++) {{
+        fread(&trash, sizeof(int), 1, w_stream);
+        W{line_number}_2[k][m] = (DATA_T) trash;
+    }}
+}}

@@ -1,0 +1,16 @@
+void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T O[{Output_channel}][{Output_width}][{Output_height}])
+{{
+	int m, x, y;
+	DATA_T ifm;
+	for (m = 0; m<{Input_channel}; m++) {{
+		for (x = 0; x<{Input_width}; x++) {{
+			for (y = 0; y<{Input_height}; y++) {{
+				ifm = I[m][x][y];
+				if (ifm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ifm;
+			}}
+		}}
+	}}
+}}
