@@ -13,23 +13,33 @@ if __name__ == "__main__":
     # Check data type of output file
     dtype = np.int32
     dtype2 = "int"
-    if sys.argv[5] == 'int':
+    data_dype = sys.argv[7]
+    if data_dype == 'int':
         dtype = np.int32
         dtype2 = "int"
-    elif sys.argv[5] == 'unsigned int':
+    elif data_dype == 'unsigned int':
         dtype = np.uint32
         dtype2 = "int"
-    elif sys.argv[5] == 'float':
+    elif data_dype == 'float':
         dtype = np.float32
         dtype2 = "float"
-    elif sys.argv[5] == 'ap_uint<16>':
+    elif data_dype == 'ap_uint<16>':
         dtype = np.uint16
         dtype2 = "int"
     else:
         print('Wrong data type!')
 
+
+
+
+    csv_dir = sys.argv[1]
+    out_dir = sys.argv[2]
+    test    = sys.argv[3]
+    random_range = int(argv[6])
+
+
     # open csv
-    csv_file = open(sys.argv[1])
+    csv_file = open(str(csv_dir)+"/"+test+"_test.csv")
     csv_reader = csv.DictReader(csv_file)
     
     # parameters
@@ -44,13 +54,13 @@ if __name__ == "__main__":
             input_size += input_shape[3]*input_shape[2]*input_shape[1]
 
     # open File
-    Weight = open(sys.argv[2], 'wb')
-    Input = open(sys.argv[3], 'wb')
+    Weight = open(out_dir+"/"+test+"/"+sys.argv[4]+".bin", 'wb')
+    Input  = open(out_dir+"/"+test+"/"+sys.argv[5]+".bin", 'wb')
 
     # Make random initialized file
     if dtype2 == "int":
-        np.random.randint(low=1, high=int(argv[4])+1, size=total_params, dtype=dtype).tofile(Weight)
-        np.random.randint(low=1, high=int(argv[4])+1, size=input_size, dtype=dtype).tofile(Input)
+        np.random.randint(low=1, high=random_range+1, size=total_params, dtype=dtype).tofile(Weight)
+        np.random.randint(low=1, high=random_range+1, size=input_size, dtype=dtype).tofile(Input)
         
     elif dtype2 == "float":
         np.random.uniform(low=0, high=1, size=total_params).astype(dtype).tofile(Weight)
