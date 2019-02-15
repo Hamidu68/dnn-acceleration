@@ -13,7 +13,7 @@ if __name__ == "__main__":
     # Check data type of output file
     dtype = np.int32
     dtype2 = "int"
-    data_dype = sys.argv[7]
+    data_dype = sys.argv[5]
     if data_dype == 'int':
         dtype = np.int32
         dtype2 = "int"
@@ -33,13 +33,13 @@ if __name__ == "__main__":
 
 
     csv_dir = sys.argv[1]
-    out_dir = sys.argv[2]
-    test    = sys.argv[3]
-    random_range = int(argv[6])
+    weight_dir = sys.argv[2]
+    input_dir  = sys.argv[3]
+    random_range = int(argv[4])
 
 
     # open csv
-    csv_file = open(str(csv_dir)+"/"+test+"_test.csv")
+    csv_file = open(csv_dir)
     csv_reader = csv.DictReader(csv_file)
     
     # parameters
@@ -54,8 +54,8 @@ if __name__ == "__main__":
             input_size += input_shape[3]*input_shape[2]*input_shape[1]
 
     # open File
-    Weight = open(out_dir+"/"+test+"/"+sys.argv[4]+".bin", 'wb')
-    Input  = open(out_dir+"/"+test+"/"+sys.argv[5]+".bin", 'wb')
+    Weight = open(weight_dir, 'wb')
+    Input  = open(input_dir, 'wb')
 
     # Make random initialized file
     if dtype2 == "int":

@@ -13,14 +13,14 @@ if __name__ == '__main__':
 
     make_C_verifier = eval(sys.argv[1])
     make_HW_test = eval(sys.argv[2])
-    make_DAC2017_test = eval(sys.argv[3])
-    test_file = sys.argv[4]
-    model_name = sys.argv[5]
-    dtype = sys.argv[6]
+    #make_DAC2017_test = eval(sys.argv[3])
+    test_file = sys.argv[3]
+    model_name = sys.argv[4]
+    dtype = sys.argv[5]
 
     if make_C_verifier:
         gen_c_verifier(test_file, model_name, dtype)
     if make_HW_test:
         gen_HW_test(test_file, model_name, dtype)
-    if make_DAC2017_test:
-        gen_DAC2017_test(test_file, model_name, dtype)
+    #if make_DAC2017_test:
+    #    gen_DAC2017_test(test_file, model_name, dtype)

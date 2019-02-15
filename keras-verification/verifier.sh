@@ -2,7 +2,7 @@ Test_dir=$1
 Random_range=$2
 Model_name=$4
 
-Variable_dir="../Variable_Generator/"
+Variable_dir="../variable_generator/"
 
 Weight_file="init_weight.bin"
 Input_file="init_input.bin"
@@ -30,12 +30,12 @@ fi
 #Generate C_Verifier
 
 Test_path="Test_file/${Model_name}_test.csv"
-python3 run.py True False False ${Test_path} ${Model_name} ${Data_type}
+python3 run.py True False ${Test_path} ${Model_name} ${Data_type}
 
 cd C_verifier_code/${Model_name}
 
 g++ -std=c++0x C_verifier.cpp -o out
-variable_path=../../Variable_Generator/
+variable_path=../../variable_generator/
 #C-code
 ./out ${variable_path}${Weight_file} ${variable_path}${Input_file}
 
