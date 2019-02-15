@@ -1,33 +1,44 @@
 # ML-acceleration  
 
-1. Set the conditions.  
+The way to generate software code of various models
+
+1. Set the conditions in run.sh file. 
   
 for example,  
 ```
-Test_dir="Test_file/Test.csv"  
-Model_name="Ex_model"  
-Data_type="ap_uint<16>"  
-Random_range="20"    
+Model_name="vgg19"
+Test_dir="Test_file/${Model_name}_test.csv"
+Data_type="float"
+Random_range="5"  
 ```  
-Test_dir : path to the csv file which contains layer information  
 Model_name : name of the model like vgg16, vgg19 etc.  
+Test_dir : path to the csv file which contains layer information  
 Data_type : data type that we use.  
 Random_range : if the Random_range value is 'Num', each index of the array is initialized to a value between 1 and Num.  
 
-2. Run ./run.sh  
+2. Change __init__ file.
+
+In ML-acceleration/cpp_generator folder, there are various folders that contain different layers, output, template in different models.
+To import one of these folders, change __init__ file like this.
+
+```  
+from .{Model_name} import *
+```   
+
+for example,  
+```  
+from .vgg19 import *
+``` 
+
+
+3. Run ./run.sh  
 ```
 ./run.sh
 ```  
-  1) Run ./verifier.sh  
-     
-     ```
-     ./verifier.sh $return_dir$Test_dir $Random_range  
-     
-     ```  
-  2) Create 'model_name.cpp' and 'model_name_test.cpp' files  
-     ```
-     python Test_cpp_Generator.py $return_dir$Test_dir $Model_name $Data_type  
-     python Cpp_Generator.py $return_dir$Test_dir $Model_name $Data_type  
-     ```   
-        
+  In run.sh, it contains the command below.
+  
+  ```
+  ./verifier.sh ../${Test_dir} ${Random_range} ${Data_type} ${Model_name}
+  ```
+  each argument is already explained above.      
    
