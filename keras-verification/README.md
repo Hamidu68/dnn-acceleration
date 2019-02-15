@@ -4,7 +4,7 @@ verifier.sh file is automatically called by run.sh file.
 
 This file contains some command below. 
 
-1. Generate Inputs, Weights values  
+####1. Generate Inputs, Weights values  
 ```
 python variable_generator.py ${Test_dir} ${Weight_file} ${Input_file} ${Random_range} ${Data_type}
 ``` 
@@ -16,7 +16,7 @@ ${Random_range} : set a numerical range of variables to be initialized (ex. 20 m
 ${Data_type} : data type (ex. float)  
 
 
-2. Generate C code
+####2. Generate C code
 
 ```
 python3 run.py True False ${Test_path} ${Model_name} ${Data_type}
@@ -28,9 +28,9 @@ argv[3] : path to test.csv file like "Test_file/${Model_name}_test.csv" (ex. Tes
 argv[4] : data type (ex. float)   
 
 
-3. Run C_Verifier with same Inputs, Weights values : C_verifier.c / keras_verifier.py   
+####3. Run C_Verifier with same Inputs, Weights values : C_verifier.c / keras_verifier.py   
 
-in C_verifier_code/{Model_name} folder, 
+In C_verifier_code/{Model_name} folder, 
 ```
 g++ C_Verifier.cpp -o out  
 ./out ${1} ${2}
@@ -50,10 +50,10 @@ ${Data_type} : data type(ex. float)
 ${Model_name} : name of the model (ex. vgg19)  
 
 
-4. Compare result : c_output.txt / keras_output.txt  
+####4. Compare result : c_output.txt / keras_output.txt  
 
 ```
 vimdiff Output/keras_output.txt Output/C_output.txt
 ```
   
-5. You can see compared result using vimDiff   
+####5. You can see compared result using vimDiff   
