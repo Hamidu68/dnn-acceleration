@@ -15,6 +15,7 @@ ${Input_file} : path to init_input.bin file to generate (ex. ../cpp_generator/vg
 ${Random_range} : set a numerical range of variables to be initialized (ex. 20 means 1 to 20)  
 ${Data_type} : data type (ex. float)  
 
+by this, init_weight.bin, init_input.bin files are created in variable_generator folder.
 
 ### 2. Generate C code
 
@@ -27,6 +28,7 @@ argv[2] : whether to contain hardware code (boolean value) (ex. False if you don
 argv[3] : path to test.csv file like "Test_file/${Model_name}_test.csv" (ex. Test_file/vgg19_test.csv)  
 argv[4] : data type (ex. float)   
 
+by this, C_verifier_code/${model_name}/C_verifier.cpp file is created.
 
 ### 3. Run C_Verifier with same Inputs, Weights values : C_verifier.c / keras_verifier.py   
 
@@ -55,5 +57,5 @@ ${Model_name} : name of the model (ex. vgg19)
 ```
 vimdiff Output/keras_output.txt Output/C_output.txt
 ```
-  
+Output files are created in cpp_generator/${model_name}/Ouput folder.  
 ### 5. You can see compared result using vimDiff   
