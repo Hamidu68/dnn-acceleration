@@ -1,2 +1,2 @@
 #from .[model_name] import *
-from .resnet50 import *
+from .xception import *
