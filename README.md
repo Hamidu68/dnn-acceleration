@@ -42,5 +42,5 @@ from .vgg19 import *
   ```
   each argument is already explained above.      
 
-by running run.sh, C_verifier_code/${model_name}/C_verifier.cpp file is created and in cpp_generator/${model_name}/Output, output file is created to compare the values between keras and c.(read verifier.sh README.md)
+by running run.sh, c code is generated and output files of c and keras are created.(read keras_verification/README.md to get more explanation in detail)
 
