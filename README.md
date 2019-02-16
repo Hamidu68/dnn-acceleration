@@ -2,6 +2,9 @@
 
 The way to generate software code of various models
 
+Before generating sw code, create empty folder named 'Output' in cpp_generator/{Model_name} folder.
+The Output values will be stored in that folder.
+
 ### 1. Set the conditions in run.sh file. 
   
 for example,  
