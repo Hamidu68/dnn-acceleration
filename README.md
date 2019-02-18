@@ -1,6 +1,6 @@
 # Development of C programs for Convolutional Neural Network Accelerators
 
--------------------------   
+
 
 ### Prerequisites
 * python 2.7
@@ -8,7 +8,8 @@
 * keras(2.2)
 * numpy
 
--------------------------   
+
+  
 
 ### Usage
 
