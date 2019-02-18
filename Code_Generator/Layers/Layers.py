@@ -2,7 +2,7 @@ from .Data import Data
 from string import Template
 
 
-class Layers:
+class Layers(object):
     def __init__(self, config={}, inputs=[], dtype='DATA_T', layer_odr=0, post=''):
         self.config = config
         self.inputs = inputs

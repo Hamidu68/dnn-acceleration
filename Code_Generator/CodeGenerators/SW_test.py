@@ -6,7 +6,7 @@ import os
 class SW_test(CodeGenerators):
 
     def __init__(self, models=[], dtype='DATA_T',name=''):
-        super().__init__(models, dtype)
+        super(SW_test, self).__init__(models, dtype)
         self.model_sw = models[0]
         self.model_name = name
 

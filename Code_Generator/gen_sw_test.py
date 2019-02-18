@@ -50,4 +50,6 @@ def gen_sw_test(test_file='', model_name='', dtype='int',weight_file='', Input_f
 
     # Check maximum error
     #from maximum_error import check_maximum_error
+    cpp_output_path = 'Produced_code/'+model_name+'/Output/c_output_num.txt'
+    keras_output_path = 'Produced_code/'+model_name+'/Output/keras_output_num.txt'
     check_maximum_error(cpp_output_path, keras_output_path)

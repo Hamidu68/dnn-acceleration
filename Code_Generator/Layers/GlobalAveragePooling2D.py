@@ -5,7 +5,7 @@ from string import Template
 class GlobalAveragePooling2D(Layers):
 
     def __init__(self, config={}, inputs=[], dtype='DATA_T', layer_odr=0, post=''):
-        super().__init__(config, inputs, dtype, layer_odr, post)
+        super(GlobalAveragePooling2D, self).__init__(config, inputs, dtype, layer_odr, post)
 
         # get shape
         input_shape = eval(self.config['batch_input_shape'])

@@ -5,7 +5,7 @@ from string import Template
 class Concatenate(Layers):
 
     def __init__(self, config={}, inputs=[], dtype='DATA_T', layer_odr=0, post=''):
-        super().__init__(config, inputs, dtype, layer_odr, post)
+        super(Concatenate, self).__init__(config, inputs, dtype, layer_odr, post)
 
         # get shape
         output_shape = eval(self.config['batch_output_shape'])

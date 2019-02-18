@@ -5,7 +5,7 @@ import sys
 from string import Template
 
 
-class CodeGenerators:
+class CodeGenerators(object):
 
     def __init__(self, models=[], dtype='DATA_T',name=''):
         self.models = []
