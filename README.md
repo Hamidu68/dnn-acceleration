@@ -8,11 +8,11 @@
 * keras(2.2)
 * numpy
 
+-------------------------   
 
 ### Usage
 
 #### Run run.py
--------------------------
 
 in ML-acceleration folder,
 ```
