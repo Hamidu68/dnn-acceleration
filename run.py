@@ -15,9 +15,9 @@ if __name__ == '__main__':
     run_gen_sw_test = eval(sys.argv[1])
     run_gen_hw_test = eval(sys.argv[2])
     #run_gen_DAC2017_test = eval(sys.argv[3])
-    test_file = "./Test_file/" + sys.argv[3]
-    model_name = sys.argv[4]
-    dtype = sys.argv[5]
+    test_file = "./Test_file/" + sys.argv[4]
+    model_name = sys.argv[5]
+    dtype = sys.argv[6]
     Random_range=5
     weight_file_path = './Variables_Generator/init_weight.bin'
     input_file_path = './Variables_Generator/init_input.bin'
