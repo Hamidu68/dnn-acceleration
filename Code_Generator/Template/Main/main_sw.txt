@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <iostream>
+#include <stdlib.h>
+#include <string>
+#include <string.h>
+#include <math.h>
+
+using namespace std;
+
+typedef float DATA_T;
+
+{sw_def_layer}
+
+//argv[1] = init_weight.txt, argv[2] = init_input.txt
+int main(int argc, char *argv[]){{
+
+    DATA_T temp;
+    int m, x, y, i, j, k, l;
+    int trash;
+
+    {sw_static_variables}
+
+    {sw_output_variables}
+
+    FILE *w_stream = fopen(argv[1], "rb");
+    if (w_stream == NULL) printf("weight file was not opened");
+    FILE *i_stream = fopen(argv[2], "rb");
+    if (i_stream == NULL) printf("input file was not opened");
+    FILE *o_stream = fopen({output_path_1}, "w");
+    if (o_stream == NULL) printf("Output file was not opened");
+    FILE *c_num = fopen({output_path_2}, "w");
+    if (c_num == NULL) printf("Output file was not opened");
+
+    printf("[C_verifier.cpp]Start Initialzation");
+    {Initialization}
+    printf("[C_verifier.cpp]Finish Initialization");
+
+    {sw_call_layer}
+
+    printf("[C_verifier.cpp]Print Result");
+
+
+    {result}
+
+
+    fclose(w_stream);
+    fclose(i_stream);
+    fclose(o_stream);
+    fclose(c_num);
+
+    return 0;
+}}

@@ -1,6 +1,0 @@
-for (i = 0; i < {second} ; i++) {{
-	for (j = 0; j < {first} ; j++) {{
-		fread(&trash, sizeof(DATA_IN), 1, {fid});
-		{ary_name}[{iter2}][{iter1}] = (DATA_T) trash;
-	}}
-}}

@@ -1,8 +1,0 @@
-void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T O[{Output_channel}][{Output_width}][{Output_height}]) {{
-	int i;
-	DATA_T denom = I[0][0][0];
-	for (i = 1; i < {Input_channel}; i++)
-		denom += I[i][0][0];
-	for (i = 0; i < {Input_channel}; i++)
-		O[i] = I[i][0][0] / denom; //float
-}}
