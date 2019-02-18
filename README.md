@@ -1,49 +1,30 @@
-# ML-acceleration  
+# Development of C programs for Convolutional Neural Network Accelerators
 
-The way to generate software code of various models
 
-Before generating sw code, create empty folder named 'Output' in cpp_generator/{Model_name} folder.
-The Output values will be stored in that folder.
 
-### 1. Set the conditions in run.sh file. 
-  
-for example,  
+### Prerequisites
+* python 2.7
+* tensorflow
+* keras(2.2)
+* numpy
+
+
+### Usage
+
+#### Run run.py
+-------------------------
+
+in ML-acceleration folder,
 ```
-Model_name="vgg19"
-Test_dir="Test_file/${Model_name}_test.csv"
-Data_type="float"
-Random_range="5"  
-```  
-Model_name : name of the model like vgg16, vgg19 etc.  
-Test_dir : path to the csv file which contains layer information  
-Data_type : data type that we use.  
-Random_range : if the Random_range value is 'Num', each index of the array is initialized to a value between 1 and Num.  
+python run.py <SW_test> <HW_test> <DAC2017_test> <Test_file> <model_name> <data_type>
 
-### 2. Change __ init__.py file.
-
-In ML-acceleration/cpp_generator folder, there are various folders that contain different layers, output, template in different models.
-To import one of these folders, change __ init__.py file like this.
-
-```  
-from .{Model_name} import *
-```   
-
-for example,  
-```  
-from .vgg19 import *
-``` 
-
-
-### 3. Run run.sh  
 ```
-./run.sh
-```  
-  In run.sh, it contains the command below.
+SW_test : generate software code or not(True/False)
+HW_test : generate hardware code or not(True/False)
+DAC2017_test : generate DAC2017 code or not(True/False)
+Test_file : name of the test file (ex. vgg19_test.csv)
+model_name : name of the model(network) ex. vgg19
+data_type : data type (int, unsinged int, float, ap_uint<16>)
+
   
-  ```
-  ./verifier.sh ../${Test_dir} ${Random_range} ${Data_type} ${Model_name}
-  ```
-  each argument is already explained above.      
-
-by running run.sh, c code is generated and output files of c and keras are created.(read keras_verification/README.md to get more explanation in detail)
-
+  
