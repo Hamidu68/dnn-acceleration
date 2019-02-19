@@ -32,10 +32,10 @@ class Dense(Layers):
             dense_relu = den_r.read()
 
         if self.config['activation'] == 'relu':  # Activation = relu
-            func = dense_softmax.format(Name=self.config["name"], Input_channel=input_shape[1],
+            func = dense_relu.format(Name=self.config["name"], Input_channel=input_shape[1],
                                         Output_channel=output_shape[1])
             self.function['code'] += func + "\n"
         else:  # Activation = softmax
-            func = dense_relu.format(Name=self.config["name"], Input_channel=input_shape[1],
+            func = dense_softmax.format(Name=self.config["name"], Input_channel=input_shape[1],
                                      Output_channel=output_shape[1])
             self.function['code'] += func + "\n"

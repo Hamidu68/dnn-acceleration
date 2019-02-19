@@ -30,12 +30,14 @@ def Keras_Verifier(model_data, model_name, weight_file_path, input_file_path, dt
     outputs = []
     outputs_dict = {}
     tensors = {}
-
+    previous_row = ''
+    
     # for each layers
     for layer in model_data.layers:
         row = layer.config
         # check skip layer
         layer_type = row["layer_type"]
+        
         if layer_type in skip_layers:
             skip = True
             print('Skip {} layer')
@@ -45,7 +47,8 @@ def Keras_Verifier(model_data, model_name, weight_file_path, input_file_path, dt
             print('[Keras_verifier.py]add a layer: ' + layer_type + '.' + str(line_num))
 
         layer_name = row['name']
-
+        previous_row = row['connected_to']
+        
         # Switch
         if layer_type == 'InputLayer':
             input_value, tensors[layer_name] = add_InputLayer(row, inputs_bin, dtype)
@@ -54,116 +57,116 @@ def Keras_Verifier(model_data, model_name, weight_file_path, input_file_path, dt
 
         elif layer_type == 'Conv2D':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_Conv2D(input_tensor, row, weights_bin, dtype)
+            outputs_dict[layer_name] = tensors[layer_name] = add_Conv2D(input_tensor, row, weights_bin, dtype, skip, tensors)
 
         elif layer_type == 'DepthwiseConv2D':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_DepthConv2D(input_tensor, row, weights_bin, dtype)
+            outputs_dict[layer_name] = tensors[layer_name] = add_DepthConv2D(input_tensor, row, weights_bin, dtype, skip, tensors)
 
         elif layer_type == 'SeparableConv2D':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_SepConv2D(input_tensor, row, weights_bin, dtype)
+            outputs_dict[layer_name] = tensors[layer_name] = add_SepConv2D(input_tensor, row, weights_bin, dtype, skip, tensors)
 
         elif layer_type == 'MaxPooling2D':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_MaxPooling2D(input_tensor, row)
+            outputs_dict[layer_name] = tensors[layer_name] = add_MaxPooling2D(input_tensor, row, skip, tensors)
 
         elif layer_type == 'BatchNormalization':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_BatchNormalization(input_tensor, row, weights_bin, dtype, skip)
+            outputs_dict[layer_name] = tensors[layer_name] = add_BatchNormalization(input_tensor, row, weights_bin, dtype, skip, tensors)
 
         elif layer_type == 'ReLU':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_ReLU(input_tensor, row)
+            outputs_dict[layer_name] = tensors[layer_name] = add_ReLU(input_tensor, row, skip, tensors)
 
         elif layer_type == 'Activation':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_Activation(input_tensor, row)
+            outputs_dict[layer_name] = tensors[layer_name] = add_Activation(input_tensor, row, skip, tensors)
 
         elif layer_type == 'Reshape':
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_Reshape(input_tensor, row)
+            outputs_dict[layer_name] = tensors[layer_name] = add_Reshape(input_tensor, row, skip, tensors)
 
         elif layer_type == 'AveragePooling2D':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_AveragePooling2D(input_tensor, row)
+            outputs_dict[layer_name] = tensors[layer_name] = add_AveragePooling2D(input_tensor, row, skip, tensors)
 
         elif layer_type == 'ZeroPadding2D':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_ZeroPadding2D(input_tensor, row)
+            outputs_dict[layer_name] = tensors[layer_name] = add_ZeroPadding2D(input_tensor, row, skip, tensors)
 
         elif layer_type == 'Flatten':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_Flatten(input_tensor, row)
+            outputs_dict[layer_name] = tensors[layer_name] = add_Flatten(input_tensor, row, skip, tensors)
 
         elif layer_type == 'Dense':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_Dense(input_tensor, row, weights_bin, dtype)
+            outputs_dict[layer_name] = tensors[layer_name] = add_Dense(input_tensor, row, weights_bin, dtype, skip, tensors)
 
         elif layer_type == 'Dropout':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_Dropout(input_tensor, row)
+            outputs_dict[layer_name] = tensors[layer_name] = add_Dropout(input_tensor, row, skip, tensors)
 
         elif layer_type == 'Add':
             # get input tensors
-            input_tensors = get_multi_inputs(row['connected_to'].split('/'), tensors, outputs_dict)
+            input_tensors = get_multi_inputs(previous_row.split('/'), tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_Add(input_tensors, row)
+            outputs_dict[layer_name] = tensors[layer_name] = add_Add(input_tensors, row, skip, tensors)
 
         elif layer_type == 'Concatenate':
             # get input tensors
-            input_tensors = get_multi_inputs(row['connected_to'].split('/'), tensors, outputs_dict)
+            input_tensors = get_multi_inputs(previous_row.split('/'), tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_Concatenate(input_tensors, row)
+            outputs_dict[layer_name] = tensors[layer_name] = add_Concatenate(input_tensors, row, skip, tensors)
 
         elif layer_type == 'Lambda':
             # get input tensors
-            input_tensors = get_multi_inputs(row['connected_to'].split('/'), tensors, outputs_dict)
+            input_tensors = get_multi_inputs(previous_row.split('/'), tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_Lambda(input_tensors, row)
+            outputs_dict[layer_name] = tensors[layer_name] = add_Lambda(input_tensors, row, skip, tensors)
 
         elif layer_type == 'GlobalAveragePooling2D':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_GlobalAveragePooling2D(input_tensor, row)
+            outputs_dict[layer_name] = tensors[layer_name] = add_GlobalAveragePooling2D(input_tensor, row, skip, tensors)
 
         elif layer_type == 'GlobalMaxPooling2D':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_GlobalMaxPooling2D(input_tensor, row)
+            outputs_dict[layer_name] = tensors[layer_name] = add_GlobalMaxPooling2D(input_tensor, row, skip, tensors)
 
         elif layer_type == 'Cropping2D':
             # get input tensor
-            input_tensor = get_single_input(row['connected_to'], tensors, outputs_dict)
+            input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
-            outputs_dict[layer_name] = tensors[layer_name] = add_Cropping2D(input_tensor, row)
+            outputs_dict[layer_name] = tensors[layer_name] = add_Cropping2D(input_tensor, row, skip, tensors)
 
         else:
             print('Undefined Layer: {}'.format(layer_type))

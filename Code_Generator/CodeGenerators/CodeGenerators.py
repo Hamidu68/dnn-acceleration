@@ -66,6 +66,19 @@ class CodeGenerators(object):
                 func = dense_input.format(Input_channel=input_shape[1], Output_channel=output_shape[1],
                                           line_number=l_n, comment_begin=begin, comment_end=end)
                 initialization += func + "\n\t"
+            elif layer_type == 'DepthwiseConv2D':
+                filter_shape = eval(layer.config['kernel_size'])
+                dc_input = open("Code_Generator/Template/Init/depthConv_var_Initializer_f.txt")
+                dconv_input = dc_input.read()
+                begin = ''
+                end = ''
+                if layer.config['use_bias'] == 'False':
+                    begin = '/*'
+                    end = '*/'
+                func = dconv_input.format(Output_channel=output_shape[3], Filter_width=filter_shape[0],
+                                          Filter_height=filter_shape[1], line_number=l_n,
+                                          comment_begin=begin, comment_end=end)
+                initialization += func + "\n\t"
             elif layer_type == 'BatchNormalization':
                 b_input = open("Code_Generator/Template/Init/Batch_var_Initializer_f.txt")
                 batch_input = b_input.read()
@@ -101,6 +114,8 @@ class CodeGenerators(object):
                 sw_def_layer += layer.function['code']
             elif layer_type == 'Dense':
                 sw_def_layer += layer.function['code']
+            elif layer_type == 'Add':
+                sw_def_layer += layer.function['code']
             elif layer_type == 'Flatten' :
                 sw_def_layer += layer.function['code']
             elif layer_type == 'Concatenate':
@@ -118,6 +133,8 @@ class CodeGenerators(object):
             elif layer_type == 'DepthwiseConv2D':
                 sw_def_layer += layer.function['code']
             elif layer_type == 'Dropout':
+                sw_def_layer += layer.function['code']
+            elif layer_type == 'ZeroPadding2D':
                 sw_def_layer += layer.function['code']
             elif layer_type == 'Reshape':
                 sw_def_layer += layer.function['code']
@@ -162,7 +179,7 @@ class CodeGenerators(object):
             output_shape = eval(layer.config['batch_output_shape'])
             layer_type = layer.config['layer_type']
             l_n=layer.layer_odr
-            if layer_type == 'Flatten' or layer_type == 'Dense' or layer_type == 'GlobalAveragePooling2D' or layer_type == 'GlobalMaxPooling2D':
+            if len(output_shape)<=2:
                 sw_output_variables += 'static DATA_T O{}_SW[{}];\n\t'.format(l_n, output_shape[1])
             else :
                 sw_output_variables += 'static DATA_T O{}_SW[{}][{}][{}];\n\t'.format(l_n, output_shape[3],

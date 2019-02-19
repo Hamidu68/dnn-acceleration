@@ -1,6 +1,7 @@
 from .Data import Data
 from .Layers import Layers
 from string import Template
+import ast
 
 class Lambda(Layers):
 

@@ -4,7 +4,7 @@
 #include <string>
 #include <string.h>
 #include <math.h>
-    
+
 using namespace std;
 
 typedef float DATA_T;
@@ -3108,25 +3108,25 @@ void SW_Logits(DATA_T I[1280], DATA_T O[1000], DATA_T W[1000][1280], DATA_T B[10
 
     //Softmax
 
-    //maximum=O[0]/denom;
+    maximum=O[0]/denom;
     for (m = 0; m < 1000; m++){
 		O[m]=O[m]/denom;
-		//if(maximum<O[m])
-		//    maximum=O[m];
+		if(maximum<O[m])
+		    maximum=O[m];
     }
 
-    /*for (m = 0; m < 1000; m++){
+    for (m = 0; m < 1000; m++){
 	    if(maximum!=O[m])
 	        O[m]=0;
 	    else
 	        O[m]=1;
-	}*/
+    }
 
 
 }
 
 
-//argv[1] = init_weight.txt, argv[3] = init_input.txt
+//argv[1] = init_weight.txt, argv[2] = init_input.txt
 int main(int argc, char *argv[]){
 
     DATA_T temp;
@@ -3400,13 +3400,12 @@ int main(int argc, char *argv[]){
     if (w_stream == NULL) printf("weight file was not opened");
     FILE *i_stream = fopen(argv[2], "rb");
     if (i_stream == NULL) printf("input file was not opened");
-    FILE *o_stream = fopen("../../cpp_generator/mobilenetv2/Output/C_output.txt", "w");
+    FILE *o_stream = fopen("Produced_code/mobilenetv2/Output/c_output.txt", "w");
     if (o_stream == NULL) printf("Output file was not opened");
-    FILE *c_num = fopen("../../cpp_generator/mobilenetv2/Output/c_output_num.txt", "w");
+    FILE *c_num = fopen("Produced_code/mobilenetv2/Output/c_output_num.txt", "w");
     if (c_num == NULL) printf("Output file was not opened");
 
     printf("[C_verifier.cpp]Start Initialzation");
-    
     for (k = 0; k <  224 ; k++) {
 	for (x = 0; x < 224 ; x++) {
 		for(y = 0; y < 3 ; y++) {
@@ -4614,8 +4613,20 @@ for (m = 0; m < 1280 ; m++) {
         W148[x][y] = (DATA_T) trash;
     }
 }
+	for (m = 0; m <  1280 ; m++) {
+	for (k = 0; k < 1000 ; k++) {
+		fread(&trash, sizeof(int), 1, w_stream);
+        W151[k][m] = (DATA_T) trash;
+	}
+}
+
+
+for (m = 0; m < 1000 ; m++) {
+    fread(&trash, sizeof(int), 1, w_stream);
+    B151[m] = (DATA_T) trash;
+}
+
 	
-    
     printf("[C_verifier.cpp]Finish Initialization");
 
     printf("[C_verifier.cpp]InputLayer\n\n");

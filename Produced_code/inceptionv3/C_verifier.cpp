@@ -4,7 +4,7 @@
 #include <string>
 #include <string.h>
 #include <math.h>
-    
+
 using namespace std;
 
 typedef float DATA_T;
@@ -129,7 +129,7 @@ void SW_conv2d_3(DATA_T I[32][109][109], DATA_T O[64][109][109], DATA_T W[64][32
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 109 + p && y*1 + j < 109 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -335,7 +335,7 @@ void SW_conv2d_9(DATA_T I[192][25][25], DATA_T O[64][25][25], DATA_T W[64][192][
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -393,7 +393,7 @@ void SW_conv2d_7(DATA_T I[192][25][25], DATA_T O[48][25][25], DATA_T W[48][192][
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -421,7 +421,7 @@ void SW_conv2d_10(DATA_T I[64][25][25], DATA_T O[96][25][25], DATA_T W[96][64][3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -537,7 +537,7 @@ void SW_conv2d_6(DATA_T I[192][25][25], DATA_T O[64][25][25], DATA_T W[64][192][
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -565,7 +565,7 @@ void SW_conv2d_8(DATA_T I[48][25][25], DATA_T O[64][25][25], DATA_T W[64][48][5]
 					for (i = 0; i<5; i++) {
 						for (j = 0; j<5; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -593,7 +593,7 @@ void SW_conv2d_11(DATA_T I[96][25][25], DATA_T O[96][25][25], DATA_T W[96][96][3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -621,7 +621,7 @@ void SW_conv2d_12(DATA_T I[192][25][25], DATA_T O[32][25][25], DATA_T W[32][192]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -795,7 +795,7 @@ void SW_conv2d_16(DATA_T I[256][25][25], DATA_T O[64][25][25], DATA_T W[64][256]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -853,7 +853,7 @@ void SW_conv2d_14(DATA_T I[256][25][25], DATA_T O[48][25][25], DATA_T W[48][256]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -881,7 +881,7 @@ void SW_conv2d_17(DATA_T I[64][25][25], DATA_T O[96][25][25], DATA_T W[96][64][3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -997,7 +997,7 @@ void SW_conv2d_13(DATA_T I[256][25][25], DATA_T O[64][25][25], DATA_T W[64][256]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1025,7 +1025,7 @@ void SW_conv2d_15(DATA_T I[48][25][25], DATA_T O[64][25][25], DATA_T W[64][48][5
 					for (i = 0; i<5; i++) {
 						for (j = 0; j<5; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1053,7 +1053,7 @@ void SW_conv2d_18(DATA_T I[96][25][25], DATA_T O[96][25][25], DATA_T W[96][96][3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1081,7 +1081,7 @@ void SW_conv2d_19(DATA_T I[256][25][25], DATA_T O[64][25][25], DATA_T W[64][256]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1255,7 +1255,7 @@ void SW_conv2d_23(DATA_T I[288][25][25], DATA_T O[64][25][25], DATA_T W[64][288]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1313,7 +1313,7 @@ void SW_conv2d_21(DATA_T I[288][25][25], DATA_T O[48][25][25], DATA_T W[48][288]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1341,7 +1341,7 @@ void SW_conv2d_24(DATA_T I[64][25][25], DATA_T O[96][25][25], DATA_T W[96][64][3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1457,7 +1457,7 @@ void SW_conv2d_20(DATA_T I[288][25][25], DATA_T O[64][25][25], DATA_T W[64][288]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1485,7 +1485,7 @@ void SW_conv2d_22(DATA_T I[48][25][25], DATA_T O[64][25][25], DATA_T W[64][48][5
 					for (i = 0; i<5; i++) {
 						for (j = 0; j<5; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1513,7 +1513,7 @@ void SW_conv2d_25(DATA_T I[96][25][25], DATA_T O[96][25][25], DATA_T W[96][96][3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1541,7 +1541,7 @@ void SW_conv2d_26(DATA_T I[288][25][25], DATA_T O[64][25][25], DATA_T W[64][288]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1715,7 +1715,7 @@ void SW_conv2d_28(DATA_T I[288][25][25], DATA_T O[64][25][25], DATA_T W[64][288]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1773,7 +1773,7 @@ void SW_conv2d_29(DATA_T I[64][25][25], DATA_T O[96][25][25], DATA_T W[96][64][3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 25 + p && y*1 + j < 25 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1981,7 +1981,7 @@ void SW_conv2d_35(DATA_T I[768][12][12], DATA_T O[128][12][12], DATA_T W[128][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2039,7 +2039,7 @@ void SW_conv2d_36(DATA_T I[128][12][12], DATA_T O[128][12][12], DATA_T W[128][12
 					for (i = 0; i<7; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2097,7 +2097,7 @@ void SW_conv2d_32(DATA_T I[768][12][12], DATA_T O[128][12][12], DATA_T W[128][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2125,7 +2125,7 @@ void SW_conv2d_37(DATA_T I[128][12][12], DATA_T O[128][12][12], DATA_T W[128][12
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<7; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2213,7 +2213,7 @@ void SW_conv2d_33(DATA_T I[128][12][12], DATA_T O[128][12][12], DATA_T W[128][12
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<7; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2241,7 +2241,7 @@ void SW_conv2d_38(DATA_T I[128][12][12], DATA_T O[128][12][12], DATA_T W[128][12
 					for (i = 0; i<7; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2357,7 +2357,7 @@ void SW_conv2d_31(DATA_T I[768][12][12], DATA_T O[192][12][12], DATA_T W[192][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2385,7 +2385,7 @@ void SW_conv2d_34(DATA_T I[128][12][12], DATA_T O[192][12][12], DATA_T W[192][12
 					for (i = 0; i<7; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2413,7 +2413,7 @@ void SW_conv2d_39(DATA_T I[128][12][12], DATA_T O[192][12][12], DATA_T W[192][12
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<7; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2441,7 +2441,7 @@ void SW_conv2d_40(DATA_T I[768][12][12], DATA_T O[192][12][12], DATA_T W[192][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2615,7 +2615,7 @@ void SW_conv2d_45(DATA_T I[768][12][12], DATA_T O[160][12][12], DATA_T W[160][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2673,7 +2673,7 @@ void SW_conv2d_46(DATA_T I[160][12][12], DATA_T O[160][12][12], DATA_T W[160][16
 					for (i = 0; i<7; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2731,7 +2731,7 @@ void SW_conv2d_42(DATA_T I[768][12][12], DATA_T O[160][12][12], DATA_T W[160][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2759,7 +2759,7 @@ void SW_conv2d_47(DATA_T I[160][12][12], DATA_T O[160][12][12], DATA_T W[160][16
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<7; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2847,7 +2847,7 @@ void SW_conv2d_43(DATA_T I[160][12][12], DATA_T O[160][12][12], DATA_T W[160][16
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<7; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2875,7 +2875,7 @@ void SW_conv2d_48(DATA_T I[160][12][12], DATA_T O[160][12][12], DATA_T W[160][16
 					for (i = 0; i<7; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2991,7 +2991,7 @@ void SW_conv2d_41(DATA_T I[768][12][12], DATA_T O[192][12][12], DATA_T W[192][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3019,7 +3019,7 @@ void SW_conv2d_44(DATA_T I[160][12][12], DATA_T O[192][12][12], DATA_T W[192][16
 					for (i = 0; i<7; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3047,7 +3047,7 @@ void SW_conv2d_49(DATA_T I[160][12][12], DATA_T O[192][12][12], DATA_T W[192][16
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<7; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3075,7 +3075,7 @@ void SW_conv2d_50(DATA_T I[768][12][12], DATA_T O[192][12][12], DATA_T W[192][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3249,7 +3249,7 @@ void SW_conv2d_55(DATA_T I[768][12][12], DATA_T O[160][12][12], DATA_T W[160][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3307,7 +3307,7 @@ void SW_conv2d_56(DATA_T I[160][12][12], DATA_T O[160][12][12], DATA_T W[160][16
 					for (i = 0; i<7; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3365,7 +3365,7 @@ void SW_conv2d_52(DATA_T I[768][12][12], DATA_T O[160][12][12], DATA_T W[160][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3393,7 +3393,7 @@ void SW_conv2d_57(DATA_T I[160][12][12], DATA_T O[160][12][12], DATA_T W[160][16
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<7; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3481,7 +3481,7 @@ void SW_conv2d_53(DATA_T I[160][12][12], DATA_T O[160][12][12], DATA_T W[160][16
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<7; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3509,7 +3509,7 @@ void SW_conv2d_58(DATA_T I[160][12][12], DATA_T O[160][12][12], DATA_T W[160][16
 					for (i = 0; i<7; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3625,7 +3625,7 @@ void SW_conv2d_51(DATA_T I[768][12][12], DATA_T O[192][12][12], DATA_T W[192][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3653,7 +3653,7 @@ void SW_conv2d_54(DATA_T I[160][12][12], DATA_T O[192][12][12], DATA_T W[192][16
 					for (i = 0; i<7; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3681,7 +3681,7 @@ void SW_conv2d_59(DATA_T I[160][12][12], DATA_T O[192][12][12], DATA_T W[192][16
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<7; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3709,7 +3709,7 @@ void SW_conv2d_60(DATA_T I[768][12][12], DATA_T O[192][12][12], DATA_T W[192][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3883,7 +3883,7 @@ void SW_conv2d_65(DATA_T I[768][12][12], DATA_T O[192][12][12], DATA_T W[192][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3941,7 +3941,7 @@ void SW_conv2d_66(DATA_T I[192][12][12], DATA_T O[192][12][12], DATA_T W[192][19
 					for (i = 0; i<7; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3999,7 +3999,7 @@ void SW_conv2d_62(DATA_T I[768][12][12], DATA_T O[192][12][12], DATA_T W[192][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4027,7 +4027,7 @@ void SW_conv2d_67(DATA_T I[192][12][12], DATA_T O[192][12][12], DATA_T W[192][19
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<7; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4115,7 +4115,7 @@ void SW_conv2d_63(DATA_T I[192][12][12], DATA_T O[192][12][12], DATA_T W[192][19
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<7; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4143,7 +4143,7 @@ void SW_conv2d_68(DATA_T I[192][12][12], DATA_T O[192][12][12], DATA_T W[192][19
 					for (i = 0; i<7; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4259,7 +4259,7 @@ void SW_conv2d_61(DATA_T I[768][12][12], DATA_T O[192][12][12], DATA_T W[192][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4287,7 +4287,7 @@ void SW_conv2d_64(DATA_T I[192][12][12], DATA_T O[192][12][12], DATA_T W[192][19
 					for (i = 0; i<7; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4315,7 +4315,7 @@ void SW_conv2d_69(DATA_T I[192][12][12], DATA_T O[192][12][12], DATA_T W[192][19
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<7; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4343,7 +4343,7 @@ void SW_conv2d_70(DATA_T I[768][12][12], DATA_T O[192][12][12], DATA_T W[192][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4517,7 +4517,7 @@ void SW_conv2d_73(DATA_T I[768][12][12], DATA_T O[192][12][12], DATA_T W[192][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4575,7 +4575,7 @@ void SW_conv2d_74(DATA_T I[192][12][12], DATA_T O[192][12][12], DATA_T W[192][19
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<7; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4633,7 +4633,7 @@ void SW_conv2d_71(DATA_T I[768][12][12], DATA_T O[192][12][12], DATA_T W[192][76
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4661,7 +4661,7 @@ void SW_conv2d_75(DATA_T I[192][12][12], DATA_T O[192][12][12], DATA_T W[192][19
 					for (i = 0; i<7; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 12 + p && y*1 + j < 12 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4899,7 +4899,7 @@ void SW_conv2d_81(DATA_T I[1280][5][5], DATA_T O[448][5][5], DATA_T W[448][1280]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4957,7 +4957,7 @@ void SW_conv2d_78(DATA_T I[1280][5][5], DATA_T O[384][5][5], DATA_T W[384][1280]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4985,7 +4985,7 @@ void SW_conv2d_82(DATA_T I[448][5][5], DATA_T O[384][5][5], DATA_T W[384][448][3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5073,7 +5073,7 @@ void SW_conv2d_79(DATA_T I[384][5][5], DATA_T O[384][5][5], DATA_T W[384][384][1
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5101,7 +5101,7 @@ void SW_conv2d_80(DATA_T I[384][5][5], DATA_T O[384][5][5], DATA_T W[384][384][3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5129,7 +5129,7 @@ void SW_conv2d_83(DATA_T I[384][5][5], DATA_T O[384][5][5], DATA_T W[384][384][1
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5157,7 +5157,7 @@ void SW_conv2d_84(DATA_T I[384][5][5], DATA_T O[384][5][5], DATA_T W[384][384][3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5213,7 +5213,7 @@ void SW_conv2d_77(DATA_T I[1280][5][5], DATA_T O[320][5][5], DATA_T W[320][1280]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5305,7 +5305,7 @@ void SW_conv2d_85(DATA_T I[1280][5][5], DATA_T O[192][5][5], DATA_T W[192][1280]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5423,6 +5423,42 @@ void SW_activation_126(DATA_T I[320][5][5], DATA_T O[320][5][5]) {
 	}
 }
 
+void SW_mixed9_0(DATA_T I1[384][5][5], DATA_T I2[384][5][5], DATA_T O[768][5][5]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 5; x++) {
+		for(y = 0; y < 5; y++) {
+			ch=0;
+			for(k = ch; k < ch+384; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=384;
+			for(k = ch; k < ch+384; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
+void SW_concatenate_1(DATA_T I1[384][5][5], DATA_T I2[384][5][5], DATA_T O[768][5][5]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 5; x++) {
+		for(y = 0; y < 5; y++) {
+			ch=0;
+			for(k = ch; k < ch+384; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=384;
+			for(k = ch; k < ch+384; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_activation_134(DATA_T I[192][5][5], DATA_T O[192][5][5]) {
 	int m, x, y, i, j, k;
 	for (m = 0; m<192; m++) {
@@ -5475,7 +5511,7 @@ void SW_conv2d_90(DATA_T I[2048][5][5], DATA_T O[448][5][5], DATA_T W[448][2048]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5533,7 +5569,7 @@ void SW_conv2d_87(DATA_T I[2048][5][5], DATA_T O[384][5][5], DATA_T W[384][2048]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5561,7 +5597,7 @@ void SW_conv2d_91(DATA_T I[448][5][5], DATA_T O[384][5][5], DATA_T W[384][448][3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5649,7 +5685,7 @@ void SW_conv2d_88(DATA_T I[384][5][5], DATA_T O[384][5][5], DATA_T W[384][384][1
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5677,7 +5713,7 @@ void SW_conv2d_89(DATA_T I[384][5][5], DATA_T O[384][5][5], DATA_T W[384][384][3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5705,7 +5741,7 @@ void SW_conv2d_92(DATA_T I[384][5][5], DATA_T O[384][5][5], DATA_T W[384][384][1
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5733,7 +5769,7 @@ void SW_conv2d_93(DATA_T I[384][5][5], DATA_T O[384][5][5], DATA_T W[384][384][3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5789,7 +5825,7 @@ void SW_conv2d_86(DATA_T I[2048][5][5], DATA_T O[320][5][5], DATA_T W[320][2048]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5881,7 +5917,7 @@ void SW_conv2d_94(DATA_T I[2048][5][5], DATA_T O[192][5][5], DATA_T W[192][2048]
 					for (i = 0; i<1; i++) {
 						for (j = 0; j<1; j++) {
 							if (x*1 + i < 5 + p && y*1 + j < 5 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5999,6 +6035,42 @@ void SW_activation_135(DATA_T I[320][5][5], DATA_T O[320][5][5]) {
 	}
 }
 
+void SW_mixed9_1(DATA_T I1[384][5][5], DATA_T I2[384][5][5], DATA_T O[768][5][5]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 5; x++) {
+		for(y = 0; y < 5; y++) {
+			ch=0;
+			for(k = ch; k < ch+384; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=384;
+			for(k = ch; k < ch+384; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
+void SW_concatenate_2(DATA_T I1[384][5][5], DATA_T I2[384][5][5], DATA_T O[768][5][5]) {
+	int x, y, k;
+	int ch=0;
+	
+	for (x = 0; x < 5; x++) {
+		for(y = 0; y < 5; y++) {
+			ch=0;
+			for(k = ch; k < ch+384; k++){
+				O[k][x][y] = I1[k][x][y];
+			}
+			ch+=384;
+			for(k = ch; k < ch+384; k++){
+				O[k][x][y] = I2[k-ch][x][y];
+			}
+		}
+	}
+
+}
 void SW_activation_143(DATA_T I[192][5][5], DATA_T O[192][5][5]) {
 	int m, x, y, i, j, k;
 	for (m = 0; m<192; m++) {
@@ -6069,7 +6141,7 @@ void SW_predictions(DATA_T I[2048], DATA_T O[1000], DATA_T W[1000][2048], DATA_T
 }
 
 
-//argv[1] = init_weight.txt, argv[3] = init_input.txt
+//argv[1] = init_weight.txt, argv[2] = init_input.txt
 int main(int argc, char *argv[]){
 
     DATA_T temp;
@@ -6588,9 +6660,9 @@ int main(int argc, char *argv[]){
     if (w_stream == NULL) printf("weight file was not opened");
     FILE *i_stream = fopen(argv[2], "rb");
     if (i_stream == NULL) printf("input file was not opened");
-    FILE *o_stream = fopen("../../cpp_generator/inceptionv3/Output/C_output.txt", "w");
+    FILE *o_stream = fopen("Produced_code/inceptionv3/Output/c_output.txt", "w");
     if (o_stream == NULL) printf("Output file was not opened");
-    FILE *c_num = fopen("../../cpp_generator/inceptionv3/Output/c_output_num.txt", "w");
+    FILE *c_num = fopen("Produced_code/inceptionv3/Output/c_output_num.txt", "w");
     if (c_num == NULL) printf("Output file was not opened");
 
     printf("[C_verifier.cpp]Start Initialzation");
@@ -9428,7 +9500,9 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Activation(Relu)275\n\n");
 	SW_activation_126(O269_SW,O275_SW);
 	printf("[C_verifier.cpp]Calculate Concatenate276\n\n");
+	SW_mixed9_0(O270_SW, O271_SW, O276_SW);
 	printf("[C_verifier.cpp]Calculate Concatenate277\n\n");
+	SW_concatenate_1(O272_SW, O273_SW, O277_SW);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)278\n\n");
 	SW_activation_134(O274_SW,O278_SW);
 	printf("[C_verifier.cpp]Calculate Concatenate279\n\n");
@@ -9488,7 +9562,9 @@ for (m = 0; m < 1000 ; m++) {
 	printf("[C_verifier.cpp]Calculate Activation(Relu)306\n\n");
 	SW_activation_135(O300_SW,O306_SW);
 	printf("[C_verifier.cpp]Calculate Concatenate307\n\n");
+	SW_mixed9_1(O301_SW, O302_SW, O307_SW);
 	printf("[C_verifier.cpp]Calculate Concatenate308\n\n");
+	SW_concatenate_2(O303_SW, O304_SW, O308_SW);
 	printf("[C_verifier.cpp]Calculate Activation(Relu)309\n\n");
 	SW_activation_143(O305_SW,O309_SW);
 	printf("[C_verifier.cpp]Calculate Concatenate310\n\n");

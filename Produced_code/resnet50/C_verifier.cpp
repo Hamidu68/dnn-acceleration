@@ -4,7 +4,7 @@
 #include <string>
 #include <string.h>
 #include <math.h>
-    
+
 using namespace std;
 
 typedef float DATA_T;
@@ -68,22 +68,20 @@ void SW_bn_conv1(DATA_T I[64][112][112], DATA_T O[64][112][112], DATA_T W[4][64]
 		}
 	}
 }
-void SW_activation_1(DATA_T I[64][112][112], DATA_T O[64][112][112])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_1(DATA_T I[64][112][112], DATA_T O[64][112][112]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<64; m++) {
 		for (x = 0; x<112; x++) {
 			for (y = 0; y<112; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_max_pooling2d_1(DATA_T I[64][112][112], DATA_T O[64][55][55])
 {
 	int m, x, y, i, j;
@@ -146,22 +144,20 @@ void SW_bn2a_branch2a(DATA_T I[64][55][55], DATA_T O[64][55][55], DATA_T W[4][64
 		}
 	}
 }
-void SW_activation_2(DATA_T I[64][55][55], DATA_T O[64][55][55])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_2(DATA_T I[64][55][55], DATA_T O[64][55][55]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<64; m++) {
 		for (x = 0; x<55; x++) {
 			for (y = 0; y<55; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res2a_branch2b(DATA_T I[64][55][55], DATA_T O[64][55][55], DATA_T W[64][64][3][3], DATA_T B[64]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -207,22 +203,20 @@ void SW_bn2a_branch2b(DATA_T I[64][55][55], DATA_T O[64][55][55], DATA_T W[4][64
 		}
 	}
 }
-void SW_activation_3(DATA_T I[64][55][55], DATA_T O[64][55][55])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_3(DATA_T I[64][55][55], DATA_T O[64][55][55]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<64; m++) {
 		for (x = 0; x<55; x++) {
 			for (y = 0; y<55; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res2a_branch2c(DATA_T I[64][55][55], DATA_T O[256][55][55], DATA_T W[256][64][1][1], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -317,22 +311,20 @@ void SW_add_1(DATA_T I1[256][55][55], DATA_T I2[256][55][55], DATA_T O[256][55][
 		}
 	}
 }
-void SW_activation_4(DATA_T I[256][55][55], DATA_T O[256][55][55])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_4(DATA_T I[256][55][55], DATA_T O[256][55][55]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<55; x++) {
 			for (y = 0; y<55; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res2b_branch2a(DATA_T I[256][55][55], DATA_T O[64][55][55], DATA_T W[64][256][1][1], DATA_T B[64]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -375,22 +367,20 @@ void SW_bn2b_branch2a(DATA_T I[64][55][55], DATA_T O[64][55][55], DATA_T W[4][64
 		}
 	}
 }
-void SW_activation_5(DATA_T I[64][55][55], DATA_T O[64][55][55])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_5(DATA_T I[64][55][55], DATA_T O[64][55][55]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<64; m++) {
 		for (x = 0; x<55; x++) {
 			for (y = 0; y<55; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res2b_branch2b(DATA_T I[64][55][55], DATA_T O[64][55][55], DATA_T W[64][64][3][3], DATA_T B[64]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -436,22 +426,20 @@ void SW_bn2b_branch2b(DATA_T I[64][55][55], DATA_T O[64][55][55], DATA_T W[4][64
 		}
 	}
 }
-void SW_activation_6(DATA_T I[64][55][55], DATA_T O[64][55][55])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_6(DATA_T I[64][55][55], DATA_T O[64][55][55]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<64; m++) {
 		for (x = 0; x<55; x++) {
 			for (y = 0; y<55; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res2b_branch2c(DATA_T I[64][55][55], DATA_T O[256][55][55], DATA_T W[256][64][1][1], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -504,22 +492,20 @@ void SW_add_2(DATA_T I1[256][55][55], DATA_T I2[256][55][55], DATA_T O[256][55][
 		}
 	}
 }
-void SW_activation_7(DATA_T I[256][55][55], DATA_T O[256][55][55])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_7(DATA_T I[256][55][55], DATA_T O[256][55][55]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<55; x++) {
 			for (y = 0; y<55; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res2c_branch2a(DATA_T I[256][55][55], DATA_T O[64][55][55], DATA_T W[64][256][1][1], DATA_T B[64]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -562,22 +548,20 @@ void SW_bn2c_branch2a(DATA_T I[64][55][55], DATA_T O[64][55][55], DATA_T W[4][64
 		}
 	}
 }
-void SW_activation_8(DATA_T I[64][55][55], DATA_T O[64][55][55])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_8(DATA_T I[64][55][55], DATA_T O[64][55][55]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<64; m++) {
 		for (x = 0; x<55; x++) {
 			for (y = 0; y<55; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res2c_branch2b(DATA_T I[64][55][55], DATA_T O[64][55][55], DATA_T W[64][64][3][3], DATA_T B[64]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -623,22 +607,20 @@ void SW_bn2c_branch2b(DATA_T I[64][55][55], DATA_T O[64][55][55], DATA_T W[4][64
 		}
 	}
 }
-void SW_activation_9(DATA_T I[64][55][55], DATA_T O[64][55][55])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_9(DATA_T I[64][55][55], DATA_T O[64][55][55]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<64; m++) {
 		for (x = 0; x<55; x++) {
 			for (y = 0; y<55; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res2c_branch2c(DATA_T I[64][55][55], DATA_T O[256][55][55], DATA_T W[256][64][1][1], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -691,22 +673,20 @@ void SW_add_3(DATA_T I1[256][55][55], DATA_T I2[256][55][55], DATA_T O[256][55][
 		}
 	}
 }
-void SW_activation_10(DATA_T I[256][55][55], DATA_T O[256][55][55])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_10(DATA_T I[256][55][55], DATA_T O[256][55][55]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<55; x++) {
 			for (y = 0; y<55; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res3a_branch2a(DATA_T I[256][55][55], DATA_T O[128][28][28], DATA_T W[128][256][1][1], DATA_T B[128]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -749,22 +729,20 @@ void SW_bn3a_branch2a(DATA_T I[128][28][28], DATA_T O[128][28][28], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_11(DATA_T I[128][28][28], DATA_T O[128][28][28])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_11(DATA_T I[128][28][28], DATA_T O[128][28][28]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<128; m++) {
 		for (x = 0; x<28; x++) {
 			for (y = 0; y<28; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res3a_branch2b(DATA_T I[128][28][28], DATA_T O[128][28][28], DATA_T W[128][128][3][3], DATA_T B[128]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -810,22 +788,20 @@ void SW_bn3a_branch2b(DATA_T I[128][28][28], DATA_T O[128][28][28], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_12(DATA_T I[128][28][28], DATA_T O[128][28][28])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_12(DATA_T I[128][28][28], DATA_T O[128][28][28]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<128; m++) {
 		for (x = 0; x<28; x++) {
 			for (y = 0; y<28; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res3a_branch2c(DATA_T I[128][28][28], DATA_T O[512][28][28], DATA_T W[512][128][1][1], DATA_T B[512]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -920,22 +896,20 @@ void SW_add_4(DATA_T I1[512][28][28], DATA_T I2[512][28][28], DATA_T O[512][28][
 		}
 	}
 }
-void SW_activation_13(DATA_T I[512][28][28], DATA_T O[512][28][28])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_13(DATA_T I[512][28][28], DATA_T O[512][28][28]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<512; m++) {
 		for (x = 0; x<28; x++) {
 			for (y = 0; y<28; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res3b_branch2a(DATA_T I[512][28][28], DATA_T O[128][28][28], DATA_T W[128][512][1][1], DATA_T B[128]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -978,22 +952,20 @@ void SW_bn3b_branch2a(DATA_T I[128][28][28], DATA_T O[128][28][28], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_14(DATA_T I[128][28][28], DATA_T O[128][28][28])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_14(DATA_T I[128][28][28], DATA_T O[128][28][28]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<128; m++) {
 		for (x = 0; x<28; x++) {
 			for (y = 0; y<28; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res3b_branch2b(DATA_T I[128][28][28], DATA_T O[128][28][28], DATA_T W[128][128][3][3], DATA_T B[128]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1039,22 +1011,20 @@ void SW_bn3b_branch2b(DATA_T I[128][28][28], DATA_T O[128][28][28], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_15(DATA_T I[128][28][28], DATA_T O[128][28][28])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_15(DATA_T I[128][28][28], DATA_T O[128][28][28]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<128; m++) {
 		for (x = 0; x<28; x++) {
 			for (y = 0; y<28; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res3b_branch2c(DATA_T I[128][28][28], DATA_T O[512][28][28], DATA_T W[512][128][1][1], DATA_T B[512]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1107,22 +1077,20 @@ void SW_add_5(DATA_T I1[512][28][28], DATA_T I2[512][28][28], DATA_T O[512][28][
 		}
 	}
 }
-void SW_activation_16(DATA_T I[512][28][28], DATA_T O[512][28][28])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_16(DATA_T I[512][28][28], DATA_T O[512][28][28]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<512; m++) {
 		for (x = 0; x<28; x++) {
 			for (y = 0; y<28; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res3c_branch2a(DATA_T I[512][28][28], DATA_T O[128][28][28], DATA_T W[128][512][1][1], DATA_T B[128]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1165,22 +1133,20 @@ void SW_bn3c_branch2a(DATA_T I[128][28][28], DATA_T O[128][28][28], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_17(DATA_T I[128][28][28], DATA_T O[128][28][28])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_17(DATA_T I[128][28][28], DATA_T O[128][28][28]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<128; m++) {
 		for (x = 0; x<28; x++) {
 			for (y = 0; y<28; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res3c_branch2b(DATA_T I[128][28][28], DATA_T O[128][28][28], DATA_T W[128][128][3][3], DATA_T B[128]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1226,22 +1192,20 @@ void SW_bn3c_branch2b(DATA_T I[128][28][28], DATA_T O[128][28][28], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_18(DATA_T I[128][28][28], DATA_T O[128][28][28])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_18(DATA_T I[128][28][28], DATA_T O[128][28][28]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<128; m++) {
 		for (x = 0; x<28; x++) {
 			for (y = 0; y<28; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res3c_branch2c(DATA_T I[128][28][28], DATA_T O[512][28][28], DATA_T W[512][128][1][1], DATA_T B[512]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1294,22 +1258,20 @@ void SW_add_6(DATA_T I1[512][28][28], DATA_T I2[512][28][28], DATA_T O[512][28][
 		}
 	}
 }
-void SW_activation_19(DATA_T I[512][28][28], DATA_T O[512][28][28])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_19(DATA_T I[512][28][28], DATA_T O[512][28][28]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<512; m++) {
 		for (x = 0; x<28; x++) {
 			for (y = 0; y<28; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res3d_branch2a(DATA_T I[512][28][28], DATA_T O[128][28][28], DATA_T W[128][512][1][1], DATA_T B[128]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1352,22 +1314,20 @@ void SW_bn3d_branch2a(DATA_T I[128][28][28], DATA_T O[128][28][28], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_20(DATA_T I[128][28][28], DATA_T O[128][28][28])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_20(DATA_T I[128][28][28], DATA_T O[128][28][28]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<128; m++) {
 		for (x = 0; x<28; x++) {
 			for (y = 0; y<28; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res3d_branch2b(DATA_T I[128][28][28], DATA_T O[128][28][28], DATA_T W[128][128][3][3], DATA_T B[128]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1413,22 +1373,20 @@ void SW_bn3d_branch2b(DATA_T I[128][28][28], DATA_T O[128][28][28], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_21(DATA_T I[128][28][28], DATA_T O[128][28][28])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_21(DATA_T I[128][28][28], DATA_T O[128][28][28]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<128; m++) {
 		for (x = 0; x<28; x++) {
 			for (y = 0; y<28; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res3d_branch2c(DATA_T I[128][28][28], DATA_T O[512][28][28], DATA_T W[512][128][1][1], DATA_T B[512]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1481,22 +1439,20 @@ void SW_add_7(DATA_T I1[512][28][28], DATA_T I2[512][28][28], DATA_T O[512][28][
 		}
 	}
 }
-void SW_activation_22(DATA_T I[512][28][28], DATA_T O[512][28][28])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_22(DATA_T I[512][28][28], DATA_T O[512][28][28]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<512; m++) {
 		for (x = 0; x<28; x++) {
 			for (y = 0; y<28; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4a_branch2a(DATA_T I[512][28][28], DATA_T O[256][14][14], DATA_T W[256][512][1][1], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1539,22 +1495,20 @@ void SW_bn4a_branch2a(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_23(DATA_T I[256][14][14], DATA_T O[256][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_23(DATA_T I[256][14][14], DATA_T O[256][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4a_branch2b(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[256][256][3][3], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1600,22 +1554,20 @@ void SW_bn4a_branch2b(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_24(DATA_T I[256][14][14], DATA_T O[256][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_24(DATA_T I[256][14][14], DATA_T O[256][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4a_branch2c(DATA_T I[256][14][14], DATA_T O[1024][14][14], DATA_T W[1024][256][1][1], DATA_T B[1024]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1710,22 +1662,20 @@ void SW_add_8(DATA_T I1[1024][14][14], DATA_T I2[1024][14][14], DATA_T O[1024][1
 		}
 	}
 }
-void SW_activation_25(DATA_T I[1024][14][14], DATA_T O[1024][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_25(DATA_T I[1024][14][14], DATA_T O[1024][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<1024; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4b_branch2a(DATA_T I[1024][14][14], DATA_T O[256][14][14], DATA_T W[256][1024][1][1], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1768,22 +1718,20 @@ void SW_bn4b_branch2a(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_26(DATA_T I[256][14][14], DATA_T O[256][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_26(DATA_T I[256][14][14], DATA_T O[256][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4b_branch2b(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[256][256][3][3], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1829,22 +1777,20 @@ void SW_bn4b_branch2b(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_27(DATA_T I[256][14][14], DATA_T O[256][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_27(DATA_T I[256][14][14], DATA_T O[256][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4b_branch2c(DATA_T I[256][14][14], DATA_T O[1024][14][14], DATA_T W[1024][256][1][1], DATA_T B[1024]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1897,22 +1843,20 @@ void SW_add_9(DATA_T I1[1024][14][14], DATA_T I2[1024][14][14], DATA_T O[1024][1
 		}
 	}
 }
-void SW_activation_28(DATA_T I[1024][14][14], DATA_T O[1024][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_28(DATA_T I[1024][14][14], DATA_T O[1024][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<1024; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4c_branch2a(DATA_T I[1024][14][14], DATA_T O[256][14][14], DATA_T W[256][1024][1][1], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -1955,22 +1899,20 @@ void SW_bn4c_branch2a(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_29(DATA_T I[256][14][14], DATA_T O[256][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_29(DATA_T I[256][14][14], DATA_T O[256][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4c_branch2b(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[256][256][3][3], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2016,22 +1958,20 @@ void SW_bn4c_branch2b(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_30(DATA_T I[256][14][14], DATA_T O[256][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_30(DATA_T I[256][14][14], DATA_T O[256][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4c_branch2c(DATA_T I[256][14][14], DATA_T O[1024][14][14], DATA_T W[1024][256][1][1], DATA_T B[1024]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2084,22 +2024,20 @@ void SW_add_10(DATA_T I1[1024][14][14], DATA_T I2[1024][14][14], DATA_T O[1024][
 		}
 	}
 }
-void SW_activation_31(DATA_T I[1024][14][14], DATA_T O[1024][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_31(DATA_T I[1024][14][14], DATA_T O[1024][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<1024; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4d_branch2a(DATA_T I[1024][14][14], DATA_T O[256][14][14], DATA_T W[256][1024][1][1], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2142,22 +2080,20 @@ void SW_bn4d_branch2a(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_32(DATA_T I[256][14][14], DATA_T O[256][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_32(DATA_T I[256][14][14], DATA_T O[256][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4d_branch2b(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[256][256][3][3], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2203,22 +2139,20 @@ void SW_bn4d_branch2b(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_33(DATA_T I[256][14][14], DATA_T O[256][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_33(DATA_T I[256][14][14], DATA_T O[256][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4d_branch2c(DATA_T I[256][14][14], DATA_T O[1024][14][14], DATA_T W[1024][256][1][1], DATA_T B[1024]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2271,22 +2205,20 @@ void SW_add_11(DATA_T I1[1024][14][14], DATA_T I2[1024][14][14], DATA_T O[1024][
 		}
 	}
 }
-void SW_activation_34(DATA_T I[1024][14][14], DATA_T O[1024][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_34(DATA_T I[1024][14][14], DATA_T O[1024][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<1024; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4e_branch2a(DATA_T I[1024][14][14], DATA_T O[256][14][14], DATA_T W[256][1024][1][1], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2329,22 +2261,20 @@ void SW_bn4e_branch2a(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_35(DATA_T I[256][14][14], DATA_T O[256][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_35(DATA_T I[256][14][14], DATA_T O[256][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4e_branch2b(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[256][256][3][3], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2390,22 +2320,20 @@ void SW_bn4e_branch2b(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_36(DATA_T I[256][14][14], DATA_T O[256][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_36(DATA_T I[256][14][14], DATA_T O[256][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4e_branch2c(DATA_T I[256][14][14], DATA_T O[1024][14][14], DATA_T W[1024][256][1][1], DATA_T B[1024]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2458,22 +2386,20 @@ void SW_add_12(DATA_T I1[1024][14][14], DATA_T I2[1024][14][14], DATA_T O[1024][
 		}
 	}
 }
-void SW_activation_37(DATA_T I[1024][14][14], DATA_T O[1024][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_37(DATA_T I[1024][14][14], DATA_T O[1024][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<1024; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4f_branch2a(DATA_T I[1024][14][14], DATA_T O[256][14][14], DATA_T W[256][1024][1][1], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2516,22 +2442,20 @@ void SW_bn4f_branch2a(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_38(DATA_T I[256][14][14], DATA_T O[256][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_38(DATA_T I[256][14][14], DATA_T O[256][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4f_branch2b(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[256][256][3][3], DATA_T B[256]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2577,22 +2501,20 @@ void SW_bn4f_branch2b(DATA_T I[256][14][14], DATA_T O[256][14][14], DATA_T W[4][
 		}
 	}
 }
-void SW_activation_39(DATA_T I[256][14][14], DATA_T O[256][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_39(DATA_T I[256][14][14], DATA_T O[256][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<256; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res4f_branch2c(DATA_T I[256][14][14], DATA_T O[1024][14][14], DATA_T W[1024][256][1][1], DATA_T B[1024]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2645,22 +2567,20 @@ void SW_add_13(DATA_T I1[1024][14][14], DATA_T I2[1024][14][14], DATA_T O[1024][
 		}
 	}
 }
-void SW_activation_40(DATA_T I[1024][14][14], DATA_T O[1024][14][14])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_40(DATA_T I[1024][14][14], DATA_T O[1024][14][14]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<1024; m++) {
 		for (x = 0; x<14; x++) {
 			for (y = 0; y<14; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res5a_branch2a(DATA_T I[1024][14][14], DATA_T O[512][7][7], DATA_T W[512][1024][1][1], DATA_T B[512]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2703,22 +2623,20 @@ void SW_bn5a_branch2a(DATA_T I[512][7][7], DATA_T O[512][7][7], DATA_T W[4][512]
 		}
 	}
 }
-void SW_activation_41(DATA_T I[512][7][7], DATA_T O[512][7][7])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_41(DATA_T I[512][7][7], DATA_T O[512][7][7]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<512; m++) {
 		for (x = 0; x<7; x++) {
 			for (y = 0; y<7; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res5a_branch2b(DATA_T I[512][7][7], DATA_T O[512][7][7], DATA_T W[512][512][3][3], DATA_T B[512]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2764,22 +2682,20 @@ void SW_bn5a_branch2b(DATA_T I[512][7][7], DATA_T O[512][7][7], DATA_T W[4][512]
 		}
 	}
 }
-void SW_activation_42(DATA_T I[512][7][7], DATA_T O[512][7][7])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_42(DATA_T I[512][7][7], DATA_T O[512][7][7]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<512; m++) {
 		for (x = 0; x<7; x++) {
 			for (y = 0; y<7; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res5a_branch2c(DATA_T I[512][7][7], DATA_T O[2048][7][7], DATA_T W[2048][512][1][1], DATA_T B[2048]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2874,22 +2790,20 @@ void SW_add_14(DATA_T I1[2048][7][7], DATA_T I2[2048][7][7], DATA_T O[2048][7][7
 		}
 	}
 }
-void SW_activation_43(DATA_T I[2048][7][7], DATA_T O[2048][7][7])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_43(DATA_T I[2048][7][7], DATA_T O[2048][7][7]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<2048; m++) {
 		for (x = 0; x<7; x++) {
 			for (y = 0; y<7; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res5b_branch2a(DATA_T I[2048][7][7], DATA_T O[512][7][7], DATA_T W[512][2048][1][1], DATA_T B[512]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2932,22 +2846,20 @@ void SW_bn5b_branch2a(DATA_T I[512][7][7], DATA_T O[512][7][7], DATA_T W[4][512]
 		}
 	}
 }
-void SW_activation_44(DATA_T I[512][7][7], DATA_T O[512][7][7])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_44(DATA_T I[512][7][7], DATA_T O[512][7][7]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<512; m++) {
 		for (x = 0; x<7; x++) {
 			for (y = 0; y<7; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res5b_branch2b(DATA_T I[512][7][7], DATA_T O[512][7][7], DATA_T W[512][512][3][3], DATA_T B[512]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -2993,22 +2905,20 @@ void SW_bn5b_branch2b(DATA_T I[512][7][7], DATA_T O[512][7][7], DATA_T W[4][512]
 		}
 	}
 }
-void SW_activation_45(DATA_T I[512][7][7], DATA_T O[512][7][7])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_45(DATA_T I[512][7][7], DATA_T O[512][7][7]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<512; m++) {
 		for (x = 0; x<7; x++) {
 			for (y = 0; y<7; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res5b_branch2c(DATA_T I[512][7][7], DATA_T O[2048][7][7], DATA_T W[2048][512][1][1], DATA_T B[2048]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -3061,22 +2971,20 @@ void SW_add_15(DATA_T I1[2048][7][7], DATA_T I2[2048][7][7], DATA_T O[2048][7][7
 		}
 	}
 }
-void SW_activation_46(DATA_T I[2048][7][7], DATA_T O[2048][7][7])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_46(DATA_T I[2048][7][7], DATA_T O[2048][7][7]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<2048; m++) {
 		for (x = 0; x<7; x++) {
 			for (y = 0; y<7; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res5c_branch2a(DATA_T I[2048][7][7], DATA_T O[512][7][7], DATA_T W[512][2048][1][1], DATA_T B[512]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -3119,22 +3027,20 @@ void SW_bn5c_branch2a(DATA_T I[512][7][7], DATA_T O[512][7][7], DATA_T W[4][512]
 		}
 	}
 }
-void SW_activation_47(DATA_T I[512][7][7], DATA_T O[512][7][7])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_47(DATA_T I[512][7][7], DATA_T O[512][7][7]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<512; m++) {
 		for (x = 0; x<7; x++) {
 			for (y = 0; y<7; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res5c_branch2b(DATA_T I[512][7][7], DATA_T O[512][7][7], DATA_T W[512][512][3][3], DATA_T B[512]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -3180,22 +3086,20 @@ void SW_bn5c_branch2b(DATA_T I[512][7][7], DATA_T O[512][7][7], DATA_T W[4][512]
 		}
 	}
 }
-void SW_activation_48(DATA_T I[512][7][7], DATA_T O[512][7][7])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_48(DATA_T I[512][7][7], DATA_T O[512][7][7]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<512; m++) {
 		for (x = 0; x<7; x++) {
 			for (y = 0; y<7; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_res5c_branch2c(DATA_T I[512][7][7], DATA_T O[2048][7][7], DATA_T W[2048][512][1][1], DATA_T B[2048]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -3248,22 +3152,20 @@ void SW_add_16(DATA_T I1[2048][7][7], DATA_T I2[2048][7][7], DATA_T O[2048][7][7
 		}
 	}
 }
-void SW_activation_49(DATA_T I[2048][7][7], DATA_T O[2048][7][7])
-{
-	int m, x, y;
-	DATA_T ifm;
+void SW_activation_49(DATA_T I[2048][7][7], DATA_T O[2048][7][7]) {
+	int m, x, y, i, j, k;
 	for (m = 0; m<2048; m++) {
 		for (x = 0; x<7; x++) {
 			for (y = 0; y<7; y++) {
-				ifm = I[m][x][y];
-				if (ifm < 0)
+				if (I[m][x][y] < 0)
 					O[m][x][y] = 0;
 				else
-					O[m][x][y] = ifm;
+				    O[m][x][y] = I[m][x][y];
 			}
 		}
 	}
 }
+
 void SW_avg_pool(DATA_T I[2048][7][7], DATA_T O[2048][1][1])
 {
 	int m, x, y, i, j;
@@ -3319,7 +3221,7 @@ void SW_fc1000(DATA_T I[2048], DATA_T O[1000], DATA_T W[1000][2048], DATA_T B[10
 }
 
 
-//argv[1] = init_weight.txt, argv[3] = init_input.txt
+//argv[1] = init_weight.txt, argv[2] = init_input.txt
 int main(int argc, char *argv[]){
 
     DATA_T temp;
@@ -3673,9 +3575,9 @@ int main(int argc, char *argv[]){
     if (w_stream == NULL) printf("weight file was not opened");
     FILE *i_stream = fopen(argv[2], "rb");
     if (i_stream == NULL) printf("input file was not opened");
-    FILE *o_stream = fopen("../../cpp_generator/resnet50/Output/C_output.txt", "w");
+    FILE *o_stream = fopen("Produced_code/resnet50/Output/c_output.txt", "w");
     if (o_stream == NULL) printf("Output file was not opened");
-    FILE *c_num = fopen("../../cpp_generator/resnet50/Output/c_output_num.txt", "w");
+    FILE *c_num = fopen("Produced_code/resnet50/Output/c_output_num.txt", "w");
     if (c_num == NULL) printf("Output file was not opened");
 
     printf("[C_verifier.cpp]Start Initialzation");
@@ -3700,6 +3602,7 @@ int main(int argc, char *argv[]){
 	}
 }
 
+
 for (m = 0; m < 64 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B2[m] = (DATA_T) trash;
@@ -3722,6 +3625,7 @@ for (m = 0; m < 64 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 64 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -3746,6 +3650,7 @@ for (m = 0; m < 64 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 64 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B9[m] = (DATA_T) trash;
@@ -3769,6 +3674,7 @@ for (m = 0; m < 64 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B12[m] = (DATA_T) trash;
@@ -3785,6 +3691,7 @@ for (m = 0; m < 256 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -3815,6 +3722,7 @@ for (m = 0; m < 256 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 64 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B18[m] = (DATA_T) trash;
@@ -3837,6 +3745,7 @@ for (m = 0; m < 64 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 64 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -3861,6 +3770,7 @@ for (m = 0; m < 64 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B24[m] = (DATA_T) trash;
@@ -3883,6 +3793,7 @@ for (m = 0; m < 256 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 64 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -3907,6 +3818,7 @@ for (m = 0; m < 64 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 64 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B31[m] = (DATA_T) trash;
@@ -3929,6 +3841,7 @@ for (m = 0; m < 64 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -3953,6 +3866,7 @@ for (m = 0; m < 256 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 128 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B38[m] = (DATA_T) trash;
@@ -3975,6 +3889,7 @@ for (m = 0; m < 128 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 128 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -3999,6 +3914,7 @@ for (m = 0; m < 128 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 512 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B44[m] = (DATA_T) trash;
@@ -4015,6 +3931,7 @@ for (m = 0; m < 512 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 512 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4045,6 +3962,7 @@ for (m = 0; m < 512 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 128 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B50[m] = (DATA_T) trash;
@@ -4067,6 +3985,7 @@ for (m = 0; m < 128 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 128 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4091,6 +4010,7 @@ for (m = 0; m < 128 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 512 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B56[m] = (DATA_T) trash;
@@ -4113,6 +4033,7 @@ for (m = 0; m < 512 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 128 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4137,6 +4058,7 @@ for (m = 0; m < 128 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 128 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B63[m] = (DATA_T) trash;
@@ -4159,6 +4081,7 @@ for (m = 0; m < 128 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 512 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4183,6 +4106,7 @@ for (m = 0; m < 512 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 128 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B70[m] = (DATA_T) trash;
@@ -4205,6 +4129,7 @@ for (m = 0; m < 128 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 128 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4229,6 +4154,7 @@ for (m = 0; m < 128 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 512 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B76[m] = (DATA_T) trash;
@@ -4251,6 +4177,7 @@ for (m = 0; m < 512 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4275,6 +4202,7 @@ for (m = 0; m < 256 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B83[m] = (DATA_T) trash;
@@ -4298,6 +4226,7 @@ for (m = 0; m < 256 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 1024 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B86[m] = (DATA_T) trash;
@@ -4314,6 +4243,7 @@ for (m = 0; m < 1024 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 1024 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4344,6 +4274,7 @@ for (m = 0; m < 1024 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B92[m] = (DATA_T) trash;
@@ -4366,6 +4297,7 @@ for (m = 0; m < 256 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4390,6 +4322,7 @@ for (m = 0; m < 256 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 1024 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B98[m] = (DATA_T) trash;
@@ -4412,6 +4345,7 @@ for (m = 0; m < 1024 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4436,6 +4370,7 @@ for (m = 0; m < 256 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B105[m] = (DATA_T) trash;
@@ -4458,6 +4393,7 @@ for (m = 0; m < 256 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 1024 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4482,6 +4418,7 @@ for (m = 0; m < 1024 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B112[m] = (DATA_T) trash;
@@ -4504,6 +4441,7 @@ for (m = 0; m < 256 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4528,6 +4466,7 @@ for (m = 0; m < 256 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 1024 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B118[m] = (DATA_T) trash;
@@ -4550,6 +4489,7 @@ for (m = 0; m < 1024 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4574,6 +4514,7 @@ for (m = 0; m < 256 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B125[m] = (DATA_T) trash;
@@ -4596,6 +4537,7 @@ for (m = 0; m < 256 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 1024 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4620,6 +4562,7 @@ for (m = 0; m < 1024 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B132[m] = (DATA_T) trash;
@@ -4642,6 +4585,7 @@ for (m = 0; m < 256 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 256 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4666,6 +4610,7 @@ for (m = 0; m < 256 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 1024 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B138[m] = (DATA_T) trash;
@@ -4688,6 +4633,7 @@ for (m = 0; m < 1024 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 512 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4712,6 +4658,7 @@ for (m = 0; m < 512 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 512 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B145[m] = (DATA_T) trash;
@@ -4735,6 +4682,7 @@ for (m = 0; m < 512 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 2048 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B148[m] = (DATA_T) trash;
@@ -4751,6 +4699,7 @@ for (m = 0; m < 2048 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 2048 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4781,6 +4730,7 @@ for (m = 0; m < 2048 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 512 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B154[m] = (DATA_T) trash;
@@ -4803,6 +4753,7 @@ for (m = 0; m < 512 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 512 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4827,6 +4778,7 @@ for (m = 0; m < 512 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 2048 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B160[m] = (DATA_T) trash;
@@ -4849,6 +4801,7 @@ for (m = 0; m < 2048 ; m++) {
 		}
 	}
 }
+
 
 for (m = 0; m < 512 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
@@ -4873,6 +4826,7 @@ for (m = 0; m < 512 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 512 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B167[m] = (DATA_T) trash;
@@ -4896,6 +4850,7 @@ for (m = 0; m < 512 ; m++) {
 	}
 }
 
+
 for (m = 0; m < 2048 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
     B170[m] = (DATA_T) trash;
@@ -4914,6 +4869,7 @@ for (m = 0; m < 2048 ; m++) {
         W176[k][m] = (DATA_T) trash;
 	}
 }
+
 
 for (m = 0; m < 1000 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);

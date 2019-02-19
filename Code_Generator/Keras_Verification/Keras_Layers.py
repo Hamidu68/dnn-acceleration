@@ -23,6 +23,7 @@ def get_single_input(inbound_name='', tensors={}, outputs_dict={}):
     if inbound_name in outputs_dict:
         del outputs_dict[inbound_name]
 
+
     return input_tensor
 
 
@@ -52,7 +53,10 @@ def add_InputLayer(info=None, fid=None, dtype=int):
     return input_value, input_tensor
 
 
-def add_Conv2D(input_tensor=None, info=None, fid=None, dtype=int):
+def add_Conv2D(input_tensor=None, info=None, fid=None, dtype=int, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+    
     # Read information of layer
     input_shape = eval(info['batch_input_shape'])
     output_shape = eval(info['batch_output_shape'])
@@ -82,7 +86,10 @@ def add_Conv2D(input_tensor=None, info=None, fid=None, dtype=int):
     return output_tensor
 
 
-def add_MaxPooling2D(input_tensor=None, info=None):
+def add_MaxPooling2D(input_tensor=None, info=None, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Get output tensor
     output_tensor = layers.MaxPooling2D(pool_size=eval(info['pool_size']),
                                         strides=eval(info['strides']),
@@ -91,15 +98,18 @@ def add_MaxPooling2D(input_tensor=None, info=None):
     return output_tensor
 
 
-def add_Cropping2D(input_tensor=None, info=None):
+def add_Cropping2D(input_tensor=None, info=None, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Get output tensor
     output_tensor = layers.Cropping2D(cropping=eval(info['cropping']), data_format=str(info['data_format']))(input_tensor)
     return output_tensor
 
 
-def add_BatchNormalization(input_tensor=None, info=None, fid=None, dtype=int, skip=False):
+def add_BatchNormalization(input_tensor=None, info=None, fid=None, dtype=int, skip=False, tensors = {}):
     if skip:
-        return input_tensor
+        return tensors[info['connected_to']]
 
     # Read information of layer
     output_shape = eval(info['batch_output_shape'])
@@ -128,13 +138,19 @@ def add_BatchNormalization(input_tensor=None, info=None, fid=None, dtype=int, sk
     return output_tensor
 
 
-def add_Activation(input_tensor=None, info=None):
+def add_Activation(input_tensor=None, info=None, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Get output tensor
     output_tensor = layers.Activation(activation=str(info['activation']))(input_tensor)
     return output_tensor
 
 
-def add_AveragePooling2D(input_tensor=None, info=None):
+def add_AveragePooling2D(input_tensor=None, info=None, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Get output tensor
     output_tensor = layers.AveragePooling2D(pool_size=eval(info['pool_size']),
                                             strides=eval(info['strides']),
@@ -143,26 +159,38 @@ def add_AveragePooling2D(input_tensor=None, info=None):
     return output_tensor
 
 
-def add_ZeroPadding2D(input_tensor=None, info=None):
+def add_ZeroPadding2D(input_tensor=None, info=None, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Get output tensor
     output_tensor = layers.ZeroPadding2D(padding=eval(info['padding']),
                                          data_format=str(info['data_format']))(input_tensor)
     return output_tensor
 
 
-def add_Flatten(input_tensor=None, info=None):
+def add_Flatten(input_tensor=None, info=None, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Get output tensor
     output_tensor = layers.Flatten(data_format=str(info['data_format']))(input_tensor)
     return output_tensor
 
 
-def add_Dropout(input_tensor=None, info=None):
+def add_Dropout(input_tensor=None, info=None, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Get output tensor
     output_tensor = layers.Dropout(rate=eval(info['rate']))(input_tensor)
     return output_tensor
 
 
-def add_Lambda(input_tensor=None, info=None):
+def add_Lambda(input_tensor=None, info=None, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     input_shape = eval(info['batch_input_shape'])
     output_shape = eval(info['batch_output_shape'])
     scale = ast.literal_eval(info['arguments'])
@@ -173,11 +201,14 @@ def add_Lambda(input_tensor=None, info=None):
     # Get output tensor
     output_tensor = layers.Lambda(lambda input_shape, scale: inputs[0] + inputs[1] * scale,
                                   output_shape=output_shape[1:],
-                                  arguments=scale)(input_tensors)
+                                  arguments=scale)(input_tensor)
     return output_tensor
 
 
-def add_DepthConv2D(input_tensor=None, info=None, fid=None,  dtype=int):
+def add_DepthConv2D(input_tensor=None, info=None, fid=None,  dtype=int, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Read information of layer
     output_shape = eval(info['batch_output_shape'])
     kernel_size = eval(info['kernel_size'])
@@ -202,7 +233,10 @@ def add_DepthConv2D(input_tensor=None, info=None, fid=None,  dtype=int):
     return output_tensor
 
 
-def add_SepConv2D(input_tensor=None, info=None, fid=None,  dtype=int):
+def add_SepConv2D(input_tensor=None, info=None, fid=None,  dtype=int, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Read information of layer
     output_shape = eval(info['batch_output_shape'])
     input_shape = eval(info['batch_input_shape'])
@@ -234,7 +268,10 @@ def add_SepConv2D(input_tensor=None, info=None, fid=None,  dtype=int):
     return output_tensor
 
 
-def add_Dense(input_tensor=None, info=None, fid=None, dtype=int):
+def add_Dense(input_tensor=None, info=None, fid=None, dtype=int, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Read information of layer
     input_shape = eval(info['batch_input_shape'])
     output_shape = eval(info['batch_output_shape'])
@@ -258,19 +295,28 @@ def add_Dense(input_tensor=None, info=None, fid=None, dtype=int):
     return output_tensor
 
 
-def add_ReLU(input_tensor=None, info=None):
+def add_ReLU(input_tensor=None, info=None, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Get output tensor
     output_tensor = layers.ReLU(max_value=int(eval(info['max_value'])))(input_tensor)
     return output_tensor
 
 
-def add_Add(input_tensors=[], info=None):
+def add_Add(input_tensors=[], info=None, skip=False, outputs_dict = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Get output tensor
     output_tensor = layers.Add()(input_tensors)
     return output_tensor
 
 
-def add_Reshape(input_tensors=[], info=None):
+def add_Reshape(input_tensors=[], info=None, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Read information of layer
     output_shape = eval(info['batch_output_shape'])
 
@@ -279,19 +325,28 @@ def add_Reshape(input_tensors=[], info=None):
     return output_tensor
 
 
-def add_Concatenate(input_tensors=[], info=None):
+def add_Concatenate(input_tensors=[], info=None, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Get output tensor
     output_tensor = layers.Concatenate(axis=-1)(input_tensors)
     return output_tensor
 
 
-def add_GlobalAveragePooling2D(input_tensors=[], info=None):
+def add_GlobalAveragePooling2D(input_tensors=[], info=None, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Get output tensor
     output_tensor = layers.GlobalAveragePooling2D(data_format=str(info['data_format']))(input_tensors)
     return output_tensor
 
 
-def add_GlobalMaxPooling2D(input_tensors=[], info=None):
+def add_GlobalMaxPooling2D(input_tensors=[], info=None, skip=False, tensors = {}):
+    if skip:
+        return tensors[info['connected_to']]
+
     # Get output tensor
     output_tensor = layers.GlobalMaxPooling2D(data_format=str(info['data_format']))(input_tensors)
     return output_tensor

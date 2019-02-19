@@ -10,7 +10,7 @@ def gen_sw_test(test_file='', model_name='', dtype='int',weight_file='', Input_f
 
     # Main) make model instance
     models = [Models(model_name=model_name, dtype='DATA_T', post='_SW')]
-
+    
     # Main) Generate Function depending on layer_type
     # Skip layers
     skip_layers = ['Dropout']
@@ -40,9 +40,20 @@ def gen_sw_test(test_file='', model_name='', dtype='int',weight_file='', Input_f
     os.system('g++ %s -o %s' % (cpp_file_path, out_file_path))
     os.system('%s %s %s' % (out_file_path, weight_file, Input_file))
 
-    # Keras-Verification
+    csv_reader = csv.DictReader(open(test_file))
+    models1 = [Models(model_name=model_name, dtype='DATA_T', post='_SW')]
 
-    Keras_Verifier.Keras_Verifier(models[0], model_name, weight_file, Input_file, dtype)
+    # for each layers
+    for row in csv_reader:
+        for model in models1:
+            model.add_layer(row)
+
+    for model in models1:
+        model.set_output()
+
+
+    # Keras-Verification
+    Keras_Verifier.Keras_Verifier(models1[0], model_name, weight_file, Input_file, dtype)
 
     cpp_output_path = 'Produced_code/'+model_name+'/Output/c_output.txt'
     keras_output_path = 'Produced_code/'+model_name+'/Output/keras_output.txt'

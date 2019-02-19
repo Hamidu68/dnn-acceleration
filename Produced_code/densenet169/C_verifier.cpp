@@ -4,7 +4,7 @@
 #include <string>
 #include <string.h>
 #include <math.h>
-    
+
 using namespace std;
 
 typedef float DATA_T;
@@ -216,7 +216,7 @@ void SW_conv2_block1_2_conv(DATA_T I[128][56][56], DATA_T O[32][56][56], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 56 + p && y*1 + j < 56 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -348,7 +348,7 @@ void SW_conv2_block2_2_conv(DATA_T I[128][56][56], DATA_T O[32][56][56], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 56 + p && y*1 + j < 56 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -480,7 +480,7 @@ void SW_conv2_block3_2_conv(DATA_T I[128][56][56], DATA_T O[32][56][56], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 56 + p && y*1 + j < 56 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -612,7 +612,7 @@ void SW_conv2_block4_2_conv(DATA_T I[128][56][56], DATA_T O[32][56][56], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 56 + p && y*1 + j < 56 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -744,7 +744,7 @@ void SW_conv2_block5_2_conv(DATA_T I[128][56][56], DATA_T O[32][56][56], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 56 + p && y*1 + j < 56 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -876,7 +876,7 @@ void SW_conv2_block6_2_conv(DATA_T I[128][56][56], DATA_T O[32][56][56], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 56 + p && y*1 + j < 56 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1091,7 +1091,7 @@ void SW_conv3_block1_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 28 + p && y*1 + j < 28 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1223,7 +1223,7 @@ void SW_conv3_block2_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 28 + p && y*1 + j < 28 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1355,7 +1355,7 @@ void SW_conv3_block3_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 28 + p && y*1 + j < 28 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1487,7 +1487,7 @@ void SW_conv3_block4_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 28 + p && y*1 + j < 28 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1619,7 +1619,7 @@ void SW_conv3_block5_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 28 + p && y*1 + j < 28 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1751,7 +1751,7 @@ void SW_conv3_block6_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 28 + p && y*1 + j < 28 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -1883,7 +1883,7 @@ void SW_conv3_block7_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 28 + p && y*1 + j < 28 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2015,7 +2015,7 @@ void SW_conv3_block8_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 28 + p && y*1 + j < 28 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2147,7 +2147,7 @@ void SW_conv3_block9_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 28 + p && y*1 + j < 28 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2279,7 +2279,7 @@ void SW_conv3_block10_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 28 + p && y*1 + j < 28 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2411,7 +2411,7 @@ void SW_conv3_block11_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 28 + p && y*1 + j < 28 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2543,7 +2543,7 @@ void SW_conv3_block12_2_conv(DATA_T I[128][28][28], DATA_T O[32][28][28], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 28 + p && y*1 + j < 28 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2758,7 +2758,7 @@ void SW_conv4_block1_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -2890,7 +2890,7 @@ void SW_conv4_block2_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3022,7 +3022,7 @@ void SW_conv4_block3_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3154,7 +3154,7 @@ void SW_conv4_block4_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3286,7 +3286,7 @@ void SW_conv4_block5_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3418,7 +3418,7 @@ void SW_conv4_block6_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3550,7 +3550,7 @@ void SW_conv4_block7_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3682,7 +3682,7 @@ void SW_conv4_block8_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3814,7 +3814,7 @@ void SW_conv4_block9_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T 
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -3946,7 +3946,7 @@ void SW_conv4_block10_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4078,7 +4078,7 @@ void SW_conv4_block11_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4210,7 +4210,7 @@ void SW_conv4_block12_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4342,7 +4342,7 @@ void SW_conv4_block13_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4474,7 +4474,7 @@ void SW_conv4_block14_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4606,7 +4606,7 @@ void SW_conv4_block15_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4738,7 +4738,7 @@ void SW_conv4_block16_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -4870,7 +4870,7 @@ void SW_conv4_block17_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5002,7 +5002,7 @@ void SW_conv4_block18_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5134,7 +5134,7 @@ void SW_conv4_block19_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5266,7 +5266,7 @@ void SW_conv4_block20_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5398,7 +5398,7 @@ void SW_conv4_block21_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5530,7 +5530,7 @@ void SW_conv4_block22_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5662,7 +5662,7 @@ void SW_conv4_block23_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5794,7 +5794,7 @@ void SW_conv4_block24_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -5926,7 +5926,7 @@ void SW_conv4_block25_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -6058,7 +6058,7 @@ void SW_conv4_block26_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -6190,7 +6190,7 @@ void SW_conv4_block27_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -6322,7 +6322,7 @@ void SW_conv4_block28_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -6454,7 +6454,7 @@ void SW_conv4_block29_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -6586,7 +6586,7 @@ void SW_conv4_block30_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -6718,7 +6718,7 @@ void SW_conv4_block31_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -6850,7 +6850,7 @@ void SW_conv4_block32_2_conv(DATA_T I[128][14][14], DATA_T O[32][14][14], DATA_T
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 14 + p && y*1 + j < 14 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -7065,7 +7065,7 @@ void SW_conv5_block1_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -7197,7 +7197,7 @@ void SW_conv5_block2_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -7329,7 +7329,7 @@ void SW_conv5_block3_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -7461,7 +7461,7 @@ void SW_conv5_block4_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -7593,7 +7593,7 @@ void SW_conv5_block5_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -7725,7 +7725,7 @@ void SW_conv5_block6_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -7857,7 +7857,7 @@ void SW_conv5_block7_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -7989,7 +7989,7 @@ void SW_conv5_block8_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -8121,7 +8121,7 @@ void SW_conv5_block9_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[32
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -8253,7 +8253,7 @@ void SW_conv5_block10_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -8385,7 +8385,7 @@ void SW_conv5_block11_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -8517,7 +8517,7 @@ void SW_conv5_block12_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -8649,7 +8649,7 @@ void SW_conv5_block13_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -8781,7 +8781,7 @@ void SW_conv5_block14_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -8913,7 +8913,7 @@ void SW_conv5_block15_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -9045,7 +9045,7 @@ void SW_conv5_block16_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -9177,7 +9177,7 @@ void SW_conv5_block17_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -9309,7 +9309,7 @@ void SW_conv5_block18_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -9441,7 +9441,7 @@ void SW_conv5_block19_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -9573,7 +9573,7 @@ void SW_conv5_block20_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -9705,7 +9705,7 @@ void SW_conv5_block21_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -9837,7 +9837,7 @@ void SW_conv5_block22_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -9969,7 +9969,7 @@ void SW_conv5_block23_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -10101,7 +10101,7 @@ void SW_conv5_block24_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -10233,7 +10233,7 @@ void SW_conv5_block25_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -10365,7 +10365,7 @@ void SW_conv5_block26_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -10497,7 +10497,7 @@ void SW_conv5_block27_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -10629,7 +10629,7 @@ void SW_conv5_block28_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -10761,7 +10761,7 @@ void SW_conv5_block29_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -10893,7 +10893,7 @@ void SW_conv5_block30_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -11025,7 +11025,7 @@ void SW_conv5_block31_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -11157,7 +11157,7 @@ void SW_conv5_block32_2_conv(DATA_T I[128][7][7], DATA_T O[32][7][7], DATA_T W[3
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
 							if (x*1 + i < 7 + p && y*1 + j < 7 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+                                    ifm = I[k][x*1 + i - p][y*1 + j - p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -11238,7 +11238,7 @@ void SW_fc1000(DATA_T I[1664], DATA_T O[1000], DATA_T W[1000][1664], DATA_T B[10
 }
 
 
-//argv[1] = init_weight.txt, argv[3] = init_input.txt
+//argv[1] = init_weight.txt, argv[2] = init_input.txt
 int main(int argc, char *argv[]){
 
     DATA_T temp;
@@ -12189,9 +12189,9 @@ int main(int argc, char *argv[]){
     if (w_stream == NULL) printf("weight file was not opened");
     FILE *i_stream = fopen(argv[2], "rb");
     if (i_stream == NULL) printf("input file was not opened");
-    FILE *o_stream = fopen("../../cpp_generator/densenet169/Output/C_output.txt", "w");
+    FILE *o_stream = fopen("Produced_code/densenet169/Output/c_output.txt", "w");
     if (o_stream == NULL) printf("Output file was not opened");
-    FILE *c_num = fopen("../../cpp_generator/densenet169/Output/c_output_num.txt", "w");
+    FILE *c_num = fopen("Produced_code/densenet169/Output/c_output_num.txt", "w");
     if (c_num == NULL) printf("Output file was not opened");
 
     printf("[C_verifier.cpp]Start Initialzation");
