@@ -13,6 +13,12 @@
 
 ### Usage
 
+#### Download the repository
+
+```
+git clone "git@github.com:Hamidu68/ML-acceleration.git"
+```
+
 #### Run run.py
 
 in ML-acceleration folder,
