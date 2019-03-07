@@ -1,6 +1,6 @@
 # Development of C programs for Convolutional Neural Network Accelerators
 
-
+### Purpose
 
 ### Prerequisites
 * python 2.7
@@ -8,6 +8,7 @@
 * keras(2.2)
 * numpy
 
+### System structure
 
   
 
@@ -32,5 +33,6 @@ Test_file : name of the test file (ex. vgg19_test.csv)
 model_name : name of the model(network) ex. vgg19  
 data_type : data type (int, unsinged int, float, ap_uint<16>)  
 
-  
+ 
+ ### Ongoing work
   
