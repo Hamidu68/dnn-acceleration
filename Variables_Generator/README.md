@@ -1,5 +1,5 @@
-Random Generator for Input, Weight value.  
-It is generated based on layer informaion(csv) using the command below.  
+### Random Generator for Input, Weight value.  
+It is generated based on layer informaion(stored in csv file in Test folder) using the command below.  
 
 
 ```
@@ -17,4 +17,4 @@ Exmple:
 python variable_generator.py ../Test_file/vgg19_test.csv init_weight.bin init_input.bin 5 float
 ```
 
-In result, this code makes two .bin files.
+In result, this code makes two .bin files. (for this example, init_weight.bin and init_input.bin files are created.)  
