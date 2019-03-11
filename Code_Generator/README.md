@@ -3,8 +3,7 @@ In each folder,
 
 ### CodeGenerators  
 
-![codegene](../image/codegene.jpeg)  
-<img src="../image/codegene.jpeg" width="30">
+<img src="../image/codegene.jpeg" width="500">
 
 ### Keras_Verification  
 
@@ -16,8 +15,7 @@ Calculate output values of each layer by Keras
 
 ### Models  
 
-![model](../image/model.jpeg)  
-<img src="../image/model.jpeg" width="30">
+<img src="../image/model.jpeg" width="500">
 
 ### Template  
 
