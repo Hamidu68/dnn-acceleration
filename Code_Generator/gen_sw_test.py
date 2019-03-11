@@ -4,7 +4,7 @@ from .CodeGenerators import *
 from .Keras_Verification import Keras_Verifier
 import Code_Generator
 from .maximum_error import check_maximum_error
-def gen_sw_test(test_file='', model_name='', dtype='int',weight_file='', Input_file=''):
+def gen_sw_test(test_file='', model_name='', dtype='int',weight_file='', Input_file='', batch=''):
     # Main) Read Layer Information from CSV
     csv_reader = csv.DictReader(open(test_file))
 
@@ -13,7 +13,10 @@ def gen_sw_test(test_file='', model_name='', dtype='int',weight_file='', Input_f
     
     # Main) Generate Function depending on layer_type
     # Skip layers
-    skip_layers = ['Dropout', 'BathNormalization']
+    if batch : 
+        skip_layers = ['Dropout']
+    else:
+        skip_layers = ['Dropout', 'BathNormalization']
 
     # for each layers
     for row in csv_reader:
