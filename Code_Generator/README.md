@@ -3,7 +3,7 @@ In each folder,
 
 ### CodeGenerators  
 
-![codegene](../image/codegene.jpeg){:height="72px" width="36px"}  
+![codegene](../image/codegene.jpeg){:height="72px" width="36px"}.    
 
 ### Keras_Verification  
 
@@ -15,7 +15,7 @@ Calculate output values of each layer by Keras
 
 ### Models  
 
-![model](../image/model.jpeg){:height="72px" width="36px"}  
+![model](../image/model.jpeg){:height="72px" width="36px"}.    
 
 ### Template  
 
