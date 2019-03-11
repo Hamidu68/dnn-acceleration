@@ -1,4 +1,4 @@
-###extract configs of Keras networks.  
+### extract configs of Keras networks.  
 
 first, import the model from Keras that you are using.  
 ```
