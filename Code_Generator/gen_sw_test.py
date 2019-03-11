@@ -13,7 +13,7 @@ def gen_sw_test(test_file='', model_name='', dtype='int',weight_file='', Input_f
     
     # Main) Generate Function depending on layer_type
     # Skip layers
-    skip_layers = ['Dropout']
+    skip_layers = ['Dropout', 'BathNormalization']
 
     # for each layers
     for row in csv_reader:
