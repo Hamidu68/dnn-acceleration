@@ -9,7 +9,7 @@
 * numpy
 
 ### System structure
-
+![structure](./image/structure.jpeg)
   
 
 ### Usage
@@ -35,4 +35,6 @@ data_type : data type (int, unsinged int, float, ap_uint<16>)
 
  
  ### Ongoing work
-  
+ 1. code revision - structure/hareware code generator   
+ 2. add new models(architecture)   
+ 3. quantization
