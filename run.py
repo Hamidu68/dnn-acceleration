@@ -18,6 +18,7 @@ if __name__ == '__main__':
     test_file = "./Test_file/" + sys.argv[4]
     model_name = sys.argv[5]
     dtype = sys.argv[6]
+    batch = sys.argv[7]
     Random_range=5
     weight_file_path = './Variables_Generator/init_weight.bin'
     input_file_path = './Variables_Generator/init_input.bin'
@@ -29,7 +30,7 @@ if __name__ == '__main__':
 
     if run_gen_sw_test and Use_trained_weight == 0:
         Variable_Generator.Variable_Generator(test_file,weight_file_path,input_file_path,Random_range,dtype)
-        gen_sw_test(test_file, model_name, dtype,weight_file_path,input_file_path)
+        gen_sw_test(test_file, model_name, dtype,weight_file_path,input_file_path, batch)
 
     if run_gen_hw_test:
         gen_hw_test(test_file, model_name, dtype)
