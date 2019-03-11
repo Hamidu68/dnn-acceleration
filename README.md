@@ -1,6 +1,7 @@
 # Development of C programs for Convolutional Neural Network Accelerators
 
 ### Purpose
+Creating a new toolkit for people who are using fpga.   
 
 ### Prerequisites
 * python 2.7
