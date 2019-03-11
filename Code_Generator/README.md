@@ -1,24 +1,32 @@
+###Code generator for c, keras and optimized one.  
+
 
 In each folder, 
 
-### CodeGenerators  
+#### CodeGenerators  
 
-<img src="../image/codegene.jpeg" width="500">
+<img src="../image/codegene.jpeg" width="400">
 
-### Keras_Verification  
+#### Keras_Verification  
 
 Calculate output values of each layer by Keras
 
-### Layers  
+#### Layers  
 
 ![layer](../image/layer.jpeg)  
 
-### Models  
+#### Models  
 
-<img src="../image/model.jpeg" width="500">
+<img src="../image/model.jpeg" width="400">
 
-### Template  
+#### Template  
 
 Template files classified by 4 directories  
 (Function, Init, Main, Print)
+
+In each file,  
+
+#### gen_sw_test.py  
+compile and run function to generate c file, compare outputs between c and keras using vimdiff  
+and check maximum error range using check_maximum_error function defined in maximum_error.py (in same folder)  
 
