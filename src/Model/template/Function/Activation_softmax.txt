@@ -1,0 +1,24 @@
+void SW_{Name}(DATA_T I[{Input_channel}][1][1], DATA_T O[{Output_channel}][1][1]) {{
+	int i;
+	DATA_T maximum;
+	DATA_T denom = I[0][0][0];
+	for (i = 1; i < {Input_channel}; i++)
+		denom += I[i][0][0];
+	for (i = 0; i < {Input_channel}; i++){{
+		O[i][0][0] = I[i][0][0] / denom; //float
+		if(i==0)
+		    maximum=O[i][0][0];
+		else{{
+		    if(maximum<O[i][0][0])
+		        maximum=O[i][0][0];
+
+		}}
+	}}
+	for (i = 0; i < {Output_channel}; i++){{
+	    if(maximum!=O[i][0][0])
+	        O[i][0][0]=0;
+	    else
+	        O[i][0][0]=1;
+	}}
+
+}}

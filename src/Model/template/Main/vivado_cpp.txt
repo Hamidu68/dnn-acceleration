@@ -1,0 +1,47 @@
+#include <iostream>
+#include <ap_int.h>
+#include <hls_stream.h>
+
+typedef ${Data_type} DATA_T;
+
+typedef ap_uint<256> uint256_t;
+typedef ap_uint<512> uint512_t;
+
+${hw_static_variables}
+
+${Stream_io}
+
+${hw_def_layer}
+
+${sw_def_layer}
+
+void assign_sw2hw(${func_params}) {
+	${assign_sw2hw}
+}
+
+void assign_hw2sw(DATA_T O, DATA_T O_i) {
+	${assign_hw2sw}
+}
+
+void ${model_name}_hw(${hw_func_params}) {
+	assign_sw2hw(${call_params} O_HW);
+
+	${optimized_code}
+
+	#pragma HLS DATAFLOW
+	//hls::stream<uint256_t> O1_packed_strm("O1_packed_strm");
+
+	${hw_output_streams}
+
+	Stream_input(I_i, I_strm);
+	${hw_call_layer}
+	Stream_output(${output_stream}, O_i);
+
+	assign_hw2sw(O,O_i);
+}
+
+void ${model_name}_sw(${sw_func_params}) {
+	${sw_output_variables}
+
+	${sw_call_layer}
+}
