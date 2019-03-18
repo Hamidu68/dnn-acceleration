@@ -1,5 +1,5 @@
-from .Keras_Layers import *
-from .Print_Keras import *
+from .keras_layers import *
+from .print_keras import *
 
 
 def Keras_Verifier(model_data, model_name, weight_file_path, input_file_path, dtype_str):
@@ -30,7 +30,6 @@ def Keras_Verifier(model_data, model_name, weight_file_path, input_file_path, dt
     outputs = []
     outputs_dict = {}
     tensors = {}
-    previous_row = ''
     
     # for each layers
     for layer in model_data.layers:

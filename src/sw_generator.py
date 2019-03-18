@@ -1,5 +1,5 @@
-from ..Models import *
-from ..Layers import *
+from .Model import *
+
 import csv
 import sys
 from string import Template
