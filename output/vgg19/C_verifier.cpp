@@ -9,6 +9,7 @@ using namespace std;
 
 typedef float DATA_T;
 
+// define functions of each layer  
 void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][224][224], DATA_T W[64][3][3][3], DATA_T B[64]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
@@ -639,6 +640,7 @@ int main(int argc, char *argv[]){
     int m, x, y, i, j, k, l;
     int trash;
 
+    // declare array variables of input, weight and bias (static variables) 
     static DATA_T I[3][224][224];
 	static DATA_T W1[64][3][3][3];
 	static DATA_T B1[64];
@@ -680,6 +682,7 @@ int main(int argc, char *argv[]){
 	static DATA_T W25[1000][4096];
 	
 
+    // declare array variables of output (static variables)
     static DATA_T O0_SW[3][224][224];
 	static DATA_T O1_SW[64][224][224];
 	static DATA_T O2_SW[64][224][224];
@@ -712,11 +715,12 @@ int main(int argc, char *argv[]){
     if (w_stream == NULL) printf("weight file was not opened");
     FILE *i_stream = fopen(argv[2], "rb");
     if (i_stream == NULL) printf("input file was not opened");
-    FILE *o_stream = fopen("Produced_code/vgg19/Output/c_output.txt", "w");
+    FILE *o_stream = fopen("output/vgg19/c_output.txt", "w");
     if (o_stream == NULL) printf("Output file was not opened");
-    FILE *c_num = fopen("Produced_code/vgg19/Output/c_output_num.txt", "w");
+    FILE *c_num = fopen("output/vgg19/c_output_num.txt", "w");
     if (c_num == NULL) printf("Output file was not opened");
 
+    // initialize input, weight, bias variables using fread
     printf("[C_verifier.cpp]Start Initialzation");
     for (k = 0; k <  224 ; k++) {
 	for (x = 0; x < 224 ; x++) {
@@ -1058,6 +1062,7 @@ for (m = 0; m < 1000 ; m++) {
 	
     printf("[C_verifier.cpp]Finish Initialization");
 
+    // call function of each layer based on csv file which containts layer information
     printf("[C_verifier.cpp]InputLayer\n\n");
 	printf("[C_verifier.cpp]Calculate Conv2D1\n\n");
 	SW_block1_conv1(O0_SW,O1_SW,W1,B1);
@@ -1111,6 +1116,7 @@ for (m = 0; m < 1000 ; m++) {
 	SW_predictions(O24_SW,O25_SW,W25,B25);
 	
 
+    // print each element of output variables 
     printf("[C_verifier.cpp]Print Result");
 
 
