@@ -1,7 +1,7 @@
 import os, sys, csv
 from .Model import Models
 from .sw_generator import *
-from .keras_generator import Keras_Verifier
+from .keras_generator import *
 
 from .maximum_error import check_maximum_error
 
@@ -34,7 +34,7 @@ def gen_sw_test(test_file='', model_name='', dtype='int',weight_file='', Input_f
         model.set_output()
 
     # generate SW_code.cpp
-    code_gen = SW_test(models=models, dtype=dtype,name = model_name)
+    code_gen = SWGenerators(models=models, dtype=dtype,name = model_name)
     cpp_file_path = code_gen.generate()
 
     # Compare cpp and keras
@@ -56,16 +56,14 @@ def gen_sw_test(test_file='', model_name='', dtype='int',weight_file='', Input_f
     for model in models1:
         model.set_output()
 
-
     # Keras-Verification
-    Keras_Verifier.Keras_Verifier(models1[0], model_name, weight_file, Input_file, dtype)
+    Keras_Verifier(models1[0], model_name, weight_file, Input_file, dtype)
 
     cpp_output_path = 'output/'+model_name+'/c_output.txt'
     keras_output_path = 'output/'+model_name+'/keras_output.txt'
     os.system('vimdiff %s %s' % (cpp_output_path, keras_output_path))
-
     # Check maximum error
-    #from maximum_error import check_maximum_error
+    # from maximum_error import check_maximum_error
     cpp_output_path = 'output/'+model_name+'/c_output_num.txt'
     keras_output_path = 'output/'+model_name+'/keras_output_num.txt'
     check_maximum_error(cpp_output_path, keras_output_path)

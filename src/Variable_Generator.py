@@ -24,12 +24,10 @@ def Variable_Generator(csv_dir='',weight_dir='',input_dir='',Random_range=8,init
     else:
         print('Wrong data type!')
 
-
     csv_dir = csv_dir
     weight_dir = weight_dir
     input_dir  = input_dir
     random_range = Random_range
-
 
     # open csv
     csv_file = open(csv_dir)

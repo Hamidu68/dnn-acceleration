@@ -8,7 +8,6 @@ from string import Template
 class SWGenerators(object):
 
     def __init__(self, models=[], dtype='DATA_T',name=''):
-        super(self).__init__(models, dtype)
         self.model_sw = models[0]
         self.model_name = name
 

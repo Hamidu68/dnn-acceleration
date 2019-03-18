@@ -4,6 +4,7 @@ import numpy as np
 
 from keras import backend as K
 
+
 # Print function
 def Print_Keras(model=None, input_values=None, name=None):
     np.set_printoptions(threshold=np.inf)
@@ -43,8 +44,8 @@ def Print_Keras(model=None, input_values=None, name=None):
     print("[Keras_verifier.py]Print Result")
 
     # Open file
-    f = open('Produced_code/'+name+'/Output/keras_output.txt', 'w')
-    fn = open('Produced_code/'+name+'/Output/keras_output_num.txt', 'w')
+    f = open('output/'+name+'/keras_output.txt', 'w')
+    fn = open('output/'+name+'/keras_output_num.txt', 'w')
 
     # Write values
     i = 0
