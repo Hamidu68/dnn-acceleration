@@ -4,6 +4,8 @@ from .sw_generator import *
 from .keras_generator import Keras_Verifier
 
 from .maximum_error import check_maximum_error
+
+
 def gen_sw_test(test_file='', model_name='', dtype='int',weight_file='', Input_file='', batch=''):
     # Main) Read Layer Information from CSV
     csv_reader = csv.DictReader(open(test_file))

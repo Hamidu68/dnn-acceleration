@@ -5,19 +5,37 @@ import sys
 from string import Template
 
 
-class CodeGenerators(object):
+class SWGenerators(object):
 
     def __init__(self, models=[], dtype='DATA_T',name=''):
-        self.models = []
-        self.dtype = dtype
+        super(self).__init__(models, dtype)
+        self.model_sw = models[0]
+        self.model_name = name
+
+    def generate(self):
+        o1 = open("src/template/Main/main_sw.txt")
+        output_path_1 = "\"output/" + self.model_name + "/c_output.txt\""
+        output_path_2 = "\"output/" + self.model_name + "/c_output_num.txt\""
+        file = open('output/'+self.model_name+'/C_verifier.cpp', 'w')
+        file.write(o1.read().format(sw_def_layer=self.gen_sw_def_layer(),
+                                    sw_static_variables=self.gen_sw_static_variables(),
+                                    sw_output_variables=self.gen_sw_output_variables(),
+                                    Initialization=self.gen_initialization(),
+                                    sw_call_layer=self.gen_sw_call_layer(),
+                                    result=self.gen_print_result(),
+                                    output_path_1 = output_path_1,
+                                    output_path_2 = output_path_2
+                                    ))
+        file.close()
+        return 'output/'+self.model_name+'/C_verifier.cpp';
 
     def gen_print_result(self):
         print_result = ''
         for layer in self.model_sw.layers :
             layer_type=layer.config['layer_type']
             output_shape = eval(layer.config['batch_output_shape'])
-            o1 = open("Code_Generator/Template/Print/Print_Output3D.txt")
-            o2 = open("Code_Generator/Template/Print/Print_Output1D.txt")
+            o1 = open("src/template/Print/Print_Output3D.txt")
+            o2 = open("src/template/Print/Print_Output1D.txt")
             output3d = o1.read()
             output1d = o2.read()
             if len(output_shape) <= 2:
@@ -37,14 +55,14 @@ class CodeGenerators(object):
             input_shape = eval(layer.config['batch_input_shape'])
             output_shape = eval(layer.config['batch_output_shape'])
             if layer_type == 'InputLayer':
-                i_input = open("Code_Generator/Template/Init/Input_var_Initializer_f.txt")
+                i_input = open("src/template/Init/Input_var_Initializer_f.txt")
                 init_input = i_input.read()
                 func = init_input.format(Input_channel=input_shape[3], Input_width=input_shape[1],
                                          Input_height=input_shape[2])
                 initialization += func + "\n\t"
             elif layer_type == 'Conv2D':
                 filter_shape = eval(layer.config['kernel_size'])
-                c_input = open("Code_Generator/Template/Init/Conv_var_Initializer_f.txt")
+                c_input = open("src/template/Init/Conv_var_Initializer_f.txt")
                 conv_input = c_input.read()
                 begin = ''
                 end = ''
@@ -56,7 +74,7 @@ class CodeGenerators(object):
                                          comment_begin=begin, comment_end=end)
                 initialization += func + "\n\t"
             elif layer_type == 'Dense':
-                d_input = open("Code_Generator/Template/Init/Dense_var_Initializer_f.txt")
+                d_input = open("src/template/Init/Dense_var_Initializer_f.txt")
                 dense_input = d_input.read()
                 begin = ''
                 end = ''
@@ -68,7 +86,7 @@ class CodeGenerators(object):
                 initialization += func + "\n\t"
             elif layer_type == 'DepthwiseConv2D':
                 filter_shape = eval(layer.config['kernel_size'])
-                dc_input = open("Code_Generator/Template/Init/depthConv_var_Initializer_f.txt")
+                dc_input = open("src/template/Init/depthConv_var_Initializer_f.txt")
                 dconv_input = dc_input.read()
                 begin = ''
                 end = ''
@@ -80,7 +98,7 @@ class CodeGenerators(object):
                                           comment_begin=begin, comment_end=end)
                 initialization += func + "\n\t"
             elif layer_type == 'BatchNormalization':
-                b_input = open("Code_Generator/Template/Init/Batch_var_Initializer_f.txt")
+                b_input = open("src/template/Init/Batch_var_Initializer_f.txt")
                 batch_input = b_input.read()
                 if layer.config['scale'] == 'False':
                     func = batch_input.format(Output_channel=output_shape[3], line_number=l_n, num=3)
@@ -89,8 +107,6 @@ class CodeGenerators(object):
                 initialization += func + "\n\t"
         return initialization
 
-    def generate(self):
-        return
 
 ##################################SW Func##########################################
 
@@ -177,9 +193,8 @@ class CodeGenerators(object):
         sw_output_variables=''
         for layer in self.model_sw.layers :
             output_shape = eval(layer.config['batch_output_shape'])
-            layer_type = layer.config['layer_type']
             l_n=layer.layer_odr
-            if len(output_shape)<=2:
+            if len(output_shape) <= 2:
                 sw_output_variables += 'static DATA_T O{}_SW[{}];\n\t'.format(l_n, output_shape[1])
             else :
                 sw_output_variables += 'static DATA_T O{}_SW[{}][{}][{}];\n\t'.format(l_n, output_shape[3],
