@@ -10,7 +10,7 @@ Creating a new toolkit for people who are using fpga.
 * numpy
 
 ### System structure
-![structure](./image/structure.jpeg)
+![structure](./other/image/structure.jpeg)
   
 
 ### Usage
