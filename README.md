@@ -43,10 +43,12 @@ model_info_file : name of the test file which contains layer information of the 
 c_code_generate : generate software code(c code of the model, {model_name}.cpp file) or not (True/False)   
 keras_generate : build model from keras or not (True/False)   
 sw_verify : verify the output value between c code and keras or not (True/False)   
-hw_code_generate : generate hardware code(optimized code, {model_name}.cpp file & {model_name}_test.cpp file) or not (True/False)   
+hw_code_generate : generate hardware code(optimized code, {model_name}.cpp file & {model_name}_test.cpp file) or not    
+                   (True/False)   
 vivado_generate : compare the value between software code and hardware code or not (True/False)   
 data_type : data type (int, unsinged int, float, ap_uint<16>)   
-random_range : number of range that will be used to generate input.bin, weight.bin value (ex. 5 means input.bin, weight.bin files consist of value between 1 to 5   
+random_range : number of range that will be used to generate input.bin, weight.bin value (ex. 5 means input.bin, weight.bin   
+               files consist of value between 1 to 5   
 skip_batch_layer : skip batch layer or not (True/False)   
 
 
