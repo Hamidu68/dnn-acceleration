@@ -21,21 +21,44 @@ Creating a new toolkit for people who are using fpga.
 git clone "git@github.com:Hamidu68/ML-acceleration.git"
 ```
 
-#### Run run.py
+#### Set condition
+
+in ML-acceleration/config.json file, change the value of various keys.  
+```
+{
+  "network": "vgg19",
+  "model_info_file": "vgg19_test.csv",
+  "c_code_generate": "True",
+  "keras_generate": "True",
+  "sw_verify": "True",
+  "hw_code_generate": "False",
+  "vivado_generate": "False",
+  "data_type": "int",
+  "random_range": "5",
+  "skip_batch_layer": "False"
+}
+```  
+network : name of the model(network) ex. vgg19, resnet50  
+model_info_file : name of the test file which contains layer information of the model (ex. vgg19_test.csv)  
+c_code_generate : generate software code(c code of the model, {model_name}.cpp file) or not (True/False)  
+keras_generate : build model from keras or not (True/False)
+sw_verify : verify the output value between c code and keras or not (True/False)
+hw_code_generate : generate hardware code(optimized code, {model_name}.cpp file & {model_name}_test.cpp file) or not (True/False)   
+vivado_generate : compare the value between software code and hardware code or not (True/False)
+data_type : data type (int, unsinged int, float, ap_uint<16>)
+random_range : number of range that will be used to generate input.bin, weight.bin value (ex. 5 means input.bin, weight.bin files consist of value between 1 to 5 
+skip_batch_layer : skip batch layer or not (True/False)
+
+
+#### Run run.sh
 
 in ML-acceleration folder, 
 use the command below to run run.py and parameters should be passed.   
 ```
-python run.py <SW_test> <HW_test> <DAC2017_test> <Test_file> <model_name> <data_type>
+./run.sh
 ```
-SW_test : generate software code(c code of the model, {model_name}.cpp file) or not (True/False)  
-HW_test : generate hardware code(optimized code, {model_name}.cpp file & {model_name}_test.cpp file) or not (True/False)  
-DAC2017_test : generate DAC2017 code or not (True/False)  //it will be removed  
-Test_file : name of the test file which contains layer information of the model (ex. vgg19_test.csv)  
-model_name : name of the model(network) ex. vgg19, resnet50    
-data_type : data type (int, unsinged int, float, ap_uint<16>)  
+script file run.sh will run main.py file.
 
- 
  ### Ongoing work
  1. code revision - structure/hareware code generator   
  2. add new models(architecture)   
