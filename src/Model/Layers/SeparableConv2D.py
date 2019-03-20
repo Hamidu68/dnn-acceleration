@@ -2,6 +2,7 @@ from .Data import Data
 from .Layers import Layers
 from string import Template
 
+
 class SeparableConv2D(Layers):
     def __init__(self, config={}, inputs=[], dtype='DATA_T', layer_odr=0, post=''):
 
@@ -27,7 +28,7 @@ class SeparableConv2D(Layers):
 
         # code
 
-        sepconv = open("Code_Generator/Template/Function/SeparableConv2D.txt")
+        sepconv = open("src/Model/template/Function/SeparableConv2D.txt")
         sep_conv = sepconv.read()
 
         func = sep_conv.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1]

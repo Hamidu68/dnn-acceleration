@@ -12,6 +12,7 @@ from keras.applications.densenet import DenseNet201
 from keras.applications.nasnet import NASNetLarge
 from keras.applications.nasnet import NASNetMobile
 from keras.applications.mobilenetv2 import MobileNetV2
+from keras.applications.mobilenet import MobileNet
 
 import csv, sys
 
@@ -89,7 +90,6 @@ print('**********************************vgg16**********************************
 extract_configs(model,'vgg16')
 
 
-'''
 model = VGG19   (include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************vgg19**************************************')
 extract_configs(model, 'vgg19')
@@ -137,6 +137,6 @@ extract_configs(model, 'nasnetlarge')
 
 model = NASNetMobile(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************nasnetmobile***********************************')
-extract_configs(model, 'nasnetmobile')'''
+extract_configs(model, 'nasnetmobile')
 
 

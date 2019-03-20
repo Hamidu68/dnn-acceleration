@@ -9,7 +9,6 @@ def check_maximum_error(c_out_path, k_out_path):
     k_output_line = k_out.readline()
     k = k_output_line.split()
 
-
     maximum = -1.0
     c_max = 0
     k_max = 0

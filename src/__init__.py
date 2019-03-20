@@ -1,5 +1,4 @@
 from .Model import *
-from .extract_configs import extract_configs
 from .hw_generator import *
 from .keras_generator import *
 from .keras_layers import *

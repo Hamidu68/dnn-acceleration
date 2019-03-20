@@ -20,9 +20,9 @@ class BatchNormalization(Layers):
 
         # code
         if self.config['scale'] == 'False' :
-            batch_normal = open("Code_Generator/Template/Function/BatchNormalization_no_scale.txt")
+            batch_normal = open("src/Model/template/Function/BatchNormalization_no_scale.txt")
         else :
-            batch_normal = open("Code_Generator/Template/Function/BatchNormalization.txt")
+            batch_normal = open("src/Model/template/Function/BatchNormalization.txt")
 
         template = batch_normal.read()
         func = template.format(Name=self.config['name'], Input_channel= input_shape[3], Input_width= input_shape[1],

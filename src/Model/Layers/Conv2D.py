@@ -37,13 +37,13 @@ class Conv2D(Layers):
 
         # code
         if use_bias:
-            conv_s = open("Code_Generator/Template/Function/Conv2D_same_stride_bias.txt")
-            conv_v = open("Code_Generator/Template/Function/Conv2D_valid_bias.txt")
+            conv_s = open("src/Model/template/Function/Conv2D_same_stride_bias.txt")
+            conv_v = open("src/Model/template/Function/Conv2D_valid_bias.txt")
             conv2d_same = conv_s.read()
             conv2d_valid = conv_v.read()
         else:
-            conv_s = open("Code_Generator/Template/Function/Conv2D_same_stride.txt")
-            conv_v = open("Code_Generator/Template/Function/Conv2D_valid.txt")
+            conv_s = open("src/Model/template/Function/Conv2D_same_stride.txt")
+            conv_v = open("src/Model/template/Function/Conv2D_valid.txt")
             conv2d_same = conv_s.read()
             conv2d_valid = conv_v.read()
 
@@ -95,8 +95,8 @@ class Conv2D_HW(Layers):
         #self.function['params'] = self.get_params()
 
         # code
-        conv_s = open("Code_Generator/Template/Function/Conv2D_same_HW.txt")
-        conv_v = open("Code_Generator/Template/Function/Conv2D_valid_HW.txt")
+        conv_s = open("src/Model/template/Function/Conv2D_same_HW.txt")
+        conv_v = open("src/Model/template/Function/Conv2D_valid_HW.txt")
         conv2d_same = conv_s.read()
         conv2d_valid = conv_v.read()
 
@@ -150,7 +150,7 @@ class Conv2D_DAC2017(Layers):
         #self.function['params'] = self.get_params()
 
         # code
-        conv_s = open("Code_Generator/Template/Function/Conv2D_same_DAC2017.txt")
+        conv_s = open("src/Model/template/Function/Conv2D_same_DAC2017.txt")
         conv2d_same = conv_s.read()
         func = conv2d_same.format(Name=self.config["name"], Input_channel=input_shape[3],
                                   Input_width=input_shape[1], Stride_width=stride_shape[0],

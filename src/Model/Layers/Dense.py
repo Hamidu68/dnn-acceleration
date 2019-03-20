@@ -21,13 +21,13 @@ class Dense(Layers):
 
         # code
         if use_bias:
-            den_s = open("Code_Generator/Template/Function/Dense_Softmax_bias.txt")
-            den_r = open("Code_Generator/Template/Function/Dense_Relu_bias.txt")
+            den_s = open("src/Model/template/Function/Dense_Softmax_bias.txt")
+            den_r = open("src/Model/template/Function/Dense_Relu_bias.txt")
             dense_softmax = den_s.read()
             dense_relu = den_r.read()
         else:
-            den_s = open("Code_Generator/Template/Function/Dense_Softmax.txt")
-            den_r = open("Code_Generator/Template/Function/Dense_Relu.txt")
+            den_s = open("src/Model/template/Function/Dense_Softmax.txt")
+            den_r = open("src/Model/template/Function/Dense_Relu.txt")
             dense_softmax = den_s.read()
             dense_relu = den_r.read()
 

@@ -18,7 +18,7 @@ class Add(Layers):
         # init part
 
         # code
-        ad = open("Code_Generator/Template/Function/Add.txt")
+        ad = open("src/Model/template/Function/Add.txt")
         template = ad.read()
         func = template.format(Name=self.config['name'], Input_channel1=output_shape[3], Input_width1=output_shape[1],
                                Input_height1=output_shape[2], Input_channel2=output_shape[3],

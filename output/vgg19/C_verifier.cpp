@@ -715,9 +715,9 @@ int main(int argc, char *argv[]){
     if (w_stream == NULL) printf("weight file was not opened");
     FILE *i_stream = fopen(argv[2], "rb");
     if (i_stream == NULL) printf("input file was not opened");
-    FILE *o_stream = fopen("output/vgg19/c_output.txt", "w");
+    FILE *o_stream = fopen("output/vgg19/output_value/c_output.txt", "w");
     if (o_stream == NULL) printf("Output file was not opened");
-    FILE *c_num = fopen("output/vgg19/c_output_num.txt", "w");
+    FILE *c_num = fopen("output/vgg19/output_value/c_output_num.txt", "w");
     if (c_num == NULL) printf("Output file was not opened");
 
     // initialize input, weight, bias variables using fread

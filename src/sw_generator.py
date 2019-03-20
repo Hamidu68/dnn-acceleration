@@ -13,8 +13,8 @@ class SWGenerators(object):
 
     def generate(self):
         o1 = open("src/Model/template/Main/main_sw.txt")
-        output_path_1 = "\"output/" + self.model_name + "/c_output.txt\""
-        output_path_2 = "\"output/" + self.model_name + "/c_output_num.txt\""
+        output_path_1 = "\"output/" + self.model_name + "/output_value/c_output.txt\""
+        output_path_2 = "\"output/" + self.model_name + "/output_value/c_output_num.txt\""
         file = open('output/'+self.model_name+'/C_verifier.cpp', 'w')
         file.write(o1.read().format(sw_def_layer=self.gen_sw_def_layer(),
                                     sw_static_variables=self.gen_sw_static_variables(),

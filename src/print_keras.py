@@ -44,8 +44,8 @@ def Print_Keras(model=None, input_values=None, name=None):
     print("[Keras_verifier.py]Print Result")
 
     # Open file
-    f = open('output/'+name+'/keras_output.txt', 'w')
-    fn = open('output/'+name+'/keras_output_num.txt', 'w')
+    f = open('output/'+name+'/output_value/keras_output.txt', 'w')
+    fn = open('output/'+name+'/output_value/keras_output_num.txt', 'w')
 
     # Write values
     i = 0

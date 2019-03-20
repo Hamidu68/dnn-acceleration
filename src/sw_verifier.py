@@ -59,11 +59,11 @@ def gen_sw_test(test_file='', model_name='', dtype='int',weight_file='', Input_f
     # Keras-Verification
     Keras_Verifier(models1[0], model_name, weight_file, Input_file, dtype)
 
-    cpp_output_path = 'output/'+model_name+'/c_output.txt'
-    keras_output_path = 'output/'+model_name+'/keras_output.txt'
+    cpp_output_path = 'output/'+model_name+'/output_value/c_output.txt'
+    keras_output_path = 'output/'+model_name+'/output_value/keras_output.txt'
     os.system('vimdiff %s %s' % (cpp_output_path, keras_output_path))
     # Check maximum error
     # from maximum_error import check_maximum_error
-    cpp_output_path = 'output/'+model_name+'/c_output_num.txt'
-    keras_output_path = 'output/'+model_name+'/keras_output_num.txt'
+    cpp_output_path = 'output/'+model_name+'/output_value/c_output_num.txt'
+    keras_output_path = 'output/'+model_name+'/output_value/keras_output_num.txt'
     check_maximum_error(cpp_output_path, keras_output_path)

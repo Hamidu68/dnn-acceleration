@@ -1,4 +1,5 @@
 import os, sys
+import json
 
 from src import *
 
@@ -10,16 +11,19 @@ from src import *
 # sys.argv[6] : data type (int, unsinged int, float, ap_uint<16>)
 
 if __name__ == '__main__':
+
+    with open('config.json', 'r') as fr:
+        jData = json.load(fr)
     
-    run_gen_sw_test = eval(sys.argv[1])
-    run_gen_hw_test = eval(sys.argv[2])
+    run_gen_sw_test = jData["c_code_generate"]
+    run_gen_hw_test = jData["hw_code_generate"]
 
     # run_gen_DAC2017_test = eval(sys.argv[3])
-    test_file = "./model_info/" + sys.argv[4]
-    model_name = sys.argv[5]
-    dtype = sys.argv[6]
-    batch = sys.argv[7]
-    Random_range=5
+    test_file = "./model_info/" + jData["model_info_file"]
+    model_name = jData["network"]
+    dtype = jData["data_type"]
+    batch = jData["skip_batch_layer"]
+    Random_range = int(jData["random_range"])
     weight_file_path = './src/init_weight.bin'
     input_file_path = './src/init_input.bin'
     Use_trained_weight=0

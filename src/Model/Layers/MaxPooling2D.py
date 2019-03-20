@@ -2,6 +2,7 @@ from .Data import Data
 from .Layers import Layers
 from string import Template
 
+
 class MaxPooling2D(Layers):
 
     def __init__(self, config={}, inputs=[], dtype='DATA_T', layer_odr=0, post=''):
@@ -21,7 +22,7 @@ class MaxPooling2D(Layers):
         # init part
 
         # code
-        mxp = open("Code_Generator/Template/Function/MaxPooling2D.txt")
+        mxp = open("src/Model/template/Function/MaxPooling2D.txt")
         template = mxp.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[3],
@@ -48,7 +49,7 @@ class MaxPooling2D_HW(Layers):
         # init part
 
         # code
-        mxp = open("Code_Generator/Template/Function/MaxPooling2D_HW.txt")
+        mxp = open("src/Model/template/Function/MaxPooling2D_HW.txt")
         template = mxp.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[3],

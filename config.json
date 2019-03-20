@@ -1,0 +1,12 @@
+{
+  "network": "vgg19",
+  "model_info_file": "vgg19_test.csv",
+  "c_code_generate": "True",
+  "keras_generate": "True",
+  "sw_verify": "True",
+  "hw_code_generate": "False",
+  "vivado_generate": "False",
+  "data_type": "int",
+  "random_range": "5",
+  "skip_batch_layer": "False"
+}

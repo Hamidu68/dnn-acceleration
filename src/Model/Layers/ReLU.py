@@ -2,6 +2,7 @@ from .Data import Data
 from .Layers import Layers
 from string import Template
 
+
 class ReLU(Layers):
 
     def __init__(self, config={}, inputs=[], dtype='DATA_T', layer_odr=0, post=''):
@@ -20,7 +21,7 @@ class ReLU(Layers):
         # init part
 
         # code
-        rl = open("Code_Generator/Template/Function/Relu.txt")
+        rl = open("src/Model/template/Function/Relu.txt")
         template = rl.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[3],

@@ -20,9 +20,9 @@ class Concatenate(Layers):
 
         # code
         # code
-        con2 = open("Code_Generator/Template/Function/Concatenate2.txt")
-        con3 = open("Code_Generator/Template/Function/Concatenate3.txt")
-        con4 = open("Code_Generator/Template/Function/Concatenate4.txt")
+        con2 = open("src/Model/template/Function/Concatenate2.txt")
+        con3 = open("src/Model/template/Function/Concatenate3.txt")
+        con4 = open("src/Model/template/Function/Concatenate4.txt")
 
         con2_r = con2.read()
         con3_r = con3.read()

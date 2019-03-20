@@ -2,6 +2,7 @@ from .Data import Data
 from .Layers import Layers
 from string import Template
 
+
 class DepthwiseConv2D(Layers):
 
     def __init__(self, config={}, inputs=[], dtype='DATA_T', layer_odr=0, post=''):
@@ -25,8 +26,8 @@ class DepthwiseConv2D(Layers):
             self.weights.append(Data(dtype=self.dtype, shape=(output_shape[3],), name='B{}'.format(self.layer_odr)))
 
         # code
-        dconv_s = open("Code_Generator/Template/Function/DepthwiseConv2D_same.txt")
-        dconv_v = open("Code_Generator/Template/Function/DepthwiseConv2D_valid.txt")
+        dconv_s = open("src/Model/template/Function/DepthwiseConv2D_same.txt")
+        dconv_v = open("src/Model/template/Function/DepthwiseConv2D_valid.txt")
 
         dconv2d_s = dconv_s.read()
         dconv2d_v = dconv_v.read()

@@ -3,6 +3,7 @@ from .Layers import Layers
 from string import Template
 import ast
 
+
 class Lambda(Layers):
 
     def __init__(self, config={}, inputs=[], dtype='DATA_T', layer_odr=0, post=''):
@@ -20,7 +21,7 @@ class Lambda(Layers):
         # init part
 
         # code
-        lamda = open("Code_Generator/Template/Function/Lambda.txt")
+        lamda = open("src/Model/template/Function/Lambda.txt")
         lamda_r = lamda.read()
 
         func = lamda_r.format(Name=self.config['name'], Output_channel=output_shape[3], scale=scale,
