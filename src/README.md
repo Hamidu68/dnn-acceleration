@@ -5,8 +5,7 @@ contain function for c, keras generator, verifier, variable generator(for input,
 ### [Model](./Model) folder  
 
 it stores the type of layers, template and structure of the network that we are using.  
-
-In each file, 
+ 
 
 ### VariableGenerator.py  
 
