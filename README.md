@@ -15,13 +15,13 @@ Creating a new toolkit for people who are using fpga.
 
 ### Usage
 
-#### Download the repository
+#### 1. Download the repository
 
 ```
 git clone "git@github.com:Hamidu68/ML-acceleration.git"
 ```
 
-#### Set condition
+#### 2. Set condition
 
 in ML-acceleration/config.json file, change the value of various keys.  
 ```
@@ -52,7 +52,7 @@ random_range : number of range that will be used to generate input.bin, weight.b
 skip_batch_layer : skip batch layer or not (True/False)   
 
 
-#### Run run.sh
+#### 3. Run run.sh
 
 in ML-acceleration folder, 
 use the command below to run run.py and parameters should be passed.   
