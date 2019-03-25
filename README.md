@@ -10,11 +10,11 @@ Creating a new toolkit for people who are using fpga.
 * numpy
 
 ### System structure  
-[model_info](./model_info)  
-[src](./src)  
-[output](./output)  
-[training](./training)  
-[other](./other)  
+* [model_info](./model_info)  
+* [src](./src)  
+* [output](./output)  
+* [training](./training)  
+* [other](./other)  
 
   
 ![structure](./other/image/structure.jpeg)
