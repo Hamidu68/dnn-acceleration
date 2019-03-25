@@ -13,7 +13,14 @@ There are 4 directories which categorize the template files.
 They are used to create c codes.  
 
 #### Data.py  
-It is used to save the data type of the model, 
+It is used to save the data type of the model, data shape and name of the data.  
 
+#### Graph.py  
+It is used to specify connection between each layer of the network.  
+Each layer saves layer number of input layer and its layer number.  
+
+#### Models.py  
 Based on csv file which contains layer information,  
 build model using ```add_layer```, ```skip_layer ```, ```set_output```, ```get_inputs```, ```add_graph``` function.  
+
+
