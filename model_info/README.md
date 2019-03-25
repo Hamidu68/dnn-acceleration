@@ -13,7 +13,7 @@ from keras.applications.resnet50 import ResNet50
 ```
 
 2. Call function  
-for example, if we want to generate resnset_test.csv file in model_info folder,  
+for example, if we want to generate resnet50_test.csv file in model_info folder,  
 put absolute path or relative path including file name in {file_path} without file extension (ex. ../model_info/resnet50_test)    
 and call function like the below.   
 ```
