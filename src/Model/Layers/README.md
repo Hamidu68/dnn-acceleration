@@ -25,6 +25,6 @@ class Layers(object):
 
 In each python file(for example, ```Conv2D.py```), class of each layer is defined which inherits features from Layers class(base class).    
 
-![Layers](./other/image/Layers.jpeg)
+![Layers](../../../other/image/Layers.jpeg)
 
 And in each class, c code of each layer is created using template file.  
