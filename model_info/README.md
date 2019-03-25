@@ -5,15 +5,15 @@ For file name, normally we use {model_name}_test.csv form (for example, vgg16_te
 
 To generate these files,  
 
-1. Import the model(network) that you want to generate in ML-acceleration/src/extract_configs.py file  
+### 1. Import the model(network) that you want to generate in ML-acceleration/src/extract_configs.py file  
 
-for example, if we want to generate resnet50 file,  
+For example, if we want to generate resnet50 file,  
 ```
 from keras.applications.resnet50 import ResNet50  
 ```  
 write these at the top of extract_configs.py.  
-
-2. Build model and call extract_configs function   
+  
+### 2. Build model and call extract_configs function   
 For example, if we want to generate resnet50_test.csv file in model_info folder,  
 put absolute path or relative path including file name in {file_path} without file extension.    
 (ex. {file_path} : '../model_info/resnet50_test')    
@@ -24,7 +24,7 @@ print('**********************************resnet50*******************************
 extract_configs(model, {file_path})
 ```  
   
-3. Run extract_configs.py file by using the command below.  
+### 3. Run extract_configs.py file by using the command below.  
 
 ```
 python extract_configs.py 
