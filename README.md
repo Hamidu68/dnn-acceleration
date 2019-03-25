@@ -55,7 +55,7 @@ in ML-acceleration/config.json file, change the value of various keys.
 #### 3. Run run.sh
 
 in ML-acceleration folder, 
-use the command below to run run.py and parameters should be passed.   
+use the command below to run run.py.   
 ```
 ./run.sh
 ```
