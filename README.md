@@ -9,7 +9,14 @@ Creating a new toolkit for people who are using fpga.
 * keras(2.2)
 * numpy
 
-### System structure
+### System structure  
+[model_info](./model_info)  
+[src](./src)  
+[output](./output)  
+[training](./training)  
+[other](./other)  
+
+  
 ![structure](./other/image/structure.jpeg)
   
 
@@ -55,11 +62,16 @@ in ML-acceleration/config.json file, change the value of various keys.
 #### 3. Run run.sh
 
 in ML-acceleration folder, 
-use the command below to run run.py.   
+use the command below to run run.sh script file.   
 ```
 ./run.sh
-```
-script file run.sh will run main.py file.
+```  
+in run.sh file,  
+```  
+python main.py  
+```  
+
+script file 'run.sh' will run main.py file.
 
  ### Ongoing work
  1. code revision - structure/hareware code generator   
