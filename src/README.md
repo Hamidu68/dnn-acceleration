@@ -1,11 +1,11 @@
 # src  
 
-contain function for c, keras generator, verifier, variable generator(for input, weight file) and optimized one.  
+contain functions for c and keras generator, verifier, variable generator(for input, weight file) and optimized one.  
 
-### [Model](./Model) folder  
+### [Model](./Model)(folder)  
 
-it stores the type of layers, template and structure of the network that we are using.  
- 
+it saves the type of layers, templates and structure of the network that we are using.  
+For more details, click the title 'Model' or [here](./Model).   
 
 ### VariableGenerator.py  
 
@@ -32,9 +32,11 @@ In result, this code makes two .bin files. (for this example, init_weight.bin an
 
 ### sw_generator.py  
 Create a c file of the network that contains the c code of each layer and building model.  
+The output c file is saved in ML-acceleration/output folder.  
 
 ### keras_generator.py 
 Calculate output values of each layer by Keras  
+The output values are saved in ML-acceleration/output/{model_name}/output_value folder.  
 
 ### keras_layers.py   
 Contain functions of various layers which call keras function. 
@@ -53,6 +55,7 @@ def add_MaxPooling2D(input_tensor=None, info=None, skip=False, tensors = {}):
 ```  
 
 ### print_keras.py  
+It is used in 'keras_generator.py' file.  
 Create keras output file to compare the values with c file and calculate maximum error.   
 
 ### maximum_error.py 
@@ -60,14 +63,14 @@ Check maximum error range by comparing each value of c and keras
 and print the maximum value of the difference of each element divided by the element of keras.  
 
 ### sw_verifier.py  
+Compare the values between generated c file and keras using vimdiff command.  
+And maximum error is calculated by using maximum_error.py.  
 
+### hw_generator.py (not completed)    
+Create a c file of the network that contains the optimized version of c code of each layer and building model.  
 
-
-### hw_generator.py  
-
-
-### vivado_generator.py
- 
+### vivado_generator.py (not completed)  
+Code that contains the comparison of the values between generated c code and optimized version.    
 
 
 ### extract_configs.py  
