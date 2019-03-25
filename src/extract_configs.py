@@ -87,9 +87,9 @@ def extract_configs(model,name):
 
 model = VGG16   (include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************vgg16**************************************')
-extract_configs(model,'vgg16')
+extract_configs(model,'/Users/kangsujin/Documents/SUJIN/I-SURF project/ML-acceleration/model_info/vgg16_test')
 
-
+'''
 model = VGG19   (include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************vgg19**************************************')
 extract_configs(model, 'vgg19')
@@ -138,5 +138,5 @@ extract_configs(model, 'nasnetlarge')
 model = NASNetMobile(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
 print('**********************************nasnetmobile***********************************')
 extract_configs(model, 'nasnetmobile')
-
+'''
 
