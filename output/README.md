@@ -1,8 +1,8 @@
 # output  
-### Store produced code after running run.py (for now, just software code)  
+### Save produced code after running run.sh (for now, it generates software code)  
  
    
-By running run.py, the c code of that network is created in the folder named model that we are using.  
+&nbsp;&nbsp;&nbsp;&nbsp;By running run.py, the c code of that network is created in the folder named model that we are using.  
 
 In each folder,  
 ```
