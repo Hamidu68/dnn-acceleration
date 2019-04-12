@@ -45,15 +45,16 @@ def replaceAndSaveSetting(params, index):
     inputDir = os.getcwd()
     outputDir = './tests/num'+str(index)
     os.system("mkdir -p "+outputDir)
-    replaceInFile(params, inputDir, outputDir, TEST_NAME+'-template.cfg', join(outputDir, TEST_NAME+'.cfg'))
+    #os.system("cp run.sh ./tests/num"+str(index))
     replaceInFile(params, inputDir, outputDir, 'script-template.tcl', join(outputDir, 'script.tcl'))
     replaceInFile(params, inputDir, outputDir, 'run-template.sh', join(outputDir, 'run.sh'))
     return outputDir
 
 class NHS(SweepTask):
     params = [
-        ParamHolder('M_L1_UF', [1, 2]),
-        ParamHolder('M_L2_UF', [1])
+        ParamHolder('B1_UF', [1, 2, 4, 8, 16, 32, 64]),
+        ParamHolder('B2_UF', [1, 2, 4, 8, 16, 32, 64,128]),
+        ParamHolder('B3_UF', [1, 2, 4, 8, 16, 32, 64,128,256])
             ] 
     containerIndex = 0
 
@@ -77,3 +78,6 @@ class NHS(SweepTask):
 if __name__ == '__main__':
     sweeper = Sweeper(NHS)
     sweeper.sweep()
+
+
+
