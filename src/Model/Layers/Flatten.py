@@ -13,14 +13,10 @@ class Flatten(Layers):
         output_shape = eval(self.config['batch_output_shape'])
 
         # set_output
-        self.set_output(output_shape[1:], self.layer_odr)
-
-        # set_weight
-
-        # init part
+        self.set_output()
 
         # code
-        fla = open("src/Model/template/Function/Flatten.txt")
+        fla = open(self.template_path + "function/Flatten.txt")
         template = fla.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[1])

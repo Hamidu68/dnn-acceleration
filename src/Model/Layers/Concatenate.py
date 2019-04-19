@@ -12,17 +12,12 @@ class Concatenate(Layers):
         input_shape = eval(self.config['batch_input_shape'])
 
         # set_output
-        self.set_output(output_shape[1:], self.layer_odr)
-
-        # set_weight
-
-        # init part
+        self.set_output()
 
         # code
-        # code
-        con2 = open("src/Model/template/Function/Concatenate2.txt")
-        con3 = open("src/Model/template/Function/Concatenate3.txt")
-        con4 = open("src/Model/template/Function/Concatenate4.txt")
+        con2 = open(self.template_path + "function/Concatenate2.txt")
+        con3 = open(self.template_path + "function/Concatenate3.txt")
+        con4 = open(self.template_path + "function/Concatenate4.txt")
 
         con2_r = con2.read()
         con3_r = con3.read()

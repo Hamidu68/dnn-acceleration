@@ -3,42 +3,48 @@ import json
 
 from src import *
 
-# sys.argv[1] : run_gen_sw_test (T/F)
-# sys.argv[2] : run_gen_hw_test (T/F)
-# sys.argv[3] : run_gen_DAC2017_test (T/F)
-# sys.argv[4] : test file (./test.csv)
-# sys.argv[5] : model_name
-# sys.argv[6] : data type (int, unsinged int, float, ap_uint<16>)
-
 if __name__ == '__main__':
 
+    #set configs
     with open('config.json', 'r') as fr:
         jData = json.load(fr)
-    
-    run_gen_sw_test = jData["c_code_generate"]
-    run_gen_hw_test = jData["hw_code_generate"]
+        extract_config = jData["extract_configs"]
+        model_info = jData["model_info"]
+        model_name = jData["model"]
+        run_c_test = jData["sw_test"]
+        run_vivado_test = jData["vivado_test"]
+        dtype = jData["data_type"]
+        batch = jData["batch"]
+        random_range = int(jData["random_range"])
+        weight_file_path = jData["weight_file_path"]
+        input_file_path = jData["input_file_path"]
+        use_trained_weight= jData["use_trained_weight"]
+        trained_weight_file_path= jData["trained_weight_file_path"]
+        image_file_path= jData["image_file_path"]
+        output_path = jData["output_path"] + model_name
+        template_path = jData["template_path"]
 
-    # run_gen_DAC2017_test = eval(sys.argv[3])
-    test_file = "./model_info/" + jData["model_info_file"]
-    model_name = jData["network"]
-    dtype = jData["data_type"]
-    batch = jData["skip_batch_layer"]
-    Random_range = int(jData["random_range"])
-    weight_file_path = './src/init_weight.bin'
-    input_file_path = './src/init_input.bin'
-    Use_trained_weight=0
-    Trained_weight_file=model_name+"_weights.bin"
-    Image_file="image.bin"
-    if run_gen_sw_test and Use_trained_weight == 1:
-        gen_sw_test(test_file, model_name, dtype,Trained_weight_file,Image_file)
-    
-    if run_gen_sw_test and Use_trained_weight == 0:
-        variable_generator.Variable_Generator(test_file,weight_file_path,input_file_path,Random_range,dtype)
-        gen_sw_test(test_file, model_name, dtype, weight_file_path, input_file_path, batch)
-    
-    # if run_gen_hw_test:
-    #    gen_hw_test(test_file, model_name, dtype)
+    paths = []
+    paths.append(output_path)
+    paths.append(template_path)
 
-# if run_gen_DAC2017_test:
-#    gen_DAC2017_test(test_file, model_name, dtype)
+    #extract model layer information. ex) vgg19.csv
+    if extract_config == "True":
+        extract_configs(model_name, model_info)
 
+    #run keras vs c test with trained weights and given input
+    if run_c_test == "True" and use_trained_weight == "True":
+        path.append(trained_weight_file_path)
+        path.append(image_file)
+        sw_test(model_info, model_name, dtype, batch, paths)
+
+    #run keras vs c test with random weights and input
+    if run_c_test == "True" and use_trained_weight == "False":
+        paths.append(weight_file_path)
+        paths.append(input_file_path)
+        variable_generator(model_info, weight_file_path, input_file_path, random_range, dtype)
+        sw_test(model_info, model_name, dtype, batch, paths)
+
+    #generate vivado code
+    if run_vivado_test == "True" :
+        vivado_test(model_info, model_name, dtype, batch,paths)

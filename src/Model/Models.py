@@ -1,4 +1,4 @@
-from .Layers import *
+from layers import *
 
 
 class Models():
@@ -10,7 +10,6 @@ class Models():
         self.layers = []
         self.inputs = []
         self.outputs = []
-        # self.weights = []
         self.graphs = {}
 
     def add_graph(self, name='', connected=''):
@@ -40,7 +39,10 @@ class Models():
 
         # Switch
         if layer_type == 'InputLayer':
-            layer = InputLayer(config, dtype=self.dtype, layer_odr=self.layer_num, post=self.post)
+            if self.post =="SW":
+                layer = InputLayer(config, dtype=self.dtype, layer_odr=self.layer_num, post=self.post)
+            else :
+                layer = InputLayer_HW(config, dtype=self.dtype, layer_odr=self.layer_num, post=self.post)
             self.layers.append(layer)
             self.inputs.append(layer.inputs[0])
             self.graphs[layer_name] = {'in':[-1],
@@ -48,12 +50,17 @@ class Models():
         elif layer_type == 'Conv2D':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)
-            self.layers.append(Conv2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
-
+            if self.post == "SW":
+                self.layers.append(Conv2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+            else:
+                self.layers.append(Conv2D_HW(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
         elif layer_type == 'MaxPooling2D':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)
-            self.layers.append(MaxPooling2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+            if self.post == "SW":
+                self.layers.append(MaxPooling2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+            else :
+                self.layers.append(MaxPooling2D_HW(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
 
         elif layer_type == 'BatchNormalization':
             self.add_graph(layer_name, config['connected_to'])

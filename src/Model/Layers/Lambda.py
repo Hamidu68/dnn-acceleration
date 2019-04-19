@@ -14,14 +14,10 @@ class Lambda(Layers):
         scale_dict = ast.literal_eval(self.config['arguments'])
         scale = scale_dict['scale']
         # set_output
-        self.set_output(output_shape[1:], self.layer_odr)
-
-        # set_weight
-
-        # init part
+        self.set_output()
 
         # code
-        lamda = open("src/Model/template/Function/Lambda.txt")
+        lamda = open(self.template_path + "function/Lambda.txt")
         lamda_r = lamda.read()
 
         func = lamda_r.format(Name=self.config['name'], Output_channel=output_shape[3], scale=scale,

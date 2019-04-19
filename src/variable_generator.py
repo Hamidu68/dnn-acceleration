@@ -3,8 +3,7 @@ from sys import argv
 import csv
 import numpy as np
 
-
-def Variable_Generator(csv_dir='',weight_dir='',input_dir='',Random_range=8,init_dtype='int'):
+def variable_generator(csv_dir='',weight_dir='',input_dir='',Random_range=8,init_dtype='int'):
     # Check data type of output file
     dtype = np.int32
     dtype2 = "int"

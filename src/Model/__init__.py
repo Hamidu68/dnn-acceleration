@@ -1,3 +1,2 @@
-from .Data import Data
-from .Models import Models
-from .Layers import *
+from .Models import *
+from layers import *

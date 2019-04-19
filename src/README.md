@@ -1,6 +1,6 @@
 # src  
 
-contain functions for c and keras generator, verifier, variable generator(for input, weight file) and optimized one.  
+source code for sw test(for c vs keras), variable generator(for input, weight file), extract configs(for model info) and vivado test (optimized code generator for vivado).  
 
 ### [Model](./Model)(folder)  
 
@@ -30,13 +30,18 @@ python variable_generator.py ../model_info/vgg19_test.csv init_weight.bin init_i
 In result, this code makes two .bin files. (for this example, init_weight.bin and init_input.bin files are created.) 
 
 
-### sw_generator.py  
-Create a c file of the network that contains the c code of each layer and building model.  
-The output c file is saved in ML-acceleration/output folder.  
+### sw_test.py  
+Call c_generator.py and keras_generator.py and compare the result if each values of layers are same using vimdiff command. maximum error is calculated by using maximum_error.py.    
+The output values of keras and C will be saved under ML-acceleration/output/model_name/output_value/.   
+
+### c_generator.py  
+Generate a c_verifire.cpp, the c code version of model.  
+The output will be saved under ML-acceleration/output/model_name/.    
+we run this cpp file in sw_test.py.  
 
 ### keras_generator.py 
-Calculate output values of each layer by Keras  
-The output values are saved in ML-acceleration/output/{model_name}/output_value folder.  
+Generate output values in Keras  
+It calls keras_layer.py  
 
 ### keras_layers.py   
 Contain functions of various layers which call keras function. 
@@ -54,24 +59,18 @@ def add_MaxPooling2D(input_tensor=None, info=None, skip=False, tensors = {}):
     return output_tensor
 ```  
 
-### print_keras.py  
-It is used in 'keras_generator.py' file.  
-Create keras output file to compare the values with c file and calculate maximum error.   
-
 ### maximum_error.py 
 Check maximum error range by comparing each value of c and keras  
 and print the maximum value of the difference of each element divided by the element of keras.  
 
-### sw_verifier.py  
-Compare the values between generated c file and keras using vimdiff command.  
-And maximum error is calculated by using maximum_error.py.  
+### vivado test.py
+Create a optimized code for Vivado HLS.  
+the code contains the comparison of the values between c code and optimized one.
+it calls vivado_generator.py.    
 
-### hw_generator.py (not completed)    
-Create a c file of the network that contains the optimized version of c code of each layer and building model.  
-
-### vivado_generator.py (not completed)  
-Code that contains the comparison of the values between generated c code and optimized version.    
-
+### vivado_generator.py
+Generate {model_name}.cpp and {model_name}_test.cpp.    
+The output will be saved under ML-acceleration/output/model_name/.    
 
 ### extract_configs.py  
 use it to generate .csv file which contains layer information of the network(model) that we are using.  

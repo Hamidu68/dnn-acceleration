@@ -14,14 +14,10 @@ class ReLU(Layers):
         max_value = int(eval(self.config['max_value']))
 
         # set_output
-        self.set_output(output_shape[1:], self.layer_odr)
-
-        # set_weight
-
-        # init part
+        self.set_output()
 
         # code
-        rl = open("src/Model/template/Function/Relu.txt")
+        rl = open(self.template_path + "function/Relu.txt")
         template = rl.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[3],

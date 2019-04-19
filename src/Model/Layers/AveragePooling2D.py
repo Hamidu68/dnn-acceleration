@@ -15,14 +15,10 @@ class AveragePooling2D(Layers):
         pool_shape = eval(self.config['pool_size'])
 
         # set_output
-        self.set_output(output_shape[1:], self.layer_odr)
-
-        # set_weight
-
-        # init part
+        self.set_output()
 
         # code
-        avp = open("src/Model/template/Function/AveragePooling2D.txt")
+        avp = open(self.template_path + "function/AveragePooling2D.txt")
         template = avp.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[3], Output_width=output_shape[1],

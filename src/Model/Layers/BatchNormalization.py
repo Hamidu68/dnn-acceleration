@@ -11,19 +11,32 @@ class BatchNormalization(Layers):
         input_shape = eval(self.config['batch_input_shape'])
         output_shape = eval(self.config['batch_output_shape'])
 
+        if self.config['scale'] == 'False':
+            num = 3
+        else :
+            num = 4
+
         # set_output
-        self.set_output(output_shape[1:], self.layer_odr)
+        self.set_output()
 
         # set_weight
+        weight_shape = (num, output_shape[3],)
+        self.weights.append(Data(dtype=self.dtype, shape=weight_shape, name='W{}'.format(self.layer_odr)))
 
-        # init part
+        # set params
+        self.set_params()
+
+        # initialization
+        b_input = open(self.template_path + "init/Batch_var_Initializer_f.txt")
+        batch_input = b_input.read()
+        func = batch_input.format(Output_channel=(output_shape[3]), line_number=l_n, num=num)
+        self.function['init'] = func + "\n\t"
 
         # code
         if self.config['scale'] == 'False' :
-            batch_normal = open("src/Model/template/Function/BatchNormalization_no_scale.txt")
+            batch_normal = open(self.template_path + "function/BatchNormalization_no_scale.txt")
         else :
-            batch_normal = open("src/Model/template/Function/BatchNormalization.txt")
-
+            batch_normal = open(self.template_path + "function/BatchNormalization.txt")
         template = batch_normal.read()
         func = template.format(Name=self.config['name'], Input_channel= input_shape[3], Input_width= input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[3], Output_width=output_shape[1]

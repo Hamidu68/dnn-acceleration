@@ -33,30 +33,40 @@ git clone "git@github.com:Hamidu68/ML-acceleration.git"
 in ML-acceleration/config.json file, change the value of various keys.  
 ```
 {
-  "network": "vgg19",
-  "model_info_file": "vgg19_test.csv",
-  "c_code_generate": "True",
-  "keras_generate": "True",
-  "sw_verify": "True",
-  "hw_code_generate": "False",
-  "vivado_generate": "False",
+  "model": "vgg19",
+  "extract_configs": "False",
+  "model_info": "./model_info/vgg19_test1.csv",
+  "sw_test": "False",
+  "vivado_test": "True",
+  "use_trained_weight": "False",
   "data_type": "int",
   "random_range": "5",
-  "skip_batch_layer": "False"
+  "batch": "False",
+  "weight_file_path": "./variables/init_weight.bin",
+  "input_file_path": "./variables/init_input.bin",
+  "trained_weight_file_path": "./variables/vgg19_weights.bin",
+  "image_file_path": "./variables/image.bin",
+  "output_path": "./output/",
+  "template_path": "src/model/template/"
 }
 ```  
-* network : name of the model(network) ex. vgg19, resnet50  
-* model_info_file : name of the test file which contains layer information of the model (ex. vgg19_test.csv)   
-* c_code_generate : generate software code(c code of the model, {model_name}.cpp file) or not (True/False)   
-* keras_generate : build model from keras or not (True/False)   
-* sw_verify : verify the output value between c code and keras or not (True/False)   
-* hw_code_generate : generate hardware code(optimized code, {model_name}.cpp file & {model_name}_test.cpp file)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or not(True/False)    
-* vivado_generate : compare the value between software code and hardware code or not (True/False)   
+* model : name of the model(network) (ex.vgg19, resnet50)  
+* extract_configs : if you don't have layer information of the model(True, False)  
+* model_info : location of layer information (ex."./model_info/vgg19.csv")   
+* sw_test : keras and c code test(True/False)   
+* vivado_test : generate code for Vivado HLS (True/False)   
+* use_trained_weight : if you don't need variable generator (True/False)   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 * data_type : data type (int, unsinged int, float, ap_uint<16>)   
-* random_range : number of range that will be used to generate input.bin, weight.bin value  
+* random_range : number of range that will be used to variable generator  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ex. 5 means input.bin, weight.bin files consist of value between 1 to 5)     
-* skip_batch_layer : skip batch layer or not (True/False)   
+* batch : batch layer or not (True/False)   
+* weight_file_path : location of weight file ("./variables/init_weight.bin")   
+* input_file_path : location of input file ("./variables/init_input.bin")   
+* trained_weight_file_path : location of trained weight file ("./variables/vgg19_weights.bin")   
+* image_file_path : location of image input file ("./variables/image.bin.bin")   
+* output_path : output path ("./output/")   
+* template_path : template path ("src/model/template/")   
 
 
 #### 3. Run run.sh
@@ -74,6 +84,5 @@ python main.py
 script file 'run.sh' will run main.py file.
 
  ### Ongoing work
- 1. code revision - structure/hareware code generator   
- 2. add new models(architecture)   
- 3. apply quantization/weight prunning  
+ 1. add new models(architecture)   
+ 2. apply quantization/weight prunning  

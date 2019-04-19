@@ -13,14 +13,10 @@ class GlobalMaxPooling2D(Layers):
         output_shape = eval(self.config['batch_output_shape'])
 
         # set_output
-        self.set_output(output_shape[1:], self.layer_odr)
-
-        # set_weight
-
-        # init part
+        self.set_output()
 
         # code
-        mxp = open("src/Model/template/Function/GlobalMaxPooling2D.txt")
+        mxp = open(self.template_path + "function/GlobalMaxPooling2D.txt")
         template = mxp.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2])

@@ -14,24 +14,38 @@ class DepthwiseConv2D(Layers):
         filter_shape = eval(self.config['kernel_size'])
         stride_shape = eval(self.config['strides'])
         padding = str(self.config['padding'])
-        use_bias = eval(self.config['use_bias'])
+        self.use_bias = eval(self.config['use_bias'])
 
         # set_output
-        self.set_output(output_shape[1:], self.layer_odr)
+        self.set_output()
 
         # set_weight
-        weight_shape = (output_shape[3], filter_shape[0], filter_shape[1])
+        weight_shape = (output_shape[3], filter_shape[0], filter_shape[1],)
         self.weights.append(Data(dtype=self.dtype, shape=weight_shape, name='W{}'.format(self.layer_odr)))
-        if use_bias:
+        if self.use_bias:
             self.weights.append(Data(dtype=self.dtype, shape=(output_shape[3],), name='B{}'.format(self.layer_odr)))
 
-        # code
-        dconv_s = open("src/Model/template/Function/DepthwiseConv2D_same.txt")
-        dconv_v = open("src/Model/template/Function/DepthwiseConv2D_valid.txt")
+        # set_params
+        self.set_params()
 
+        # initialization
+        dc_input = open(self.template_path + "init/depthConv_var_Initializer_f.txt")
+        dconv_input = dc_input.read()
+        begin = ''
+        end = ''
+        if self.use_bias == False:
+            begin = '/*'
+            end = '*/'
+        func = dconv_input.format(Output_channel=output_shape[3], Filter_width=filter_shape[0],
+                                          Filter_height=filter_shape[1], line_number=l_n,
+                                          comment_begin=begin, comment_end=end)
+        self.function['init'] = func + "\n\t"
+
+        # code
+        dconv_s = open(self.template_path + "function/DepthwiseConv2D_same.txt")
+        dconv_v = open(self.template_path + "function/DepthwiseConv2D_valid.txt")
         dconv2d_s = dconv_s.read()
         dconv2d_v = dconv_v.read()
-
         if padding == 'valid':
             func = dconv2d_v.format(Name=self.config["name"], Input_channel=input_shape[3],
                                     Input_width=input_shape[1]

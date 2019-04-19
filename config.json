@@ -1,12 +1,17 @@
 {
-  "network": "vgg19",
-  "model_info_file": "vgg19_test.csv",
-  "c_code_generate": "True",
-  "keras_generate": "True",
-  "sw_verify": "True",
-  "hw_code_generate": "False",
-  "vivado_generate": "False",
+  "model": "vgg19",
+  "extract_configs": "False",
+  "model_info": "./model_info/vgg19.csv",
+  "sw_test": "False",
+  "vivado_test": "True",
+  "use_trained_weight": "False",
   "data_type": "int",
   "random_range": "5",
-  "skip_batch_layer": "False"
+  "batch": "False",
+  "weight_file_path": "./variables/init_weight.bin",
+  "input_file_path": "./variables/init_input.bin",
+  "trained_weight_file_path": "./variables/vgg19_weights.bin",
+  "image_file_path": "./variables/image.bin",
+  "output_path": "./output/",
+  "template_path": "src/model/template/"
 }

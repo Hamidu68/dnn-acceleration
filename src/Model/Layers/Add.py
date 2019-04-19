@@ -11,14 +11,10 @@ class Add(Layers):
         output_shape = eval(self.config['batch_output_shape'])
 
         # set_output
-        self.set_output(output_shape[1:], self.layer_odr)
-
-        # set_weight
-
-        # init part
+        self.set_output()
 
         # code
-        ad = open("src/Model/template/Function/Add.txt")
+        ad = open(self.template_path + "function/Add.txt")
         template = ad.read()
         func = template.format(Name=self.config['name'], Input_channel1=output_shape[3], Input_width1=output_shape[1],
                                Input_height1=output_shape[2], Input_channel2=output_shape[3],

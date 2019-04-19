@@ -14,14 +14,10 @@ class ZeroPadding2D(Layers):
         padding = eval(self.config['padding'])
 
         # set_output
-        self.set_output(output_shape[1:], self.layer_odr)
-
-        # set_weight
-
-        # init part
+        self.set_output()
 
         # code
-        zp = open("src/Model/template/Function/ZeroPadding.txt")
+        zp = open(self.template_path + "function/ZeroPadding.txt")
         template = zp.read()
         func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2], Output_channel=output_shape[3], Output_width=output_shape[1],

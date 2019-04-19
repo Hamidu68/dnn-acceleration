@@ -13,10 +13,10 @@ class Cropping2D(Layers):
         cropping = eval(self.config['cropping'])
 
         # set_output
-        self.set_output(output_shape[1:], self.layer_odr)
+        self.set_output()
 
         # code
-        cropp = open("src/Model/template/Function/Cropping2D.txt")
+        cropp = open(self.template_path + "function/Cropping2D.txt")
         cropp_2d = cropp.read()
 
         func = cropp_2d.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],

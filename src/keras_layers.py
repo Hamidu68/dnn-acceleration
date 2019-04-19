@@ -23,7 +23,6 @@ def get_single_input(inbound_name='', tensors={}, outputs_dict={}):
     if inbound_name in outputs_dict:
         del outputs_dict[inbound_name]
 
-
     return input_tensor
 
 
@@ -56,7 +55,7 @@ def add_InputLayer(info=None, fid=None, dtype=int):
 def add_Conv2D(input_tensor=None, info=None, fid=None, dtype=int, skip=False, tensors = {}):
     if skip:
         return tensors[info['connected_to']]
-    
+
     # Read information of layer
     input_shape = eval(info['batch_input_shape'])
     output_shape = eval(info['batch_output_shape'])
@@ -220,7 +219,6 @@ def add_DepthConv2D(input_tensor=None, info=None, fid=None,  dtype=int, skip=Fal
     kernel = kernel.reshape((kernel_size[0], kernel_size[1], output_shape[3], 1)).astype(np.float32)
     weights.append(kernel)
 
-
     # Get output tensor
     output_tensor = layers.DepthwiseConv2D(kernel_size=eval(info['kernel_size']),
                                            strides=eval(info['strides']),
@@ -350,4 +348,3 @@ def add_GlobalMaxPooling2D(input_tensors=[], info=None, skip=False, tensors = {}
     # Get output tensor
     output_tensor = layers.GlobalMaxPooling2D(data_format=str(info['data_format']))(input_tensors)
     return output_tensor
-

@@ -1,8 +1,12 @@
 from .keras_layers import *
-from .print_keras import *
 
 
-def Keras_Verifier(model_data, model_name, weight_file_path, input_file_path, dtype_str):
+def keras_generator(model_data, model_name, dtype_str, paths, skip_layers):
+    output_path = paths[0]
+    template_path = paths[1]
+    weight_file_path = paths[2]
+    input_file_path = paths[3]
+
     # Read weight and input file
     weights_bin=open(weight_file_path, 'rb')
     inputs_bin=open(input_file_path, 'rb')
@@ -20,9 +24,6 @@ def Keras_Verifier(model_data, model_name, weight_file_path, input_file_path, dt
     else:
         print('Wrong data type!')
 
-    # Skip layers
-    skip_layers = ['Dropout']
-
     # init parameters
     line_num = -1
     input_values = np.array([])
@@ -30,24 +31,23 @@ def Keras_Verifier(model_data, model_name, weight_file_path, input_file_path, dt
     outputs = []
     outputs_dict = {}
     tensors = {}
-    
+
     # for each layers
     for layer in model_data.layers:
         row = layer.config
-        # check skip layer
+
         layer_type = row["layer_type"]
-        
+        layer_name = row['name']
+        previous_row = row['connected_to']
+
+        # Check skip layer
         if layer_type in skip_layers:
             skip = True
-            print('Skip {} layer')
         else:
             skip = False
             line_num=line_num+1
-            print('[Keras_verifier.py]add a layer: ' + layer_type + '.' + str(line_num))
+            print('[keras_verifier.py]Calculate ' + layer_type + str(line_num))
 
-        layer_name = row['name']
-        previous_row = row['connected_to']
-        
         # Switch
         if layer_type == 'InputLayer':
             input_value, tensors[layer_name] = add_InputLayer(row, inputs_bin, dtype)
@@ -179,9 +179,70 @@ def Keras_Verifier(model_data, model_name, weight_file_path, input_file_path, dt
     name = model_name
 
     # Print the result
-    Print_Keras(model, input_values, name)
+    print_keras(model, input_values, name, output_path)
 
     # Close weight and input binary files
     weights_bin.close()
     inputs_bin.close()
 
+
+def print_keras(model=None, input_values=None, name=None, output_path =''):
+    np.set_printoptions(threshold=np.inf)
+    np.set_printoptions(linewidth=999999999999999999999999999999)
+
+    def printXD(ary, fid=None, fn=None, shape=()):
+        if len(shape) == 1:
+            print1D(ary, fid, fn, shape)
+        elif len(shape) == 3:
+            print3D(ary, fid, fn, shape)
+
+    def print1D(ary1D, fid=None, fn=None, shape=()):
+        fid.write('[[')
+        for x in range(shape[0]):
+            fid.write('{:.6f} '.format(ary1D[x]))
+            fn.write('{:.6f} '.format(ary1D[x]))
+        fid.write(']]\n\n')
+
+    def print3D(ary3D, fid=None, fn=None, shape=()):
+        fid.write('[[')
+        for x in range(shape[0]):
+            fid.write('[')
+            for y in range(shape[1]):
+                fid.write('[')
+                for z in range(shape[2]):
+                    fid.write('{:.6f} '.format(ary3D[x][y][z]))
+                    fn.write('{:.6f} '.format(ary3D[x][y][z]))
+                if y != (shape[1] - 1):
+                    fid.write(']\n   ')
+                else:
+                    fid.write(']')
+            if x != (shape[0] - 1):
+                fid.write(']\n\n  ')
+        fid.write(']]]\n\n')
+
+    # Print result
+    print("[keras_verifier.py]Print Result")
+
+    # Open file
+    f = open(output_path+'/output_value/keras_output.txt', 'w')
+    fn = open(output_path+'/output_value/keras_output_num.txt', 'w')
+
+    # Write values
+    i = 0
+    for layer in model.layers:
+        layer_type = (str(layer).split()[0]).split('.')[-1]
+
+        f.write('{} : '.format(layer_type))
+        if layer_type == 'InputLayer':
+            # Write input values
+            printXD(input_values[i], f, fn, input_values[i].shape)
+
+        else:
+            # Get output values of each layer
+            get_3rd_layer_output = K.function([model.layers[0].input], [layer.output])
+            layer_output = get_3rd_layer_output([input_values])[0]
+            # Write output values
+            printXD(layer_output[0], f, fn, layer_output[0].shape)
+
+    # model.summary()
+    f.close()

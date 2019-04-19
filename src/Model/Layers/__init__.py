@@ -1,6 +1,7 @@
 from .Data import Data
 from .Layers import Layers
 from .InputLayer import InputLayer
+from .InputLayer import InputLayer_HW
 from .Conv2D import Conv2D
 from .Conv2D import Conv2D_HW
 from .Conv2D import Conv2D_DAC2017

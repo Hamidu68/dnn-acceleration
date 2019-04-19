@@ -13,20 +13,16 @@ class Reshape(Layers):
         output_shape = eval(self.config['batch_output_shape'])
 
         # set_output
-        self.set_output(output_shape[1:], self.layer_odr)
-
-        # set_weight
-
-        # init part
+        self.set_output()
 
         # code
         if len(input_shape)>=3:
-            rl = open("src/Model/template/Function/Reshape1.txt")
+            rl = open(self.template_path + "function/Reshape1.txt")
             template = rl.read()
             func = template.format(Name=self.config["name"], Input_channel=input_shape[3],
                                    Output_channel=output_shape[1])
         else:
-            rl = open("src/Model/template/Function/Reshape2.txt")
+            rl = open(self.template_path + "function/Reshape2.txt")
             template = rl.read()
             func = template.format(Name=self.config["name"], Input_channel=input_shape[1],
                                    Output_channel=output_shape[3])
