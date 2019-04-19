@@ -9,7 +9,7 @@ using namespace std;
 
 typedef float DATA_T;
 
-// define functions of each layer  
+// define functions of each layer
 {sw_def_layer}
 
 //argv[1] = init_weight.txt, argv[2] = init_input.txt
@@ -19,7 +19,7 @@ int main(int argc, char *argv[]){{
     int m, x, y, i, j, k, l;
     int trash;
 
-    // declare array variables of input, weight and bias (static variables) 
+    // declare array variables of input, weight and bias (static variables)
     {sw_static_variables}
 
     // declare array variables of output (static variables)
@@ -35,15 +35,15 @@ int main(int argc, char *argv[]){{
     if (c_num == NULL) printf("Output file was not opened");
 
     // initialize input, weight, bias variables using fread
-    printf("[C_verifier.cpp]Start Initialzation");
+    printf("[c_verifier.cpp]Start Initialzation\n");
     {Initialization}
-    printf("[C_verifier.cpp]Finish Initialization");
+    printf("[c_verifier.cpp]Finish Initialization\n");
 
     // call function of each layer based on csv file which containts layer information
     {sw_call_layer}
 
-    // print each element of output variables 
-    printf("[C_verifier.cpp]Print Result");
+    // print each element of output variables
+    printf("[c_verifier.cpp]Print Result\n");
 
 
     {result}

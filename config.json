@@ -1,7 +1,7 @@
 {
   "model": "vgg19",
   "extract_configs": "False",
-  "model_info": "./model_info/vgg19.csv",
+  "model_info": "./model_info/vgg19_test1.csv",
   "sw_test": "False",
   "vivado_test": "True",
   "use_trained_weight": "False",

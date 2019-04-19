@@ -12,12 +12,12 @@ void Stream_input(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], hls:
 	}}
 }}
 
-void Stream_output(hls::stream<DATA_T> &O_strm, DATA_T O[{last_output_channel}]) {{
+void Stream_output(hls::stream<DATA_T> &O_strm, DATA_T O[{Output_channel}]) {{
   int x;
 #pragma HLS ARRAY_PARTITION variable=O complete dim=1
 
-	Stream_input_x_loop: for (x=0; x<{last_output_channel}; x++) {{
-	 
+	Stream_input_x_loop: for (x=0; x<{Output_channel}; x++) {{
+
 #pragma HLS PIPELINE
 	 			O[x] = O_strm.read()
 	}}

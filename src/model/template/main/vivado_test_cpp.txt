@@ -1,0 +1,59 @@
+#include <iostream>
+#include <ap_int.h>
+#include "hls_stream.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+using namespace std;
+
+
+typedef {Data_type} DATA_IN;
+typedef {Data_type} DATA_T;
+
+void {model_name}_top({func_params}DATA_T O[{output_channel}][{output_width}][{output_height}]);
+void {model_name}_sw({func_params}DATA_T O[{output_channel}][{output_width}][{output_height}]);
+
+int main() {{
+
+	int m, x, y, i, j, k;
+	DATA_T temp;
+	int trash;
+
+	{static_variables}
+
+	FILE *w_stream = fopen("init_Weight.bin", "r");
+	if (w_stream == NULL) printf("weight file was not opened");
+	FILE *i_stream = fopen("init_Input.bin", "r");
+	if (i_stream == NULL) printf("input file was not opened");
+
+ 	{Initialization}
+
+	{model_name}_top({call_params} O_HW);
+	{model_name}_sw({call_params} O_SW);
+
+	int err_cnt =0;
+	for(m=0; m<{output_channel}; m++){{
+	   for(x=0;x<{output_width}; x++){{
+	     for(y=0;y<{output_height}; y++){{
+	       cout<<"SW: O["<<m<<"]["<<"x"<<"]["<<y<<"] = "<<O_SW[m][x][y];
+	       cout<<"HW: O["<<m<<"]["<<"x"<<"]["<<y<<"] = "<<O_HW[m][x][y];
+	       if (O_HW[m][x][y] != O_SW[m][x][y]){{
+	         err_cnt++;
+	       }}
+	     }}
+	   }}
+	}}
+
+	int ret_val;
+	if (err_cnt == 0) {{
+		printf("*** TEST PASSED ***\n");
+		ret_val = 0;
+	}} else {{
+		printf("!!! TEST FAILED - %d mismatches detected !!!\n\n",err_cnt);
+		ret_val = -1;
+	}}
+
+	fclose(w_stream);
+	fclose(i_stream);
+	return ret_val;
+}}

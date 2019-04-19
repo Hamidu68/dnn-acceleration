@@ -17,7 +17,7 @@ void Stream_output(hls::stream<DATA_T> &O_strm, DATA_T O[{last_output_channel}])
 #pragma HLS ARRAY_PARTITION variable=O complete dim=1
 
 	Stream_input_x_loop: for (x=0; x<{last_output_channel}; x++) {{
-	 
+
 #pragma HLS PIPELINE
 	 			O[x] = O_strm.read()
 	}}
