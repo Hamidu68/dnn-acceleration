@@ -5,7 +5,7 @@ Creating a new toolkit for people who are using fpga.
 
 ### Prerequisites
 * python 2.7
-* tensorflow
+* tensorflow 1.10.0
 * keras(2.2)
 * numpy
 
@@ -15,9 +15,6 @@ Creating a new toolkit for people who are using fpga.
 * [output](./output)  
 * [training](./training)  
 * [other](./other)  
-
-  
-![structure](./other/image/structure.jpeg)
   
 
 ### Usage
