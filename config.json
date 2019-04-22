@@ -1,9 +1,9 @@
 {
-  "model": "vgg19",
+  "model": "alexnet",
   "extract_configs": "False",
-  "model_info": "./model_info/vgg19_test1.csv",
-  "sw_test": "False",
-  "vivado_test": "True",
+  "model_info": "./model_info/alexnet_test.csv",
+  "sw_test": "True",
+  "vivado_test": "False",
   "use_trained_weight": "False",
   "data_type": "int",
   "random_range": "5",

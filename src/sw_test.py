@@ -32,9 +32,7 @@ def sw_test(model_info='', model_name='', dtype='DATA_T', batch='', paths=[]):
             model.skip_layer(row)
         else:
             model.add_layer(row)
-        k_model.add_layer(row)
     model.set_output()
-    k_model.set_output()
 
     # C code
     # Generate c_code.cpp
@@ -47,6 +45,12 @@ def sw_test(model_info='', model_name='', dtype='DATA_T', batch='', paths=[]):
     os.system('g++ %s -o %s' % (cpp_file_path, out_file_path))
     os.system('%s %s %s' % (out_file_path, weight_file, input_file))
 
+    csv_reader = csv.DictReader(open(model_info))
+
+    for row in csv_reader:
+        k_model.add_layer(row)
+    k_model.set_output()
+    
     # Keras
     keras_generator(k_model, model_name, dtype, paths, skip_layers)
 

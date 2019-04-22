@@ -3,13 +3,14 @@ import numpy as np
 import ast
 
 from keras import backend as K
+K.set_image_dim_ordering('th')
+
 from keras import Model
 from keras import layers
 from keras.engine.topology import get_source_inputs
 
 #import tensorflow as tf
 #from tensorflow.keras import layers
-
 
 ####################################################
 # Functions about input_tensors & outputs_dict

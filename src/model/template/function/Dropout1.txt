@@ -1,0 +1,7 @@
+void SW_{Name}(DATA_T I[{Input_channel}], DATA_T O[{Output_channel}]) {{
+	int m, x, y;
+	double coef = {rate};
+	for (m = 0; m< {Input_channel}; m++) {{
+		O[m] = I[m]*coef;
+	}}
+}}
