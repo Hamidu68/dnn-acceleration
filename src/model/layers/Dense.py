@@ -33,7 +33,7 @@ class Dense(Layers):
             begin = '/*'
             end = '*/'
         func = dense_input.format(Input_channel=input_shape[1], Output_channel=output_shape[1],
-                                          line_number=l_n, comment_begin=begin, comment_end=end)
+                                          line_number=self.layer_odr, comment_begin=begin, comment_end=end)
         self.function['init'] = func + "\n\t"
 
         # code

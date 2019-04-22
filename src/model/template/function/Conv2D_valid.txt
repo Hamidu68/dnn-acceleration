@@ -11,7 +11,6 @@ void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T 
 							if (x + i <= {Input_width} && y + j <= {Input_height}) {{
 								ifm = I[k][x*{Stride_width} + i][y*{Stride_height} + j];
 							}}
-
 							ofm = ofm + ifm * W[m][k][i][j];
 						}}
 					}}

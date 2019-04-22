@@ -39,10 +39,10 @@ class Models():
 
         # Switch
         if layer_type == 'InputLayer':
-            if self.post =="SW":
-                layer = InputLayer(config, dtype=self.dtype, layer_odr=self.layer_num, post=self.post)
-            else :
+            if self.post =="HW":
                 layer = InputLayer_HW(config, dtype=self.dtype, layer_odr=self.layer_num, post=self.post)
+            else :
+                layer = InputLayer(config, dtype=self.dtype, layer_odr=self.layer_num, post=self.post)
             self.layers.append(layer)
             self.inputs.append(layer.inputs[0])
             self.graphs[layer_name] = {'in':[-1],
@@ -50,10 +50,10 @@ class Models():
         elif layer_type == 'Conv2D':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)
-            if self.post == "SW":
-                self.layers.append(Conv2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
-            else:
+            if self.post == "HW":
                 self.layers.append(Conv2D_HW(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+            else:
+                self.layers.append(Conv2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
         elif layer_type == 'MaxPooling2D':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)

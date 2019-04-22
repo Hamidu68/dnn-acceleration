@@ -4,7 +4,7 @@ void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T 
 	for (m = 0; m<{Output_channel}; m++) {{
 		for (x = 0; x<{Output_width}; x++) {{
 			for (y = 0; y<{Output_height}; y++) {{
-				ofm = 0;
+				ofm = B[m];
 				for (k = 0; k<{Input_channel}; k++) {{
 					for (i = 0; i<{Filter_width}; i++) {{
 						for (j = 0; j<{Filter_height}; j++) {{
@@ -16,7 +16,6 @@ void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T 
 						}}
 					}}
 				}}
-				ofm += B[m];
 				O[m][x][y] = ofm;
 			}}
 		}}

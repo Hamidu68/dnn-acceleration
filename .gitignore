@@ -1,6 +1,9 @@
 out
-C_output.txt
+a.out
+c_output.txt
 keras_output.txt
+c_output_num.txt
+keras_output_num.txt
 *.bin
 *.swo
 *.swp

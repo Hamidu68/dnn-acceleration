@@ -29,7 +29,7 @@ class BatchNormalization(Layers):
         # initialization
         b_input = open(self.template_path + "init/Batch_var_Initializer_f.txt")
         batch_input = b_input.read()
-        func = batch_input.format(Output_channel=(output_shape[3]), line_number=l_n, num=num)
+        func = batch_input.format(Output_channel=(output_shape[3]), line_number=self.layer_odr, num=num)
         self.function['init'] = func + "\n\t"
 
         # code

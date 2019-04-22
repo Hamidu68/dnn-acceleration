@@ -17,7 +17,10 @@ class Layers(object):
 
     def set_output(self):
         output_shape = eval(self.config['batch_output_shape'])
-        self.output = Data(dtype=self.dtype, shape=(output_shape[1],output_shape[2],output_shape[3],), name='O{}_{}'.format(self.layer_odr, self.post))
+        if len(output_shape) <= 2:
+            self.output = Data(dtype=self.dtype, shape=(output_shape[1],), name='O{}_{}'.format(self.layer_odr, self.post))
+        else:
+            self.output = Data(dtype=self.dtype, shape=(output_shape[1],output_shape[2],output_shape[3],), name='O{}_{}'.format(self.layer_odr, self.post))
         self.function['static_o'] = self.output.get_static_variable()
 
     def print_result(self):
