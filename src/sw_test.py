@@ -23,7 +23,7 @@ def sw_test(model_info='', model_name='', dtype='DATA_T', batch='', paths=[]):
     if batch == "True":
         skip_layers = ['Dropout']
     else:
-        skip_layers = ['Dropout', 'BathNormalization']
+        skip_layers = ['Dropout', 'BatchNormalization']
 
     # for each layers
     for row in csv_reader:
@@ -50,7 +50,7 @@ def sw_test(model_info='', model_name='', dtype='DATA_T', batch='', paths=[]):
     for row in csv_reader:
         k_model.add_layer(row)
     k_model.set_output()
-    
+
     # Keras
     keras_generator(k_model, model_name, dtype, paths, skip_layers)
 

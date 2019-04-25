@@ -32,17 +32,17 @@ if __name__ == '__main__':
     if extract_config == "True":
         extract_configs(model_name, model_info)
 
-    #run keras vs c test with trained weights and given input
-    if run_c_test == "True" and use_trained_weight == "True":
-        path.append(trained_weight_file_path)
-        path.append(image_file)
-        sw_test(model_info, model_name, dtype, batch, paths)
-
-    #run keras vs c test with random weights and input
-    if run_c_test == "True" and use_trained_weight == "False":
+    #if you don't have trained weight, generate random weights(included bias) and input.bin
+    if use_trained_weight == "False":
+        variable_generator(model_info, weight_file_path, input_file_path, random_range, dtype)
         paths.append(weight_file_path)
         paths.append(input_file_path)
-        variable_generator(model_info, weight_file_path, input_file_path, random_range, dtype)
+    else:
+        path.append(trained_weight_file_path)
+        path.append(image_file)
+
+    #run keras vs c test
+    if run_c_test == "True":
         sw_test(model_info, model_name, dtype, batch, paths)
 
     #generate vivado code

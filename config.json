@@ -1,7 +1,7 @@
 {
-  "model": "alexnet",
+  "model": "resnet50",
   "extract_configs": "False",
-  "model_info": "./model_info/alexnet_test.csv",
+  "model_info": "./model_info/resnet50_test.csv",
   "sw_test": "True",
   "vivado_test": "False",
   "use_trained_weight": "False",
@@ -10,7 +10,7 @@
   "batch": "False",
   "weight_file_path": "./variables/init_weight.bin",
   "input_file_path": "./variables/init_input.bin",
-  "trained_weight_file_path": "./variables/vgg19_weights.bin",
+  "trained_weight_file_path": "./variables/my_weights.bin",
   "image_file_path": "./variables/image.bin",
   "output_path": "./output/",
   "template_path": "src/model/template/"
