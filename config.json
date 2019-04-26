@@ -1,7 +1,7 @@
 {
-  "model": "resnet50",
+  "model": "alexnet",
   "extract_configs": "False",
-  "model_info": "./model_info/resnet50_test.csv",
+  "model_info": "./model_info/alexnet_test.csv",
   "sw_test": "True",
   "vivado_test": "False",
   "use_trained_weight": "False",

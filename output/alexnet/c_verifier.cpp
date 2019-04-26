@@ -104,6 +104,7 @@ void SW_block2_pool(DATA_T I[256][27][27], DATA_T O[256][13][13])
 void SW_block3_conv1(DATA_T I[256][13][13], DATA_T O[384][13][13], DATA_T W[384][256][3][3], DATA_T B[384]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
+    int p = (1 *(13 - 1) - 13 + 3)/2;
 	for (m = 0; m<384; m++) {
 		for (x = 0; x<13; x++) {
 			for (y = 0; y<13; y++) {
@@ -111,10 +112,12 @@ void SW_block3_conv1(DATA_T I[256][13][13], DATA_T O[384][13][13], DATA_T W[384]
 				for (k = 0; k<256; k++) {
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
-							if (x + i <= 13 && y + j <= 13) {
-								ifm = I[k][x*1 + i][y*1 + j];
+							if (x + i < 13 + p && y + j < 13 + p && x + i -p >= 0 && y + j -p >= 0) {
+                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
 							}
-
+							else {
+								ifm = 0; // zero padding
+							}
 							ofm = ofm + ifm * W[m][k][i][j];
 						}
 					}
@@ -128,6 +131,7 @@ void SW_block3_conv1(DATA_T I[256][13][13], DATA_T O[384][13][13], DATA_T W[384]
 void SW_block4_conv1(DATA_T I[384][13][13], DATA_T O[384][13][13], DATA_T W[384][384][3][3], DATA_T B[384]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
+    int p = (1 *(13 - 1) - 13 + 3)/2;
 	for (m = 0; m<384; m++) {
 		for (x = 0; x<13; x++) {
 			for (y = 0; y<13; y++) {
@@ -135,10 +139,12 @@ void SW_block4_conv1(DATA_T I[384][13][13], DATA_T O[384][13][13], DATA_T W[384]
 				for (k = 0; k<384; k++) {
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
-							if (x + i <= 13 && y + j <= 13) {
-								ifm = I[k][x*1 + i][y*1 + j];
+							if (x + i < 13 + p && y + j < 13 + p && x + i -p >= 0 && y + j -p >= 0) {
+                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
 							}
-
+							else {
+								ifm = 0; // zero padding
+							}
 							ofm = ofm + ifm * W[m][k][i][j];
 						}
 					}
