@@ -349,3 +349,5 @@ def add_GlobalMaxPooling2D(input_tensors=[], info=None, skip=False, tensors = {}
     # Get output tensor
     output_tensor = layers.GlobalMaxPooling2D(data_format=str(info['data_format']))(input_tensors)
     return output_tensor
+
+
