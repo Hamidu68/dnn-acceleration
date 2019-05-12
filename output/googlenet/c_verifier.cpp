@@ -2044,7 +2044,7 @@ void SW_avg_pool1(DATA_T I[1024][7][7], DATA_T O[1024][1][1])
 {
 	int m, x, y, i, j;
 	DATA_T sum;
-	int p = (1*(1-1) - 7 + 7)/2;
+	int p = (1*(1-1) - 7 + 6)/2;
     DATA_T div;
 	for (m = 0; m<1024; m++) {
 		for (x = 0; x<1; x++) {
@@ -2056,8 +2056,8 @@ void SW_avg_pool1(DATA_T I[1024][7][7], DATA_T O[1024][1][1])
                     div = 4;
                 else
                     div = 6;
-				for (i = 0; i<7; i++) {
-					for (j = 0; j<7; j++) {
+				for (i = 0; i<6; i++) {
+					for (j = 0; j<6; j++) {
 
 						if (x + i < 7 + p && y + j < 7 + p && x + i -p >= 0 && y + j -p >= 0)
 						    sum += I[m][x*1 + i -p][y*1 + j -p];
@@ -2068,6 +2068,17 @@ void SW_avg_pool1(DATA_T I[1024][7][7], DATA_T O[1024][1][1])
 		}
 	}
 }
+void SW_flatten(DATA_T I[1024][1][1], DATA_T O[1024]){
+	int i, j, x, y;
+	i = 0;
+	 for(x=0; x<1;x++)
+		for(y=0; y<1; y++)
+			for (j=0; j<1024; j++) {
+				O[i] = I[j][x][y];
+				i++;
+			}
+}
+
 void SW_predictions(DATA_T I[1024], DATA_T O[1000], DATA_T W[1000][1024])
 {
     //Dense
@@ -2223,7 +2234,7 @@ int main(int argc, char *argv[]){
 	static DATA_T B77[128];
 	static DATA_T W78[128][832][1][1];
 	static DATA_T B78[128];
-	static DATA_T W81[1000][1024];
+	static DATA_T W82[1000][1024];
 	
 
     // declare array variables of output (static variables)
@@ -2308,7 +2319,8 @@ int main(int argc, char *argv[]){
 	static DATA_T O78_SW[128][7][7];
 	static DATA_T O79_SW[1024][7][7];
 	static DATA_T O80_SW[1024][1][1];
-	static DATA_T O81_SW[1000];
+	static DATA_T O81_SW[1024];
+	static DATA_T O82_SW[1000];
 	
 
     FILE *w_stream = fopen(argv[1], "rb");
@@ -3246,13 +3258,13 @@ for (m = 0; m < 128 ; m++) {
 	for (m = 0; m <  1024 ; m++) {
 	for (k = 0; k < 1000 ; k++) {
 		fread(&trash, sizeof(int), 1, w_stream);
-        W81[k][m] = (DATA_T) trash;
+        W82[k][m] = (DATA_T) trash;
 	}
 }
 /*
 for (m = 0; m < 1000 ; m++) {
     fread(&trash, sizeof(int), 1, w_stream);
-    B81[m] = (DATA_T) trash;
+    B82[m] = (DATA_T) trash;
 }
 */
 	
@@ -3420,8 +3432,10 @@ for (m = 0; m < 1000 ; m++) {
 	SW_concat13(O72_SW, O76_SW, O77_SW, O78_SW,O79_SW);
 	printf("[c_verifier.cpp]Calculate AveragePooling2D80\n");
 	SW_avg_pool1(O79_SW,O80_SW);
-	printf("[c_verifier.cpp]Calculate Dense81\n");
-	SW_predictions(O80_SW,O81_SW,W81);
+	printf("[c_verifier.cpp]Calculate Flatten81\n");
+	SW_flatten(O80_SW,O81_SW);
+	printf("[c_verifier.cpp]Calculate Dense82\n");
+	SW_predictions(O81_SW,O82_SW,W82);
 	
 
     // print each element of output variables
@@ -5048,10 +5062,18 @@ for (k = 0; k < 1 ; k++) {
 fprintf(o_stream,"%s","]]]\n\n");
 
 
-	fprintf(o_stream,"%s","Dense : [[");
-for (k = 0; k <  1000 ; k++) {
+	fprintf(o_stream,"%s","Flatten : [[");
+for (k = 0; k <  1024 ; k++) {
 	fprintf(o_stream,"%.6f ",O81_SW[k]);
 	fprintf(c_num,"%.6f ",O81_SW[k]);
+}
+fprintf(o_stream,"%s","]]\n\n");
+
+
+	fprintf(o_stream,"%s","Dense : [[");
+for (k = 0; k <  1000 ; k++) {
+	fprintf(o_stream,"%.6f ",O82_SW[k]);
+	fprintf(c_num,"%.6f ",O82_SW[k]);
 }
 fprintf(o_stream,"%s","]]\n\n");
 
