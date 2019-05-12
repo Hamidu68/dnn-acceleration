@@ -25,4 +25,4 @@ from .Dropout import Dropout
 from .Add import Add
 from .Cropping2D import Cropping2D
 from .Concatenate import Concatenate
-from .InceptionModule import InceptionModule
+

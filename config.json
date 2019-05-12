@@ -1,7 +1,7 @@
 {
-  "model": "alexnet",
+  "model": "googlenet",
   "extract_configs": "False",
-  "model_info": "./model_info/alexnet_test.csv",
+  "model_info": "./model_info/googlenet_test.csv",
   "sw_test": "True",
   "vivado_test": "False",
   "use_trained_weight": "False",
