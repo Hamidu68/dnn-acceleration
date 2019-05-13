@@ -7,7 +7,7 @@ For file name, normally we use {model_name}_test.csv form (for example, vgg16_te
 
 #### 1. Import the model(network) that you want to generate in ML-acceleration/src/extract_configs.py file  
 
-&nbsp;&nbsp;&nbsp;&nbsp;For example, if we want to generate resnet50 file,  
+&nbsp;&nbsp;&nbsp;&nbsp;For example, if we want to generate resnet50.csv file to extract layer information,  
 ```
 from keras.applications.resnet50 import ResNet50  
 ```  
@@ -28,7 +28,8 @@ extract_configs(model, {file_path})
 
 ```
 python extract_configs.py 
-``` 
+```  
+In this case, resnet50_test.csv file is created in ML-acceleration/model_info folder.  
 
 
 
