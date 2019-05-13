@@ -55,8 +55,7 @@ in ML-acceleration/config.json file, change the value of various keys.
 * use_trained_weight : if you don't need variable generator (True/False)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 * data_type : data type (int, unsinged int, float, ap_uint<16>)
-* random_range : number of range that will be used to variable generator
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ex. 5 means input.bin, weight.bin files consist of value between 1 to 5)
+* random_range : number of range that will be used to variable generator (ex. 5 means input.bin, weight.bin files consist of value between 1 to 5)
 * batch : batch layer or not (True/False)
 * weight_file_path : location of weight file ("./variables/init_weight.bin")
 * input_file_path : location of input file ("./variables/init_input.bin")
