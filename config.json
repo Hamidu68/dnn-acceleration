@@ -1,7 +1,7 @@
 {
-  "model": "googlenet",
+  "model": "vgg19",
   "extract_configs": "False",
-  "model_info": "./model_info/googlenet_test.csv",
+  "model_info": "./model_info/vgg19_test.csv",
   "sw_test": "True",
   "vivado_test": "False",
   "use_trained_weight": "False",

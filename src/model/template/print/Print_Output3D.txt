@@ -4,8 +4,8 @@ for (k = 0; k < {first} ; k++) {{
 	for (x = 0; x < {second} ; x++) {{
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < {third} ; y++) {{
-			fprintf(o_stream,"%.6f ",{output}[y][k][x]);
-			fprintf(c_num,"%.6f ",{output}[y][k][x]);
+			fprintf(o_stream,"%.6f ",(float){output}[y][k][x]);
+			fprintf(c_num,"%.6f ",(float){output}[y][k][x]);
 		}}
 		if(x != {second} -1 )
 			fprintf(o_stream,"%s","]\n   ");

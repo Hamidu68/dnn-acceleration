@@ -19,7 +19,10 @@ void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T 
 						}}
 					}}
 				}}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}}
 		}}
 	}}
