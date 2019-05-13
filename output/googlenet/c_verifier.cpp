@@ -13,6 +13,7 @@ typedef float DATA_T;
 void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][112][112], DATA_T W[64][3][7][7], DATA_T B[64]) {
 	int m, x, y, i, j, k;
 	DATA_T ifm, ofm;
+    int p = (2 *(112 - 1) - 224 + 7)/2;
 	for (m = 0; m<64; m++) {
 		for (x = 0; x<112; x++) {
 			for (y = 0; y<112; y++) {
@@ -20,10 +21,12 @@ void SW_block1_conv1(DATA_T I[3][224][224], DATA_T O[64][112][112], DATA_T W[64]
 				for (k = 0; k<3; k++) {
 					for (i = 0; i<7; i++) {
 						for (j = 0; j<7; j++) {
-							if (x + i <= 224 && y + j <= 224) {
-								ifm = I[k][x*2 + i][y*2 + j];
+							if (x + i < 224 + p && y + j < 224 + p && x + i -p >= 0 && y + j -p >= 0) {
+                                    ifm = I[k][x*2 + i - p][y*2 + j -p];
 							}
-
+							else {
+								ifm = 0; // zero padding
+							}
 							ofm = ofm + ifm * W[m][k][i][j];
 						}
 					}
@@ -2044,7 +2047,7 @@ void SW_avg_pool1(DATA_T I[1024][7][7], DATA_T O[1024][1][1])
 {
 	int m, x, y, i, j;
 	DATA_T sum;
-	int p = (1*(1-1) - 7 + 6)/2;
+	int p = (1*(1-1) - 7 + 7)/2;
     DATA_T div;
 	for (m = 0; m<1024; m++) {
 		for (x = 0; x<1; x++) {
@@ -2056,8 +2059,8 @@ void SW_avg_pool1(DATA_T I[1024][7][7], DATA_T O[1024][1][1])
                     div = 4;
                 else
                     div = 6;
-				for (i = 0; i<6; i++) {
-					for (j = 0; j<6; j++) {
+				for (i = 0; i<7; i++) {
+					for (j = 0; j<7; j++) {
 
 						if (x + i < 7 + p && y + j < 7 + p && x + i -p >= 0 && y + j -p >= 0)
 						    sum += I[m][x*1 + i -p][y*1 + j -p];
