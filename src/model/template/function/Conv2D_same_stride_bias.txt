@@ -9,8 +9,8 @@ void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T 
 				for (k = 0; k<{Input_channel}; k++) {{
 					for (i = 0; i<{Filter_width}; i++) {{
 						for (j = 0; j<{Filter_height}; j++) {{
-							if (x + i < {Input_width} + p && y + j < {Input_height} + p && x + i -p >= 0 && y + j -p >= 0) {{
-                                    ifm = I[k][x*{Stride_width} + i - p][y*{Stride_height} + j -p];
+							if (x*{Stride_width} + i < {Input_width} + p && y*{Stride_height} + j < {Input_height} + p && x*{Stride_width} + i -p >= 0 && y*{Stride_height} + j -p >= 0) {{
+                                    				ifm = I[k][x*{Stride_width} + i - p][y*{Stride_height} + j -p];
 							}}
 							else {{
 								ifm = 0; // zero padding

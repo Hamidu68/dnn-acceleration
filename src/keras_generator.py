@@ -23,7 +23,7 @@ def keras_generator(model_data, model_name, dtype_str, paths, skip_layers):
         dtype = np.uint16
     else:
         print('Wrong data type!')
-    print(dtype)
+    
     # init parameters
     line_num = -1
     input_values = np.array([])
