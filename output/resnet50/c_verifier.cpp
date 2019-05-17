@@ -45,7 +45,10 @@ void SW_conv1(DATA_T I[3][19][19], DATA_T O[4][7][7], DATA_T W[4][3][7][7], DATA
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -103,7 +106,10 @@ void SW_res2a_branch2a(DATA_T I[4][3][3], DATA_T O[4][3][3], DATA_T W[4][4][1][1
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -134,8 +140,8 @@ void SW_res2a_branch2b(DATA_T I[4][3][3], DATA_T O[4][3][3], DATA_T W[4][4][3][3
 				for (k = 0; k<4; k++) {
 					for (i = 0; i<3; i++) {
 						for (j = 0; j<3; j++) {
-							if (x + i < 3 + p && y + j < 3 + p && x + i -p >= 0 && y + j -p >= 0) {
-                                    ifm = I[k][x*1 + i - p][y*1 + j -p];
+							if (x*1 + i < 3 + p && y*1 + j < 3 + p && x*1 + i -p >= 0 && y*1 + j -p >= 0) {
+                                    				ifm = I[k][x*1 + i - p][y*1 + j -p];
 							}
 							else {
 								ifm = 0; // zero padding
@@ -144,7 +150,10 @@ void SW_res2a_branch2b(DATA_T I[4][3][3], DATA_T O[4][3][3], DATA_T W[4][4][3][3
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -182,7 +191,10 @@ void SW_res2a_branch2c(DATA_T I[4][3][3], DATA_T O[5][3][3], DATA_T W[5][4][1][1
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -206,7 +218,10 @@ void SW_res2a_branch1(DATA_T I[4][3][3], DATA_T O[5][3][3], DATA_T W[5][4][1][1]
 						}
 					}
 				}
-				O[m][x][y] = ofm;
+				if (ofm < 0)
+					O[m][x][y] = 0;
+				else
+					O[m][x][y] = ofm;
 			}
 		}
 	}
@@ -399,8 +414,8 @@ for (k = 0; k < 13 ; k++) {
 	for (x = 0; x < 13 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 3 ; y++) {
-			fprintf(o_stream,"%.6f ",O0_SW[y][k][x]);
-			fprintf(c_num,"%.6f ",O0_SW[y][k][x]);
+			fprintf(o_stream,"%.6f ",(float)O0_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",(float)O0_SW[y][k][x]);
 		}
 		if(x != 13 -1 )
 			fprintf(o_stream,"%s","]\n   ");
@@ -419,8 +434,8 @@ for (k = 0; k < 19 ; k++) {
 	for (x = 0; x < 19 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 3 ; y++) {
-			fprintf(o_stream,"%.6f ",O1_SW[y][k][x]);
-			fprintf(c_num,"%.6f ",O1_SW[y][k][x]);
+			fprintf(o_stream,"%.6f ",(float)O1_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",(float)O1_SW[y][k][x]);
 		}
 		if(x != 19 -1 )
 			fprintf(o_stream,"%s","]\n   ");
@@ -439,8 +454,8 @@ for (k = 0; k < 7 ; k++) {
 	for (x = 0; x < 7 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 4 ; y++) {
-			fprintf(o_stream,"%.6f ",O2_SW[y][k][x]);
-			fprintf(c_num,"%.6f ",O2_SW[y][k][x]);
+			fprintf(o_stream,"%.6f ",(float)O2_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",(float)O2_SW[y][k][x]);
 		}
 		if(x != 7 -1 )
 			fprintf(o_stream,"%s","]\n   ");
@@ -459,8 +474,8 @@ for (k = 0; k < 7 ; k++) {
 	for (x = 0; x < 7 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 4 ; y++) {
-			fprintf(o_stream,"%.6f ",O3_SW[y][k][x]);
-			fprintf(c_num,"%.6f ",O3_SW[y][k][x]);
+			fprintf(o_stream,"%.6f ",(float)O3_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",(float)O3_SW[y][k][x]);
 		}
 		if(x != 7 -1 )
 			fprintf(o_stream,"%s","]\n   ");
@@ -479,8 +494,8 @@ for (k = 0; k < 3 ; k++) {
 	for (x = 0; x < 3 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 4 ; y++) {
-			fprintf(o_stream,"%.6f ",O4_SW[y][k][x]);
-			fprintf(c_num,"%.6f ",O4_SW[y][k][x]);
+			fprintf(o_stream,"%.6f ",(float)O4_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",(float)O4_SW[y][k][x]);
 		}
 		if(x != 3 -1 )
 			fprintf(o_stream,"%s","]\n   ");
@@ -499,8 +514,8 @@ for (k = 0; k < 3 ; k++) {
 	for (x = 0; x < 3 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 4 ; y++) {
-			fprintf(o_stream,"%.6f ",O5_SW[y][k][x]);
-			fprintf(c_num,"%.6f ",O5_SW[y][k][x]);
+			fprintf(o_stream,"%.6f ",(float)O5_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",(float)O5_SW[y][k][x]);
 		}
 		if(x != 3 -1 )
 			fprintf(o_stream,"%s","]\n   ");
@@ -519,8 +534,8 @@ for (k = 0; k < 3 ; k++) {
 	for (x = 0; x < 3 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 4 ; y++) {
-			fprintf(o_stream,"%.6f ",O6_SW[y][k][x]);
-			fprintf(c_num,"%.6f ",O6_SW[y][k][x]);
+			fprintf(o_stream,"%.6f ",(float)O6_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",(float)O6_SW[y][k][x]);
 		}
 		if(x != 3 -1 )
 			fprintf(o_stream,"%s","]\n   ");
@@ -539,8 +554,8 @@ for (k = 0; k < 3 ; k++) {
 	for (x = 0; x < 3 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 4 ; y++) {
-			fprintf(o_stream,"%.6f ",O7_SW[y][k][x]);
-			fprintf(c_num,"%.6f ",O7_SW[y][k][x]);
+			fprintf(o_stream,"%.6f ",(float)O7_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",(float)O7_SW[y][k][x]);
 		}
 		if(x != 3 -1 )
 			fprintf(o_stream,"%s","]\n   ");
@@ -559,8 +574,8 @@ for (k = 0; k < 3 ; k++) {
 	for (x = 0; x < 3 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 4 ; y++) {
-			fprintf(o_stream,"%.6f ",O8_SW[y][k][x]);
-			fprintf(c_num,"%.6f ",O8_SW[y][k][x]);
+			fprintf(o_stream,"%.6f ",(float)O8_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",(float)O8_SW[y][k][x]);
 		}
 		if(x != 3 -1 )
 			fprintf(o_stream,"%s","]\n   ");
@@ -579,8 +594,8 @@ for (k = 0; k < 3 ; k++) {
 	for (x = 0; x < 3 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 5 ; y++) {
-			fprintf(o_stream,"%.6f ",O9_SW[y][k][x]);
-			fprintf(c_num,"%.6f ",O9_SW[y][k][x]);
+			fprintf(o_stream,"%.6f ",(float)O9_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",(float)O9_SW[y][k][x]);
 		}
 		if(x != 3 -1 )
 			fprintf(o_stream,"%s","]\n   ");
@@ -599,8 +614,8 @@ for (k = 0; k < 3 ; k++) {
 	for (x = 0; x < 3 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 5 ; y++) {
-			fprintf(o_stream,"%.6f ",O10_SW[y][k][x]);
-			fprintf(c_num,"%.6f ",O10_SW[y][k][x]);
+			fprintf(o_stream,"%.6f ",(float)O10_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",(float)O10_SW[y][k][x]);
 		}
 		if(x != 3 -1 )
 			fprintf(o_stream,"%s","]\n   ");
@@ -619,8 +634,8 @@ for (k = 0; k < 3 ; k++) {
 	for (x = 0; x < 3 ; x++) {
 		fprintf(o_stream,"%s","[");
 		for(y = 0; y < 5 ; y++) {
-			fprintf(o_stream,"%.6f ",O11_SW[y][k][x]);
-			fprintf(c_num,"%.6f ",O11_SW[y][k][x]);
+			fprintf(o_stream,"%.6f ",(float)O11_SW[y][k][x]);
+			fprintf(c_num,"%.6f ",(float)O11_SW[y][k][x]);
 		}
 		if(x != 3 -1 )
 			fprintf(o_stream,"%s","]\n   ");

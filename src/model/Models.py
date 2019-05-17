@@ -57,10 +57,10 @@ class Models():
         elif layer_type == 'MaxPooling2D':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)
-            if self.post == "SW":
-                self.layers.append(MaxPooling2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
-            else :
+            if self.post == "HW":
                 self.layers.append(MaxPooling2D_HW(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+            else :
+                self.layers.append(MaxPooling2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
 
         elif layer_type == 'BatchNormalization':
             self.add_graph(layer_name, config['connected_to'])
@@ -70,7 +70,10 @@ class Models():
         elif layer_type == 'Activation':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)
-            self.layers.append(Activation(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+            if self.post == "HW":
+                self.layers.append(Activation_HW(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+            else:
+                self.layers.append(Activation(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
 
         elif layer_type == 'AveragePooling2D':
             self.add_graph(layer_name, config['connected_to'])
@@ -95,8 +98,10 @@ class Models():
         elif layer_type == 'Add':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)
-            self.layers.append(Add(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
-
+            if self.post == "HW":
+                self.layers.append(Add_HW(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+            else:
+                self.layers.append(Add(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
         elif layer_type == 'Cropping2D':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)

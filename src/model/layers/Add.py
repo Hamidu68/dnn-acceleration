@@ -22,3 +22,21 @@ class Add(Layers):
                                Output_channel=output_shape[3], Output_width=output_shape[1],
                                Output_height=output_shape[2])
         self.function['code'] = func + "\n"
+
+class Add_HW(Layers):
+
+    def __init__(self, config={}, inputs=[], dtype='DATA_T', layer_odr=0, post=''):
+        super(Add_HW, self).__init__(config, inputs, dtype, layer_odr, post)
+
+        # get shape
+        output_shape = eval(self.config['batch_output_shape'])
+
+        # set_output
+        self.set_output()
+
+        # code
+        ad = open(self.template_path + "function/HW_add.txt")
+        template = ad.read()
+        func = template.format(Name=self.config['name'], Input_width=output_shape[1],
+                               Input_height=output_shape[2], Output_channel=output_shape[3])
+        self.function['code'] = func + "\n"

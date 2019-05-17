@@ -1,0 +1,30 @@
+void HW_{Name}(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm, DATA_T W[{Output_channel}][{Input_channel}], DATA_T B[{Output_channel}]) {{
+#pragma HLS INLINE
+	int m, x, y, k;
+	DATA_T ofm[{Output_channel}];
+#pragma HLS ARRAY_PARTITION variable=ofm complete dim=0
+
+	DATA_T I[{Input_channel}][{Input_width}];
+#pragma HLS ARRAY_PARTITION variable=I complete dim=1
+#pragma HLS ARRAY_PARTITION variable=I complete dim=2
+
+	HW_{Name}_x_loop: for (x = 0; x < {Input_width}; x++) {{
+		HW_{Name}_y_loop: for (y = 0; y < {Input_height}; y++) {{
+			HW_{Name}_k_loop: for (k = 0; k < {Input_channel}; k++) {{
+				I[k][y] = I_strm.read();
+				HW_{Name}_m_loop: for (m = 0; m < {Output_channel}; m++) {{
+#pragma HLS PIPELINE
+					if (k == 0) {{
+						ofm[m] = B[m];}}
+					ofm[m] = ofm[m] + I[k][y] * W[m][k];
+				}}
+				if (k == 3) {{
+					for (m = 0; m < {Output_channel}; m++) {{
+#pragma HLS UNROLL
+						O_strm.write(ofm[m]);
+					}}
+				}}
+			}}
+		}}
+	}}
+}}

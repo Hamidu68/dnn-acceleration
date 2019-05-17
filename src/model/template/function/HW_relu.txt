@@ -1,0 +1,18 @@
+void HW_{Name}(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {{
+#pragma HLS INLINE
+	int m, x, y;
+	int num = 0;
+	DATA_T ifm;
+	HW_{Name}_x_loop: for (x = 0; x < {Input_width}; x++) {{
+		HW_{Name}_y_loop: for (y = 0; y < {Input_height}; y++) {{
+			HW_{Name}_m_loop: for (m = 0; m < {Input_channel}; m++) {{
+				ifm = I_strm.read();
+				if (ifm < 0) {{
+					O_strm.write(0);}}
+				else{{
+					O_strm.write(ifm);
+				}}
+			}}
+		}}
+	}}
+}}

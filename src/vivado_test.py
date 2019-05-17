@@ -19,7 +19,7 @@ def vivado_test(model_info='', model_name='', dtype='DATA_T', batch='', paths=[]
     if batch == "True":
         skip_layers = ['Dropout']
     else:
-        skip_layers = ['Dropout', 'BathNormalization']
+        skip_layers = ['Dropout', 'BatchNormalization']
 
     # for each layers
     for row in csv_reader:

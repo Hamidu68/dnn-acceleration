@@ -87,47 +87,40 @@ class Conv2D_HW(Layers):
         # set_output
         self.set_output()
 
-        # set_weight
-        weight_shape=(output_shape[3], input_shape[3], filter_shape[0], filter_shape[1],)
-        self.weights.append(Data(dtype=self.dtype, shape=weight_shape, name='W{}_i'.format(self.layer_odr)))
-        if self.use_bias:
-            self.weights.append(Data(dtype=self.dtype, shape=(output_shape[3],), name='B{}_i'.format(self.layer_odr)))
-
-        # Optimized code
-        self.function['optimized_code'] += "#pragma HLS ARRAY_PARTITION variable=W{line_num}_i complete dim=1\n#pragma HLS ARRAY_PARTITION variable=W{line_num}_i complete dim=3\n#pragma HLS ARRAY_PARTITION variable=W{line_num}_i complete dim=4\n#pragma HLS ARRAY_PARTITION variable=B{line_num}_i complete\n".format(line_num = self.layer_odr)
-
         num = self.layer_odr
-        # copy values
-        self.function['copy_values'] += "W"+str(num)+"_i_m_loop: for (m=0; m<"+str(output_shape[3])+"; m++) {\n  W"+str(num)+"_i_k_loop: for (k=0; k<"+str(input_shape[3])+"; k++) {\n  W"+str(num)+"_i_i_loop: for (i=0; i<"+str(filter_shape[0])+"; i++) {\n  W"+str(num)+"_i_j_loop: for (j=0; j<"+str(filter_shape[1])+"; j++) {\n  W"+str(num)+"_i[m][k][i][j] = W"+str(num)+"[m][k][i][j];\n      }\n    }\n  }\n}\n"
-        if self.use_bias:
-            self.function['copy_values'] += "B"+str(num)+"_i_m_loop: for (m=0; m<"+str(output_shape[3])+"; m++) {\n"+"\tB"+str(num)+"_i[m] = B"+str(num)+"[m];\n}\n"
 
+        if(filter_shape[0] == 1):  # 1x1 filter
+            # set weight shape
+            weight_shape = (output_shape[3], input_shape[3],)
+            # optimized code
+            self.function['optimized_code'] += "#pragma HLS ARRAY_PARTITION variable=W{line_num}_i complete dim=1\n#pragma HLS ARRAY_PARTITION variable=B{line_num}_i complete\n".format(line_num = self.layer_odr)
+            # copy values (weight)
+            self.function['copy_values'] += "W"+str(num)+"_i_m_loop: for (m=0; m<"+str(output_shape[3])+"; m++) {\n  W"+str(num)+"_i_k_loop: for (k=0; k<"+str(input_shape[3])+"; k++) {\n  W"+str(num)+"_i[m][k] = W"+str(num)+"[m][k];\n  }\n}\n"
+        else:
+            # set_weight shape
+            weight_shape=(output_shape[3], input_shape[3], filter_shape[0], filter_shape[1],)
+            # optimized code
+            self.function['optimized_code'] += "#pragma HLS ARRAY_PARTITION variable=W{line_num}_i complete dim=1\n#pragma HLS ARRAY_PARTITION variable=W{line_num}_i complete dim=3\n#pragma HLS ARRAY_PARTITION variable=W{line_num}_i complete dim=4\n#pragma HLS ARRAY_PARTITION variable=B{line_num}_i complete\n".format(line_num = self.layer_odr)
+            # copy values (weight)
+            self.function['copy_values'] += "W"+str(num)+"_i_m_loop: for (m=0; m<"+str(output_shape[3])+"; m++) {\n  W"+str(num)+"_i_k_loop: for (k=0; k<"+str(input_shape[3])+"; k++) {\n  W"+str(num)+"_i_i_loop: for (i=0; i<"+str(filter_shape[0])+"; i++) {\n  W"+str(num)+"_i_j_loop: for (j=0; j<"+str(filter_shape[1])+"; j++) {\n  W"+str(num)+"_i[m][k][i][j] = W"+str(num)+"[m][k][i][j];\n      }\n    }\n  }\n}\n"
+
+        # set weight, Bias
+        self.weights.append(Data(dtype=self.dtype, shape=weight_shape, name='W{}_i'.format(num)))
+        self.weights.append(Data(dtype=self.dtype, shape=(output_shape[3],), name='B{}_i'.format(num)))
+
+        # copy values (Bias)
+        self.function['copy_values'] += "B"+str(num)+"_i_m_loop: for (m=0; m<"+str(output_shape[3])+"; m++) {\n"+"\tB"+str(num)+"_i[m] = B"+str(num)+"[m];\n}\n"
 
         # set params
         self.set_params()
 
         # code
-        conv_s = open(self.template_path + "function/Conv2D_same_HW.txt")
-        conv_v = open(self.template_path + "function/Conv2D_valid_HW.txt")
-        conv2d_same = conv_s.read()
-        conv2d_valid = conv_v.read()
+        fname = "function/HW_conv_{}_{}x{}_{}x{}({}).txt".format(self.config['padding'], filter_shape[0],filter_shape[1],stride_shape[0],stride_shape[1],self.config['activation'])
+        conv_f = open(self.template_path + fname);
+        conv = conv_f.read()
 
-        if self.config['padding'] == 'valid':
-            func = conv2d_valid.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1]
-                                       ,Stride_width=stride_shape[0], Stride_height=stride_shape[1],
-                                       Input_height=input_shape[2], Output_channel=output_shape[3],
-                                       Filter_width=filter_shape[0], Filter_height=filter_shape[1],
-                                       Output_width=output_shape[1], Output_height=output_shape[2])
-            self.function['code'] = func + "\n"
-        else:
-            func = conv2d_same.format(Name=self.config["name"], Input_channel=input_shape[3],
-                                      Input_width=input_shape[1], Stride_width=stride_shape[0],
-                                      Stride_height=stride_shape[1], Input_height=input_shape[2],
-                                      Output_channel=output_shape[3], Filter_width=filter_shape[0],
-                                      Filter_height=filter_shape[1], Output_width=output_shape[1],
-                                      Output_height=output_shape[2])
-            self.function['code'] = func + "\n"
-
+        func = conv.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],Stride_width=stride_shape[0], Stride_height=stride_shape[1], Input_height=input_shape[2], Output_channel=output_shape[3], Filter_width=filter_shape[0], Filter_height=filter_shape[1], Output_width=output_shape[1], Output_height=output_shape[2])
+        self.function['code'] = func + "\n"
 
 class Conv2D_DAC2017(Layers):
 

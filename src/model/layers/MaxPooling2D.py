@@ -43,8 +43,8 @@ class MaxPooling2D_HW(Layers):
         self.set_output()
 
         # code
-        mxp = open(self.template_path + "function/MaxPooling2D_HW.txt")
-        template = mxp.read()
-        func = template.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
+        fname = "function/HW_maxpooling_{}_{}x{}_{}x{}.txt".format(self.config['padding'], pool_shape[0],pool_shape[1],stride_shape[0],stride_shape[1])
+        mxp = open(self.template_path + fname).read()
+        func = mxp.format(Name=self.config["name"], Input_channel=input_shape[3], Input_width=input_shape[1],
                                Input_height=input_shape[2])
         self.function['code'] = func + "\n"

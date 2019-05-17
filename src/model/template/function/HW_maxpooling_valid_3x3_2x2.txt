@@ -1,0 +1,47 @@
+void HW_{Name}(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {{
+#pragma HLS INLINE
+	int m, x, y ;
+	ap_uint<32> max;
+	DATA_T I[{Input_channel}][3][{Input_width}];
+#pragma HLS ARRAY_PARTITION variable=I complete dim=2
+#pragma HLS ARRAY_PARTITION variable=I complete dim=3
+
+	HW_{Name}_x_loop: for (x = 0; x < {Input_width}; x++) {{
+		HW_{Name}_y_loop: for (y = 0; y < {Input_height}; y++) {{
+			HW_{Name}_m_loop: for (m = 0; m < {Input_channel}; m++) {{
+#pragma HLS PIPELINE
+				I[m][x % 3][y] = I_strm.read();
+				if (x >= 2 && y >= 2) {{
+					if (x % 2 == 0 && y % 2 == 0) {{
+						max = I[m][(x - 2) % 3][y - 2];
+						if (I[m][(x - 1) % 3][y - 2] > max) {{
+							max = I[m][(x - 1) % 3][y - 2];
+						}}
+						if (I[m][(x) % 3][y - 2] > max) {{
+							max = I[m][(x) % 3][y - 2];
+						}}
+						if (I[m][(x - 2) % 3][y - 1] > max) {{
+							max = I[m][(x - 2) % 3][y - 1];
+						}}
+						if (I[m][(x - 1) % 3][y - 1] > max) {{
+							max = I[m][(x - 1) % 3][y - 1];
+						}}
+						if (I[m][(x) % 3][y - 1] > max) {{
+							max = I[m][(x) % 3][y - 1];
+						}}
+						if (I[m][(x - 2) % 3][y] > max) {{
+							max = I[m][(x - 2) % 3][y];
+						}}
+						if (I[m][(x - 1) % 3][y] > max) {{
+							max = I[m][(x - 1) % 3][y];
+						}}
+						if (I[m][(x) % 3][y] > max) {{
+							max = I[m][(x) % 3][y];
+						}}
+						O_strm.write(max);
+					}}
+				}}
+			}}
+		}}
+	}}
+}}

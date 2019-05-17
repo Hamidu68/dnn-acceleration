@@ -1,0 +1,104 @@
+void HW_{Name}(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm, DATA_T W[{Output_channel}][{Input_channel}][3][3],DATA_T B[{Output_channel}]) {{
+#pragma HLS INLINE
+	int m, x, y, k;
+
+	DATA_T I_0, I_1, I_2, I_3, I_4, I_5, I_6, I_7, I_8;
+	DATA_T ifm[{Input_channel}], ofm[{Output_channel}];
+#pragma HLS ARRAY_PARTITION variable=ifm complete dim=0
+#pragma HLS ARRAY_PARTITION variable=ofm complete dim=0
+
+	DATA_T I[{Input_channel}][3][{Input_height}];
+#pragma HLS ARRAY_PARTITION variable=I complete dim=1
+#pragma HLS ARRAY_PARTITION variable=I complete dim=2
+#pragma HLS ARRAY_PARTITION variable=I complete dim=3
+
+	HW_{Name}_x_loop: for (x = 0; x<{Input_width} ; x++) {{
+		HW_{Name}_y_loop: for (y = 0; y<{Input_height} ; y++) {{
+			HW_{Name}_k_loop: for (k = 0; k<{Input_channel}; k++) {{
+				if (x<{Input_width} && y<{Input_height}) {{
+					I[k][x % 3][y] = I_strm.read();
+				}}
+				if (x > 0 && y > 0){{
+#pragma HLS PIPELINE
+					if (x - 2 + 0 < {Input_width} && y - 2 + 0 < {Input_height} && x - 2 + 0 >= 0 && y - 2 + 0 >= 0) {{
+						I_0 = I[k][(x - 2) % 3][(y - 2)];
+					}}
+					else {{
+						I_0 = 0; // zero padding
+					}}
+					if (x - 2 + 0 < {Input_width} && y - 2 + 1 < {Input_height} && x - 2 + 0 >= 0 && y - 2 + 1 >= 0) {{
+						I_1 = I[k][(x - 2) % 3][(y - 1)];
+					}}
+					else {{
+						I_1 = 0; // zero padding
+					}}
+					if (x - 2 + 0 < {Input_width} && y - 2 + 2 < {Input_height} && x - 2 + 0 >= 0 && y - 2 + 2 >= 0) {{
+						I_2 = I[k][(x - 2) % 3][(y)];
+					}}
+					else {{
+						I_2 = 0; // zero padding
+					}}
+
+					if (x - 2 + 1 < {Input_width} && y - 2 + 0 < {Input_height} && x - 2 + 1 >= 0 && y - 2 + 0 >= 0) {{
+						I_3 = I[k][(x - 1) % 3][(y - 2)];
+					}}
+					else {{
+						I_3 = 0; // zero padding
+					}}
+					if (x - 2 + 1 < {Input_width} && y - 2 + 1 < {Input_height} && x - 2 + 1 >= 0 && y - 2 + 1 >= 0) {{
+						I_4 = I[k][(x - 1) % 3][(y - 1)];
+					}}
+					else {{
+						I_4 = 0; // zero padding
+					}}
+					if (x - 2 + 1 < {Input_width} && y - 2 + 2 < {Input_height} && x - 2 + 1 >= 0 && y - 2 + 2 >= 0) {{
+						I_5 = I[k][(x - 1) % 3][(y)];
+					}}
+					else {{
+						I_5 = 0; // zero padding
+					}}
+					if (x - 2 + 2 < {Input_width} && y - 2 + 0 < {Input_height} && x - 2 + 2 >= 0 && y - 2 + 0 >= 0) {{
+						I_6 = I[k][(x) % 3][(y - 2)];
+					}}
+					else {{
+						I_6 = 0; // zero padding
+					}}
+					if (x - 2 + 2 < {Input_width} && y - 2 + 1 < {Input_height} && x - 2 + 2 >= 0 && y - 2 + 1 >= 0) {{
+						I_7 = I[k][(x) % 3][(y - 1)];
+					}}
+					else {{
+						I_7 = 0; // zero padding
+					}}
+					if (x - 2 + 2 < {Input_width} && y - 2 + 2 < {Input_height} && x - 2 + 2 >= 0 && y - 2 + 2 >= 0) {{
+						I_8 = I[k][(x) % 3][(y)];
+					}}
+					else {{
+						I_8 = 0; // zero padding
+					}}
+
+					HW_{Name}_m_loop: for (m = 0; m<{Output_channel}; m++) {{
+#pragma HLS PIPELINE
+						if (k == 0) {{
+							ofm[m] = B[m];
+						}}
+						ofm[m] = ofm[m] + I_0 * W[m][k][0][0];
+						ofm[m] = ofm[m] + I_1 * W[m][k][0][1];
+						ofm[m] = ofm[m] + I_2 * W[m][k][0][2];
+						ofm[m] = ofm[m] + I_3 * W[m][k][1][0];
+						ofm[m] = ofm[m] + I_4 * W[m][k][1][1];
+						ofm[m] = ofm[m] + I_5 * W[m][k][1][2];
+						ofm[m] = ofm[m] + I_6 * W[m][k][2][0];
+						ofm[m] = ofm[m] + I_7 * W[m][k][2][1];
+						ofm[m] = ofm[m] + I_8 * W[m][k][2][2];
+					}}
+					if (k == 3) {{
+						for (m = 0; m<{Output_channel}; m++) {{
+#pragma HLS UNROLL
+							O_strm.write(ofm[m]);
+						}}
+					}}
+				}}
+			}}
+		}}
+	}}
+}}

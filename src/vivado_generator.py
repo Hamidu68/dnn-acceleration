@@ -152,7 +152,7 @@ class vivado_generator(object):
                 # input 2
                 a2 = self.model_sw.graphs[layer.config['name']]['in'][1]
                 self.sw_call_layer += 'O{}_SW,O{}_SW);\n\t'.format(a2,l_n)
-               # hw_call_layer += 'HW_{}(O{}_strm, W{line_num}_1, W{line_num}_2,O{line_num}_strm);\n\t'.format(layer.config['name'], inp, line_num= l_n)
+                self.hw_call_layer += 'HW_{}(O{}_strm, O{}_strm, O{}_strm);\n\t'.format(layer.config['name'], inp, a2, l_n)
 
             elif layer_type == 'Concatenate':
                 if len(self.model_sw.graphs[layer.config['name']]['in']) == 2:
