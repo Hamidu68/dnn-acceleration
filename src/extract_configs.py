@@ -12,7 +12,7 @@ from keras.applications.densenet import DenseNet201
 from keras.applications.nasnet import NASNetLarge
 from keras.applications.nasnet import NASNetMobile
 from keras.applications.mobilenetv2 import MobileNetV2
-
+from squeezenet import SqueezeNet
 import csv, sys
 
 params = [
@@ -113,6 +113,8 @@ def extract_configs(name='',path=''):
         model = NASNetLarge(include_top=True, weights='imagenet', input_tensor=None, input_shape=(331,331,3), pooling=None, classes=1000)
     elif name == 'nasnetmobile':
         model = NASNetMobile(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
+    elif name == 'squeezenet':
+        model = SqueezeNet  (include_top=True, weights='imagenet', input_tensor=None, input_shape=(224, 224,3), pooling=None, classes=1000)
 
     print('**********************************',name,'**************************************')
-    extract(model,"." + path)
+    extract(model,path)
