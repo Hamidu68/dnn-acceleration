@@ -18,12 +18,12 @@ class Dropout(Layers):
 
         # code
         if len(input_shape)==2:
-            ad = open("src/Model/template/Function/Dropout1.txt")
+            ad = open(self.template_path + "function/Dropout1.txt")
             template = ad.read()
             func = template.format(Name=self.config['name'], Input_channel=input_shape[1], Output_channel=output_shape[1], rate=rate_n)
             self.function['code'] = func + "\n"
         else:
-            ad = open("src/Model/template/Function/Dropout2.txt")
+            ad = open(self.template_path + "function/Dropout2.txt")
             template = ad.read()
             func = template.format(Name=self.config['name'], Input_channel=input_shape[3], Input_width=input_shape[1],
                                    Input_height=input_shape[2], Output_channel=output_shape[3],

@@ -25,10 +25,15 @@ class Activation(Layers):
                                    Output_height=output_shape[2])
             self.function['code'] = func + "\n"
         elif self.config['activation'] == 'softmax':
-            rl = open(self.template_path + "function/Activation_softmax.txt")
-            template = rl.read()
-            func = template.format(Name=self.config["name"], Output_channel=output_shape[3],
-                                   Input_channel=input_shape[3])
+            if len(input_shape) < 3:
+                rl = open(self.template_path + "function/Activation_softmax_1d.txt")
+                template = rl.read()
+                func = template.format(Name=self.config["name"], Output_channel=output_shape[1],Input_channel=input_shape[1])
+            else :
+                rl = open(self.template_path + "function/Activation_softmax_3d.txt")
+                template = rl.read()
+                func = template.format(Name=self.config["name"], Output_channel=output_shape[3],Input_channel=input_shape[3])
+
             self.function['code'] = func + "\n"
 
 class Activation_HW(Layers):

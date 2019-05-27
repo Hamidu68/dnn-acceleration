@@ -1,8 +1,8 @@
 {
   "model": "squeezenet",
-  "extract_configs": "True",
+  "extract_configs": "False",
   "model_info": "./model_info/squeezenet_test.csv",
-  "sw_test": "False",
+  "sw_test": "True",
   "vivado_test": "False",
   "use_trained_weight": "False",
   "data_type": "int",

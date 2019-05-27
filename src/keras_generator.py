@@ -23,7 +23,7 @@ def keras_generator(model_data, model_name, dtype_str, paths, skip_layers):
         dtype = np.uint16
     else:
         print('Wrong data type!')
-    
+
     # init parameters
     line_num = -1
     input_values = np.array([])
@@ -59,7 +59,7 @@ def keras_generator(model_data, model_name, dtype_str, paths, skip_layers):
             input_tensor = get_single_input(previous_row, tensors, outputs_dict)
             # get output of current layer and save it to dict
             outputs_dict[layer_name] = tensors[layer_name] = add_Conv2D(input_tensor, row, weights_bin, dtype, skip, tensors)
-                
+
         elif layer_type == 'DepthwiseConv2D':
             # get input tensor
             input_tensor = get_single_input(previous_row, tensors, outputs_dict)

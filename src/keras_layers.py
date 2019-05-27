@@ -274,13 +274,13 @@ def add_Dense(input_tensor=None, info=None, fid=None, dtype=int, skip=False, ten
     # Read information of layer
     input_shape = eval(info['batch_input_shape'])
     output_shape = eval(info['batch_output_shape'])
-    
+
     # Read weights from file
     weights=[]
     nodes = np.fromfile(file=fid, dtype=dtype, sep='', count=input_shape[1]*output_shape[1])
     nodes = nodes.reshape((input_shape[1], output_shape[1])).astype(np.float32)
     weights.append(nodes)
-    
+
     if eval(info['use_bias']):
         bias = np.fromfile(file=fid, dtype=dtype, sep='', count=output_shape[1])
         bias = bias.reshape((output_shape[1],)).astype(np.float32)

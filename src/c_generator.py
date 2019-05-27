@@ -83,7 +83,7 @@ class c_generator(object):
                 sw_call_layer += 'SW_{}(O{}_SW,O{}_SW, W{});\n\t'.format(layer.config['name'], inp, l_n, l_n)
 
             elif layer_type == 'Activation':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate Activation(Relu){}\\n\");\n\t'.format(l_n)
+                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate Activation{}\\n\");\n\t'.format(l_n)
                 inp = self.model_sw.graphs[layer.config['name']]['in'][0]
                 sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
 
