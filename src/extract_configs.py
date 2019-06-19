@@ -2,6 +2,8 @@
 # from keras.applications.xception import Xception
 from keras.applications.vgg16 import VGG16
 from keras.applications.vgg19 import VGG19
+from keras_contrib.applications.resnet import ResNet18
+from keras_contrib.applications.resnet import ResNet34
 from keras.applications.resnet50 import ResNet50
 from keras.applications.inception_v3 import InceptionV3
 from keras.applications.inception_resnet_v2 import InceptionResNetV2
@@ -91,6 +93,10 @@ def extract_configs(name='',path=''):
         model = VGG16   (include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
     elif name == 'vgg19':
         model = VGG19   (include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
+    elif name == 'resnet18':
+        model = ResNet18(input_shape=(64,64,3), classes=200)
+    elif name == 'resnet34':
+        model = ResNet34(input_shape=(64,64,3), classes=200)
     elif name == 'resnet50':
         model = ResNet50(include_top=True, weights='imagenet', input_tensor=None, input_shape=(224,224,3), pooling=None, classes=1000)
     elif name == 'inceptionv3':
