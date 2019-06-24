@@ -7,9 +7,9 @@ from .BatchNormalization import BatchNormalization
 from .Activation import *
 from .AveragePooling2D import AveragePooling2D
 from .ZeroPadding2D import ZeroPadding2D
-from .Dense import Dense
+from .Dense import *
 from .Concatenate import Concatenate
-from .GlobalAveragePooling2D import GlobalAveragePooling2D
+from .GlobalAveragePooling2D import *
 from .GlobalMaxPooling2D import GlobalMaxPooling2D
 from .Lambda import Lambda
 from .ReLU import ReLU

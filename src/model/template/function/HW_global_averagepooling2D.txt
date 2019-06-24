@@ -1,0 +1,24 @@
+void HW_{Name}(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {{
+#pragma HLS INLINE
+  int m, x, y;
+  int div = {Input_width} * {Input_height};
+  DATA_T ofm[{Input_channel}];
+  DATA_T ifm;
+
+  HW_{Name}_x_loop: for (x=0; x<{Input_width}; x++) {{
+	  HW_{Name}_y_loop: for (y=0; y<{Input_height}; y++) {{
+	    HW_{Name}_m_1_loop: for (m=0; m<{Input_channel}; m++) {{
+#pragma HLS PIPELINE
+	        ifm = I_strm.read();
+	        ifm /= div;
+            ofm[m] += ifm;
+        }}
+    }}
+    if(x == {Input_width} - 1){{
+      HW_{Name}_m_2_loop: for (m=0; m<{Input_channel}; m++) {{
+#pragma HLS UNROLL
+         O_strm.write(ofm[m]);
+      }}
+    }}
+  }}
+}}

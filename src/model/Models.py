@@ -93,7 +93,10 @@ class Models():
         elif layer_type == 'Dense':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)
-            self.layers.append(Dense(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+            if self.post == "HW":
+                self.layers.append(Dense_HW(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+            else :
+                self.layers.append(Dense(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
 
         elif layer_type == 'Add':
             self.add_graph(layer_name, config['connected_to'])
@@ -125,7 +128,10 @@ class Models():
         elif layer_type == 'GlobalAveragePooling2D':
             self.add_graph(layer_name, config['connected_to'])
             inputs = self.get_inputs(layer_name)
-            self.layers.append(GlobalAveragePooling2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+            if self.post == "HW":
+                self.layers.append(GlobalAveragePooling2D_HW(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
+            else :
+                self.layers.append(GlobalAveragePooling2D(config, inputs, dtype=self.dtype, layer_odr=self.layer_num, post=self.post))
 
         elif layer_type == 'GlobalMaxPooling2D':
             self.add_graph(layer_name, config['connected_to'])

@@ -2,33 +2,24 @@ void SW_{Name}(DATA_T I[{Input_channel}], DATA_T O[{Output_channel}], DATA_T W[{
 {{
     //Dense
 	int m, c;
-	DATA_T maximum;
-	DATA_T denom=0;
+	DATA_T maximum = 0;
 
 	for(m=0; m<{Output_channel}; m++){{
-        O[m] = 0;
+        O[m] = B[m];
 		for (c = 0; c < {Input_channel}; c++){{
 			O[m] += W[m][c] * I[c];
         }}
-        O[m] += B[m];
-        denom+=O[m];
     }}
-
-    //Softmax
-
-    maximum=O[0]/denom;
+    //Find max
     for (m = 0; m < {Output_channel}; m++){{
-		O[m]=O[m]/denom;
 		if(maximum<O[m])
 		    maximum=O[m];
     }}
-
+    //One hot key
     for (m = 0; m < {Output_channel}; m++){{
 	    if(maximum!=O[m])
 	        O[m]=0;
 	    else
 	        O[m]=1;
     }}
-
-
 }}

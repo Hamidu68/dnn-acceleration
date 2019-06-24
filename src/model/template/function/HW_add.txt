@@ -1,4 +1,4 @@
-void HW_{Name}(hls::stream<DATA_T> &I1_strm, hls::stream<DATA_T> I2_strm, hls::stream<DATA_T> &O_strm) {{
+void HW_{Name}(hls::stream<DATA_T> &I1_strm, hls::stream<DATA_T> &I2_strm, hls::stream<DATA_T> &O_strm) {{
 #pragma HLS INLINE
 	int m, x, y;
 	DATA_T ifm1;

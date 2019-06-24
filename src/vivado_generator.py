@@ -13,8 +13,10 @@ class vivado_generator(object):
         self.stream_def = ''
 
     def generate(self):
-    	o1 = open(self.template_path + "main/vivado_cpp.txt")
-    	o2 = open(self.template_path + "main/vivado_test_cpp.txt")
+        o0 = open(self.template_path + "main/vivado_cpp_3D.txt")
+    	o1 = open(self.template_path + "main/vivado_cpp_1D.txt")
+    	o2 = open(self.template_path + "main/vivado_test_cpp_3D.txt")
+        o3 = open(self.template_path + "main/vivado_test_cpp_1D.txt")
     	f1 = open(self.output_path +'/'+ self.model_name+'.cpp', 'w')
         f2 = open(self.output_path +'/'+ self.model_name+'_test.cpp', 'w')
 
@@ -62,10 +64,10 @@ class vivado_generator(object):
         static_variables += final_layer.function['static_o']
         final_layer.set_output_name('O_HW')
         static_variables += final_layer.function['static_o']
-        copy_output = "\tfor(m=0; m<"+str(final_layer.output.shape[2])+"; m++) {\n\t\tfor(x=0;x<"+str(final_layer.output.shape[0])+";x++){\n\t\t\tfor(y=0;y<"+str(final_layer.output.shape[1])+";y++){ O[m][x][y] = O_i[m][x][y]; \n}}}\n"
 
-        # fill template
+        # Output 1D, 3D
         if len(final_layer.output.shape) == 3:
+            #fill template
             stream_io = st.read().format(
             Input_channel=start_layer.output.shape[2],
             Input_width = start_layer.output.shape[0],
@@ -73,14 +75,8 @@ class vivado_generator(object):
             Output_channel = final_layer.output.shape[2],
             Output_width = final_layer.output.shape[0],
             Output_height = final_layer.output.shape[1])
-        else:
-            stream_io = st_d.read().format(
-            Input_channel=start_layer.output.shape[2],
-            Input_width = start_layer.output.shape[0],
-            Input_height = start_layer.output.shape[1],
-            Output_channel = final_layer.output.shape[2])
-
-        f2.write(o2.read().format(
+            copy_output = "\tfor(m=0; m<"+str(final_layer.output.shape[2])+"; m++) {\n\t\tfor(x=0;x<"+str(final_layer.output.shape[0])+";x++){\n\t\t\tfor(y=0;y<"+str(final_layer.output.shape[1])+";y++){ O[m][x][y] = O_i[m][x][y]; \n}}}\n"
+            test_cpp = o2.read().format(
             Data_type= self.dtype,
             model_name=self.model_name,
             func_params= func_params,
@@ -89,29 +85,65 @@ class vivado_generator(object):
             call_params= call_params,
             output_channel = final_layer.output.shape[2],
             output_width = final_layer.output.shape[0],
-            output_height = final_layer.output.shape[1]))
-
-        f1.write(o1.read().format(Data_type = self.dtype,
-        	hw_static_variables= i_static_variables,
-        	Stream_io= stream_io,
+            output_height = final_layer.output.shape[1])
+            cpp = o0.read().format(Data_type = self.dtype,
+            hw_static_variables= i_static_variables,
+            Stream_io= stream_io,
             output_channel = final_layer.output.shape[2],
             output_width = final_layer.output.shape[0],
             output_height = final_layer.output.shape[1],
-        	hw_def_layer=hw_def_layer,
-        	sw_def_layer=sw_def_layer,
+            hw_def_layer=hw_def_layer,
+            sw_def_layer=sw_def_layer,
             i_func_params = i_func_params,
-        	func_params= func_params,
+            func_params= func_params,
             layer_odr = layer_odr,
-        	HLS_optimization = optimized_code,
-        	model_name=self.model_name,
-        	call_params=i_call_parmas,
-        	hw_output_streams= self.stream_def,
-        	hw_call_layer=self.hw_call_layer,
-        	copy_values = copy_values,
+            HLS_optimization = optimized_code,
+            model_name=self.model_name,
+            call_params=i_call_parmas,
+            hw_output_streams= self.stream_def,
+            hw_call_layer=self.hw_call_layer,
+            copy_values = copy_values,
             copy_output = copy_output,
-        	sw_output_variables= sw_output_variables,
-        	sw_call_layer=self.sw_call_layer))
+            sw_output_variables= sw_output_variables,
+            sw_call_layer=self.sw_call_layer)
 
+        else:
+            #fill template
+            stream_io = st_d.read().format(
+            Input_channel=start_layer.output.shape[2],
+            Input_width = start_layer.output.shape[0],
+            Input_height = start_layer.output.shape[1],
+            Output_channel = final_layer.output.shape[0])
+            copy_output = "\tfor(m=0; m<"+str(final_layer.output.shape[0])+"; m++) { O[m] = O_i[m]; }\n"
+            test_cpp = o3.read().format(
+            Data_type= self.dtype,
+            model_name=self.model_name,
+            func_params= func_params,
+            static_variables=static_variables,
+            Initialization=initialization,
+            call_params= call_params,
+            output_channel = final_layer.output.shape[0])
+            cpp = o1.read().format(Data_type = self.dtype,
+            hw_static_variables= i_static_variables,
+            Stream_io= stream_io,
+            output_channel = final_layer.output.shape[0],
+            hw_def_layer=hw_def_layer,
+            sw_def_layer=sw_def_layer,
+            i_func_params = i_func_params,
+            func_params= func_params,
+            layer_odr = layer_odr,
+            HLS_optimization = optimized_code,
+            model_name=self.model_name,
+            call_params=i_call_parmas,
+            hw_output_streams= self.stream_def,
+            hw_call_layer=self.hw_call_layer,
+            copy_values = copy_values,
+            copy_output = copy_output,
+            sw_output_variables= sw_output_variables,
+            sw_call_layer=self.sw_call_layer)
+
+        f1.write(cpp);
+        f2.write(test_cpp)
         f1.close()
         f2.close()
 
@@ -123,7 +155,7 @@ class vivado_generator(object):
             layer_type = layer.config['layer_type']
             l_n = layer.layer_odr
             # stream declaration
-            self.stream_def += "\thls::stream<DATA_T> O{line_num}_strm(\"O{line_num}_strm\");\n".format(line_num=l_n)
+            self.stream_def += "\tstatic hls::stream<DATA_T> O{line_num}_strm(\"O{line_num}_strm\");\n".format(line_num=l_n)
             # skip inputlayer
             if layer_type == 'InputLayer':
                 continue

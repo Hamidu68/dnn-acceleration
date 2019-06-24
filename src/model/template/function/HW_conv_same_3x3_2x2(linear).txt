@@ -1,4 +1,4 @@
-void HW_{Name}(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm, DATA_T W[{Output_channel}][{Input_channel}][3][3],DATA_T B[{Output_channel}]) {{
+void HW_{Name}(hls::stream<DATA_T> &I_strm, DATA_T W[{Output_channel}][{Input_channel}][3][3],DATA_T B[{Output_channel}], hls::stream<DATA_T> &O_strm) {{
 #pragma HLS INLINE
 	int m, x, y, k;
 	DATA_T I_0, I_1, I_2, I_3, I_4, I_5, I_6, I_7, I_8;
@@ -14,7 +14,9 @@ void HW_{Name}(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm, DATA_T 
 	HW_{Name}_x_loop: for (x = 0; x<{Input_width} + 1 ; x++) {{
 		HW_{Name}_y_loop: for (y = 0; y<{Input_height} + 1 ; y++) {{
 			HW_{Name}_k_loop: for (k = 0; k<{Input_channel}; k++) {{
-				I[k][x % 3][y] = I_strm.read();
+				if(x < {Input_width} && y < {Input_height}){{
+	                I[k][x % 3][y] = I_strm.read();
+				}}
 				if ((x >> 1) && (y >> 1)){{
 				    if(x % 2 == 0 && y % 2 == 0){{
 #pragma HLS PIPELINE

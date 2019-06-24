@@ -21,9 +21,9 @@ int main() {{
 
 	{static_variables}
 
-	FILE *w_stream = fopen("init_Weight.bin", "r");
+	FILE *w_stream = fopen("init_weight.bin", "r");
 	if (w_stream == NULL) printf("weight file was not opened");
-	FILE *i_stream = fopen("init_Input.bin", "r");
+	FILE *i_stream = fopen("init_input.bin", "r");
 	if (i_stream == NULL) printf("input file was not opened");
 
  	{Initialization}

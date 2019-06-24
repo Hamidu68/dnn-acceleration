@@ -1,4 +1,4 @@
-void HW_{Name}(hls::stream<DATA_T> &I_strm, DATA_T W[{Output_channel}][{Input_channel}], hls::stream<DATA_T> &O_strm) {{
+void HW_{Name}(hls::stream<DATA_T> &I_strm, DATA_T W[{Output_channel}][{Input_channel}],DATA_T B[{Output_channel}],hls::stream<DATA_T> &O_strm) {{
 #pragma HLS INLINE
 	int m, c;
 	DATA_T maximum=0;
@@ -9,6 +9,8 @@ void HW_{Name}(hls::stream<DATA_T> &I_strm, DATA_T W[{Output_channel}][{Input_ch
 	    ifm = I_strm.read();
 		HW_{Name}_m_1_loop: for (m=0; m<{Output_channel}; m++) {{
 #pragma HLS PIPELINE
+		  if(c == 0)
+		    ofm[m] = B[m];
 		  ofm[m] += W[m][c] * ifm;
         }}
     }}

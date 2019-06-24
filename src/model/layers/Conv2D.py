@@ -95,7 +95,7 @@ class Conv2D_HW(Layers):
             # optimized code
             self.function['optimized_code'] += "#pragma HLS ARRAY_PARTITION variable=W{line_num}_i complete dim=1\n#pragma HLS ARRAY_PARTITION variable=B{line_num}_i complete\n".format(line_num = self.layer_odr)
             # copy values (weight)
-            self.function['copy_values'] += "W"+str(num)+"_i_m_loop: for (m=0; m<"+str(output_shape[3])+"; m++) {\n  W"+str(num)+"_i_k_loop: for (k=0; k<"+str(input_shape[3])+"; k++) {\n  W"+str(num)+"_i[m][k] = W"+str(num)+"[m][k];\n  }\n}\n"
+            self.function['copy_values'] += "W"+str(num)+"_i_m_loop: for (m=0; m<"+str(output_shape[3])+"; m++) {\n  W"+str(num)+"_i_k_loop: for (k=0; k<"+str(input_shape[3])+"; k++) {\n  W"+str(num)+"_i[m][k] = W"+str(num)+"[m][k][0][0];\n  }\n}\n"
         else:
             # set_weight shape
             weight_shape=(output_shape[3], input_shape[3], filter_shape[0], filter_shape[1],)

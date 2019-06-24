@@ -19,6 +19,6 @@ void Stream_output(hls::stream<DATA_T> &O_strm, DATA_T O[{Output_channel}]) {{
 	Stream_input_x_loop: for (x=0; x<{Output_channel}; x++) {{
 
 #pragma HLS PIPELINE
-	 			O[x] = O_strm.read()
+	 			O[x] = O_strm.read();
 	}}
 }}

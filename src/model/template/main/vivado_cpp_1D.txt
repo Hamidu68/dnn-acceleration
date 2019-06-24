@@ -1,0 +1,43 @@
+#include <iostream>
+#include <ap_int.h>
+#include <hls_stream.h>
+
+typedef {Data_type} DATA_T;
+typedef ap_uint<256> uint256_t;
+typedef ap_uint<512> uint512_t;
+
+{Stream_io}
+
+{hw_static_variables}
+
+{hw_def_layer}
+
+{sw_def_layer}
+
+void {model_name}({i_func_params} DATA_T O[{output_channel}])  {{
+    {HLS_optimization}
+
+    #pragma HLS DATAFLOW
+
+    {hw_output_streams}
+
+    {hw_call_layer}
+}}
+
+void {model_name}_top({func_params} DATA_T O[{output_channel}]) {{
+
+    DATA_T O_i[{output_channel}];
+    int m, x, y, i, j, k;
+
+    {copy_values}
+
+    {model_name}({call_params} O_i);
+
+    {copy_output}
+}}
+
+void {model_name}_sw({func_params} DATA_T O{layer_odr}_SW[{output_channel}]) {{
+    {sw_output_variables}
+
+    {sw_call_layer}
+}}
