@@ -5,8 +5,8 @@ void HW_{Name}(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm, DATA_T 
 #pragma HLS ARRAY_PARTITION variable=ofm complete dim=0
 	DATA_T ifm;
 
-	HW_{Name}_x_loop: for (x = 0; x < {Input_width}; x++) {{
-		HW_{Name}_y_loop: for (y = 0; y < {Input_height}; y++) {{
+	HW_{Name}_x_loop: for (x = 0; x < {Input_width}; x+=2) {{
+		HW_{Name}_y_loop: for (y = 0; y < {Input_height}; y+=2) {{
 			HW_{Name}_k_loop: for (k = 0; k < {Input_channel}; k++) {{
 				ifm = I_strm.read();
 				HW_{Name}_m_loop: for (m = 0; m < {Output_channel}; m++) {{

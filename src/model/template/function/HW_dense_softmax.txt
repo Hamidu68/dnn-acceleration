@@ -1,0 +1,29 @@
+void HW_{Name}(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm, DATA_T W[{Output_channel}][{Input_channel}],DATA_T B[{Output_channel}) {{
+#pragma HLS INLINE
+	int m, c;
+	DATA_T maximum=0;
+	DATA_T ofm[{Output_channel}];
+	DATA_T ifm;
+    //Dense
+	HW_{Name}_c_loop: for (c = 0; c < {Input_channel}; c++){{
+	    ifm = I_strm.read()
+		HW_{Name}_m_1_loop: for (m=0; m<{Output_channel}; m++) {{
+#pragma HLS PIPELINE
+		  if(c == 0)
+		    ofm[m] = B[m];
+		  ofm[m] += W[m][c] * ifm;
+        }}
+    }}
+    //find Max
+    HW_{Name}_m_2_loop: for (m = 0; m < {Output_channel}; m++){{
+		if(maximum<ofm[m])
+		   maximum=ofm[m];
+    }}
+    //one hot label
+    HW_{Name}_m_3_loop: for (m = 0; m < {Output_channel}; m++){{
+	    if(maximum!=ofm[m])
+	        O_strm.write(0);
+	    else
+	        O_strm.write(1);
+    }}
+}}

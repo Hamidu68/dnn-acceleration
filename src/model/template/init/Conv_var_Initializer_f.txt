@@ -2,7 +2,7 @@ for (m = 0; m <  {Filter_width} ; m++) {{
 	for (k = 0; k < {Filter_height} ; k++) {{
 		for (i = 0; i < {Input_channel} ; i++) {{
 			for (j = 0; j < {Output_channel} ; j++) {{
-				fread(&trash, sizeof(int), 1, w_stream);
+				fread(&trash, sizeof(DATA_T), 1, w_stream);
                 W{line_number}[j][i][m][k] = (DATA_T) trash;
 			}}
 		}}
@@ -10,7 +10,7 @@ for (m = 0; m <  {Filter_width} ; m++) {{
 }}
 {comment_begin}
 for (m = 0; m < {Output_channel} ; m++) {{
-    fread(&trash, sizeof(int), 1, w_stream);
+    fread(&trash, sizeof(DATA_T), 1, w_stream);
     B{line_number}[m] = (DATA_T) trash;
 }}
 {comment_end}

@@ -17,7 +17,7 @@ int main(int argc, char *argv[]){{
 
     DATA_T temp;
     int m, x, y, i, j, k, l;
-    int trash;
+    DATA_T trash;
 
     // declare array variables of input, weight and bias (static variables)
     {sw_static_variables}

@@ -15,7 +15,10 @@ if __name__ == '__main__':
         run_vivado_test = jData["vivado_test"]
         dtype = jData["data_type"]
         batch = jData["batch"]
-        random_range = int(jData["random_range"])
+        if(dtype == "int"):
+            random_range = int(jData["random_range"])
+        else :
+            random_range = float(jData["random_range"])
         weight_file_path = jData["weight_file_path"]
         input_file_path = jData["input_file_path"]
         use_trained_weight= jData["use_trained_weight"]

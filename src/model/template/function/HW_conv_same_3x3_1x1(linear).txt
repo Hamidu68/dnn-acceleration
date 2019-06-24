@@ -15,9 +15,7 @@ void HW_{Name}(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm, DATA_T 
 	HW_{Name}_x_loop: for (x = 0; x<{Input_width} ; x++) {{
 		HW_{Name}_y_loop: for (y = 0; y<{Input_height} ; y++) {{
 			HW_{Name}_k_loop: for (k = 0; k<{Input_channel}; k++) {{
-				if (x<{Input_width} && y<{Input_height}) {{
-					I[k][x % 3][y] = I_strm.read();
-				}}
+				I[k][x % 3][y] = I_strm.read();
 				if (x > 0 && y > 0){{
 #pragma HLS PIPELINE
 					if (x - 2 + 0 < {Input_width} && y - 2 + 0 < {Input_height} && x - 2 + 0 >= 0 && y - 2 + 0 >= 0) {{
@@ -91,7 +89,7 @@ void HW_{Name}(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm, DATA_T 
 						ofm[m] = ofm[m] + I_7 * W[m][k][2][1];
 						ofm[m] = ofm[m] + I_8 * W[m][k][2][2];
 					}}
-					if (k == 3) {{
+					if (k == {Input_channel}-1) {{
 						for (m = 0; m<{Output_channel}; m++) {{
 #pragma HLS UNROLL
 							O_strm.write(ofm[m]);

@@ -53,8 +53,8 @@ def variable_generator(csv_dir='',weight_dir='',input_dir='',Random_range=8,init
         np.random.randint(low=1, high=random_range+1, size=input_size, dtype=dtype).tofile(Input)
 
     elif dtype2 == "float":
-        np.random.uniform(low=0, high=1, size=total_params).astype(dtype).tofile(Weight)
-        np.random.uniform(low=0, high=1, size=input_size).astype(dtype).tofile(Input)
+        np.random.uniform(low=0, high=random_range, size=total_params).astype(dtype).tofile(Weight)
+        np.random.uniform(low=0, high=random_range, size=input_size).astype(dtype).tofile(Input)
     # Close file
     Weight.close()
     Input.close()

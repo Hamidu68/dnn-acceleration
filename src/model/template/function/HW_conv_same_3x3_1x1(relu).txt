@@ -91,7 +91,7 @@ void HW_{Name}(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm, DATA_T 
 						ofm[m] = ofm[m] + I_7 * W[m][k][2][1];
 						ofm[m] = ofm[m] + I_8 * W[m][k][2][2];
 					}}
-					if (k == 3) {{
+					if (k == {Input_channnel} -1) {{
 						for (m = 0; m<{Output_channel}; m++) {{
 #pragma HLS UNROLL
                             if(ofm[m] < 0){{ // relu
