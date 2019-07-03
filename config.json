@@ -1,9 +1,9 @@
 {
-  "model": "resnet34",
+  "model": "resnet18",
   "extract_configs": "False",
-  "model_info": "./model_info/resnet_v1/resnet34_Cifar-10_32(3x3).csv",
-  "sw_test": "False",
-  "vivado_test": "True",
+  "model_info": "./model_info/resnet_v1/resnet18_Cifar-10_32(3x3).csv",
+  "sw_test": "True",
+  "vivado_test": "False",
   "use_trained_weight": "False",
   "data_type": "int",
   "random_range": "2",

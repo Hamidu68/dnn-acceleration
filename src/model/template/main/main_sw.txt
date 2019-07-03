@@ -7,7 +7,7 @@
 
 using namespace std;
 
-typedef float DATA_T;
+typedef {Data_type} DATA_T;
 
 // define functions of each layer
 {sw_def_layer}

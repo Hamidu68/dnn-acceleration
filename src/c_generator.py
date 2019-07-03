@@ -39,7 +39,8 @@ class c_generator(object):
                                     sw_call_layer=self.gen_sw_call_layer(),
                                     result=print_result,
                                     output_path_1 = output_path_1,
-                                    output_path_2 = output_path_2
+                                    output_path_2 = output_path_2,
+                                    Data_type = self.dtype
                                     ))
         file.close()
         return self.output_path+'/c_verifier.cpp';
