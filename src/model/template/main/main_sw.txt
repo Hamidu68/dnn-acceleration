@@ -7,6 +7,7 @@
 
 using namespace std;
 
+typedef {Data_type} DATA_IN;
 typedef {Data_type} DATA_T;
 
 // define functions of each layer
