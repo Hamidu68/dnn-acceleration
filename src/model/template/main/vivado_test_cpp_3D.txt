@@ -7,7 +7,7 @@
 using namespace std;
 
 
-typedef ap_int<32> DATA_IN;
+typedef {Data_type} DATA_IN;
 typedef {Data_type} DATA_T;
 
 void {model_name}_top({func_params}DATA_T O[{output_channel}][{output_width}][{output_height}]);
