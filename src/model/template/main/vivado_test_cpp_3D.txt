@@ -35,8 +35,8 @@ int main() {{
 	for(m=0; m<{output_channel}; m++){{
 	   for(x=0;x<{output_width}; x++){{
 	     for(y=0;y<{output_height}; y++){{
-	       cout<<"SW: O["<<m<<"][<<x<<]["<<y<<"] = "<<O_SW[m][x][y];
-	       cout<<"HW: O["<<m<<"][<<x<<]["<<y<<"] = "<<O_HW[m][x][y];
+	       cout<<"SW: O["<<m<<"]["<<x<<"]["<<y<<"] = "<<O_SW[m][x][y];
+	       cout<<"HW: O["<<m<<"]["<<x<<"]["<<y<<"] = "<<O_HW[m][x][y];
 	       if (O_HW[m][x][y] != O_SW[m][x][y]){{
 	         err_cnt++;
 	       }}
