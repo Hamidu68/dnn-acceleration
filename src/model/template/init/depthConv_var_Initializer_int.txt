@@ -1,8 +1,8 @@
 for (m = 0; m <  {Output_channel} ; m++) {{
 		for (i = 0; i < {Filter_width} ; i++) {{
 			for (j = 0; j < {Filter_height} ; j++) {{
-                fread(&W{line_number}[m][i][j], sizeof(int), 1, w_stream);
+                fread(&W{line_number}[m][i][j], sizeof(DATA_IN), 1, w_stream);
 			}}
 		}}
-    {comment}fread(&B{line_number}[m], sizeof(int), 1, w_stream);
+    {comment}fread(&B{line_number}[m], sizeof(DATA_IN), 1, w_stream);
 }}
