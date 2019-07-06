@@ -8,11 +8,7 @@
 using namespace std;
 
 typedef {Data_type} DATA_IN;
-<<<<<<< HEAD
 typedef float DATA_T;
-=======
-typedef {Data_type} DATA_T;
->>>>>>> f33605dae644911e501db4e1a5b0dd2f653a9302
 
 // define functions of each layer
 {sw_def_layer}
