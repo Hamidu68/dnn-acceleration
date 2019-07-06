@@ -1,6 +1,0 @@
-for (x = 0; x < {num}; x++) {{
-    for (y = 0; y < {Output_channel} ; y++) {{
-        fread(&trash, sizeof(DATA_IN), 1, w_stream);
-        W{line_number}[x][y] = (DATA_T) trash;
-    }}
-}}

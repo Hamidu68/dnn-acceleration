@@ -3,7 +3,6 @@ for (k = 0; k <  {Input_width} ; k++) {{
 		for(y = 0; y < {Input_channel} ; y++) {{
 			fread(&trash, sizeof(DATA_IN), 1, i_stream);
             I[y][k][x] = (DATA_T) trash;
-			O0_SW[y][k][x] = (DATA_T) trash;
 		}}
 	}}
 }}

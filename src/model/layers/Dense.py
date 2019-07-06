@@ -25,7 +25,7 @@ class Dense(Layers):
         self.set_params()
 
         #intialization
-        d_input = open(self.template_path + "init/Dense_var_Initializer_f.txt")
+        d_input = open(self.template_path + "init/Dense_var_Initializer.txt")
         dense_input = d_input.read()
         begin = ''
         end = ''

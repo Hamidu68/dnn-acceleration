@@ -30,11 +30,15 @@ class Layers(object):
         o2 = open(self.template_path + "print/Print_Output1D.txt")
         output3d = o1.read()
         output1d = o2.read()
-        if len(output_shape) <= 2:
-            func = output1d.format(Name=layer, first=output_shape[1], output='O{}_{}'.format(self.layer_odr,self.post))
+        if self.layer_odr == 0:
+            output_name = 'I'
         else:
-            func = output3d.format(Name=layer, third=output_shape[3], second=output_shape[2],
-                                       first=output_shape[1], output='O{}_{}'.format(self.layer_odr,self.post))
+            output_name = 'O{}_{}'.format(self.layer_odr,self.post)
+
+        if len(output_shape) <= 2:
+            func = output1d.format(Name=layer+self.config['name'], first=output_shape[1], output=output_name)
+        else:
+            func = output3d.format(Name=layer+self.config['name'], third=output_shape[3], second=output_shape[2],first=output_shape[1], output=output_name)
         self.function['print_result'] = func+"\n\t"
 
     def set_params(self):

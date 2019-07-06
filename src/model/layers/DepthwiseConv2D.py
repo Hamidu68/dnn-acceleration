@@ -29,7 +29,7 @@ class DepthwiseConv2D(Layers):
         self.set_params()
 
         # initialization
-        dc_input = open(self.template_path + "init/depthConv_var_Initializer_f.txt")
+        dc_input = open(self.template_path + "init/depthConv_var_Initializer.txt")
         dconv_input = dc_input.read()
         begin = ''
         end = ''

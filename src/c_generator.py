@@ -50,125 +50,47 @@ class c_generator(object):
         for layer in self.model_sw.layers :
             layer_type = layer.config['layer_type']
             l_n = layer.layer_odr
-            if layer_type == 'Conv2D':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate Conv2D{}\\n\");\n\t'.format(layer.layer_odr)
+            if l_n == 0:
+                continue
+
+            sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate {}{}\\n\");\n\t'.format(layer_type,layer.layer_odr)
+            if l_n == 1:
+                sw_call_layer += 'SW_{}(I,'.format(layer.config['name'])
+            else :
                 inp = self.model_sw.graphs[layer.config['name']]['in'][0]
+                sw_call_layer += 'SW_{}(O{}_SW,'.format(layer.config['name'],inp)
+
+            if layer_type in ['Conv2D','Dense']:
                 if layer.config['use_bias'] == 'True':
-                    sw_call_layer += 'SW_{}(O{}_SW,O{line_num}_SW,W{line_num},B{line_num});\n\t'.format(layer.config['name'], inp, line_num=l_n)
+                    sw_call_layer += 'O{line_num}_SW,W{line_num},B{line_num});\n\t'.format(line_num=l_n)
                 else:
-                    sw_call_layer += 'SW_{}(O{}_SW,O{line_num}_SW,W{line_num});\n\t'.format(layer.config['name'], inp,
-                                                                                            line_num=l_n)
+                    sw_call_layer += 'O{line_num}_SW,W{line_num});\n\t'.format(line_num=l_n)
+
             elif layer_type == 'SeparableConv2D':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate SeparableConv2D{}\\n\");\n\t'.format(layer.layer_odr)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{line_num}_SW,W{line_num}_1,W{line_num}_2);\n\t'.format(layer.config['name']
-                                                                                                    , inp, line_num=l_n)
-            elif layer_type == 'DepthwiseConv2D':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate DepthwiseConv2D{}\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{line_num}_SW,W{line_num});\n\t'.format(layer.config['name'], inp,
-                                                                                        line_num=l_n)
-            elif layer_type == 'ReLU':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate Relu{}\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
+                sw_call_layer += 'O{line_num}_SW,W{line_num}_1,W{line_num}_2);\n\t'.format(line_num=l_n)
 
-            elif layer_type == 'Cropping2D':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate Cropping2D{}\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
+            elif layer_type in ['DepthwiseConv2D','BatchNormalization']:
+                sw_call_layer += 'O{line_num}_SW,W{line_num});\n\t'.format(line_num=l_n)
 
-            elif layer_type == 'BatchNormalization':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate BatchNormalization{}\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW, W{});\n\t'.format(layer.config['name'], inp, l_n, l_n)
+            elif layer_type in ['ReLU','Cropping2D','Activation','MaxPooling2D','AveragePooling2D','ZeroPadding2D','Flatten','GlobalAveragePooling2D','GlobalMaxPooling2D','Dropout','Reshape'] :
+                sw_call_layer += 'O{}_SW);\n\t'.format(l_n)
 
-            elif layer_type == 'Activation':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate Activation{}\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
-
-            elif layer_type == 'MaxPooling2D':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate MaxPooling2D{}\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
-
-            elif layer_type == 'AveragePooling2D':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate AveragePooling2D{}\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
-
-            elif layer_type == 'Add':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate Add{}\\n\");\n\t'.format(l_n)
-                a1 = self.model_sw.graphs[layer.config['name']]['in'][0]
-                a2 = self.model_sw.graphs[layer.config['name']]['in'][1]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],a1,a2,l_n)
-
-            elif layer_type == 'ZeroPadding2D':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate ZeroPadding2D{}\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
-
-            elif layer_type == 'InputLayer':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]InputLayer\\n\");\n\t'
-
-            elif layer_type == 'Flatten':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate Flatten{}\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
-
-            elif layer_type == 'Dense':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate Dense{}\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                if layer.config['use_bias'] == 'True':
-                    sw_call_layer += 'SW_{}(O{}_SW,O{}_SW,W{},B{});\n\t'.format(layer.config['name'], inp, l_n, l_n, l_n)
-                else:
-                    sw_call_layer += 'SW_{}(O{}_SW,O{}_SW,W{});\n\t'.format(layer.config['name'], inp, l_n, l_n)
-
-            elif layer_type == 'GlobalAveragePooling2D':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate GlobalAveragePooling2D{}\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
-
-            elif layer_type == 'GlobalMaxPooling2D':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate GlobalMaxPooling2D{}\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
+            elif layer_type in ['Add','Lambda']:
+                inp2 = self.model_sw.graphs[layer.config['name']]['in'][1]
+                sw_call_layer += 'O{}_SW,O{}_SW);\n\t'.format(inp2,l_n)
 
             elif layer_type == 'Concatenate':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate Concatenate{}\\n\");\n\t'.format(l_n)
                 if len(self.model_sw.graphs[layer.config['name']]['in']) == 2:
-                    inp1 = self.model_sw.graphs[layer.config['name']]['in'][0]
                     inp2 = self.model_sw.graphs[layer.config['name']]['in'][1]
-                    sw_call_layer += 'SW_{}(O{}_SW, O{}_SW, O{}_SW);\n\t'.format(layer.config['name'], inp1, inp2, l_n)
+                    sw_call_layer += 'O{}_SW, O{}_SW);\n\t'.format(inp2, l_n)
                 elif len(self.model_sw.graphs[layer.config['name']]['in']) == 3:
-                    inp1 = self.model_sw.graphs[layer.config['name']]['in'][0]
                     inp2 = self.model_sw.graphs[layer.config['name']]['in'][1]
                     inp3 = self.model_sw.graphs[layer.config['name']]['in'][2]
-                    sw_call_layer += 'SW_{}(O{}_SW, O{}_SW, O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],
-                                                                                        inp1, inp2, inp3, l_n)
+                    sw_call_layer += 'O{}_SW, O{}_SW,O{}_SW);\n\t'.format(inp2, inp3, l_n)
                 elif len(self.model_sw.graphs[layer.config['name']]['in']) == 4:
-                    inp1 = self.model_sw.graphs[layer.config['name']]['in'][0]
                     inp2 = self.model_sw.graphs[layer.config['name']]['in'][1]
                     inp3 = self.model_sw.graphs[layer.config['name']]['in'][2]
                     inp4 = self.model_sw.graphs[layer.config['name']]['in'][3]
-                    sw_call_layer += 'SW_{}(O{}_SW, O{}_SW, O{}_SW, O{}_SW,O{}_SW);\n\t'.format(layer.config['name'],
-                                                                                                inp1, inp2, inp3, inp4, l_n)
-            elif layer_type == 'Lambda':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate Lambda{}\\n\");\n\t'.format(l_n)
-                if len(self.model_sw.graphs[layer.config['name']]['in']) == 2:
-                    inp1 = self.model_sw.graphs[layer.config['name']]['in'][0]
-                    inp2 = self.model_sw.graphs[layer.config['name']]['in'][1]
-                    sw_call_layer += 'SW_{}(O{}_SW, O{}_SW, O{}_SW);\n\t'.format(layer.config['name'], inp1, inp2, l_n)
-
-            elif layer_type == 'Dropout':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate Dropout{}\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
-
-            elif layer_type == 'Reshape':
-                sw_call_layer += 'printf(\"[c_verifier.cpp]Calculate Reshape{}\\n\");\n\t'.format(l_n)
-                inp = self.model_sw.graphs[layer.config['name']]['in'][0]
-                sw_call_layer += 'SW_{}(O{}_SW,O{}_SW);\n\t'.format(layer.config['name'], inp, l_n)
+                    sw_call_layer += 'O{}_SW, O{}_SW, O{}_SW,O{}_SW);\n\t'.format(inp2, inp3, inp4, l_n)
 
         return sw_call_layer

@@ -58,8 +58,6 @@ class vivado_generator(object):
         start_layer = self.model_sw.layers[0]
         final_layer = self.model_sw.layers[-1]
         layer_odr = final_layer.layer_odr
-        start_layer.set_output_name('O0_SW')
-        static_variables +=start_layer.function['static_o']
         final_layer.set_output_name('O_SW')
         static_variables += final_layer.function['static_o']
         final_layer.set_output_name('O_HW')

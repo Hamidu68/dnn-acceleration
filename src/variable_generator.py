@@ -49,8 +49,8 @@ def variable_generator(csv_dir='',weight_dir='',input_dir='',Random_range=8,init
 
     # Make random initialized file
     if dtype2 == "int":
-        np.random.randint(low=1, high=random_range+1, size=total_params, dtype=dtype).tofile(Weight)
-        np.random.randint(low=1, high=random_range+1, size=input_size, dtype=dtype).tofile(Input)
+        np.random.randint(low=-1, high=random_range+1, size=total_params, dtype=dtype).tofile(Weight)
+        np.random.randint(low=-1, high=random_range+1, size=input_size, dtype=dtype).tofile(Input)
 
     elif dtype2 == "float":
         np.random.uniform(low=0, high=random_range, size=total_params).astype(dtype).tofile(Weight)

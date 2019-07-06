@@ -14,7 +14,7 @@ class InputLayer(Layers):
         self.inputs.append(Data(dtype=self.dtype, shape=shape, name='I'))
 
         #set output
-        self.set_output()
+        #self.set_output()
 
         # set params
         self.function['static_w'] = inputs[0].get_static_variable()
@@ -22,7 +22,7 @@ class InputLayer(Layers):
         self.function['func_p'] += inputs[0].get_func_param()
 
         #initialization
-        i_input = open(self.template_path + "init/Input_var_Initializer_f.txt")
+        i_input = open(self.template_path + "init/Input_var_Initializer.txt")
         init_input = i_input.read()
         func = init_input.format(Input_channel=input_shape[3], Input_width=input_shape[1], Input_height=input_shape[2])
         self.function['init'] = func + "\n\t"

@@ -6,7 +6,7 @@
   "vivado_test": "False",
   "use_trained_weight": "False",
   "data_type": "int",
-  "random_range": "2",
+  "random_range": "1",
   "batch": "False",
   "weight_file_path": "./variables/init_weight.bin",
   "input_file_path": "./variables/init_input.bin",

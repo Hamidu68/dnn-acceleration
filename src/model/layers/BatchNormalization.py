@@ -27,9 +27,9 @@ class BatchNormalization(Layers):
         self.set_params()
 
         # initialization
-        b_input = open(self.template_path + "init/Batch_var_Initializer_f.txt")
+        b_input = open(self.template_path + "init/Batch_var_Initializer.txt")
         batch_input = b_input.read()
-        func = batch_input.format(Output_channel=(output_shape[3]), line_number=self.layer_odr, num=num)
+        func = batch_input.format(Output_channel=output_shape[3], line_number=self.layer_odr, Input_channel=input_shape[3])
         self.function['init'] = func + "\n\t"
 
         # code

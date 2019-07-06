@@ -31,10 +31,11 @@ class Conv2D(Layers):
         self.set_params()
 
         #intialization
-        c_input = open(self.template_path + "init/Conv_var_Initializer_f.txt")
+        c_input = open(self.template_path + "init/Conv_var_Initializer.txt")
         conv_input = c_input.read()
         begin = ''
         end = ''
+        padding_amount = (stride_shape[0] *(output_shape[1] - 1) - input_shape[1] + filter_shape[0])/2;
         if self.use_bias == False:
            begin = '/*'
            end = '*/'
@@ -44,13 +45,13 @@ class Conv2D(Layers):
 
         # code
         if self.use_bias:
-            conv_s = open(self.template_path + "function/Conv2D_same_stride_bias.txt")
-            conv_v = open(self.template_path + "function/Conv2D_valid_bias.txt")
+            conv_s = open(self.template_path + "function/Conv2D_same_bias_{}.txt".format(self.config["activation"]))
+            conv_v = open(self.template_path + "function/Conv2D_valid_bias_{}.txt".format(self.config["activation"]))
             conv2d_same = conv_s.read()
             conv2d_valid = conv_v.read()
         else:
-            conv_s = open(self.template_path + "function/Conv2D_same_stride.txt")
-            conv_v = open(self.template_path + "function/Conv2D_valid.txt")
+            conv_s = open(self.template_path + "function/Conv2D_same_{}.txt".format(self.config["activation"]))
+            conv_v = open(self.template_path + "function/Conv2D_valid_{}.txt".format(self.config["activation"]))
             conv2d_same = conv_s.read()
             conv2d_valid = conv_v.read()
 
@@ -59,7 +60,7 @@ class Conv2D(Layers):
                                        ,Stride_width=stride_shape[0], Stride_height=stride_shape[1],
                                        Input_height=input_shape[2], Output_channel=output_shape[3],
                                        Filter_width=filter_shape[0], Filter_height=filter_shape[1],
-                                       Output_width=output_shape[1], Output_height=output_shape[2])
+                                       Output_width=output_shape[1], Output_height=output_shape[2], pad=padding_amount)
             self.function['code'] = func + "\n"
         else:
             func = conv2d_same.format(Name=self.config["name"], Input_channel=input_shape[3],
@@ -67,7 +68,7 @@ class Conv2D(Layers):
                                       Stride_height=stride_shape[1], Input_height=input_shape[2],
                                       Output_channel=output_shape[3], Filter_width=filter_shape[0],
                                       Filter_height=filter_shape[1], Output_width=output_shape[1],
-                                      Output_height=output_shape[2])
+                                      Output_height=output_shape[2], pad=padding_amount)
             self.function['code'] = func + "\n"
 
 class Conv2D_HW(Layers):

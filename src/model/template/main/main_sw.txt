@@ -8,7 +8,11 @@
 using namespace std;
 
 typedef {Data_type} DATA_IN;
+<<<<<<< HEAD
+typedef float DATA_T;
+=======
 typedef {Data_type} DATA_T;
+>>>>>>> f33605dae644911e501db4e1a5b0dd2f653a9302
 
 // define functions of each layer
 {sw_def_layer}
@@ -16,9 +20,8 @@ typedef {Data_type} DATA_T;
 //argv[1] = init_weight.txt, argv[2] = init_input.txt
 int main(int argc, char *argv[]){{
 
-    DATA_T temp;
     int m, x, y, i, j, k, l;
-    DATA_T trash;
+    DATA_IN trash;
 
     // declare array variables of input, weight and bias (static variables)
     {sw_static_variables}
@@ -45,10 +48,7 @@ int main(int argc, char *argv[]){{
 
     // print each element of output variables
     printf("[c_verifier.cpp]Print Result\n");
-
-
     {result}
-
 
     fclose(w_stream);
     fclose(i_stream);
