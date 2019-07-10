@@ -42,7 +42,7 @@ if __name__ == '__main__':
         paths.append(input_file_path)
     else:
         paths.append(trained_weight_file_path)
-        paths.append(image_file)
+        paths.append(image_file_path)
 
     #run keras vs c test
     if run_c_test == "True":

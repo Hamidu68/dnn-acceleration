@@ -44,13 +44,13 @@ def extract(model,name):
 
     for layer in model.layers:
         dict_layer = layer.get_config()
-
         dict_layer['batch_input_shape'] = layer.input_shape
         dict_layer['batch_output_shape']= layer.output_shape #add output shape for hidder layers
         dict_layer['layer_type'] = (str(layer).split()[0]).split('.')[-1]
 
         # custom
         connections = ''
+        post_connections = ''
         for node in layer._inbound_nodes:
             if relevant_nodes and node not in relevant_nodes:
                 # node is not part of the current network

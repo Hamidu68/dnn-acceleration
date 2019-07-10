@@ -1,17 +1,17 @@
 {
-  "model": "resnet18",
+  "model": "resnet34",
   "extract_configs": "False",
-  "model_info": "./model_info/resnet_v1/resnet18_Cifar-10_32(3x3).csv",
+  "model_info": "./model_info/resnet_v1/resnet34_Cifar-10_32(3x3).csv",
   "sw_test": "True",
-  "vivado_test": "False",
+  "vivado_test": "True",
   "use_trained_weight": "False",
   "data_type": "int",
   "random_range": "1",
   "batch": "False",
   "weight_file_path": "./variables/init_weight.bin",
   "input_file_path": "./variables/init_input.bin",
-  "trained_weight_file_path": "./variables/my_weights.bin",
-  "image_file_path": "./variables/image.bin",
+  "trained_weight_file_path": "./variables/init_weight.bin",
+  "image_file_path": "./variables/init_input.bin",
   "output_path": "./output/",
   "template_path": "src/model/template/"
 }

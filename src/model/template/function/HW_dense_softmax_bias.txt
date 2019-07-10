@@ -1,7 +1,7 @@
 void HW_{Name}(hls::stream<DATA_T> &I_strm, DATA_T W[{Output_channel}][{Input_channel}],DATA_T B[{Output_channel}],hls::stream<DATA_T> &O_strm) {{
 #pragma HLS INLINE
 	int m, c;
-	DATA_T maximum=0;
+	DATA_T maximum;
 	DATA_T ofm[{Output_channel}];
 	DATA_T ifm;
     //Dense
@@ -15,7 +15,8 @@ void HW_{Name}(hls::stream<DATA_T> &I_strm, DATA_T W[{Output_channel}][{Input_ch
         }}
     }}
     //find Max
-    HW_{Name}_m_2_loop: for (m = 0; m < {Output_channel}; m++){{
+    maximum = ofm[0];
+    HW_{Name}_m_2_loop: for (m = 1; m < {Output_channel}; m++){{
 		if(maximum<ofm[m])
 		   maximum=ofm[m];
     }}

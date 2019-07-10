@@ -1,6 +1,6 @@
 void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T O[{Input_channel}]) {{
 	int m, x, y;
-	double max;
+	DATA_T max;
 	for (m = 0; m < {Input_channel}; m++) {{
 		max = I[m][0][0];
 		for (x = 0; x < {Input_width}; x++) {{

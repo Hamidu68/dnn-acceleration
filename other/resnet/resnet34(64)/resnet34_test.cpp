@@ -7,8 +7,8 @@
 using namespace std;
 
 
-typedef int DATA_IN;
-typedef int DATA_T;
+typedef ap_int<32> DATA_IN;
+typedef ap_int<128> DATA_T;
 
 void resnet34_top(DATA_T I[3][64][64],DATA_T W1[64][3][3][3],DATA_T B1[64], DATA_T W3[64][64][3][3],DATA_T B3[64], DATA_T W4[64][64][3][3],DATA_T B4[64], DATA_T W5[64][64][1][1],DATA_T B5[64], DATA_T W8[64][64][3][3],DATA_T B8[64], DATA_T W10[64][64][3][3],DATA_T B10[64], DATA_T W13[64][64][3][3],DATA_T B13[64], DATA_T W15[64][64][3][3],DATA_T B15[64], DATA_T W18[128][64][3][3],DATA_T B18[128], DATA_T W20[128][128][3][3],DATA_T B20[128], DATA_T W21[128][64][1][1],DATA_T B21[128], DATA_T W24[128][128][3][3],DATA_T B24[128], DATA_T W26[128][128][3][3],DATA_T B26[128], DATA_T W29[128][128][3][3],DATA_T B29[128], DATA_T W31[128][128][3][3],DATA_T B31[128], DATA_T W34[128][128][3][3],DATA_T B34[128], DATA_T W36[128][128][3][3],DATA_T B36[128], DATA_T W39[256][128][3][3],DATA_T B39[256], DATA_T W41[256][256][3][3],DATA_T B41[256], DATA_T W42[256][128][1][1],DATA_T B42[256], DATA_T W45[256][256][3][3],DATA_T B45[256], DATA_T W47[256][256][3][3],DATA_T B47[256], DATA_T W50[256][256][3][3],DATA_T B50[256], DATA_T W52[256][256][3][3],DATA_T B52[256], DATA_T W55[256][256][3][3],DATA_T B55[256], DATA_T W57[256][256][3][3],DATA_T B57[256], DATA_T W60[256][256][3][3],DATA_T B60[256], DATA_T W62[256][256][3][3],DATA_T B62[256], DATA_T W65[256][256][3][3],DATA_T B65[256], DATA_T W67[256][256][3][3],DATA_T B67[256], DATA_T W70[512][256][3][3],DATA_T B70[512], DATA_T W72[512][512][3][3],DATA_T B72[512], DATA_T W73[512][256][1][1],DATA_T B73[512], DATA_T W76[512][512][3][3],DATA_T B76[512], DATA_T W78[512][512][3][3],DATA_T B78[512], DATA_T W81[512][512][3][3],DATA_T B81[512], DATA_T W83[512][512][3][3],DATA_T B83[512], DATA_T W88[200][512],DATA_T B88[200], DATA_T O[200]);
 void resnet34_sw(DATA_T I[3][64][64],DATA_T W1[64][3][3][3],DATA_T B1[64], DATA_T W3[64][64][3][3],DATA_T B3[64], DATA_T W4[64][64][3][3],DATA_T B4[64], DATA_T W5[64][64][1][1],DATA_T B5[64], DATA_T W8[64][64][3][3],DATA_T B8[64], DATA_T W10[64][64][3][3],DATA_T B10[64], DATA_T W13[64][64][3][3],DATA_T B13[64], DATA_T W15[64][64][3][3],DATA_T B15[64], DATA_T W18[128][64][3][3],DATA_T B18[128], DATA_T W20[128][128][3][3],DATA_T B20[128], DATA_T W21[128][64][1][1],DATA_T B21[128], DATA_T W24[128][128][3][3],DATA_T B24[128], DATA_T W26[128][128][3][3],DATA_T B26[128], DATA_T W29[128][128][3][3],DATA_T B29[128], DATA_T W31[128][128][3][3],DATA_T B31[128], DATA_T W34[128][128][3][3],DATA_T B34[128], DATA_T W36[128][128][3][3],DATA_T B36[128], DATA_T W39[256][128][3][3],DATA_T B39[256], DATA_T W41[256][256][3][3],DATA_T B41[256], DATA_T W42[256][128][1][1],DATA_T B42[256], DATA_T W45[256][256][3][3],DATA_T B45[256], DATA_T W47[256][256][3][3],DATA_T B47[256], DATA_T W50[256][256][3][3],DATA_T B50[256], DATA_T W52[256][256][3][3],DATA_T B52[256], DATA_T W55[256][256][3][3],DATA_T B55[256], DATA_T W57[256][256][3][3],DATA_T B57[256], DATA_T W60[256][256][3][3],DATA_T B60[256], DATA_T W62[256][256][3][3],DATA_T B62[256], DATA_T W65[256][256][3][3],DATA_T B65[256], DATA_T W67[256][256][3][3],DATA_T B67[256], DATA_T W70[512][256][3][3],DATA_T B70[512], DATA_T W72[512][512][3][3],DATA_T B72[512], DATA_T W73[512][256][1][1],DATA_T B73[512], DATA_T W76[512][512][3][3],DATA_T B76[512], DATA_T W78[512][512][3][3],DATA_T B78[512], DATA_T W81[512][512][3][3],DATA_T B81[512], DATA_T W83[512][512][3][3],DATA_T B83[512], DATA_T W88[200][512],DATA_T B88[200], DATA_T O[200]);
@@ -16,8 +16,7 @@ void resnet34_sw(DATA_T I[3][64][64],DATA_T W1[64][3][3][3],DATA_T B1[64], DATA_
 int main() {
 
 	int m, x, y, i, j, k;
-	DATA_T temp;
-	int trash;
+	DATA_IN trash;
 
 	static DATA_T I[3][64][64];
 	static DATA_T W1[64][3][3][3];
@@ -96,7 +95,6 @@ int main() {
 	static DATA_T B83[512];
 	static DATA_T W88[200][512];
 	static DATA_T B88[200];
-	static DATA_T O0_SW[3][64][64];
 	static DATA_T O_SW[200];
 	static DATA_T O_HW[200];
 	
@@ -109,9 +107,8 @@ int main() {
  	for (k = 0; k <  64 ; k++) {
 	for (x = 0; x < 64 ; x++) {
 		for(y = 0; y < 3 ; y++) {
-			fread(&trash, sizeof(int), 1, i_stream);
+			fread(&trash, sizeof(DATA_IN), 1, i_stream);
             I[y][k][x] = (DATA_T) trash;
-			O0_SW[y][k][x] = (DATA_T) trash;
 		}
 	}
 }
@@ -119,7 +116,7 @@ int main() {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 3 ; i++) {
 			for (j = 0; j < 64 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W1[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -127,7 +124,7 @@ int main() {
 }
 
 for (m = 0; m < 64 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B1[m] = (DATA_T) trash;
 }
 
@@ -135,7 +132,7 @@ for (m = 0; m < 64 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 64 ; i++) {
 			for (j = 0; j < 64 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W3[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -143,7 +140,7 @@ for (m = 0; m < 64 ; m++) {
 }
 
 for (m = 0; m < 64 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B3[m] = (DATA_T) trash;
 }
 
@@ -151,7 +148,7 @@ for (m = 0; m < 64 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 64 ; i++) {
 			for (j = 0; j < 64 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W4[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -159,7 +156,7 @@ for (m = 0; m < 64 ; m++) {
 }
 
 for (m = 0; m < 64 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B4[m] = (DATA_T) trash;
 }
 
@@ -167,7 +164,7 @@ for (m = 0; m < 64 ; m++) {
 	for (k = 0; k < 1 ; k++) {
 		for (i = 0; i < 64 ; i++) {
 			for (j = 0; j < 64 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W5[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -175,7 +172,7 @@ for (m = 0; m < 64 ; m++) {
 }
 
 for (m = 0; m < 64 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B5[m] = (DATA_T) trash;
 }
 
@@ -183,7 +180,7 @@ for (m = 0; m < 64 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 64 ; i++) {
 			for (j = 0; j < 64 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W8[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -191,7 +188,7 @@ for (m = 0; m < 64 ; m++) {
 }
 
 for (m = 0; m < 64 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B8[m] = (DATA_T) trash;
 }
 
@@ -199,7 +196,7 @@ for (m = 0; m < 64 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 64 ; i++) {
 			for (j = 0; j < 64 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W10[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -207,7 +204,7 @@ for (m = 0; m < 64 ; m++) {
 }
 
 for (m = 0; m < 64 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B10[m] = (DATA_T) trash;
 }
 
@@ -215,7 +212,7 @@ for (m = 0; m < 64 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 64 ; i++) {
 			for (j = 0; j < 64 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W13[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -223,7 +220,7 @@ for (m = 0; m < 64 ; m++) {
 }
 
 for (m = 0; m < 64 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B13[m] = (DATA_T) trash;
 }
 
@@ -231,7 +228,7 @@ for (m = 0; m < 64 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 64 ; i++) {
 			for (j = 0; j < 64 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W15[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -239,7 +236,7 @@ for (m = 0; m < 64 ; m++) {
 }
 
 for (m = 0; m < 64 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B15[m] = (DATA_T) trash;
 }
 
@@ -247,7 +244,7 @@ for (m = 0; m < 64 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 64 ; i++) {
 			for (j = 0; j < 128 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W18[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -255,7 +252,7 @@ for (m = 0; m < 64 ; m++) {
 }
 
 for (m = 0; m < 128 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B18[m] = (DATA_T) trash;
 }
 
@@ -263,7 +260,7 @@ for (m = 0; m < 128 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 128 ; i++) {
 			for (j = 0; j < 128 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W20[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -271,7 +268,7 @@ for (m = 0; m < 128 ; m++) {
 }
 
 for (m = 0; m < 128 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B20[m] = (DATA_T) trash;
 }
 
@@ -279,7 +276,7 @@ for (m = 0; m < 128 ; m++) {
 	for (k = 0; k < 1 ; k++) {
 		for (i = 0; i < 64 ; i++) {
 			for (j = 0; j < 128 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W21[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -287,7 +284,7 @@ for (m = 0; m < 128 ; m++) {
 }
 
 for (m = 0; m < 128 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B21[m] = (DATA_T) trash;
 }
 
@@ -295,7 +292,7 @@ for (m = 0; m < 128 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 128 ; i++) {
 			for (j = 0; j < 128 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W24[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -303,7 +300,7 @@ for (m = 0; m < 128 ; m++) {
 }
 
 for (m = 0; m < 128 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B24[m] = (DATA_T) trash;
 }
 
@@ -311,7 +308,7 @@ for (m = 0; m < 128 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 128 ; i++) {
 			for (j = 0; j < 128 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W26[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -319,7 +316,7 @@ for (m = 0; m < 128 ; m++) {
 }
 
 for (m = 0; m < 128 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B26[m] = (DATA_T) trash;
 }
 
@@ -327,7 +324,7 @@ for (m = 0; m < 128 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 128 ; i++) {
 			for (j = 0; j < 128 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W29[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -335,7 +332,7 @@ for (m = 0; m < 128 ; m++) {
 }
 
 for (m = 0; m < 128 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B29[m] = (DATA_T) trash;
 }
 
@@ -343,7 +340,7 @@ for (m = 0; m < 128 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 128 ; i++) {
 			for (j = 0; j < 128 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W31[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -351,7 +348,7 @@ for (m = 0; m < 128 ; m++) {
 }
 
 for (m = 0; m < 128 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B31[m] = (DATA_T) trash;
 }
 
@@ -359,7 +356,7 @@ for (m = 0; m < 128 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 128 ; i++) {
 			for (j = 0; j < 128 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W34[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -367,7 +364,7 @@ for (m = 0; m < 128 ; m++) {
 }
 
 for (m = 0; m < 128 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B34[m] = (DATA_T) trash;
 }
 
@@ -375,7 +372,7 @@ for (m = 0; m < 128 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 128 ; i++) {
 			for (j = 0; j < 128 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W36[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -383,7 +380,7 @@ for (m = 0; m < 128 ; m++) {
 }
 
 for (m = 0; m < 128 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B36[m] = (DATA_T) trash;
 }
 
@@ -391,7 +388,7 @@ for (m = 0; m < 128 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 128 ; i++) {
 			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W39[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -399,7 +396,7 @@ for (m = 0; m < 128 ; m++) {
 }
 
 for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B39[m] = (DATA_T) trash;
 }
 
@@ -407,7 +404,7 @@ for (m = 0; m < 256 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 256 ; i++) {
 			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W41[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -415,7 +412,7 @@ for (m = 0; m < 256 ; m++) {
 }
 
 for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B41[m] = (DATA_T) trash;
 }
 
@@ -423,7 +420,7 @@ for (m = 0; m < 256 ; m++) {
 	for (k = 0; k < 1 ; k++) {
 		for (i = 0; i < 128 ; i++) {
 			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W42[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -431,7 +428,7 @@ for (m = 0; m < 256 ; m++) {
 }
 
 for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B42[m] = (DATA_T) trash;
 }
 
@@ -439,7 +436,7 @@ for (m = 0; m < 256 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 256 ; i++) {
 			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W45[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -447,7 +444,7 @@ for (m = 0; m < 256 ; m++) {
 }
 
 for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B45[m] = (DATA_T) trash;
 }
 
@@ -455,7 +452,7 @@ for (m = 0; m < 256 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 256 ; i++) {
 			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W47[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -463,7 +460,7 @@ for (m = 0; m < 256 ; m++) {
 }
 
 for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B47[m] = (DATA_T) trash;
 }
 
@@ -471,7 +468,7 @@ for (m = 0; m < 256 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 256 ; i++) {
 			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W50[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -479,7 +476,7 @@ for (m = 0; m < 256 ; m++) {
 }
 
 for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B50[m] = (DATA_T) trash;
 }
 
@@ -487,7 +484,7 @@ for (m = 0; m < 256 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 256 ; i++) {
 			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W52[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -495,7 +492,7 @@ for (m = 0; m < 256 ; m++) {
 }
 
 for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B52[m] = (DATA_T) trash;
 }
 
@@ -503,7 +500,7 @@ for (m = 0; m < 256 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 256 ; i++) {
 			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W55[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -511,7 +508,7 @@ for (m = 0; m < 256 ; m++) {
 }
 
 for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B55[m] = (DATA_T) trash;
 }
 
@@ -519,7 +516,7 @@ for (m = 0; m < 256 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 256 ; i++) {
 			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W57[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -527,7 +524,7 @@ for (m = 0; m < 256 ; m++) {
 }
 
 for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B57[m] = (DATA_T) trash;
 }
 
@@ -535,7 +532,7 @@ for (m = 0; m < 256 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 256 ; i++) {
 			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W60[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -543,7 +540,7 @@ for (m = 0; m < 256 ; m++) {
 }
 
 for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B60[m] = (DATA_T) trash;
 }
 
@@ -551,7 +548,7 @@ for (m = 0; m < 256 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 256 ; i++) {
 			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W62[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -559,7 +556,7 @@ for (m = 0; m < 256 ; m++) {
 }
 
 for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B62[m] = (DATA_T) trash;
 }
 
@@ -567,7 +564,7 @@ for (m = 0; m < 256 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 256 ; i++) {
 			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W65[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -575,7 +572,7 @@ for (m = 0; m < 256 ; m++) {
 }
 
 for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B65[m] = (DATA_T) trash;
 }
 
@@ -583,7 +580,7 @@ for (m = 0; m < 256 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 256 ; i++) {
 			for (j = 0; j < 256 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W67[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -591,7 +588,7 @@ for (m = 0; m < 256 ; m++) {
 }
 
 for (m = 0; m < 256 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B67[m] = (DATA_T) trash;
 }
 
@@ -599,7 +596,7 @@ for (m = 0; m < 256 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 256 ; i++) {
 			for (j = 0; j < 512 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W70[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -607,7 +604,7 @@ for (m = 0; m < 256 ; m++) {
 }
 
 for (m = 0; m < 512 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B70[m] = (DATA_T) trash;
 }
 
@@ -615,7 +612,7 @@ for (m = 0; m < 512 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 512 ; i++) {
 			for (j = 0; j < 512 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W72[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -623,7 +620,7 @@ for (m = 0; m < 512 ; m++) {
 }
 
 for (m = 0; m < 512 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B72[m] = (DATA_T) trash;
 }
 
@@ -631,7 +628,7 @@ for (m = 0; m < 512 ; m++) {
 	for (k = 0; k < 1 ; k++) {
 		for (i = 0; i < 256 ; i++) {
 			for (j = 0; j < 512 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W73[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -639,7 +636,7 @@ for (m = 0; m < 512 ; m++) {
 }
 
 for (m = 0; m < 512 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B73[m] = (DATA_T) trash;
 }
 
@@ -647,7 +644,7 @@ for (m = 0; m < 512 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 512 ; i++) {
 			for (j = 0; j < 512 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W76[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -655,7 +652,7 @@ for (m = 0; m < 512 ; m++) {
 }
 
 for (m = 0; m < 512 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B76[m] = (DATA_T) trash;
 }
 
@@ -663,7 +660,7 @@ for (m = 0; m < 512 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 512 ; i++) {
 			for (j = 0; j < 512 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W78[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -671,7 +668,7 @@ for (m = 0; m < 512 ; m++) {
 }
 
 for (m = 0; m < 512 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B78[m] = (DATA_T) trash;
 }
 
@@ -679,7 +676,7 @@ for (m = 0; m < 512 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 512 ; i++) {
 			for (j = 0; j < 512 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W81[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -687,7 +684,7 @@ for (m = 0; m < 512 ; m++) {
 }
 
 for (m = 0; m < 512 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B81[m] = (DATA_T) trash;
 }
 
@@ -695,7 +692,7 @@ for (m = 0; m < 512 ; m++) {
 	for (k = 0; k < 3 ; k++) {
 		for (i = 0; i < 512 ; i++) {
 			for (j = 0; j < 512 ; j++) {
-				fread(&trash, sizeof(DATA_T), 1, w_stream);
+				fread(&trash, sizeof(DATA_IN), 1, w_stream);
                 W83[j][i][m][k] = (DATA_T) trash;
 			}
 		}
@@ -703,19 +700,19 @@ for (m = 0; m < 512 ; m++) {
 }
 
 for (m = 0; m < 512 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B83[m] = (DATA_T) trash;
 }
 
 	for (m = 0; m <  512 ; m++) {
 	for (k = 0; k < 200 ; k++) {
-		fread(&trash, sizeof(DATA_T), 1, w_stream);
+		fread(&trash, sizeof(DATA_IN), 1, w_stream);
         W88[k][m] = (DATA_T) trash;
 	}
 }
 
 for (m = 0; m < 200 ; m++) {
-    fread(&trash, sizeof(DATA_T), 1, w_stream);
+    fread(&trash, sizeof(DATA_IN), 1, w_stream);
     B88[m] = (DATA_T) trash;
 }
 

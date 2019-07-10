@@ -36,3 +36,4 @@ def vivado_test(model_info='', model_name='', dtype='DATA_T', batch='', paths=[]
     # Generate code
     code_gen = vivado_generator(models=models, paths = paths, dtype = dtype)
     code_gen.generate()
+    print("Generate vivado_test\n")

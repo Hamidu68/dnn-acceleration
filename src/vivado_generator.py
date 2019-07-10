@@ -67,9 +67,9 @@ class vivado_generator(object):
         if len(final_layer.output.shape) == 3:
             #fill template
             stream_io = st.read().format(
-            Input_channel=start_layer.output.shape[2],
-            Input_width = start_layer.output.shape[0],
-            Input_height = start_layer.output.shape[1],
+            Input_channel=start_layer.inputs[0].shape[2],
+            Input_width = start_layer.inputs[0].shape[0],
+            Input_height = start_layer.inputs[0].shape[1],
             Output_channel = final_layer.output.shape[2],
             Output_width = final_layer.output.shape[0],
             Output_height = final_layer.output.shape[1])
@@ -108,9 +108,9 @@ class vivado_generator(object):
         else:
             #fill template
             stream_io = st_d.read().format(
-            Input_channel=start_layer.output.shape[2],
-            Input_width = start_layer.output.shape[0],
-            Input_height = start_layer.output.shape[1],
+            Input_channel=start_layer.inputs[0].shape[2],
+            Input_width = start_layer.inputs[0].shape[0],
+            Input_height = start_layer.inputs[0].shape[1],
             Output_channel = final_layer.output.shape[0])
             copy_output = "\tfor(m=0; m<"+str(final_layer.output.shape[0])+"; m++) { O[m] = O_i[m]; }\n"
             test_cpp = o3.read().format(

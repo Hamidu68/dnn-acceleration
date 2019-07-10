@@ -16,8 +16,7 @@ void {model_name}_sw({func_params}DATA_T O[{output_channel}][{output_width}][{ou
 int main() {{
 
 	int m, x, y, i, j, k;
-	DATA_T temp;
-	int trash;
+	DATA_IN trash;
 
 	{static_variables}
 

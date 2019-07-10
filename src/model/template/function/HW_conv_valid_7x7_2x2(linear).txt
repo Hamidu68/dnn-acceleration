@@ -8,8 +8,7 @@ void HW_{Name}(hls::stream<DATA_T> &I_strm, DATA_T W[{Output_channel}][{Input_ch
 	DATA_T I_28, I_29, I_30, I_31, I_32, I_33, I_34;
 	DATA_T I_35, I_36, I_37, I_38, I_39, I_40, I_41;
 	DATA_T I_42, I_43, I_44, I_45, I_46, I_47, I_48;
-	DATA_T ifm[{Input_channel}], ofm[{Output_channel}];
-#pragma HLS ARRAY_PARTITION variable=ifm complete dim=0
+	DATA_T ofm[{Output_channel}];
 #pragma HLS ARRAY_PARTITION variable=ofm complete dim=0
 
 	DATA_T I[{Input_channel}][7][{Input_height}];

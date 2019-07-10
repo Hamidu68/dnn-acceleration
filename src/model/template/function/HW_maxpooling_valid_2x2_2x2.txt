@@ -1,7 +1,7 @@
 void HW_{Name}(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {{
 #pragma HLS INLINE
   int m, x, y, i, j;
-  ap_uint<32> max;
+  DATA_T max;
 
   DATA_T I[{Input_channel}][3][{Input_width}];
 
@@ -18,7 +18,7 @@ void HW_{Name}(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {{
 	    	if (x<{Input_width} && y<{Input_height}) {{
 	    		I[m][x%3][y] = I_strm.read();
 	    	}}
-	    	if (x>=2 && y>=2) {{
+	    	if (x>>1 && y>>1) {{
 	    		if (x%2==0 && y%2==0) {{
 	    			max = I[m][(x-2)%3][y-2];
 	    			if (I[m][(x-2)%3][y-2] > max) {{

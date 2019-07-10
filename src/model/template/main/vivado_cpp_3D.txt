@@ -3,8 +3,6 @@
 #include <hls_stream.h>
 
 typedef {Data_type} DATA_T;
-typedef ap_uint<256> uint256_t;
-typedef ap_uint<512> uint512_t;
 
 {Stream_io}
 

@@ -3,8 +3,7 @@ void HW_{Name}(hls::stream<DATA_T> &I_strm, DATA_T W[{Output_channel}][{Input_ch
 	int m, x, y, k;
 
 	DATA_T I_0, I_1, I_2, I_3, I_4, I_5, I_6, I_7, I_8;
-	DATA_T ifm[{Input_channel}], ofm[{Output_channel}];
-#pragma HLS ARRAY_PARTITION variable=ifm complete dim=0
+	DATA_T ofm[{Output_channel}];
 #pragma HLS ARRAY_PARTITION variable=ofm complete dim=0
 
 	DATA_T I[{Input_channel}][3][{Input_height}];
@@ -18,7 +17,7 @@ void HW_{Name}(hls::stream<DATA_T> &I_strm, DATA_T W[{Output_channel}][{Input_ch
 				if (x<{Input_width} && y<{Input_height}) {{
 					I[k][x % 3][y] = I_strm.read();
 				}}
-				if (x > 0 && y > 0){{
+				if (x && y){{
 #pragma HLS PIPELINE
 					if (x - 2 + 0 < {Input_width} && y - 2 + 0 < {Input_height} && x - 2 + 0 >= 0 && y - 2 + 0 >= 0) {{
 						I_0 = I[k][(x - 2) % 3][(y - 2)];

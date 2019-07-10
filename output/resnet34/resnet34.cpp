@@ -2,7 +2,7 @@
 #include <ap_int.h>
 #include <hls_stream.h>
 
-typedef ap_int<128> DATA_T;
+typedef int DATA_T;
 
 void Stream_input(DATA_T I[3][32][32], hls::stream<DATA_T> &I_strm) {
   int k, x, y;
@@ -212,7 +212,7 @@ void HW_conv2d_1(hls::stream<DATA_T> &I_strm, DATA_T W[64][3][3][3],DATA_T B[64]
 	}
 }
 
-void HW_activation_1(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O1_strm, hls::stream<DATA_T> &O2_strm) {
+void HW_activation_1(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {
 #pragma HLS INLINE
 	int m, x, y;
 	DATA_T ifm;
@@ -221,10 +221,9 @@ void HW_activation_1(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O1_strm, 
 			HW_activation_1_m_loop: for (m = 0; m < 64; m++) {
 				ifm = I_strm.read();
 				if (ifm < 0) {
-					O1_strm.write(0); O2_strm.write(0);
-				}
+					O_strm.write(0);}
 				else{
-					O1_strm.write(ifm); O2_strm.write(ifm);
+					O_strm.write(ifm);
 				}
 			}
 		}
@@ -4453,7 +4452,7 @@ void HW_activation_32(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) 
 	}
 }
 
-void HW_add_16(hls::stream<DATA_T> &I1_strm, hls::stream<DATA_T> &I2_strm, hls::stream<DATA_T> &O_strm) {
+void HW_add_16(hls::stream<DATA_T> &I1_strm, hls::stream<DATA_T> &I2_strm, hls::stream<DATA_T> &O1_strm, hls::stream<DATA_T> &O2_strm) {
 #pragma HLS INLINE
 	int m, x, y;
 	DATA_T ifm;
@@ -4462,7 +4461,8 @@ void HW_add_16(hls::stream<DATA_T> &I1_strm, hls::stream<DATA_T> &I2_strm, hls::
 	    	HW_add_16_m_loop_1: for (m = 0; m < 512; m++) {
 				ifm = I1_strm.read();
 				ifm = ifm + I2_strm.read();
-				O_strm.write(ifm);
+				O1_strm.write(ifm);
+				O2_strm.write(ifm);
 			}
 		}
 	}
@@ -6166,152 +6166,152 @@ void SW_dense_1(DATA_T I[512], DATA_T O[10], DATA_T W[10][512], DATA_T B[10])
 
 void resnet34(DATA_T I_i[3][32][32],DATA_T W1_i[64][3][3][3],DATA_T B1_i[64], DATA_T W3_i[64][64][3][3],DATA_T B3_i[64], DATA_T W4_i[64][64][3][3],DATA_T B4_i[64], DATA_T W5_i[64][64],DATA_T B5_i[64], DATA_T W8_i[64][64][3][3],DATA_T B8_i[64], DATA_T W10_i[64][64][3][3],DATA_T B10_i[64], DATA_T W13_i[64][64][3][3],DATA_T B13_i[64], DATA_T W15_i[64][64][3][3],DATA_T B15_i[64], DATA_T W18_i[128][64][3][3],DATA_T B18_i[128], DATA_T W20_i[128][128][3][3],DATA_T B20_i[128], DATA_T W21_i[128][64],DATA_T B21_i[128], DATA_T W24_i[128][128][3][3],DATA_T B24_i[128], DATA_T W26_i[128][128][3][3],DATA_T B26_i[128], DATA_T W29_i[128][128][3][3],DATA_T B29_i[128], DATA_T W31_i[128][128][3][3],DATA_T B31_i[128], DATA_T W34_i[128][128][3][3],DATA_T B34_i[128], DATA_T W36_i[128][128][3][3],DATA_T B36_i[128], DATA_T W39_i[256][128][3][3],DATA_T B39_i[256], DATA_T W41_i[256][256][3][3],DATA_T B41_i[256], DATA_T W42_i[256][128],DATA_T B42_i[256], DATA_T W45_i[256][256][3][3],DATA_T B45_i[256], DATA_T W47_i[256][256][3][3],DATA_T B47_i[256], DATA_T W50_i[256][256][3][3],DATA_T B50_i[256], DATA_T W52_i[256][256][3][3],DATA_T B52_i[256], DATA_T W55_i[256][256][3][3],DATA_T B55_i[256], DATA_T W57_i[256][256][3][3],DATA_T B57_i[256], DATA_T W60_i[256][256][3][3],DATA_T B60_i[256], DATA_T W62_i[256][256][3][3],DATA_T B62_i[256], DATA_T W65_i[256][256][3][3],DATA_T B65_i[256], DATA_T W67_i[256][256][3][3],DATA_T B67_i[256], DATA_T W70_i[512][256][3][3],DATA_T B70_i[512], DATA_T W72_i[512][512][3][3],DATA_T B72_i[512], DATA_T W73_i[512][256],DATA_T B73_i[512], DATA_T W76_i[512][512][3][3],DATA_T B76_i[512], DATA_T W78_i[512][512][3][3],DATA_T B78_i[512], DATA_T W81_i[512][512][3][3],DATA_T B81_i[512], DATA_T W83_i[512][512][3][3],DATA_T B83_i[512], DATA_T W88_i[10][512],DATA_T B88_i[10],  DATA_T O[10])  {
     #pragma HLS ARRAY_PARTITION variable=W1_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B1_i complete
-	#pragma HLS ARRAY_PARTITION variable=W3_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W3_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W3_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B3_i complete
-	#pragma HLS ARRAY_PARTITION variable=W4_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W4_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W4_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B4_i complete
-	#pragma HLS ARRAY_PARTITION variable=W5_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=B5_i complete
-	#pragma HLS ARRAY_PARTITION variable=W8_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W8_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W8_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B8_i complete
-	#pragma HLS ARRAY_PARTITION variable=W10_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W10_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W10_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B10_i complete
-	#pragma HLS ARRAY_PARTITION variable=W13_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W13_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W13_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B13_i complete
-	#pragma HLS ARRAY_PARTITION variable=W15_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W15_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W15_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B15_i complete
-	#pragma HLS ARRAY_PARTITION variable=W18_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W18_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W18_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B18_i complete
-	#pragma HLS ARRAY_PARTITION variable=W20_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W20_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W20_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B20_i complete
-	#pragma HLS ARRAY_PARTITION variable=W21_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=B21_i complete
-	#pragma HLS ARRAY_PARTITION variable=W24_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W24_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W24_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B24_i complete
-	#pragma HLS ARRAY_PARTITION variable=W26_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W26_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W26_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B26_i complete
-	#pragma HLS ARRAY_PARTITION variable=W29_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W29_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W29_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B29_i complete
-	#pragma HLS ARRAY_PARTITION variable=W31_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W31_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W31_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B31_i complete
-	#pragma HLS ARRAY_PARTITION variable=W34_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W34_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W34_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B34_i complete
-	#pragma HLS ARRAY_PARTITION variable=W36_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W36_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W36_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B36_i complete
-	#pragma HLS ARRAY_PARTITION variable=W39_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W39_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W39_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B39_i complete
-	#pragma HLS ARRAY_PARTITION variable=W41_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W41_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W41_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B41_i complete
-	#pragma HLS ARRAY_PARTITION variable=W42_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=B42_i complete
-	#pragma HLS ARRAY_PARTITION variable=W45_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W45_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W45_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B45_i complete
-	#pragma HLS ARRAY_PARTITION variable=W47_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W47_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W47_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B47_i complete
-	#pragma HLS ARRAY_PARTITION variable=W50_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W50_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W50_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B50_i complete
-	#pragma HLS ARRAY_PARTITION variable=W52_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W52_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W52_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B52_i complete
-	#pragma HLS ARRAY_PARTITION variable=W55_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W55_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W55_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B55_i complete
-	#pragma HLS ARRAY_PARTITION variable=W57_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W57_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W57_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B57_i complete
-	#pragma HLS ARRAY_PARTITION variable=W60_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W60_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W60_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B60_i complete
-	#pragma HLS ARRAY_PARTITION variable=W62_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W62_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W62_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B62_i complete
-	#pragma HLS ARRAY_PARTITION variable=W65_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W65_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W65_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B65_i complete
-	#pragma HLS ARRAY_PARTITION variable=W67_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W67_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W67_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B67_i complete
-	#pragma HLS ARRAY_PARTITION variable=W70_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W70_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W70_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B70_i complete
-	#pragma HLS ARRAY_PARTITION variable=W72_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W72_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W72_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B72_i complete
-	#pragma HLS ARRAY_PARTITION variable=W73_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=B73_i complete
-	#pragma HLS ARRAY_PARTITION variable=W76_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W76_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W76_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B76_i complete
-	#pragma HLS ARRAY_PARTITION variable=W78_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W78_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W78_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B78_i complete
-	#pragma HLS ARRAY_PARTITION variable=W81_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W81_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W81_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B81_i complete
-	#pragma HLS ARRAY_PARTITION variable=W83_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=W83_i complete dim=3
-	#pragma HLS ARRAY_PARTITION variable=W83_i complete dim=4
-	#pragma HLS ARRAY_PARTITION variable=B83_i complete
-	#pragma HLS ARRAY_PARTITION variable=W88_i complete dim=1
-	#pragma HLS ARRAY_PARTITION variable=B88_i complete
+#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W1_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B1_i complete
+#pragma HLS ARRAY_PARTITION variable=W3_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W3_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W3_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B3_i complete
+#pragma HLS ARRAY_PARTITION variable=W4_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W4_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W4_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B4_i complete
+#pragma HLS ARRAY_PARTITION variable=W5_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=B5_i complete
+#pragma HLS ARRAY_PARTITION variable=W8_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W8_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W8_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B8_i complete
+#pragma HLS ARRAY_PARTITION variable=W10_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W10_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W10_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B10_i complete
+#pragma HLS ARRAY_PARTITION variable=W13_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W13_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W13_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B13_i complete
+#pragma HLS ARRAY_PARTITION variable=W15_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W15_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W15_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B15_i complete
+#pragma HLS ARRAY_PARTITION variable=W18_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W18_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W18_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B18_i complete
+#pragma HLS ARRAY_PARTITION variable=W20_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W20_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W20_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B20_i complete
+#pragma HLS ARRAY_PARTITION variable=W21_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=B21_i complete
+#pragma HLS ARRAY_PARTITION variable=W24_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W24_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W24_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B24_i complete
+#pragma HLS ARRAY_PARTITION variable=W26_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W26_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W26_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B26_i complete
+#pragma HLS ARRAY_PARTITION variable=W29_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W29_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W29_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B29_i complete
+#pragma HLS ARRAY_PARTITION variable=W31_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W31_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W31_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B31_i complete
+#pragma HLS ARRAY_PARTITION variable=W34_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W34_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W34_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B34_i complete
+#pragma HLS ARRAY_PARTITION variable=W36_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W36_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W36_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B36_i complete
+#pragma HLS ARRAY_PARTITION variable=W39_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W39_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W39_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B39_i complete
+#pragma HLS ARRAY_PARTITION variable=W41_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W41_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W41_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B41_i complete
+#pragma HLS ARRAY_PARTITION variable=W42_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=B42_i complete
+#pragma HLS ARRAY_PARTITION variable=W45_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W45_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W45_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B45_i complete
+#pragma HLS ARRAY_PARTITION variable=W47_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W47_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W47_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B47_i complete
+#pragma HLS ARRAY_PARTITION variable=W50_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W50_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W50_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B50_i complete
+#pragma HLS ARRAY_PARTITION variable=W52_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W52_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W52_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B52_i complete
+#pragma HLS ARRAY_PARTITION variable=W55_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W55_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W55_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B55_i complete
+#pragma HLS ARRAY_PARTITION variable=W57_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W57_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W57_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B57_i complete
+#pragma HLS ARRAY_PARTITION variable=W60_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W60_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W60_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B60_i complete
+#pragma HLS ARRAY_PARTITION variable=W62_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W62_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W62_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B62_i complete
+#pragma HLS ARRAY_PARTITION variable=W65_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W65_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W65_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B65_i complete
+#pragma HLS ARRAY_PARTITION variable=W67_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W67_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W67_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B67_i complete
+#pragma HLS ARRAY_PARTITION variable=W70_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W70_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W70_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B70_i complete
+#pragma HLS ARRAY_PARTITION variable=W72_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W72_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W72_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B72_i complete
+#pragma HLS ARRAY_PARTITION variable=W73_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=B73_i complete
+#pragma HLS ARRAY_PARTITION variable=W76_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W76_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W76_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B76_i complete
+#pragma HLS ARRAY_PARTITION variable=W78_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W78_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W78_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B78_i complete
+#pragma HLS ARRAY_PARTITION variable=W81_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W81_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W81_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B81_i complete
+#pragma HLS ARRAY_PARTITION variable=W83_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=W83_i complete dim=3
+#pragma HLS ARRAY_PARTITION variable=W83_i complete dim=4
+#pragma HLS ARRAY_PARTITION variable=B83_i complete
+#pragma HLS ARRAY_PARTITION variable=W88_i complete dim=1
+#pragma HLS ARRAY_PARTITION variable=B88_i complete
 
 
-	#pragma HLS DATAFLOW
+    #pragma HLS DATAFLOW
 
-	static hls::stream<DATA_T> O0_strm("O0_strm");
+    	static hls::stream<DATA_T> O0_strm("O0_strm");
 	static hls::stream<DATA_T> O1_strm("O1_strm");
 	static hls::stream<DATA_T> O2_strm("O2_strm");
 	static hls::stream<DATA_T> O3_strm("O3_strm");
@@ -6400,113 +6400,99 @@ void resnet34(DATA_T I_i[3][32][32],DATA_T W1_i[64][3][3][3],DATA_T B1_i[64], DA
 	static hls::stream<DATA_T> O86_strm("O86_strm");
 	static hls::stream<DATA_T> O87_strm("O87_strm");
 	static hls::stream<DATA_T> O88_strm("O88_strm");
-	static hls::stream<DATA_T> O89_strm("O89_strm");
-	static hls::stream<DATA_T> O90_strm("O90_strm");
-	static hls::stream<DATA_T> O91_strm("O91_strm");
-	static hls::stream<DATA_T> O92_strm("O92_strm");
-	static hls::stream<DATA_T> O93_strm("O93_strm");
-	static hls::stream<DATA_T> O94_strm("O94_strm");
-	static hls::stream<DATA_T> O95_strm("O95_strm");
-	static hls::stream<DATA_T> O96_strm("O96_strm");
-	static hls::stream<DATA_T> O97_strm("O97_strm");
-	static hls::stream<DATA_T> O98_strm("O98_strm");
-	static hls::stream<DATA_T> O99_strm("O99_strm");
-	static hls::stream<DATA_T> O100_strm("O100_strm");
-	static hls::stream<DATA_T> O101_strm("O101_strm");
-	static hls::stream<DATA_T> O102_strm("O102_strm");
-	static hls::stream<DATA_T> O103_strm("O103_strm");
-	static hls::stream<DATA_T> O104_strm("O104_strm");
 
-	Stream_input(I_i, O0_strm);
-	HW_conv2d_1(O0_strm, W1_i, B1_i, O1_strm);
-	HW_activation_1(O1_strm, O2_strm, O4_strm); //double
-	HW_res0a_branch2a(O2_strm, W3_i, B3_i, O3_strm);
-	HW_conv2d_2(O3_strm, W4_i, B4_i, O6_strm);
-	HW_conv2d_3(O4_strm, W5_i, B5_i, O5_strm);
-	HW_activation_2(O6_strm, O7_strm);
-	HW_add_1(O5_strm, O7_strm, O8_strm, O9_strm); //double
-	HW_conv2d_4(O8_strm, W8_i, B8_i, O10_strm);
-	HW_activation_3(O10_strm, O11_strm);
-	HW_conv2d_5(O11_strm, W10_i, B10_i, O12_strm);
-	HW_activation_4(O12_strm, O13_strm);
-	HW_add_2(O9_strm, O13_strm, O14_strm, O15_strm);//double
-	HW_conv2d_6(O14_strm, W13_i, B13_i, O16_strm);
-	HW_activation_5(O16_strm, O17_strm);
-	HW_conv2d_7(O17_strm, W15_i, B15_i, O18_strm);
-	HW_activation_6(O18_strm, O19_strm);
-	HW_add_3(O15_strm, O19_strm, O20_strm, O21_strm); //double
-	HW_conv2d_8(O20_strm, W18_i, B18_i, O22_strm);
-	HW_activation_7(O22_strm, O23_strm);
-	HW_conv2d_9(O23_strm, W20_i, B20_i, O24_strm);
-	HW_conv2d_10(O21_strm, W21_i, B21_i, O25_strm);
-	HW_activation_8(O24_strm, O26_strm);
-	HW_add_4(O25_strm, O26_strm, O27_strm, O28_strm); //double
-	HW_conv2d_11(O27_strm, W24_i, B24_i, O29_strm);
-	HW_activation_9(O29_strm, O30_strm);
-	HW_conv2d_12(O30_strm, W26_i, B26_i, O31_strm);
-	HW_activation_10(O31_strm, O32_strm);
-	HW_add_5(O28_strm, O32_strm, O33_strm, O34_strm); //double
-	HW_conv2d_13(O33_strm, W29_i, B29_i, O35_strm);
-	HW_activation_11(O35_strm, O36_strm);
-	HW_conv2d_14(O36_strm, W31_i, B31_i, O37_strm);
-	HW_activation_12(O37_strm, O38_strm);
-	HW_add_6(O34_strm, O38_strm, O39_strm, O40_strm); //double
-	HW_conv2d_15(O39_strm, W34_i, B34_i, O41_strm);
-	HW_activation_13(O41_strm, O42_strm);
-	HW_conv2d_16(O42_strm, W36_i, B36_i, O43_strm);
-	HW_activation_14(O43_strm, O44_strm);
-	HW_add_7(O40_strm, O44_strm, O45_strm, O46_strm); //double
-	HW_conv2d_17(O45_strm, W39_i, B39_i, O47_strm);
-	HW_activation_15(O47_strm, O48_strm);
-	HW_conv2d_18(O48_strm, W41_i, B41_i, O49_strm);
-	HW_conv2d_19(O46_strm, W42_i, B42_i, O50_strm);
-	HW_activation_16(O49_strm, O51_strm);
-	HW_add_8(O50_strm, O51_strm, O52_strm, O53_strm); //double
-	HW_conv2d_20(O52_strm, W45_i, B45_i, O54_strm);
-	HW_activation_17(O54_strm, O55_strm);
-	HW_conv2d_21(O55_strm, W47_i, B47_i, O56_strm);
-	HW_activation_18(O56_strm, O57_strm);
-	HW_add_9(O53_strm, O57_strm, O58_strm, O59_strm); //double
-	HW_conv2d_22(O58_strm, W50_i, B50_i, O60_strm);
-	HW_activation_19(O60_strm, O61_strm);
-	HW_conv2d_23(O61_strm, W52_i, B52_i, O62_strm);
-	HW_activation_20(O62_strm, O63_strm);
-	HW_add_10(O59_strm, O63_strm, O64_strm, O65_strm); //double
-	HW_conv2d_24(O64_strm, W55_i, B55_i, O66_strm);
-	HW_activation_21(O66_strm, O67_strm);
-	HW_conv2d_25(O67_strm, W57_i, B57_i, O68_strm);
-	HW_activation_22(O68_strm, O69_strm);
-	HW_add_11(O65_strm, O69_strm, O70_strm, O71_strm); //double
-	HW_conv2d_26(O70_strm, W60_i, B60_i, O72_strm);
-	HW_activation_23(O72_strm, O73_strm);
-	HW_conv2d_27(O73_strm, W62_i, B62_i, O74_strm);
-	HW_activation_24(O74_strm, O75_strm);
-	HW_add_12(O71_strm, O75_strm, O76_strm, O77_strm); // double
-	HW_conv2d_28(O76_strm, W65_i, B65_i, O78_strm);
-	HW_activation_25(O78_strm, O79_strm);
-	HW_conv2d_29(O79_strm, W67_i, B67_i, O80_strm);
-	HW_activation_26(O80_strm, O81_strm);
-	HW_add_13(O77_strm, O81_strm, O82_strm, O83_strm); // double
-	HW_conv2d_30(O82_strm, W70_i, B70_i, O84_strm);
-	HW_activation_27(O84_strm, O85_strm);
-	HW_conv2d_31(O85_strm, W72_i, B72_i, O86_strm);
-	HW_conv2d_32(O83_strm, W73_i, B73_i, O87_strm);
-	HW_activation_28(O86_strm, O88_strm);
-	HW_add_14(O87_strm, O88_strm, O89_strm, O90_strm); // double
-	HW_conv2d_33(O89_strm, W76_i, B76_i, O91_strm);
-	HW_activation_29(O91_strm, O92_strm);
-	HW_conv2d_34(O92_strm, W78_i, B78_i, O93_strm);
-	HW_activation_30(O93_strm, O94_strm);
-	HW_add_15(O90_strm, O94_strm, O95_strm, O96_strm); // double
-	HW_conv2d_35(O95_strm, W81_i, B81_i, O97_strm);
-	HW_activation_31(O97_strm, O98_strm);
-	HW_conv2d_36(O98_strm, W83_i, B83_i, O99_strm);
-	HW_activation_32(O99_strm, O100_strm);
-	HW_add_16(O96_strm, O100_strm, O101_strm);
-	HW_activation_33(O101_strm, O102_strm);
-	HW_global_average_pooling2d_1(O102_strm, O103_strm);
-	HW_dense_1(O103_strm, W88_i, B88_i, O104_strm);
-	Stream_output(O104_strm, O);
+
+    	Stream_input(I_i,O0_strm);
+	HW_conv2d_1(O0_strm, W1_i, B1_i,O1_strm);
+	HW_activation_1(O1_strm ,O2_strm);
+	HW_res0a_branch2a(O2_strm, W3_i, B3_i,O3_strm);
+	HW_conv2d_2(O3_strm, W4_i, B4_i,O4_strm);
+	HW_conv2d_3(O2_strm, W5_i, B5_i,O5_strm);
+	HW_activation_2(O4_strm ,O6_strm);
+	HW_add_1(O5_strm, O6_strm, O7_strm);
+	HW_conv2d_4(O7_strm, W8_i, B8_i,O8_strm);
+	HW_activation_3(O8_strm ,O9_strm);
+	HW_conv2d_5(O9_strm, W10_i, B10_i,O10_strm);
+	HW_activation_4(O10_strm ,O11_strm);
+	HW_add_2(O7_strm, O11_strm, O12_strm);
+	HW_conv2d_6(O12_strm, W13_i, B13_i,O13_strm);
+	HW_activation_5(O13_strm ,O14_strm);
+	HW_conv2d_7(O14_strm, W15_i, B15_i,O15_strm);
+	HW_activation_6(O15_strm ,O16_strm);
+	HW_add_3(O12_strm, O16_strm, O17_strm);
+	HW_conv2d_8(O17_strm, W18_i, B18_i,O18_strm);
+	HW_activation_7(O18_strm ,O19_strm);
+	HW_conv2d_9(O19_strm, W20_i, B20_i,O20_strm);
+	HW_conv2d_10(O17_strm, W21_i, B21_i,O21_strm);
+	HW_activation_8(O20_strm ,O22_strm);
+	HW_add_4(O21_strm, O22_strm, O23_strm);
+	HW_conv2d_11(O23_strm, W24_i, B24_i,O24_strm);
+	HW_activation_9(O24_strm ,O25_strm);
+	HW_conv2d_12(O25_strm, W26_i, B26_i,O26_strm);
+	HW_activation_10(O26_strm ,O27_strm);
+	HW_add_5(O23_strm, O27_strm, O28_strm);
+	HW_conv2d_13(O28_strm, W29_i, B29_i,O29_strm);
+	HW_activation_11(O29_strm ,O30_strm);
+	HW_conv2d_14(O30_strm, W31_i, B31_i,O31_strm);
+	HW_activation_12(O31_strm ,O32_strm);
+	HW_add_6(O28_strm, O32_strm, O33_strm);
+	HW_conv2d_15(O33_strm, W34_i, B34_i,O34_strm);
+	HW_activation_13(O34_strm ,O35_strm);
+	HW_conv2d_16(O35_strm, W36_i, B36_i,O36_strm);
+	HW_activation_14(O36_strm ,O37_strm);
+	HW_add_7(O33_strm, O37_strm, O38_strm);
+	HW_conv2d_17(O38_strm, W39_i, B39_i,O39_strm);
+	HW_activation_15(O39_strm ,O40_strm);
+	HW_conv2d_18(O40_strm, W41_i, B41_i,O41_strm);
+	HW_conv2d_19(O38_strm, W42_i, B42_i,O42_strm);
+	HW_activation_16(O41_strm ,O43_strm);
+	HW_add_8(O42_strm, O43_strm, O44_strm);
+	HW_conv2d_20(O44_strm, W45_i, B45_i,O45_strm);
+	HW_activation_17(O45_strm ,O46_strm);
+	HW_conv2d_21(O46_strm, W47_i, B47_i,O47_strm);
+	HW_activation_18(O47_strm ,O48_strm);
+	HW_add_9(O44_strm, O48_strm, O49_strm);
+	HW_conv2d_22(O49_strm, W50_i, B50_i,O50_strm);
+	HW_activation_19(O50_strm ,O51_strm);
+	HW_conv2d_23(O51_strm, W52_i, B52_i,O52_strm);
+	HW_activation_20(O52_strm ,O53_strm);
+	HW_add_10(O49_strm, O53_strm, O54_strm);
+	HW_conv2d_24(O54_strm, W55_i, B55_i,O55_strm);
+	HW_activation_21(O55_strm ,O56_strm);
+	HW_conv2d_25(O56_strm, W57_i, B57_i,O57_strm);
+	HW_activation_22(O57_strm ,O58_strm);
+	HW_add_11(O54_strm, O58_strm, O59_strm);
+	HW_conv2d_26(O59_strm, W60_i, B60_i,O60_strm);
+	HW_activation_23(O60_strm ,O61_strm);
+	HW_conv2d_27(O61_strm, W62_i, B62_i,O62_strm);
+	HW_activation_24(O62_strm ,O63_strm);
+	HW_add_12(O59_strm, O63_strm, O64_strm);
+	HW_conv2d_28(O64_strm, W65_i, B65_i,O65_strm);
+	HW_activation_25(O65_strm ,O66_strm);
+	HW_conv2d_29(O66_strm, W67_i, B67_i,O67_strm);
+	HW_activation_26(O67_strm ,O68_strm);
+	HW_add_13(O64_strm, O68_strm, O69_strm);
+	HW_conv2d_30(O69_strm, W70_i, B70_i,O70_strm);
+	HW_activation_27(O70_strm ,O71_strm);
+	HW_conv2d_31(O71_strm, W72_i, B72_i,O72_strm);
+	HW_conv2d_32(O69_strm, W73_i, B73_i,O73_strm);
+	HW_activation_28(O72_strm ,O74_strm);
+	HW_add_14(O73_strm, O74_strm, O75_strm);
+	HW_conv2d_33(O75_strm, W76_i, B76_i,O76_strm);
+	HW_activation_29(O76_strm ,O77_strm);
+	HW_conv2d_34(O77_strm, W78_i, B78_i,O78_strm);
+	HW_activation_30(O78_strm ,O79_strm);
+	HW_add_15(O75_strm, O79_strm, O80_strm);
+	HW_conv2d_35(O80_strm, W81_i, B81_i,O81_strm);
+	HW_activation_31(O81_strm ,O82_strm);
+	HW_conv2d_36(O82_strm, W83_i, B83_i,O83_strm);
+	HW_activation_32(O83_strm ,O84_strm);
+	HW_add_16(O80_strm, O84_strm, O85_strm);
+	HW_activation_33(O85_strm ,O86_strm);
+	HW_global_average_pooling2d_1(O86_strm ,O87_strm);
+	HW_dense_1(O87_strm, W88_i, B88_i,O88_strm);
+	Stream_output(O88_strm,O);
+	
 }
 
 void resnet34_top(DATA_T I[3][32][32],DATA_T W1[64][3][3][3],DATA_T B1[64], DATA_T W3[64][64][3][3],DATA_T B3[64], DATA_T W4[64][64][3][3],DATA_T B4[64], DATA_T W5[64][64][1][1],DATA_T B5[64], DATA_T W8[64][64][3][3],DATA_T B8[64], DATA_T W10[64][64][3][3],DATA_T B10[64], DATA_T W13[64][64][3][3],DATA_T B13[64], DATA_T W15[64][64][3][3],DATA_T B15[64], DATA_T W18[128][64][3][3],DATA_T B18[128], DATA_T W20[128][128][3][3],DATA_T B20[128], DATA_T W21[128][64][1][1],DATA_T B21[128], DATA_T W24[128][128][3][3],DATA_T B24[128], DATA_T W26[128][128][3][3],DATA_T B26[128], DATA_T W29[128][128][3][3],DATA_T B29[128], DATA_T W31[128][128][3][3],DATA_T B31[128], DATA_T W34[128][128][3][3],DATA_T B34[128], DATA_T W36[128][128][3][3],DATA_T B36[128], DATA_T W39[256][128][3][3],DATA_T B39[256], DATA_T W41[256][256][3][3],DATA_T B41[256], DATA_T W42[256][128][1][1],DATA_T B42[256], DATA_T W45[256][256][3][3],DATA_T B45[256], DATA_T W47[256][256][3][3],DATA_T B47[256], DATA_T W50[256][256][3][3],DATA_T B50[256], DATA_T W52[256][256][3][3],DATA_T B52[256], DATA_T W55[256][256][3][3],DATA_T B55[256], DATA_T W57[256][256][3][3],DATA_T B57[256], DATA_T W60[256][256][3][3],DATA_T B60[256], DATA_T W62[256][256][3][3],DATA_T B62[256], DATA_T W65[256][256][3][3],DATA_T B65[256], DATA_T W67[256][256][3][3],DATA_T B67[256], DATA_T W70[512][256][3][3],DATA_T B70[512], DATA_T W72[512][512][3][3],DATA_T B72[512], DATA_T W73[512][256][1][1],DATA_T B73[512], DATA_T W76[512][512][3][3],DATA_T B76[512], DATA_T W78[512][512][3][3],DATA_T B78[512], DATA_T W81[512][512][3][3],DATA_T B81[512], DATA_T W83[512][512][3][3],DATA_T B83[512], DATA_T W88[10][512],DATA_T B88[10],  DATA_T O[10]) {

@@ -2,7 +2,7 @@
 #include <ap_int.h>
 #include <hls_stream.h>
 
-typedef ap_int<80> DATA_T;
+typedef int DATA_T;
 
 void Stream_input(DATA_T I[3][64][64], hls::stream<DATA_T> &I_strm) {
   int k, x, y;
@@ -180,7 +180,7 @@ void HW_conv2d_1(hls::stream<DATA_T> &I_strm, DATA_T W[64][3][3][3],DATA_T B[64]
 	}
 }
 
-void HW_activation_1(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O1_strm, hls::stream<DATA_T> &O2_strm) {
+void HW_activation_1(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) {
 #pragma HLS INLINE
 	int m, x, y;
 	DATA_T ifm;
@@ -189,10 +189,9 @@ void HW_activation_1(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O1_strm, 
 			HW_activation_1_m_loop: for (m = 0; m < 64; m++) {
 				ifm = I_strm.read();
 				if (ifm < 0) {
-					O1_strm.write(0); O2_strm.write(0);
-				}
+					O_strm.write(0);}
 				else{
-					O1_strm.write(ifm); O2_strm.write(ifm);
+					O_strm.write(ifm);
 				}
 			}
 		}
@@ -2357,7 +2356,7 @@ void HW_activation_16(hls::stream<DATA_T> &I_strm, hls::stream<DATA_T> &O_strm) 
 	}
 }
 
-void HW_add_8(hls::stream<DATA_T> &I1_strm, hls::stream<DATA_T> &I2_strm, hls::stream<DATA_T> &O_strm) {
+void HW_add_8(hls::stream<DATA_T> &I1_strm, hls::stream<DATA_T> &I2_strm, hls::stream<DATA_T> &O1_strm, hls::stream<DATA_T> &O2_strm) {
 #pragma HLS INLINE
 	int m, x, y;
 	DATA_T ifm;
@@ -2366,7 +2365,8 @@ void HW_add_8(hls::stream<DATA_T> &I1_strm, hls::stream<DATA_T> &I2_strm, hls::s
 	    	HW_add_8_m_loop_1: for (m = 0; m < 512; m++) {
 				ifm = I1_strm.read();
 				ifm = ifm + I2_strm.read();
-				O_strm.write(ifm);
+				O1_strm.write(ifm);
+				O2_strm.write(ifm);
 			}
 		}
 	}
@@ -3429,9 +3429,9 @@ void resnet18(DATA_T I_i[3][64][64],DATA_T W1_i[64][3][3][3],DATA_T B1_i[64], DA
 #pragma HLS ARRAY_PARTITION variable=B48_i complete
 
 
-#pragma HLS DATAFLOW
+    #pragma HLS DATAFLOW
 
-	static hls::stream<DATA_T> O0_strm("O0_strm");
+    	static hls::stream<DATA_T> O0_strm("O0_strm");
 	static hls::stream<DATA_T> O1_strm("O1_strm");
 	static hls::stream<DATA_T> O2_strm("O2_strm");
 	static hls::stream<DATA_T> O3_strm("O3_strm");
@@ -3480,65 +3480,59 @@ void resnet18(DATA_T I_i[3][64][64],DATA_T W1_i[64][3][3][3],DATA_T B1_i[64], DA
 	static hls::stream<DATA_T> O46_strm("O46_strm");
 	static hls::stream<DATA_T> O47_strm("O47_strm");
 	static hls::stream<DATA_T> O48_strm("O48_strm");
-	static hls::stream<DATA_T> O49_strm("O49_strm");
-	static hls::stream<DATA_T> O50_strm("O50_strm");
-	static hls::stream<DATA_T> O51_strm("O51_strm");
-	static hls::stream<DATA_T> O52_strm("O52_strm");
-	static hls::stream<DATA_T> O53_strm("O53_strm");
-	static hls::stream<DATA_T> O54_strm("O54_strm");
-	static hls::stream<DATA_T> O55_strm("O55_strm");
-	static hls::stream<DATA_T> O56_strm("O56_strm");
 
-	Stream_input(I_i, O0_strm);
-	HW_conv2d_1(O0_strm, W1_i, B1_i, O1_strm);
-	HW_activation_1(O1_strm, O2_strm, O4_strm); //double
-	HW_res0a_branch2a(O2_strm, W3_i, B3_i, O3_strm);
-	HW_conv2d_2(O3_strm, W4_i, B4_i, O6_strm);
-	HW_conv2d_3(O4_strm, W5_i, B5_i, O5_strm);
-	HW_activation_2(O6_strm, O7_strm);
-	HW_add_1(O5_strm, O7_strm, O8_strm, O9_strm); //double
-	HW_conv2d_4(O8_strm, W8_i, B8_i, O10_strm);
-	HW_activation_3(O10_strm, O11_strm);
-	HW_conv2d_5(O11_strm, W10_i, B10_i, O12_strm);
-	HW_activation_4(O12_strm, O13_strm);
-	HW_add_2(O9_strm, O13_strm, O14_strm, O15_strm);//double
-	HW_conv2d_6(O14_strm, W13_i, B13_i, O16_strm);
-	HW_activation_5(O16_strm, O17_strm);
-	HW_conv2d_7(O17_strm, W15_i, B15_i, O18_strm);
-	HW_conv2d_8(O15_strm, W16_i, B16_i, O19_strm);
-	HW_activation_6(O18_strm, O20_strm);
-	HW_add_3(O19_strm, O20_strm, O21_strm, O22_strm);//double
-	HW_conv2d_9(O21_strm, W19_i, B19_i, O23_strm);
-	HW_activation_7(O23_strm, O24_strm);
-	HW_conv2d_10(O24_strm, W21_i, B21_i, O25_strm);
-	HW_activation_8(O25_strm, O26_strm);
-	HW_add_4(O22_strm, O26_strm, O27_strm, O28_strm); //double
-	HW_conv2d_11(O27_strm, W24_i, B24_i, O29_strm);
-	HW_activation_9(O29_strm, O30_strm);
-	HW_conv2d_12(O30_strm, W26_i, B26_i, O31_strm);
-	HW_conv2d_13(O28_strm, W27_i, B27_i, O32_strm);
-	HW_activation_10(O31_strm, O33_strm);
-	HW_add_5(O32_strm, O33_strm, O34_strm, O35_strm); //double
-	HW_conv2d_14(O34_strm, W30_i, B30_i, O36_strm);
-	HW_activation_11(O36_strm, O37_strm);
-	HW_conv2d_15(O37_strm, W32_i, B32_i, O38_strm);
-	HW_activation_12(O38_strm, O39_strm);
-	HW_add_6(O35_strm, O39_strm, O40_strm, O41_strm); //double
-	HW_conv2d_16(O40_strm, W35_i, B35_i, O42_strm);
-	HW_activation_13(O42_strm, O43_strm);
-	HW_conv2d_17(O43_strm, W37_i, B37_i, O44_strm);
-	HW_conv2d_18(O41_strm, W38_i, B38_i, O45_strm);
-	HW_activation_14(O44_strm, O46_strm);
-	HW_add_7(O46_strm, O45_strm, O47_strm, O48_strm); //double
-	HW_conv2d_19(O47_strm, W41_i, B41_i, O49_strm);
-	HW_activation_15(O49_strm, O50_strm);
-	HW_conv2d_20(O50_strm, W43_i, B43_i, O51_strm);
-	HW_activation_16(O51_strm, O52_strm);
-	HW_add_8(O48_strm, O52_strm, O53_strm);
-	HW_activation_17(O53_strm, O54_strm);
-	HW_global_average_pooling2d_1(O54_strm, O55_strm);
-	HW_dense_1(O55_strm, W48_i, B48_i, O56_strm);
-	Stream_output(O56_strm, O);
+
+    	Stream_input(I_i,O0_strm);
+	HW_conv2d_1(O0_strm, W1_i, B1_i,O1_strm);
+	HW_activation_1(O1_strm ,O2_strm);
+	HW_res0a_branch2a(O2_strm, W3_i, B3_i,O3_strm);
+	HW_conv2d_2(O3_strm, W4_i, B4_i,O4_strm);
+	HW_conv2d_3(O2_strm, W5_i, B5_i,O5_strm);
+	HW_activation_2(O4_strm ,O6_strm);
+	HW_add_1(O5_strm, O6_strm, O7_strm);
+	HW_conv2d_4(O7_strm, W8_i, B8_i,O8_strm);
+	HW_activation_3(O8_strm ,O9_strm);
+	HW_conv2d_5(O9_strm, W10_i, B10_i,O10_strm);
+	HW_activation_4(O10_strm ,O11_strm);
+	HW_add_2(O7_strm, O11_strm, O12_strm);
+	HW_conv2d_6(O12_strm, W13_i, B13_i,O13_strm);
+	HW_activation_5(O13_strm ,O14_strm);
+	HW_conv2d_7(O14_strm, W15_i, B15_i,O15_strm);
+	HW_conv2d_8(O12_strm, W16_i, B16_i,O16_strm);
+	HW_activation_6(O15_strm ,O17_strm);
+	HW_add_3(O16_strm, O17_strm, O18_strm);
+	HW_conv2d_9(O18_strm, W19_i, B19_i,O19_strm);
+	HW_activation_7(O19_strm ,O20_strm);
+	HW_conv2d_10(O20_strm, W21_i, B21_i,O21_strm);
+	HW_activation_8(O21_strm ,O22_strm);
+	HW_add_4(O18_strm, O22_strm, O23_strm);
+	HW_conv2d_11(O23_strm, W24_i, B24_i,O24_strm);
+	HW_activation_9(O24_strm ,O25_strm);
+	HW_conv2d_12(O25_strm, W26_i, B26_i,O26_strm);
+	HW_conv2d_13(O23_strm, W27_i, B27_i,O27_strm);
+	HW_activation_10(O26_strm ,O28_strm);
+	HW_add_5(O27_strm, O28_strm, O29_strm);
+	HW_conv2d_14(O29_strm, W30_i, B30_i,O30_strm);
+	HW_activation_11(O30_strm ,O31_strm);
+	HW_conv2d_15(O31_strm, W32_i, B32_i,O32_strm);
+	HW_activation_12(O32_strm ,O33_strm);
+	HW_add_6(O29_strm, O33_strm, O34_strm);
+	HW_conv2d_16(O34_strm, W35_i, B35_i,O35_strm);
+	HW_activation_13(O35_strm ,O36_strm);
+	HW_conv2d_17(O36_strm, W37_i, B37_i,O37_strm);
+	HW_conv2d_18(O34_strm, W38_i, B38_i,O38_strm);
+	HW_activation_14(O37_strm ,O39_strm);
+	HW_add_7(O38_strm, O39_strm, O40_strm);
+	HW_conv2d_19(O40_strm, W41_i, B41_i,O41_strm);
+	HW_activation_15(O41_strm ,O42_strm);
+	HW_conv2d_20(O42_strm, W43_i, B43_i,O43_strm);
+	HW_activation_16(O43_strm ,O44_strm);
+	HW_add_8(O40_strm, O44_strm, O45_strm);
+	HW_activation_17(O45_strm ,O46_strm);
+	HW_global_average_pooling2d_1(O46_strm ,O47_strm);
+	HW_dense_1(O47_strm, W48_i, B48_i,O48_strm);
+	Stream_output(O48_strm,O);
+	
 }
 
 void resnet18_top(DATA_T I[3][64][64],DATA_T W1[64][3][3][3],DATA_T B1[64], DATA_T W3[64][64][3][3],DATA_T B3[64], DATA_T W4[64][64][3][3],DATA_T B4[64], DATA_T W5[64][64][1][1],DATA_T B5[64], DATA_T W8[64][64][3][3],DATA_T B8[64], DATA_T W10[64][64][3][3],DATA_T B10[64], DATA_T W13[128][64][3][3],DATA_T B13[128], DATA_T W15[128][128][3][3],DATA_T B15[128], DATA_T W16[128][64][1][1],DATA_T B16[128], DATA_T W19[128][128][3][3],DATA_T B19[128], DATA_T W21[128][128][3][3],DATA_T B21[128], DATA_T W24[256][128][3][3],DATA_T B24[256], DATA_T W26[256][256][3][3],DATA_T B26[256], DATA_T W27[256][128][1][1],DATA_T B27[256], DATA_T W30[256][256][3][3],DATA_T B30[256], DATA_T W32[256][256][3][3],DATA_T B32[256], DATA_T W35[512][256][3][3],DATA_T B35[512], DATA_T W37[512][512][3][3],DATA_T B37[512], DATA_T W38[512][256][1][1],DATA_T B38[512], DATA_T W41[512][512][3][3],DATA_T B41[512], DATA_T W43[512][512][3][3],DATA_T B43[512], DATA_T W48[200][512],DATA_T B48[200],  DATA_T O[200]) {

@@ -1,6 +1,6 @@
 void SW_{Name}(DATA_T I[{Input_channel}][{Input_width}][{Input_height}], DATA_T O[{Input_channel}]) {{
 	int m, x, y;
-	double avg;
+	DATA_T avg;
 	int div = {Input_width} * {Input_height};
 	for (m = 0; m < {Input_channel}; m++){{
 		avg = 0;
