@@ -2,7 +2,7 @@
 
 source code for sw test(for c vs keras), variable generator(for input, weight file), extract configs(for model info) and vivado test (optimized code generator for vivado).  
 
-### [Model](./Model)(folder)  
+### [Model](./model)(folder)  
 
 it saves the type of layers, templates and structure of the network that we are using.  
 For more details, click the title 'Model' or [here](./Model).   
